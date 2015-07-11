@@ -56,7 +56,8 @@ gulp.task('watch', function() {
 // Rebuild all in sequence
 // 1) "build",
 // 2) "namespace" to add namespace versions,
-// 3) "min" to create minified version
+// 3) "module" to add npm module.exports versions,
+// 4) "min" to create minified version
 
 gulp.task('build', ["pt", "core", "extend", "core-files", "extend-files"]);
 
@@ -84,7 +85,7 @@ gulp.task('namespace', function() {
 });
 
 
-gulp.task('npm', function() {
+gulp.task('module', function() {
   var before = "var Pt = {}; (function() {";
   var after = "\n}).call(Pt); module.exports = Pt;";
 
