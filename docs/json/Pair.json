@@ -1,0 +1,222 @@
+{
+    "cls": "Pair", 
+    "description": "<h3>A Pair of Vector</h3>", 
+    "extend": "Vector", 
+    "file": "Pair.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a new Pair. A Pair is a Vector which defines its anchor point, and connected to another Vector through the <code>connect()</code> function.</h2>", 
+            "eg": "<p><code>new Pair()</code> <code>new Pair(1,2,3)</code> <code>new Pair([2,4])</code> <code>new Pair({x:3, y:6, z:9}).connect(1,2,3)</code>, <code>new Pair(10,10, 20,20)</code></p>", 
+            "name": "Pair", 
+            "param": [
+                "<p><code>args</code> Similar to Point constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>connect()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
+            ], 
+            "pname": "", 
+            "return": "<p>a new Pair object</p>"
+        }, 
+        {
+            "description": "<h2>connect the other point</h2>", 
+            "eg": "<p><code>pair.connect(1,2,3)</code> <code>new Pair(1,2).connect(3,4)</code></p>", 
+            "name": "connect", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or an array, or an object</p>"
+            ], 
+            "pname": "", 
+            "return": "<p>this Pair</p>"
+        }, 
+        {
+            "description": "<h2>Update p1's new position by recalculating it as a relative position to the anchor point</h2>", 
+            "name": "relative", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>this Pair</p>"
+        }, 
+        {
+            "description": "<h2>Return a new vector of p1's new position, by recalculating it as a relative position to the anchor point</h2>", 
+            "name": "$relative", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>a new Vector</p>"
+        }, 
+        {
+            "description": "<h2>Add a vector to both points in this <code>Pair</code></h2>", 
+            "name": "pointsAdd", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this <code>Pair</code></p>"
+        }, 
+        {
+            "description": "<h2>Same as <code>pointsAdd()</code> but returns a new <code>Pair</code></h2>", 
+            "name": "$pointsAdd", 
+            "param": [], 
+            "pname": "args"
+        }, 
+        {
+            "description": "<h2>Subtract a vector from both points in this <code>Pair</code></h2>", 
+            "name": "pointsSubtract", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this <code>Pair</code></p>"
+        }, 
+        {
+            "description": "<h2>Same as <code>pointsSubtract()</code> but returns a new <code>Pair</code></h2>", 
+            "name": "$pointsSubtract", 
+            "param": [], 
+            "pname": "args"
+        }, 
+        {
+            "description": "<h2>Multiply a vector with both points in this <code>Pair</code></h2>", 
+            "name": "pointsMultiply", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this <code>Pair</code></p>"
+        }, 
+        {
+            "description": "<h2>Same as <code>pointsMultiply()</code> but returns a new <code>Pair</code></h2>", 
+            "name": "$pointsMultiply", 
+            "param": [], 
+            "pname": "args"
+        }, 
+        {
+            "description": "<h2>Divide with both points in this <code>Pair</code> with a vector</h2>", 
+            "name": "pointsDivide", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this <code>Pair</code></p>"
+        }, 
+        {
+            "description": "<h2>Same as <code>pointsDivide()</code> but returns a new <code>Pair</code></h2>", 
+            "name": "$pointsDivide", 
+            "param": [], 
+            "pname": "args"
+        }, 
+        {
+            "description": "<h2>Get a new pair that's the bounding box of this pair. This is the same as calculating its top-left (min) and bottom-right (max) points.</h2>", 
+            "name": "bounds", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>a new Pair</p>"
+        }, 
+        {
+            "description": "<h2>Check if a point is within the bounds of this pair</h2>", 
+            "eg": "<p><code>pair.withinBounds( point )</code>, <code>pair.withinBounds( point, Const.yz )</code></p>", 
+            "name": "withinBounds", 
+            "param": [
+                "<p><code>pt</code> a Point object to check.</p>", 
+                "<p><code>axis</code> optional axis id such as Const.xy.</p>"
+            ], 
+            "pname": "pt, axis", 
+            "return": "<p>a boolean value where <code>true</code> means the point is within bounds.</p>"
+        }, 
+        {
+            "description": "<h2>Interpolate to find a point which lies somewhere on a straight path between the two points of this pair</h2>", 
+            "eg": "<p><code>pair.interpolate(0.4)</code> <code>pair.interpolate(0.1, true)</code></p>", 
+            "name": "interpolate", 
+            "param": [
+                "<p><code>t</code> a value between 0 to 1.</p>", 
+                "<p><code>relative</code> an optional boolean value. If <code>true</code>, then <code>this.p1</code> will be treated as relative to the achor point. Default is <code>false</code>.</p>"
+            ], 
+            "pname": "t, relative=false", 
+            "return": "<p>the interpolated point as Vector</p>"
+        }, 
+        {
+            "description": "<h2>A convenient method to get the midpoint of this pair of points. Same as @interpolate( 0.5 )</h2>", 
+            "name": "midpoint", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>the middle point as Vector</p>"
+        }, 
+        {
+            "description": "<h2>Get a vector which points to the same direction as this pair, but starts at origin (0,0)</h2>", 
+            "eg": "<p><code>pair.direction()</code>, <code>pair.direction(false)</code>, <code>pair.direction().normalize()</code></p>", 
+            "name": "direction", 
+            "param": [
+                "<p><code>reverse</code> optional parameter to reverse the direction if set to <code>true</code>. Default is <code>false</code>.</p>"
+            ], 
+            "pname": "reverse", 
+            "return": "<p>the directional vector</p>"
+        }, 
+        {
+            "description": "<h2>Set or get width and height of this pair</h2>", 
+            "eg": "<p><code>pair.size()</code>, <code>pair.size(100, 50)</code></p>", 
+            "name": "size", 
+            "param": [
+                "<p><code>args</code> Optional parameter to set the size of this Pair. Can be comma-separated values, or as an array, or a Point object.</p>"
+            ], 
+            "pname": "", 
+            "return": "<p>When setting a new size, returns self. When getting size, returns a Vector whose x is the width and y is the height.</p>"
+        }, 
+        {
+            "description": "<h2>Find distance of this pair from anchor to p1</h2>", 
+            "name": "length", 
+            "param": [
+                "<p>: <code>sqrt</code> optional boolean value to get distance-squared value if set to <code>false</code>. Default is true.</p>"
+            ], 
+            "pname": "sqrt = true", 
+            "return": "<p>distance value</p>"
+        }, 
+        {
+            "description": "<h2>Check if a point lies on the left or right side of this pair's <em>ray</em>, and if the 3 points are collinear</h2>", 
+            "name": "collinear", 
+            "param": [
+                "<p><code>point</code> a Point object to check against this pair.</p>"
+            ], 
+            "pname": "point", 
+            "return": "<p>a value where 0 means collinear, poitive value means the point lies on left, and negative value means it's on right</p>"
+        }, 
+        {
+            "description": "<h2>Recalculate the origin and vec so that origin is at top-left and vec is at bottom-right</h2>", 
+            "name": "resetBounds", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>this Pair</p>"
+        }, 
+        {
+            "description": "<h2>override equal() from parent class</h2>", 
+            "name": "equal", 
+            "param": [], 
+            "pname": "epsilon=false"
+        }, 
+        {
+            "description": "<h2>Override clone() from parent class</h2>", 
+            "name": "clone", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>Override floor() from parent class</h2>", 
+            "name": "floor", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>Describe this Pair as a text string</h2>", 
+            "name": "toString", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>\"Pair of vectors from ... to ...\" text</p>"
+        }, 
+        {
+            "description": "<h2>Override toArray() include <code>p1</code> in the array.</h2>", 
+            "name": "toArray", 
+            "param": [], 
+            "pname": ""
+        }
+    ], 
+    "props": [
+        {
+            "description": "<h2>A vector object which is other point in this pair.</h2>", 
+            "name": "p1", 
+            "param": []
+        }
+    ], 
+    "statics": []
+}

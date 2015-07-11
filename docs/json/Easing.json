@@ -1,0 +1,51 @@
+{
+    "cls": "Easing", 
+    "description": "<h2>Easing functions based on Robert Penner's</h2>", 
+    "extend": "", 
+    "file": "Geom.coffee", 
+    "funcs": [], 
+    "props": [], 
+    "statics": [
+        {
+            "description": "<h2>Linear interpolation</h2>", 
+            "name": "linear", 
+            "param": [
+                "<p><code>t</code> current time or iteration</p>", 
+                "<p><code>b</code> start value</p>", 
+                "<p><code>c</code> change in value</p>", 
+                "<p><code>d</code> duration time or total iteration</p>"
+            ], 
+            "pname": "t, b, c, d"
+        }, 
+        {
+            "description": "<h2>Runge-Kutta-4 integrator (adopted from gafferongames.com)</h2>", 
+            "name": "RK4", 
+            "param": [
+                "<p><code>c, d</code> the derivative of c is d. If c is position, then d is velocity.</p>", 
+                "<p><code>func</code> acceleration function(c, d, dt, t)</p>", 
+                "<p><code>dt</code> change in time</p>", 
+                "<p><code>t</code> current time</p>"
+            ], 
+            "pname": "c, d, func, dt, t", 
+            "return": "<p>an object with <code>{c, d}</code> properties where the derivative of c is d.</p>"
+        }, 
+        {
+            "description": "<h2>A static function to pre-calculate a sine and cosine table. To use this, convert radian to angle as an integer, and then get table index by finding modulus <code>angle%360</code></h2>", 
+            "name": "sinCosTable", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>an object with <code>{sin, cos}</code> properties.</p>"
+        }, 
+        {
+            "description": "<h2>A simple implementation of Mitchell's Best Neighor Algorithm to generate one sample. (Consider using <code>SamplePoints</code> class instead)</h2>", 
+            "name": "bestCandidate", 
+            "param": [
+                "<p><code>bound</code> a Rectangle object to specify the bounding box</p>", 
+                "<p><code>items</code> an array of existing items</p>", 
+                "<p><code>samples</code> number of sampling. Default to 10.</p>"
+            ], 
+            "pname": "bound, items, samples=10", 
+            "return": "<p>o Vector object which is best candidate</p>"
+        }
+    ]
+}

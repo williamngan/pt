@@ -1,0 +1,215 @@
+{
+    "cls": "Rectangle", 
+    "description": "<p>Rectangle class is a pair of points</p>", 
+    "extend": "Pair", 
+    "file": "Rectangle.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a new Rectangle. A Rectangle is a Pair whose rectangular bounding box are defined by two Vectors. Use <code>toPointSet()</code> to convert it to a PointSet with 4 points if you need to rotate or shear it.</h2>", 
+            "eg": "<p><code>new Rectangle()</code> <code>new Rectangle(1,2,3)</code> <code>new Rectangle([2,4])</code> <code>new Rectangle({x:3, y:6, z:9}).connect(1,2,3)</code></p>", 
+            "name": "Rectangle", 
+            "param": [
+                "<p><code>args</code> Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>connect()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
+            ], 
+            "pname": "", 
+            "return": "<p>a new Rectangle object</p>"
+        }, 
+        {
+            "description": "<h2>Describe this rectangle as a text string</h2>", 
+            "name": "toString", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>\"Rectangle x1, y1, z1, x2, y2, z2, width height\" text</p>"
+        }, 
+        {
+            "description": "<h2>Convert this Rectangle from a pair of points to a <code>PointSet</code> which has 4 points. Note that if you want to rotate or shear this rectangle, convert this rectangle to a <code>PointSet</code> first.</h2>", 
+            "name": "toPointSet", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>a PointSet with 4 points. (top-right, bottom-right, bottom-left, top-left)</p>"
+        }, 
+        {
+            "description": "<h2>Similar to <code>Pair</code>, this function connects the anchor with another point to define the rectangular bounds. This also calls Pair's <code>resetBounds()</code> to make sure anchor point is at top-left and <code>p1</code> is at bottom-right</h2>", 
+            "eg": "<p><code>rect.connect(1,2,3)</code> <code>new Rect(pt).connect([3,4])</code></p>", 
+            "name": "connect", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or an array, or an object</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this Rectangle</p>"
+        }, 
+        {
+            "description": "<h2>Resize this rectangle by a certain amount from top left</h2>", 
+            "eg": "<p><code>rect.resizeBy(1,2,3)</code> <code>rect.resizeBy( delta_vec )</code></p>", 
+            "name": "resizeBy", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or an array, or an object to specify the size change</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this Rectangle</p>"
+        }, 
+        {
+            "description": "<h2>resize this rectangle by a certain amount from center</h2>", 
+            "eg": "<p><code>rect.resizeCenterBy(1,2,3)</code> <code>rect.resizeCenterBy( delta_vec )</code></p>", 
+            "name": "resizeCenterBy", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or an array, or an object to specify the size change</p>"
+            ], 
+            "pname": "", 
+            "return": "<p>this Rectangle</p>"
+        }, 
+        {
+            "description": "<h2>resize to a specific size from top left</h2>", 
+            "eg": "<p><code>rect.resizeTo(10,10)</code> <code>rect.resizeTo( size_vec )</code></p>", 
+            "name": "resizeTo", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or an array, or an object to specify the new size</p>"
+            ], 
+            "pname": "", 
+            "return": "<p>this Rectangle</p>"
+        }, 
+        {
+            "description": "<h2>resize to a specific size from center point</h2>", 
+            "eg": "<p><code>rect.resizeCenterTo(10,10)</code> <code>rect.resizeCenterTo( size_vec )</code></p>", 
+            "name": "resizeCenterTo", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or an array, or an object to specify the new size</p>"
+            ], 
+            "pname": "", 
+            "return": "<p>this Rectangle</p>"
+        }, 
+        {
+            "description": "<h2>resize this rectangle so that it will enclose another rectangle. Namely, the resulting rectangle is a <em>union</em> of the two initial rectangles.</h2>", 
+            "name": "enclose", 
+            "param": [
+                "<p><code>rect</code> another Rectangle or Pair object</p>"
+            ], 
+            "pname": "rect", 
+            "return": "<p>this Rectangle which has the new size</p>"
+        }, 
+        {
+            "description": "<h2>Same as <code>enclose()</code> but returns a new Rectangle</h2>", 
+            "name": "$enclose", 
+            "param": [
+                "<p><code>rect</code> another Rectangle or Pair object</p>"
+            ], 
+            "pname": "rect", 
+            "return": "<p>a new Rectangle which has the new size</p>"
+        }, 
+        {
+            "description": "<h2>Check if this rectangle encloses (or is enclosed by) another rect. Use with <code>isLarger()</code> to check which rectangle is being enclosed.</h2>", 
+            "name": "isEnclosed", 
+            "param": [
+                "<p><code>rect</code> another rectangle</p>"
+            ], 
+            "pname": "rect", 
+            "return": "<p>a boolean value to indicate if one rectangle is enclosed by another</p>"
+        }, 
+        {
+            "description": "<h2>Check if this rectangle is larger than another rectangle</h2>", 
+            "name": "isLarger", 
+            "param": [
+                "<p><code>rect</code> another rectangle</p>"
+            ], 
+            "pname": "rect", 
+            "return": "<p>a boolean value to indicate if this rectangle is larger</p>"
+        }, 
+        {
+            "description": "<h2>Check if a Point is on this Rectangle</h2>", 
+            "eg": "<p><code>rect.intersectPoint(1,2,3)</code> <code>rect.intersectPoint(pt)</code></p>", 
+            "name": "intersectPoint", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or an array, or a Point object</p>"
+            ], 
+            "pname": "", 
+            "return": "<p>a boolean value to indicate if there is an intersection</p>"
+        }, 
+        {
+            "description": "<h2>Check intersections between this Rectangle and an infinite Line on xy axis.</h2><p>@get_pts <code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>", 
+            "name": "intersectPath", 
+            "param": [
+                "<p><code>path</code> a Pair or Line object to specify an infinite line</p>"
+            ], 
+            "pname": "line, get_pts=true", 
+            "return": "<p>s an Array of intersection points (zero or two points), or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }, 
+        {
+            "description": "<h2>Check intersections between this Rectangle and a Line segment on xy axis.</h2><p>@get_pts <code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>", 
+            "name": "intersectLine", 
+            "param": [
+                "<p><code>line</code> a Line to check</p>"
+            ], 
+            "pname": "line, get_pts=true", 
+            "return": "<p>s an Array of intersection points (zero, one, or two points), or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }, 
+        {
+            "description": "<h2>Check if this Rectangle intersects with a list of Lines ( useful for polygon or polyline such as <code>rectangle.sides()</code> ) on xy axis.</h2><p>@get_pts <code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>", 
+            "name": "intersectLines", 
+            "param": [
+                "<p><code>lines</code> an array of Line</p>"
+            ], 
+            "pname": "lines, get_pts=true", 
+            "return": "<p>s an Array of intersection points, or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }, 
+        {
+            "description": "<h2>Check if this Rectangle intersects with another Rectangle</h2><p>@get_pts <code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>", 
+            "name": "intersectRectangle", 
+            "param": [
+                "<p><code>rect</code> a Rectangle to check</p>"
+            ], 
+            "pname": "rect, get_pts=true", 
+            "return": "<p>s an Array of intersection points (zero or two or four points), or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }, 
+        {
+            "description": "<h2>Check if this Rectangle intersect with another element</h2>", 
+            "eg": "<p><code>rect.hasIntersect( another_circle )</code> <code>rect.hasIntersect(line)</code> <code>rect.hasIntersect(rect)</code></p>", 
+            "name": "hasIntersect", 
+            "param": [
+                "<p><code>item</code> any object that is based on Point. (Vector, Line, Rectangle, Circle, etc)</p>"
+            ], 
+            "pname": "item, get_pts=false", 
+            "return": "<p>s an Array of intersection points or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }, 
+        {
+            "description": "<h2>Get the corners of this rectangle as 4 Vectors</h2>", 
+            "name": "corners", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>an Object with 4 <code>Vector</code> objects as {topLeft, topRight, bottomLeft, bottomRight}</p>"
+        }, 
+        {
+            "description": "<h2>Get the sides of this rectangle as 4 lines</h2>", 
+            "name": "sides", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>an Array of 4 <code>Line</code> objects [top, right, bottom, left]</p>"
+        }, 
+        {
+            "description": "<h2>Get 4 rectangles from this rectangle by subdividing the quadrants</h2>", 
+            "name": "quadrants", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>an Object with 4 <code>Rectangle</code> objects as {topLeft, topRight, bottomLeft, bottomRight}</p>"
+        }
+    ], 
+    "props": [
+        {
+            "description": "<h2>the center point of rectangle as Vector object</h2>", 
+            "name": "center", 
+            "param": []
+        }
+    ], 
+    "statics": [
+        {
+            "description": "<h2>A static method <code>Rectangle.contain</code> to check if a point is within a bound</h2>", 
+            "name": "contain", 
+            "param": [
+                "<p><code>pt</code> the Point to check</p>", 
+                "<p><code>ptl</code> a Point to specify top-left position of the rectangular bounds</p>", 
+                "<p><code>pbr</code>  a Point to specify bottom-right position of the rectangular bounds</p>"
+            ], 
+            "pname": "pt, ptl, pbr", 
+            "return": "<p>a boolean value indicating if the point is contained within the rectangular bounds</p>"
+        }
+    ]
+}

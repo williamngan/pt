@@ -1,0 +1,249 @@
+{
+    "cls": "Color", 
+    "description": "<h3>A color in a color space</h3>", 
+    "extend": "Vector", 
+    "file": "Color.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a new Color. Color lets you define a color in a specific mode. <a href=\"https://software.intel.com/en-us/node/503873\">This article</a> from Intel has a good overview of different color models.</h2>", 
+            "eg": "<p><code>new Color()</code> <code>new Color(255,100,20)</code> <code>new Color([2,4])</code> <code>new Color({x:3, y:6, z:9})</code> <code>new Color(360,1,1,0.5)</code>, <code>new Color(100,50,-50,1,'lab')</code></p>", 
+            "name": "Color", 
+            "param": [
+                "<p><code>args</code> Set the three values of a color as comma-separated values, as an array, or as an object with <code>{x, y, z}</code> properties. Optionally set <code>alpha</code> in a 4th parameter, and color mode string in 5th parameter.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>a new Color object</p>"
+        }, 
+        {
+            "description": "<h2>set a color mode and convert current color to new color mode</h2>", 
+            "eg": "<p><code>color.setMode('lab')</code></p>", 
+            "name": "setMode", 
+            "param": [
+                "<p><code>m</code> a string to specify color mode: 'hsl', 'hsb', 'rgb', 'lab', 'lch', 'xyz'</p>"
+            ], 
+            "pname": "m", 
+            "return": "<p>this Color object with new color mode</p>"
+        }, 
+        {
+            "description": "<h2>Get rgb value as hex string such as '#123456'</h2>", 
+            "name": "hex", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>Get rgb string such as 'rgb(12,34,56)'</h2>", 
+            "name": "rgb", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>Get rgba string such as 'rgba(12,34,56, 0.2)'</h2>", 
+            "name": "rgba", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>Get color values (based on current color mode) as an array</h2>", 
+            "name": "values", 
+            "param": [
+                "<p><code>toRGB</code> Optional boolean value to convert to rgb value if set to <code>true</code>. Default is false.</p>"
+            ], 
+            "pname": "toRGB=false", 
+            "return": "<p>an array of colro values</p>"
+        }
+    ], 
+    "props": [
+        {
+            "description": "<h2>alpha value from 0 to 1, where 0 is fully transparent, and 1 is fully opaque</h2>", 
+            "name": "alpha", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>color mode id such as \"lab\" or \"rgb\"</h2>", 
+            "name": "mode", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>A property to adject XYZ for Standard Observer 2deg, Daylight/sRGB illuminant D65</h2>", 
+            "name": "XYZ", 
+            "param": []
+        }
+    ], 
+    "statics": [
+        {
+            "description": "<h2>A static function <code>Color.RGBtoHSL</code> to convert RGB to HSL</h2>", 
+            "eg": "<p><code>Color.RGBtoHSL(255,70,0)</code> <code>Color.RGBtoHSL(1,0.3,0, true)</code></p>", 
+            "name": "RGBtoHSL", 
+            "param": [
+                "<p><code>r, g, b</code> red, green, blue values from 0 to 255</p>", 
+                "<p><code>normalizedInput, normalizedOutput</code> Optional boolean values to indicate if input parameters are normalized (0 to 1), and if return value should be normalized</p>"
+            ], 
+            "pname": "r, g, b, normalizedInput, normalizedOutput", 
+            "return": "<p>an array of [h, s, l] where h is from 0 to 360, s is from 0 to 1, and l is from 0 to 1.</p>"
+        }, 
+        {
+            "description": "<h2>A static function <code>Color.HSLtoRGB</code> to convert HSL to RGB</h2>", 
+            "eg": "<p><code>Color.HSLtoRGB(360,0.7,0.9)</code> <code>Color.HSLtoRGB(1,0.3,0, true)</code></p>", 
+            "name": "HSLtoRGB", 
+            "param": [
+                "<p><code>h, s, l</code> hue, saturation, and lightness. hue value from 0 to 360, saturation and lightness values from 0 to 1</p>", 
+                "<p><code>normalizedInput, normalizedOutput</code> Optional boolean values to indicate if input parameters are normalized (0 to 1), and if return value should be normalized</p>"
+            ], 
+            "pname": "h, s, l, normalizedInput, normalizedOutput", 
+            "return": "<p>an array of [r, g, b] where each value is from 0 to 255</p>"
+        }, 
+        {
+            "description": "<h2>A static function <code>Color.RGBtoHSB</code> to convert RGB to HSB</h2>", 
+            "eg": "<p><code>Color.RGBtoHSB(255,70,0)</code> <code>Color.RGBtoHSB(1,0.3,0, true)</code></p>", 
+            "name": "RGBtoHSB", 
+            "param": [
+                "<p><code>r, g, b</code> red, green, blue values from 0 to 255</p>", 
+                "<p><code>normalizedInput, normalizedOutput</code> Optional boolean values to indicate if input parameters are normalized (0 to 1), and if return value should be normalized</p>"
+            ], 
+            "pname": "r, g, b, normalizedInput, normalizedOutput", 
+            "return": "<p>an array of [h, s, b] where h is from 0 to 360, s is from 0 to 1, and b is from 0 to 1.</p>"
+        }, 
+        {
+            "description": "<h2>A static function <code>Color.HSBtoRGB</code> to convert HSB to RGB</h2>", 
+            "eg": "<p><code>Color.HSBtoRGB(360,0.7,0.9)</code> <code>Color.HSBtoRGB(1,0.3,0, true)</code></p>", 
+            "name": "HSBtoRGB", 
+            "param": [
+                "<p><code>h, s, b</code> hue, saturation, and brightness. hue value from 0 to 360, saturation and brightness values from 0 to 1</p>", 
+                "<p><code>normalizedInput, normalizedOutput</code> Optional boolean values to indicate if input parameters are normalized (0 to 1), and if return value should be normalized</p>"
+            ], 
+            "pname": "h, s, v, normalizedInput, normalizedOutput", 
+            "return": "<p>an array of [r, g, b] where each value is from 0 to 255</p>"
+        }, 
+        {
+            "description": "<h2>Static function <code>Color.RGBtoLAB</code> transforms RGB to LAB</h2>", 
+            "name": "RGBtoLAB", 
+            "param": [
+                "<p><code>r, g, b</code> red, green, and blue values from 0 to 255</p>", 
+                "<p><code>normalizedInput, normalizedOutput</code> Optional boolean values to indicate if input parameters are normalized (0 to 1), and if return value should be normalized</p>"
+            ], 
+            "pname": "r, g, b, normalizedInput, normalizedOutput", 
+            "return": "<p>an array of [L, a, b] where lightness (L) is from 0 to 100, a and b component values are from -128 to 127. red/green colors are represented in a, and yellow/blue colors are represented in b.</p>"
+        }, 
+        {
+            "description": "<h2>Static function <code>Color.LABtoRGB</code> transforms LAB to RGB</h2>", 
+            "name": "LABtoRGB", 
+            "param": [
+                "<p><code>L, a, b</code> lightness (L) is from 0 to 100, a and b component values are from -128 to 127. red/green colors are represented in a, and yellow/blue colors are represented in b.</p>", 
+                "<p><code>normalizedInput, normalizedOutput</code> Optional boolean values to indicate if input parameters are normalized (0 to 1), and if return value should be normalized</p>"
+            ], 
+            "pname": "L, a, b, normalizedInput, normalizedOutput", 
+            "return": "<p>an array of [r, g, b] where each value is from 0 to 255</p>"
+        }, 
+        {
+            "description": "<h2>Static function <code>Color.RGBtoLCH</code> transforms RGB to LCH (Cylindrical Lab)</h2>", 
+            "name": "RGBtoLCH", 
+            "param": [
+                "<p><code>r, g, b</code> red, green, and blue values from 0 to 255</p>", 
+                "<p><code>normalizedInput, normalizedOutput</code> Optional boolean values to indicate if input parameters are normalized (0 to 1), and if return value should be normalized</p>"
+            ], 
+            "pname": "r, g, b, normalizedInput, normalizedOutput", 
+            "return": "<p>an array of [L, c, h] where lightness (l) and chroma (c) is from 0 to 100, and hue (h) is from 0 to 360</p>"
+        }, 
+        {
+            "description": "<h2>Static function <code>Color.LCHtoRGB</code> transforms LCH to RGB</h2>", 
+            "name": "LCHtoRGB", 
+            "param": [
+                "<p><code>L, c, h</code> lightness (l) and chroma (c) is from 0 to 100, and hue (h) is from 0 to 360</p>"
+            ], 
+            "pname": "L, c, h, normalizedInput, normalizedOutput", 
+            "return": "<p>an array of [r, g, b] where each value is from 0 to 255</p>"
+        }, 
+        {
+            "description": "<h2>Static function <code>Color.XYZtoRGB</code> to convert XYZ to RGB. This is usually used when converting between LAB and RGB.</h2>", 
+            "name": "XYZtoRGB", 
+            "param": [
+                "<p><code>x, y, z</code> x, y, z values from 0 to 100</p>", 
+                "<p><code>normalizedInput, normalizedOutput</code> Optional boolean values to indicate if input parameters are normalized (0 to 1), and if return value should be normalized</p>"
+            ], 
+            "pname": "x, y, z, normalizedInput, normalizedOutput", 
+            "return": "<p>an array of [r, g, b] where each value is from 0 to 255</p>"
+        }, 
+        {
+            "description": "<h2>A static function <code>Color.RGBtoXYZ</code> to convert RGB to XYZ. This is usually used when converting between LAB and RGB.</h2>", 
+            "name": "RGBtoXYZ", 
+            "param": [
+                "<p><code>r, g, b</code> red, green, blue values from 0 to 255</p>", 
+                "<p><code>normalizedInput, normalizedOutput</code> Optional boolean values to indicate if input parameters are normalized (0 to 1), and if return value should be normalized</p>"
+            ], 
+            "pname": "r, g, b, normalizedInput, normalizedOutput", 
+            "return": "<p>an array of [x, y, z] where each value is from 0 to 100</p>"
+        }, 
+        {
+            "description": "<h2>Static function <code>Color.XYZtoLAB</code> to convert XYZ to LAB.</h2>", 
+            "name": "XYZtoLAB", 
+            "param": [
+                "<p><code>x, y, z</code> x, y, z values from 0 to 100</p>"
+            ], 
+            "pname": "x, y, z", 
+            "return": "<p>an array of [l, a, b] where lightness (L) is from 0 to 100, a and b values are from -128 to 127</p>"
+        }, 
+        {
+            "description": "<h2>Static function <code>Color.LABtoXYZ</code> to convert LAB to XYZ.</h2>", 
+            "name": "LABtoXYZ", 
+            "param": [
+                "<p><code>L, a, b</code> lightness (L) is from 0 to 100, a and b component values are from -128 to 127</p>"
+            ], 
+            "pname": "L, a, b", 
+            "return": "<p>an array of [x, y, z] where each value is from 0 to 100</p>"
+        }, 
+        {
+            "description": "<h2>Static function <code>Color.XYZtoLUV</code> to convert XYZ to LUV.</h2>", 
+            "name": "XYZtoLUV", 
+            "param": [
+                "<p><code>x, y, z</code> x, y, z values from 0 to 100</p>"
+            ], 
+            "pname": "x, y, z", 
+            "return": "<p>an array of [l, u, v] where lightness is from 0 to 100, u is from -134 to 220, and v is from -140 o 122</p>"
+        }, 
+        {
+            "description": "<h2>Static function <code>Color.LUVtoXYZ</code> to convert LUV to XYZ.</h2>", 
+            "name": "LUVtoXYZ", 
+            "param": [
+                "<p><code>L, u, v</code> lightness (L) is from 0 to 100, u is from -134 to 220, and v is from -140 o 122</p>"
+            ], 
+            "pname": "L, u, v", 
+            "return": "<p>an array of [x, y, z] where each value is from 0 to 100</p>"
+        }, 
+        {
+            "description": "<h2>Static function <code>Color.LABtoLCH</code> transforms LAB to Cylindrical LCH</h2>", 
+            "name": "LABtoLCH", 
+            "param": [
+                "<p><code>L, a, b</code> lightness (L) is from 0 to 100, a and b component values are from -128 to 127</p>"
+            ], 
+            "pname": "L, a, b", 
+            "return": "<p>an array of [l, c, h] where lightness (l) and chroma (c) is from 0 to 100, and hue (h) is from 0 to 360</p>"
+        }, 
+        {
+            "description": "<h2>Static function <code>Color.LCHtoLAB</code> transforms Cylindrical LCH to LAB</h2>", 
+            "name": "LCHtoLAB", 
+            "param": [
+                "<p><code>L, c, h</code> lightness (L) and chroma (c) is from 0 to 100, and hue (h) is from 0 to 360</p>"
+            ], 
+            "pname": "L, c, h", 
+            "return": "<p>an array of [l, a, b] where lightness (L) is from 0 to 100, a and b values are from -128 to 127</p>"
+        }, 
+        {
+            "description": "<h2>Static function <code>Color.LUVtoLCH</code> to convert LUV to LCH.</h2>", 
+            "name": "LUVtoLCH", 
+            "param": [
+                "<p><code>L, u, v</code> lightness (L) is from 0 to 100, u is from -134 to 220, and v is from -140 o 122</p>"
+            ], 
+            "pname": "L, u, v", 
+            "return": "<p>an array of [l, c, h] where lightness (l) and chroma (c) is from 0 to 100, and hue (h) is from 0 to 360</p>"
+        }, 
+        {
+            "description": "<h2>Static function <code>Color.LCHtoLUV</code> transforms Cylindrical LCH to LUV</h2>", 
+            "name": "LCHtoLUV", 
+            "param": [
+                "<p><code>L, c, h</code> lightness (L) and chroma (c) is from 0 to 100, and hue (h) is from 0 to 360</p>"
+            ], 
+            "pname": "L, c, h", 
+            "return": "<p>an array of [l, u, v] where lightness is from 0 to 100, u is from -134 to 220, and v is from -140 o 122</p>"
+        }
+    ]
+}

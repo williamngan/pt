@@ -1,0 +1,292 @@
+$link: #334fff;
+$link-menu: #345;
+$link-hover: lighten( $link, 10 );
+$grey-medium: #89a;
+
+$bg: #f3f5f9;
+
+$contentW: 550px;
+$menuW: 300px;
+
+body {
+  background-color: $bg;
+  font-family: 'Roboto', sans-serif;
+  font-size: 10px;
+  margin: 0;
+}
+
+html {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+html * {
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 12em;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 5em;
+  letter-spacing: -0.03em;
+}
+
+h3 {
+  font-size: 3em;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+
+p {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 1.4em;
+}
+
+p.small {
+  font-size: 1.1em;
+}
+
+
+code {
+  font-weight: 600;
+}
+
+section {
+  padding-top: 40px;
+}
+
+section {
+  h1 {
+    position: relative;
+    font-size: 2em;
+    .param {
+      font-weight: 400;
+      font-size: .8em;
+    }
+  }
+
+  h2 {
+    font-size: 1.5em;
+    font-weight: 400;
+  }
+
+  .param, .return, .eg, .demo {
+    > em {
+      display: inline-block;
+      vertical-align: top;
+      color: #999;
+      width: 100px;
+    }
+
+    > .p {
+      display: inline-block;
+      vertical-align: top;
+      color: #222;
+      width: 400px;
+      margin-top: 0;
+    }
+
+    > .group {
+      display: inline-block;
+      vertical-align: top;
+      color: #222;
+      width: 320px;
+      margin-top: 0;
+
+      > p {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .demo {
+    position: relative;
+
+    .demo-arrow {
+      position: absolute;
+      top: 0; right: 0;
+      width: 20px; height: 20px;
+      background-color: #f00;
+    }
+  }
+}
+
+
+section.inherited ul {
+  margin: 0 0 1em;
+  padding: 0;
+  font-size: 1.5em;
+
+  li {
+    display: inline-block;
+    list-style: none;
+
+    &:after { content: ', ' }
+    &:last-child:after { content: '' }
+    &.label { display: block; color: #999; font-size: 0.75em; }
+    &.label:after { content: ''  }
+  }
+}
+
+
+.eg code {
+  display: block;
+  font-size: 0.8em;
+}
+
+
+// head
+#head { position: relative; z-index: 10 }
+
+#header {
+  position: absolute;
+  height: 30px; left: 0; right: 0; top: -50px;
+  background-color: $link;
+  transition: top .4s;
+}
+
+.sticky-step1 #header {
+  position: fixed; top: 0;
+}
+
+
+
+#page {
+  background-color: #fff;
+}
+
+
+// content
+#content {
+  margin-left: 300px;
+  padding: 30px 50px;
+  width: $contentW;
+
+  background-color: #fff;
+  transition: background-color .5s;
+}
+
+
+// Menu
+#menu {
+
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  float: left;
+  margin-top: 100px;
+  width: $menuW; height: 2500px;
+  padding: 30px;
+  background-color: #fff;
+  position: relative;
+
+  transition: background-color .5s, margin-top .5s;
+
+  font-size: 1.2em;
+  line-height: 1.5;
+
+  > ul {
+    width: 120px;
+    overflow-x: hidden;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+
+    &.depth-1 { margin: 10px 0; border-left: 1px solid #ddd; padding-left: 10px; font-weight: 400;}
+    &.depth-0 > li { margin: 10px 0; font-weight: 700; }
+    &.depth-2 > li { margin: 15px 0; font-weight: 400;}
+  }
+
+  a {
+    color: $link-menu;
+    text-decoration: none;
+    &:hover { color: $link; }
+  }
+
+
+  #submenu {
+    position: absolute;
+    top: 30px;
+    left: 150px;
+    width: 150px;
+    padding: 10px 5px 20px 20px;
+
+    border-left: 1px solid $link;
+    font-weight: 400;
+    font-size: 0.9em;
+
+    .subsection {
+      margin-bottom: 30px;
+      overflow-x: hidden;
+    }
+
+    .subitem {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    h4 {
+      text-transform: uppercase;
+      font-weight: 400;
+      color: $grey-medium;
+      margin: 0 0 10px;
+    }
+  }
+}
+
+
+.sticky-step1 #menu {
+  position: fixed;
+  top: 30px; left: 0px; bottom: 0px; height: auto;
+  background-color:$bg;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-top: 0;
+}
+
+
+#pt {
+  position: absolute;
+  top: 0; right: 0;
+  display: block;
+  background-color: $link;
+}
+
+
+.sticky-step1 #pt {
+  position: fixed;
+  display: block;
+  left: $contentW + $menuW;
+  bottom: 0;
+
+}
+
+#mask {
+  position: absolute;
+  z-index: 1;
+  top: 0; left: 0%; right: 0; bottom: 0;
+  background: #fff;
+  transition: right .3s;
+  display: none;
+}
+
+
+.sticky-step1 #mask {
+  display: block;
+}
+
+.sticky-step1 .active #mask {
+  right: 100%;
+}

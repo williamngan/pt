@@ -1,0 +1,33 @@
+{
+    "cls": "Timer", 
+    "description": "<h2>Timer</h2><p>use this to track a duration</p>", 
+    "extend": "", 
+    "file": "Timer.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a Timer</h2>", 
+            "name": "Timer", 
+            "param": [
+                "<p><code>d</code> duration of the timer in milliseconds</p>"
+            ], 
+            "pname": "d=1000"
+        }, 
+        {
+            "description": "<h2>Start or restart the timer</h2>", 
+            "name": "start", 
+            "param": [
+                "<p><code>reset</code> a boolean value to restart the timer from the beginning if set to <code>true</code>.</p>"
+            ], 
+            "pname": "reset"
+        }, 
+        {
+            "description": "<h2>Check % of time that has elapsed currently.</h2>", 
+            "name": "check", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>a number between 0 to 1</p>"
+        }
+    ], 
+    "props": [], 
+    "statics": []
+}

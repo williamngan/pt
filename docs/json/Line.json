@@ -1,0 +1,159 @@
+{
+    "cls": "Line", 
+    "description": "<h3>Line element</h3>", 
+    "extend": "Pair", 
+    "file": "Line.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a new Line. A Line is a Pair defined by two vectors. It can be treated as an infinite line, or as a line segment with two end points.</h2>", 
+            "eg": "<p><code>new Line()</code> <code>new Line(1,2,3)</code> <code>new Line([2,4])</code> <code>new Line({x:3, y:6, z:9}).connect(1,2,3)</code></p>", 
+            "name": "Line", 
+            "param": [
+                "<p><code>args</code> Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>connect()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
+            ], 
+            "pname": "", 
+            "return": "<p>a new Pair object</p>"
+        }, 
+        {
+            "description": "<h2>Get slope of this line</h2>", 
+            "name": "slope", 
+            "param": [
+                "<p><code>axis</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>"
+            ], 
+            "pname": "axis=Const.xy", 
+            "return": "<p>slope value, or false if it divides by 0 (a vertical line)</p>"
+        }, 
+        {
+            "description": "<h2>Get intercepts and slop of this line</h2><p>return: an Object with {xi, yi, slope} properties, or false if it divides by 0 (a vertical line)</p>", 
+            "name": "intercept", 
+            "param": [
+                "<p><code>axis</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>"
+            ], 
+            "pname": "axis=Const.xy"
+        }, 
+        {
+            "description": "<h2>Given an interpolated point on this line, return another line of specific length that is perpendicular to this line.</h2>", 
+            "eg": "<p><code>ln.getPerpendicularLine(0.5)</code>, <code>ln.getPerpendicularLine(0.2, 100, true, Const.yz)</code></p>", 
+            "name": "getPerpendicularLine", 
+            "param": [
+                "<p><code>t</code> a value between 0 to 1 to interpolate a point on this line</p>", 
+                "<p><code>len</code> an optional value to specify a length for the new line. Defaults to 10.</p>", 
+                "<p><code>reverse</code> a boolean value to reverse the direction of the new line if set to <code>true</code></p>", 
+                "<p><code>axis</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>"
+            ], 
+            "pname": "t, len=10, reverse=false, axis=Const.xy", 
+            "return": "<p>a new Line that's perpendicular to this line</p>"
+        }, 
+        {
+            "description": "<h2>Find the shortest distance from a point to this line (as infinite line, not line segment)</h2><p>return the distance, which can be positive or negative value depending on the point's position.</p>", 
+            "name": "getDistanceFromPoint", 
+            "param": [
+                "<p><code>pt</code> a Point</p>"
+            ], 
+            "pname": "pt"
+        }, 
+        {
+            "description": "<h2>Find the perpendicular vector from this line to the point. You can connect the resulting vector with the point's position to draw a perpendicular line</h2>", 
+            "name": "getPerpendicularFromPoint", 
+            "param": [
+                "<p><code>pt</code> a Point</p>", 
+                "<p><code>fromProjection</code> a boolean value defaults to true. If true, the resulting vector is based on this line's position. Otherwise the vector starts from origin (0,0).</p>"
+            ], 
+            "pname": "pt, fromProjection=true", 
+            "return": "<p>a perpendicular Vector</p>"
+        }, 
+        {
+            "description": "<h2>Get intersection point of this line and another line (as infinite lines, not line segements)</h2>", 
+            "name": "intersectPath", 
+            "param": [
+                "<p><code>line</code> another Line</p>", 
+                "<p><code>axis</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>"
+            ], 
+            "pname": "line, axis=Const.xy", 
+            "return": "<p>an intersection point as Vector, or <code>false</code> if no intersection, or <code>null</code> if two lines are identical</p>"
+        }, 
+        {
+            "description": "<h2>Get intersection point of this line segement and another line segement (not infintie lines)</h2>", 
+            "name": "intersectLine", 
+            "param": [
+                "<p><code>line</code> another Line</p>", 
+                "<p><code>axis</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>"
+            ], 
+            "pname": "line, axis=Const.xy", 
+            "return": "<p>an intersection point as Vector, or <code>false</code> if no intersection, or <code>null</code> if two lines are identical</p>"
+        }, 
+        {
+            "description": "<h2>Get intersection point of between two \"grid\" lines. Grid lines are parallel to an axis, such as a horizontal or vertical line on xy plane.</h2>", 
+            "name": "intersectGridLine", 
+            "param": [
+                "<p><code>line</code> another Line which is parallen to an axis</p>", 
+                "<p><code>path_only</code> a boolean value to specify whether to check for whole path (<code>true</code>) or line segment (<code>false</code>). Defaults to <code>false</code>.</p>", 
+                "<p><code>axis</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>"
+            ], 
+            "pname": "line, path_only=false, axis=Const.xy", 
+            "return": "<p>an intersection point as Vector, or <code>false</code> if no intersection</p>"
+        }, 
+        {
+            "description": "<h2>Get a list of evenly distributed points on this line</h2>", 
+            "name": "subpoints", 
+            "param": [
+                "<p><code>num</code> the number of points to get</p>"
+            ], 
+            "pname": "num", 
+            "return": "<p>an Array of Points</p>"
+        }, 
+        {
+            "description": "<h2>override clone</h2>", 
+            "name": "clone", 
+            "param": [], 
+            "pname": "deep"
+        }
+    ], 
+    "props": [], 
+    "statics": [
+        {
+            "description": "<h2>a static function <code>Line.slope</code> to find the slope between two points</h2>", 
+            "eg": "<p><code>Line.slope(pt1, pt2)</code>, <code>Line.slope(pt1, pt2, Const.yz)</code></p>", 
+            "name": "slope", 
+            "param": [
+                "<p><code>a</code> a Point</p>", 
+                "<p><code>b</code> another Point</p>", 
+                "<p><code>axis</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>"
+            ], 
+            "pname": "a, b, axis=Const.xy", 
+            "return": "<p>slope value, or false if it divides by 0 (a vertical line)</p>"
+        }, 
+        {
+            "description": "<h2>a static function <code>Line.intercept</code> to get x and y intercept</h2><p>return: an Object with {xi, yi, slope} properties, or false if it divides by 0 (a vertical line)</p>", 
+            "eg": "<p><code>Line.intercept(pt1, pt2)</code>, <code>Line.intercept(pt1, pt2, Const.yz)</code></p>", 
+            "name": "intercept", 
+            "param": [
+                "<p><code>a</code> a Point</p>", 
+                "<p><code>b</code> another Point</p>", 
+                "<p><code>axis</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>"
+            ], 
+            "pname": "a, b, axis=Const.xy"
+        }, 
+        {
+            "description": "<h2>a static function <code>Line.isPerpendicularLine</code> to check if two lines are perpendicular to each other</h2><p>return a boolean value where <code>true</code> means the two lines are perpendicular</p>", 
+            "eg": "<p><code>Line.isPerpendicularLine(ln1, ln2)</code>, <code>Line.isPerpendicularLine(ln1, ln2, Const.yz)</code></p>", 
+            "name": "isPerpendicularLine", 
+            "param": [
+                "<p><code>line1</code> a Line</p>", 
+                "<p><code>line2</code> another Line</p>", 
+                "<p><code>axis</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>"
+            ], 
+            "pname": "line1, line2, axis=Const.xy"
+        }, 
+        {
+            "description": "<h2>A static function <code>Line.intersectLines</code> if an element intersects with a list of lines ( useful for polygon or polyline such as <code>rectangle.sides()</code> ) on xy axis.</h2><p>@get_pts <code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>", 
+            "eg": "<p><code>Line.intersectLines( rect, triangle.sides() )</code> <code>Line.intersectLines( line, pointset.sides(), true )</code></p>", 
+            "name": "intersectLines", 
+            "param": [
+                "<p><code>lines</code> an array of Line</p>"
+            ], 
+            "pname": "elem, lines, get_pts=true", 
+            "return": "<p>s an Array of intersection points, or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }
+    ]
+}

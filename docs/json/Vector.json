@@ -1,0 +1,303 @@
+{
+    "cls": "Vector", 
+    "description": "<h3>Vector element</h3>", 
+    "extend": "Point", 
+    "file": "Vector.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a new Vector. A Vector extends a Point and includes functions for arithmetics.</h2>", 
+            "eg": "<p><code>new Vector()</code> <code>new Vector(1,2,3)</code> <code>new Vector([2,4])</code> <code>new Vector({x:3, y:6, z:9})</code></p>", 
+            "name": "Vector", 
+            "param": [
+                "<p><code>args</code> Similar to Point constructor, use comma-separated values, an array, or a Point object as parameters.</p>"
+            ], 
+            "pname": "", 
+            "return": "<p>a new Vector object</p>"
+        }, 
+        {
+            "description": "<h2>Add another vector to this vector.</h2>", 
+            "eg": "<p><code>vec.add(1,2)</code> <code>vec.add([2,4])</code> <code>vec.add({x:3, y:6, z:9})</code></p>", 
+            "name": "add", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this Vector</p>"
+        }, 
+        {
+            "description": "<h2>Same as <code>add()</code> but returns a new Vector. The values of this vector are not changed.</h2>", 
+            "name": "$add", 
+            "param": [], 
+            "pname": "args"
+        }, 
+        {
+            "description": "<h2>Subtract another vector from this vector.</h2>", 
+            "eg": "<p><code>vec.subtract(1,2)</code> <code>vec.subtract([2,4])</code> <code>vec.subtract({x:3, y:6, z:9})</code></p>", 
+            "name": "subtract", 
+            "param": [
+                "<p><code>args</code> 0-3 comma-separated values, or as an array, or a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this Vector</p>"
+        }, 
+        {
+            "description": "<h2>Same as <code>subtract()</code> but returns a new Vector. The values of this vector are not changed.</h2>", 
+            "name": "$subtract", 
+            "param": [], 
+            "pname": "args"
+        }, 
+        {
+            "description": "<h2>Multiple this vector with a scalar or vector. If there's only one numberic value in the parameter, this vector will be multiplied by that scalar value. Otherwise, this vector's x,y,z values will be multiplied by the corresponding x,y,z in the parameters. Note that this is different to .dot and .cross products.</h2>", 
+            "eg": "<p><code>vec.multiply(4)</code> <code>vec.multiply(1,2,3)</code> <code>vec.multiply([2,4])</code> <code>vec.multiply({x:3, y:6, z:9})</code></p>", 
+            "name": "multiply", 
+            "param": [
+                "<p><code>args</code> 0-3 comma-separated values, or as an array, or a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this Vector</p>"
+        }, 
+        {
+            "description": "<h2>Same as <code>multiply()</code> but returns a new Vector. The values of this vector is not changed.</h2>", 
+            "name": "$multiply", 
+            "param": [], 
+            "pname": "args"
+        }, 
+        {
+            "description": "<h2>Similar as <code>multiply()</code> but easier to read semantically.</h2>", 
+            "eg": "<p><code>vec.divide(2,4,5)</code> is the same as <code>vec.multiply(0.5, 0.25, 0.2)</code></p>", 
+            "name": "divide", 
+            "param": [], 
+            "pname": "args", 
+            "return": "<p>this Vector</p>"
+        }, 
+        {
+            "description": "<h2>Same as <code>divide()</code> but returns a new Vector. The values of this vector is not changed.</h2>", 
+            "name": "$divide", 
+            "param": [], 
+            "pname": "args"
+        }, 
+        {
+            "description": "<h2>Get the angle of this vector on a plane. Or get the angle from this vector to another point. If no parameter specified, this will return the angle on xy plane.</h2>", 
+            "eg": "<p><code>vec.angle()</code> <code>vec.angle(Const.yz)</code> <code>vec.angle(another_pt)</code> <code>vec.angle(Const.xz, another_pt)</code> <code>new Vector(1,1).angle( new Vector(1,2) ) * Const.rad_to_deg = 90</code></p>", 
+            "name": "angle", 
+            "param": [
+                "<p><code>args(axis)</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>", 
+                "<p><code>args(pt)</code> optional Point object to calculate the angle from this Point to another Point instead</p>", 
+                "<p><code>args(axis, pt)</code> optional axis id and Point object to get the angle to a Point on a specific plane</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>a radian value</p>"
+        }, 
+        {
+            "description": "<h2>Get the change in radian between this and another vector (at origin position)</h2>", 
+            "eg": "<p><code>vec.angleBetween( another_pt )</code> <code>vec.angleBetween( another_pt, Const.yz )</code></p>", 
+            "name": "angleBetween", 
+            "param": [
+                "<p><code>vec</code> another Vector to compare against</p>", 
+                "<p>axis optional axis id (eg <code>Const.xy</code>) to specify a plane</p>"
+            ], 
+            "pname": "vec, axis=Const.xy"
+        }, 
+        {
+            "description": "<h2>Get the mangnitude (ie, distance from origin) of this vector. Or get the distance from this vector to another point. Default is to get the magnitude on xyz plane.</h2>", 
+            "eg": "<p><code>vec.magnitude()</code> <code>vec.magnitude(false)</code> <code>vec.magnitude(Const.yz)</code> <code>vec.magnitude(another_pt)</code> <code>vec.magnitude(Const.xz, another_pt, false)</code>.</p>", 
+            "name": "magnitude", 
+            "param": [
+                "<p><code>args(axis)</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>", 
+                "<p><code>args(pt)</code> optional Point object to calculate the distance from this Point to another Point instead</p>", 
+                "<p><code>args(sqrt)</code> optional boolean value to get distance-squared value if set to <code>false</code>. Default is true.</p>", 
+                "<p><code>args(axis, pt, sqrt)</code> 3 optional parameters can be used in this sequence to specify a plane, a Point, and whether to get squared value.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>magnitude value</p>"
+        }, 
+        {
+            "description": "<h2>Get the distance between this and another point. An alias of magnitude.</h2>", 
+            "name": "distance", 
+            "param": [
+                "<p><code>pt</code> another point</p>", 
+                "<p><code>axis</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>"
+            ], 
+            "pname": "pt, axis=Const.xy", 
+            "return": "<p>distance</p>"
+        }, 
+        {
+            "description": "<h2>Normalize this vector to a unit vector, which has magnitude of 1.</h2>", 
+            "name": "normalize", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>this vector</p>"
+        }, 
+        {
+            "description": "<h2>Get a normalized unit vector which has magnitude of 1. The original vector is not changed.</h2>", 
+            "name": "$normalize", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>a new unit vector</p>"
+        }, 
+        {
+            "description": "<h2>Set this vector's values to its absolute value (always positive).</h2>", 
+            "name": "abs", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>this vector</p>"
+        }, 
+        {
+            "description": "<h2>Calculate the <a href=\"http://en.wikipedia.org/wiki/Dot_product\">dot product</a> of this and another vector.</h2>", 
+            "eg": "<p><code>vec.dot( another_vec )</code>, <code>vec.dot( another_vec, Const.xz )</code></p>", 
+            "name": "dot", 
+            "param": [
+                "<p><code>p</code> a Point to calculate the dot product</p>", 
+                "<p><code>axis</code> optional axis id (eg <code>Const.xy</code>) to specify a plane</p>"
+            ], 
+            "pname": "p, axis=Const.xyz", 
+            "return": "<p>the dot product which is a scalar (numeric) value</p>"
+        }, 
+        {
+            "description": "<h2>Calculate <a href=\"http://en.wikipedia.org/wiki/Vector_projection\">vector projection</a>. A vector projection that has the same direction as this vector but a different length. So if you draw a line from the projection vector to the vector specified in the parameter, it will be perpendicular to this vector.</h2>", 
+            "eg": "<p><code>vec.projection( another_vec)</code>, , <code>vec.projection( another_vec, Const.xz )</code></p>", 
+            "name": "projection", 
+            "param": [
+                "<p><code>vec</code> a Vector to calculate the projection</p>", 
+                "<p><code>axis</code> optional axis id (eg <code>Const.xy</code>) to specify a plane</p>"
+            ], 
+            "pname": "vec, axis=Const.xyz", 
+            "return": "<p>the vector projection</p>"
+        }, 
+        {
+            "description": "<h2>Calculate the <a href=\"http://en.wikipedia.org/wiki/Cross_product\">cross product</a> of this and another vector.</h2>", 
+            "eg": "<p><code>vec.cross( another_vec )</code></p>", 
+            "name": "cross", 
+            "param": [
+                "<p><code>p</code> a Point to calculate the cross product</p>"
+            ], 
+            "pname": "p", 
+            "return": "<p>the cross product which is a vector</p>"
+        }, 
+        {
+            "description": "<h2>Get the middle vector between this and another vector</h2>", 
+            "eg": "<p><code>vec.bisect( another_vec )</code></p>", 
+            "name": "bisect", 
+            "param": [
+                "<p><code>vec</code> a Vector to calculate the bisect</p>"
+            ], 
+            "pname": "vec, isNormalized=false", 
+            "return": "<p>a vector in the middle</p>"
+        }, 
+        {
+            "description": "<h2>Get 2 vectors that are perpendicular to this vector</h2>", 
+            "eg": "<p><code>vec.perpendicular()</code> <code>vec.perpendicular(Const.yz)</code></p>", 
+            "name": "perpendicular", 
+            "param": [
+                "<p><code>axis</code> optional axis id (eg <code>Const.xy</code>) to specify a plane</p>"
+            ], 
+            "pname": "axis=Const.xy", 
+            "return": "<p>an array of two vectors</p>"
+        }, 
+        {
+            "description": "<h2>Check if another vector is perpendicular to this</h2>", 
+            "eg": "<p><code>vec.isPerpendicular( another_vec )</code> <code>vec.isPerpendicular( another_vec, Const.yz )</code></p>", 
+            "name": "isPerpendicular", 
+            "param": [
+                "<p><code>p</code> a Point to check against</p>", 
+                "<p><code>axis</code> optional axis id (eg <code>Const.xy</code>) to specify a plane</p>"
+            ], 
+            "pname": "p, axis=Const.xyz", 
+            "return": "<p>a boolean (true or false)</p>"
+        }, 
+        {
+            "description": "<h2>Get surface normal vector. A <a href=\"http://en.wikipedia.org/wiki/Normal_%28geometry%29\">normal</a> is a vector perpendicular to a plane or object.</h2>", 
+            "eg": "<p><code>vec.surfaceNormal( another_vec )</code></p>", 
+            "name": "surfaceNormal", 
+            "param": [
+                "<p><code>p</code> a Point to calculate the surface normal</p>"
+            ], 
+            "pname": "p", 
+            "return": "<p>the normal vector</p>"
+        }, 
+        {
+            "description": "<h2>move origin to a new position</h2>", 
+            "name": "moveTo", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>move origin by a certain amount</h2>", 
+            "name": "moveBy", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>Rotate this vector around an anchor point on a 2D plane.</h2>", 
+            "eg": "<p><code>vec.rotate2D( Math.PI/2, anchor_pt )</code> <code>vec.rotate2D( 30*Const.deg_to_rad, another_pt, Const.xz )</code></p>", 
+            "name": "rotate2D", 
+            "param": [
+                "<p><code>radian</code> a radian value specifying the angle. (where 1 degree = PI / 180 radian)</p>", 
+                "<p><code>anchor</code> a Point object specifying the anchor position</p>", 
+                "<p><code>axis</code> optional axis id (eg <code>Const.xy</code>) to specify a plane</p>"
+            ], 
+            "pname": "radian, anchor, axis=Const.xy", 
+            "return": "<p>this vector</p>"
+        }, 
+        {
+            "description": "<h2>Reflect this vector along a path</h2>", 
+            "eg": "<p><code>vec.reflect2D( line )</code> <code>vec.reflect2D( line, Const.xz )</code></p>", 
+            "name": "reflect2D", 
+            "param": [
+                "<p><code>line</code> a Line object to specify the path</p>", 
+                "<p><code>axis</code> optional axis id (eg <code>Const.xy</code>) to specify a plane</p>"
+            ], 
+            "pname": "line, axis=Const.xy", 
+            "return": "<p>this vector</p>"
+        }, 
+        {
+            "description": "<h2>Rescale this vector from an anchor point</h2>", 
+            "eg": "<p><code>vec.scale2D( 0.7, 1.2, anchor_pt )</code> <code>vec.scale2D( 1, 3, anchor_pt, Const.xz )</code></p>", 
+            "name": "scale2D", 
+            "param": [
+                "<p><code>sx</code> x scale value, where 1 = no change</p>", 
+                "<p><code>sy</code> y scale value, where 1 = no change</p>", 
+                "<p><code>anchor</code> a Point object specifying the anchor position to scale from</p>", 
+                "<p><code>axis</code> optional axis id (eg <code>Const.xy</code>) to specify a plane</p>"
+            ], 
+            "pname": "sx, sy, anchor, axis=Const.xy", 
+            "return": "<p>this vector</p>"
+        }, 
+        {
+            "description": "<h2>Shear this vector from an anchor point</h2>", 
+            "eg": "<p><code>vec.scale2D( 0.7, 1.2, anchor_pt )</code> <code>vec.scale2D( 1, 3, anchor_pt, Const.xz )</code></p>", 
+            "name": "shear2D", 
+            "param": [
+                "<p><code>sx</code> x scale value, where 1 = no change</p>", 
+                "<p><code>sy</code> y scale value, where 1 = no change</p>", 
+                "<p><code>anchor</code> a Point object specifying the anchor position to scale from</p>", 
+                "<p><code>axis</code> optional axis id (eg <code>Const.xy</code>) to specify a plane</p>"
+            ], 
+            "pname": "sx, sy, anchor, axis=Const.xy", 
+            "return": "<p>this vector</p>"
+        }, 
+        {
+            "description": "<h2>Clone this vector</h2>", 
+            "name": "clone", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>a new vector identical to this vector</p>"
+        }, 
+        {
+            "description": "<h2>Describe this point as a text string</h2>", 
+            "name": "toString", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>\"Vector x, y, z\" text</p>"
+        }, 
+        {
+            "description": "<h2>Put this vector into an array</h2>", 
+            "name": "toArray", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>an array with a single point object</p>"
+        }
+    ], 
+    "props": [], 
+    "statics": []
+}

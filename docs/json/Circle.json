@@ -1,0 +1,92 @@
+{
+    "cls": "Circle", 
+    "description": "<h3>A circle</h3>", 
+    "extend": "Vector", 
+    "file": "Circle.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a new Circle. A Circle is a Vector which defines its center position, with a <code>radius</code> property to define its radius.</h2>", 
+            "eg": "<p><code>new Circle()</code> <code>new Circle(1,2,3)</code> <code>new Circle(1,2,3,100)</code></p>", 
+            "name": "Circle", 
+            "param": [
+                "<p><code>args</code> Similar to Point constructor, use comma-separated values, an array, or a Point object as parameters to specify the center of circle. Optionally include a 4th parameter to set the radius directly, or use <code>setRadius()</code> afterwards.</p>"
+            ], 
+            "pname": "", 
+            "return": "<p>a new Circle object</p>"
+        }, 
+        {
+            "description": "<h2>set radius of the circle</h2>", 
+            "name": "setRadius", 
+            "param": [
+                "<p><code>r</code> radius value</p>"
+            ], 
+            "pname": "r", 
+            "return": "<p>this Circle</p>"
+        }, 
+        {
+            "description": "<h2>Check if a point is on this Circle on xy axis.</h2>", 
+            "eg": "<p><code>circle.intersectPoint(1,2,3)</code> <code>circle.intersectPoint(pt)</code></p>", 
+            "name": "intersectPoint", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or an array, or a Point object</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>a boolean value to indicate if there is an intersection</p>"
+        }, 
+        {
+            "description": "<h2>Check intersections between this Circle and an infinite Line on xy axis. Based on <a href=\"http://stackoverflow.com/questions/13053061/circle-line-intersection-points\">this algorithm</a>.</h2><p>@get_pts <code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>", 
+            "name": "intersectPath", 
+            "param": [
+                "<p><code>path</code> a Pair or Line object to specify an infinite line</p>"
+            ], 
+            "pname": "path, get_pts=true", 
+            "return": "<p>s an Array of intersection points (zero, one, or two points), or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }, 
+        {
+            "description": "<h2>Check intersections between this Circle and a Line segment on xy axis.</h2><p>@get_pts <code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>", 
+            "name": "intersectLine", 
+            "param": [
+                "<p><code>line</code> a Pair or Line object to specify a line segment</p>"
+            ], 
+            "pname": "line, get_pts=true", 
+            "return": "<p>s an Array of intersection points (zero, one, or two points), or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }, 
+        {
+            "description": "<h2>Check if this cirlce intersects with a set of lines ( useful for polygon or polyline such as <code>rectangle.sides()</code> ) on xy axis.</h2><p>@get_pts <code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>", 
+            "eg": "<p><code>circle.intersectLines( rect.sides() )</code> <code>circle.intersectLines( pointset.sides(), true )</code></p>", 
+            "name": "intersectLines", 
+            "param": [
+                "<p><code>lines</code> an array of Line</p>"
+            ], 
+            "pname": "lines, get_pts=true", 
+            "return": "<p>s an Array of intersection points, or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }, 
+        {
+            "description": "<h2>Check if this circle intersects with another circle</h2><p>@get_pts <code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>", 
+            "name": "intersectCircle", 
+            "param": [
+                "<p><code>circle</code> another Circle</p>"
+            ], 
+            "pname": "circle, get_pts=true", 
+            "return": "<p>s an Array of intersection points (zero or two points), or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }, 
+        {
+            "description": "<h2>Check if this cirlce intersect with another element on xy axis</h2>", 
+            "eg": "<p><code>circle.hasIntersect( another_circle )</code> <code>circle.hasIntersect(line)</code> <code>circle.hasIntersect(rect)</code></p>", 
+            "name": "hasIntersect", 
+            "param": [
+                "<p><code>item</code> any object that is based on Point. (Vector, Line, Rectangle, Circle, etc)</p>"
+            ], 
+            "pname": "item, get_pts=false", 
+            "return": "<p>s an Array of intersection points or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }
+    ], 
+    "props": [
+        {
+            "description": "<h2>the radius property</h2>", 
+            "name": "radius", 
+            "param": []
+        }
+    ], 
+    "statics": []
+}

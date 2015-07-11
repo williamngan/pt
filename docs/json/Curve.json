@@ -1,0 +1,126 @@
+{
+    "cls": "Curve", 
+    "description": "<h3>Curves and splines</h3>", 
+    "extend": "PointSet", 
+    "file": "Curve.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a new Curve. A Curve uses a set of anchor and/or control points to interpolate a curve.</h2>", 
+            "eg": "<p><code>new PointSet()</code> <code>new PointSet(1,2,3)</code> <code>new PointSet([2,4])</code> <code>new PointSet({x:3, y:6, z:9}).connect(1,2,3)</code> <code>new PointSet(1,2,3).connect([p1, p2, p3, p4, p5])</code></p>", 
+            "name": "Curve", 
+            "param": [
+                "<p><code>args</code> Similar to PointSet constructor, use comma-separated values, an array, or an object as parameters to specify the anchor point. Use <code>connect()</code> to add points to the set.</p>"
+            ], 
+            "pname": "", 
+            "return": "<p>a new Curve object</p>"
+        }, 
+        {
+            "description": "<h2>Given an index for the starting position in <code>points</code> array, get the control and/or end points of a curve segment</h2>", 
+            "name": "controlPoints", 
+            "param": [
+                "<p><code>index</code> start index in <code>points</code> array. Default is 0.</p>", 
+                "<p><code>copyStart</code> an optional boolean value to indicate if the start index should be used twice. Default is false.</p>"
+            ], 
+            "pname": "index=0, copyStart=false", 
+            "return": "<p>an object with 4 points <code>{p0, p1, p2, p3}</code></p>"
+        }, 
+        {
+            "description": "<h2>Create a Catmull-Rom curve. Catmull-Rom is a kind of Cardinal curve with smooth-looking curve.</h2>", 
+            "name": "catmullRom", 
+            "param": [
+                "<p><code>step</code> the number of line segments. Defaults to 10 steps.</p>"
+            ], 
+            "pname": "steps=10", 
+            "return": "<p>an array of Points</p>"
+        }, 
+        {
+            "description": "<h2>Interpolate to get a point on Catmull-Rom curve</h2>", 
+            "name": "catmullRomPoint", 
+            "param": [
+                "<p><code>step</code> the point to interpolate, as an array of <code>[t, t*t, t*t*t]</code> where <code>t</code> is between 0 to 1</p>", 
+                "<p><code>ctrls</code> the control points which can be provided by <code>controlPoints()</code> function</p>"
+            ], 
+            "pname": "step, ctrls", 
+            "return": "<p>a Point on the curve</p>"
+        }, 
+        {
+            "description": "<h2>Create a Cardinal spline curve</h2>", 
+            "name": "cardinal", 
+            "param": [
+                "<p><code>step</code> the number of line segments. Defaults to 10 steps.</p>", 
+                "<p><code>tension</code> optional value between 0 to 1 to specify a \"tension\". Default to 0.5 which is the tension for Catmull-Rom curve</p>"
+            ], 
+            "pname": "steps=10, tension=0.5", 
+            "return": "<p>an array of Points</p>"
+        }, 
+        {
+            "description": "<h2>Interpolate to get a point on Cardinal curve</h2>", 
+            "name": "cardinalPoint", 
+            "param": [
+                "<p><code>step</code> the point to interpolate, as an array of <code>[t, t*t, t*t*t]</code> where <code>t</code> is between 0 to 1</p>", 
+                "<p><code>ctrls</code> the control points which can be provided by <code>controlPoints()</code> function</p>", 
+                "<p><code>tension</code> optional value between 0 to 1 to specify a \"tension\". Default to 0.5 which is the tension for Catmull-Rom curve</p>"
+            ], 
+            "pname": "step, ctrls, tension=0.5", 
+            "return": "<p>a Point on the curve</p>"
+        }, 
+        {
+            "description": "<h2>Create a Bezier curve. In a cubic bezier curve, the first and 4th points are end points, and 2nd and 3rd points are control points.</h2>", 
+            "name": "bezier", 
+            "param": [
+                "<p><code>step</code> the number of line segments. Defaults to 10 steps</p>"
+            ], 
+            "pname": "steps=10", 
+            "return": "<p>an array of Points</p>"
+        }, 
+        {
+            "description": "<h2>Interpolate to get a point on a cubic Bezier curve</h2>", 
+            "name": "bezierPoint", 
+            "param": [
+                "<p><code>step</code> the point to interpolate, as an array of <code>[t, t*t, t*t*t]</code> where <code>t</code> is between 0 to 1</p>", 
+                "<p><code>ctrls</code> the control and end points which can be provided by <code>controlPoints()</code> function. The first and 4th points are end points, and 2nd and 3rd points are control points.</p>"
+            ], 
+            "pname": "step, ctrls", 
+            "return": "<p>a Point on the curve</p>"
+        }, 
+        {
+            "description": "<h2>Create a B-Spline cuve</h2>", 
+            "name": "bspline", 
+            "param": [
+                "<p><code>step</code> the number of line segments. Defaults to 10 steps.</p>", 
+                "<p><code>tension</code> optional value between 0 to 1 to specify a \"tension\". Or <code>false</code> to have normal tension. Default is false.</p>"
+            ], 
+            "pname": "steps=10, tension=false", 
+            "return": "<p>an array of Points</p>"
+        }, 
+        {
+            "description": "<h2>Interpolate to get a point on B-Spline curve</h2>", 
+            "name": "bsplinePoint", 
+            "param": [
+                "<p><code>step</code> the point to interpolate, as an array of <code>[t, t*t, t*t*t]</code> where <code>t</code> is between 0 to 1</p>", 
+                "<p><code>ctrls</code> the control points which can be provided by <code>controlPoints()</code> function</p>"
+            ], 
+            "pname": "step, ctrls", 
+            "return": "<p>a Point on the curve</p>"
+        }, 
+        {
+            "description": "<h2>Interpolate to get a point on B-Spline curve with tension (Duff)</h2>", 
+            "name": "bsplineTensionPoint", 
+            "param": [
+                "<p><code>step</code> the point to interpolate, as an array of <code>[t, t*t, t*t*t]</code> where <code>t</code> is between 0 to 1</p>", 
+                "<p><code>ctrls</code> the control points which can be provided by <code>controlPoints()</code> function</p>", 
+                "<p><code>tension</code> optional value between 0 to 1 to specify a \"tension\". Default to 1 which is the normal tension.</p>"
+            ], 
+            "pname": "step, ctrls, tension=1", 
+            "return": "<p>a Point on the curve</p>"
+        }
+    ], 
+    "props": [
+        {
+            "description": "<h2>a boolean value to specify if this Curve is 2D or 3D. Default is <code>false</code> (2D).</h2>", 
+            "name": "is3D", 
+            "param": []
+        }
+    ], 
+    "statics": []
+}

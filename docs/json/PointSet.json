@@ -1,0 +1,170 @@
+{
+    "cls": "PointSet", 
+    "description": "", 
+    "extend": "Vector", 
+    "file": "PointSet.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a new PointSet. A PointSet is a set of points which can repsent a polygon or a polyline or a time series.</h2>", 
+            "eg": "<p><code>new PointSet()</code> <code>new PointSet(1,2,3)</code> <code>new PointSet([2,4])</code> <code>new PointSet({x:3, y:6, z:9}).connect(1,2,3)</code> <code>new PointSet(1,2,3).connect([p1, p2, p3, p4, p5])</code></p>", 
+            "name": "PointSet", 
+            "param": [
+                "<p><code>args</code> Similar to Point constructor, use comma-separated values, an array, or an object as parameters to specify the anchor point. Use <code>connect()</code> to add points to the set.</p>"
+            ], 
+            "pname": "", 
+            "return": "<p>a new PointSet object</p>"
+        }, 
+        {
+            "description": "<h2>Describe this rectangle as a text string</h2>", 
+            "name": "toString", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>\"PointSet [p1... p2... p3...]\" text</p>"
+        }, 
+        {
+            "description": "<h2>Get a copy of the <code>points</code> property as an array</h2>", 
+            "name": "toArray", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>Add a point or an array of points to this PointSet</h2>", 
+            "eg": "<p><code>pset.connect( 1,2,3 )</code> <code>pset.connect([1,2,3]</code> <code>pset.connect({x:3, y:6, z:9})</code> <code>pset.connect([p1, p2, p3, p4...])</code></p>", 
+            "name": "connect", 
+            "param": [
+                "<p><code>args</code> either an Array of Points, or a single point defined by comma-separated values, an array, or an object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this PointSet</p>"
+        }, 
+        {
+            "description": "<h2>Add a point whose position is calculated relative to this PointSet's anchor point</h2>", 
+            "eg": "<p><code>pset.connectFromAnchor(1,2)</code> <code>pset.connectFromAnchor([2,4])</code> <code>pset.connectFromAnchor({x:3, y:6, z:9})</code></p>", 
+            "name": "connectFromAnchor", 
+            "param": [
+                "<p><code>args</code> 0-3 comma-separated values, or as an array, or a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this PointSet</p>"
+        }, 
+        {
+            "description": "<h2>Remove a point or a series of points from this Points set</h2>", 
+            "eg": "<p><code>pset.disconnect(3)</code>, <code>pset.disconnect(-2)</code></p>", 
+            "name": "disconnect", 
+            "param": [
+                "<p><code>index</code> an index which can be positive or negative integer. If index is negative, the points are removed from the end. For example, <code>-2</code> will remove the last 2 points.</p>"
+            ], 
+            "pname": "index=-1", 
+            "return": "<p>this PointSet</p>"
+        }, 
+        {
+            "description": "<h2>Add a vector to all the points in the <code>points</code> array.</h2>", 
+            "name": "pointsAdd", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this PointSet</p>"
+        }, 
+        {
+            "description": "<h2>Same as <code>pointsAdd()</code> but returns a new array of the resulting points.</h2>", 
+            "name": "$pointsAdd", 
+            "param": [], 
+            "pname": "args"
+        }, 
+        {
+            "description": "<h2>Subtract a vector from all the points in the <code>points</code> array.</h2>", 
+            "name": "pointsSubtract", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this PointSet</p>"
+        }, 
+        {
+            "description": "<h2>Same as <code>pointsSubtract()</code> but returns a new array of the resulting points.</h2>", 
+            "name": "$pointsSubtract", 
+            "param": [], 
+            "pname": "args"
+        }, 
+        {
+            "description": "<h2>Multiply a vector with all the points in the <code>points</code> array.</h2>", 
+            "name": "pointsMultiply", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this PointSet</p>"
+        }, 
+        {
+            "description": "<h2>Same as <code>pointsMultiply()</code> but returns a new array of the resulting points.</h2>", 
+            "name": "$pointsMultiply", 
+            "param": [], 
+            "pname": "args"
+        }, 
+        {
+            "description": "<h2>Divide all the points in the <code>points</code> array with a vector.</h2>", 
+            "name": "pointsDivide", 
+            "param": [
+                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this PointSet</p>"
+        }, 
+        {
+            "description": "<h2>Same as <code>pointsDivide()</code> but returns a new array of the resulting points.</h2>", 
+            "name": "$pointsDivide", 
+            "param": [], 
+            "pname": "args"
+        }, 
+        {
+            "description": "<h2>Get an array of Lines that represents this PointSet's sides</h2>", 
+            "name": "sides", 
+            "param": [
+                "<p><code>close_path</code> a boolean value to include the side from last point to first point when set to <code>true</code></p>"
+            ], 
+            "pname": "close_path=true", 
+            "return": "<p>an array of Lines</p>"
+        }, 
+        {
+            "description": "<h2>Get the angles of each vertice connected by 2 sides</h2>", 
+            "name": "angles", 
+            "param": [
+                "<p><code>axis</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>"
+            ], 
+            "pname": "axis=Const.xy", 
+            "return": "<p>an array of angles in radian</p>"
+        }, 
+        {
+            "description": "<h2>Get the bounding box for this point set.</h2>", 
+            "name": "bounds", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>a Rectangle which is the bounding box of the PointSet</p>"
+        }, 
+        {
+            "description": "<h2>Get this PointSet's centroid, which is the averge positions of its points.</h2>", 
+            "name": "centroid", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>the centroid point as Vector</p>"
+        }, 
+        {
+            "description": "<h2>Get a convex hull of the point set using Melkman's algorithm</h2>", 
+            "name": "convexHull", 
+            "param": [
+                "<p><code>sort</code> a boolean value to sort the <code>points</code> by x position first if set to true</p>"
+            ], 
+            "pname": "sort=true", 
+            "return": "<p>an array of Vectors to define the convex hull</p>"
+        }
+    ], 
+    "props": [
+        {
+            "description": "<h2>The points in this set as an array</h2>", 
+            "name": "points", 
+            "param": []
+        }
+    ], 
+    "statics": []
+}

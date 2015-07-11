@@ -1,0 +1,138 @@
+{
+    "cls": "Geom", 
+    "description": "<h1>Various static methods and helper classes</h1>", 
+    "extend": "", 
+    "file": "Geom.coffee", 
+    "funcs": [], 
+    "props": [], 
+    "statics": [
+        {
+            "description": "<h2>A static function to convert degrees to radian</h2>", 
+            "name": "toRadian", 
+            "param": [
+                "<p><code>degree</code> angle in degrees. ie, 180 degrees = Math.PI radian</p>"
+            ], 
+            "pname": "angle"
+        }, 
+        {
+            "description": "<h2>A static function to convert radian to degrees</h2>", 
+            "name": "toDegree", 
+            "param": [
+                "<p><code>radian</code> angle in radian. ie, Math.PI radian = 180 degrees</p>"
+            ], 
+            "pname": "radian"
+        }, 
+        {
+            "description": "<h2>A static function to convert a color value (0-255) to hex \"FF\".</h2>", 
+            "name": "toHexColor", 
+            "param": [
+                "<p><code>number</code> a value between 0 to 255</p>"
+            ], 
+            "pname": "number", 
+            "return": "<p>a string with 2 hex digits, such as \"FF\" or \"00\"</p>"
+        }, 
+        {
+            "description": "<h2>A static function to limit a value (such as an angle, can be negative) as the modulus between 0 to max, or between -max/2 to max/2</h2>", 
+            "name": "bound", 
+            "param": [
+                "<p><code>val</code> the value to be bound</p>", 
+                "<p><code>max</code> maximum value as boundary</p>", 
+                "<p><code>positive</code> a boolean value. If set to <code>true</code>, the return value will be between 0 to max; if <code>false</code>, return value will be between -max/2 to max/2. Default is <code>false</code>.</p>"
+            ], 
+            "pname": "val, max, positive=false", 
+            "return": "<p>a value either (0 to max) or (-max/2 to max/2)</p>"
+        }, 
+        {
+            "description": "<h2>A static function to limit an angle</h2>", 
+            "name": "boundAngle", 
+            "param": [
+                "<p><code>ang</code> an angle to be bound</p>", 
+                "<p><code>positive</code> a boolean value. If set to <code>true</code>, the return value will be between 0 to max; if <code>false</code>, return value will be between -max/2 to max/2. Default is <code>false</code>.</p>"
+            ], 
+            "pname": "ang, positive", 
+            "return": "<p>an angle either between 0 to 360, or between -180 to 180 degrees</p>"
+        }, 
+        {
+            "description": "<h2>A static function similar to <code>Geom.boundAngle</code> but limit a radian angle between 0 to 2*PI, or between -PI to PI</h2>", 
+            "name": "boundRadian", 
+            "param": [], 
+            "pname": "radian, positive"
+        }, 
+        {
+            "description": "<h2>A static function to get a bounding box for a list of points</h2>", 
+            "name": "boundingBox", 
+            "param": [
+                "<p><code>points</code> an array of points</p>", 
+                "<p><code>is3D</code> a boolean value to specify if the points are 3D. Default is false which means the points are 2D.</p>"
+            ], 
+            "pname": "points, is3D=false", 
+            "return": "<p>an Rectangle object as bounding box</p>"
+        }, 
+        {
+            "description": "<h2>Get a centroid point which is the averge positions of a list of points.</h2>", 
+            "name": "centroid", 
+            "param": [
+                "<p><code>points</code> an array of points</p>"
+            ], 
+            "pname": "points", 
+            "return": "<p>the centroid point as Vector</p>"
+        }, 
+        {
+            "description": "<h2>Check if two numbers are equal within a threshold</h2>", 
+            "name": "same", 
+            "param": [
+                "<p><code>a, b</code> two numbers to compare</p>", 
+                "<p><code>threshold</code> the smallest difference allowed to be considered as same. Default is <code>Const.epsilon</code>.</p>"
+            ], 
+            "pname": "a, b, threshold=Const.epsilon", 
+            "return": "<p>a boolean value where <code>true</code> means they are the same</p>"
+        }, 
+        {
+            "description": "<h2>Check is a number is within the range of two number</h2>", 
+            "name": "within", 
+            "param": [
+                "<p><code>p</code> the number to check</p>", 
+                "<p><code>a, b</code> two numbers to set the range</p>"
+            ], 
+            "pname": "p, a, b", 
+            "return": "<p>a boolean value where <code>true</code> means the number is within range</p>"
+        }, 
+        {
+            "description": "<h2>Get a random value in between a range</h2>", 
+            "name": "randomRange", 
+            "param": [
+                "<p><code>a, b</code> two numbers to set a range. <code>b</code> is optional and defaults to 0.</p>"
+            ], 
+            "pname": "a, b=0", 
+            "return": "<p>a random number within the range</p>"
+        }, 
+        {
+            "description": "<h2>Simple mixin implementataion</h2>", 
+            "name": "mixin", 
+            "param": [
+                "<p><code>klass</code> the class to inject</p>", 
+                "<p><code>mix</code> is the source mixin object</p>"
+            ], 
+            "pname": "klass, mix", 
+            "return": "<p>the klass with mixin</p>"
+        }, 
+        {
+            "description": "<h2>Given an array of Points (eg, in results of toArray() ), return an array of the points as copy</h2>", 
+            "name": "clonePoints", 
+            "param": [], 
+            "pname": "array"
+        }, 
+        {
+            "description": "<h2>Rotate from an origin using canvas rendering context</h2>", 
+            "name": "contextRotateOrigin", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>bound</code> the bounding box as Rectangle object</p>", 
+                "<p><code>radian</code> the angle in radian to rotate</p>", 
+                "<p><code>origin</code> an optional Point object to specify the anchor point of rotation. If origin is false or not set, the anchor is at the center of the <code>bound</code> bounding box</p>", 
+                "<p><code>mask</code> an optional Rectangle object as mask</p>"
+            ], 
+            "pname": "ctx, bound, radian, origin=false, mask"
+        }
+    ]
+}

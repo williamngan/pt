@@ -1,0 +1,246 @@
+{
+    "cls": "Triangle", 
+    "description": "", 
+    "extend": "Vector", 
+    "file": "Triangle.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a new triangle</h2>", 
+            "eg": "<p><code>new Triangle()</code> <code>new Triangle(1,2,3)</code> <code>new Triangle([2,4])</code> <code>new Triangle({x:3, y:6, z:9})</code></p>", 
+            "name": "Triangle", 
+            "param": [
+                "<p>Set the triangle's anchor point using 0 to 3 values. Can be comma-separated values, as an array, or as an object with <code>{x, y, z}</code> properties.</p>"
+            ], 
+            "pname": "", 
+            "return": "<p>a new Triangle object</p>"
+        }, 
+        {
+            "description": "<h2>Connect triangle's anchor point with the other two points</h2>", 
+            "eg": "<p><code>tri.connect( p1, p2)</code> <code>tri.connect([1,2], [3,4]</code> <code>tri.connect(1,2,3,4)</code> <code>tri.connect(1,3,5,2,4,6)</code></p>", 
+            "name": "connect", 
+            "param": [
+                "<p>Parameters can be 2 objects or 2 arrays, or 4 or 6 numeric values to specify x, y, and optionally z positions</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this triangle</p>"
+        }, 
+        {
+            "description": "<h2>Convert this triangle's points to an array of Vectors</h2>", 
+            "name": "toArray", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>an array of 3 vectors</p>"
+        }, 
+        {
+            "description": "<h2>Get a text string that describes this triangle</h2>", 
+            "name": "toString", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>Convert this Triangle to a <code>PointSet</code></h2>", 
+            "name": "toPointSet", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>a PointSet with 3 points.</p>"
+        }, 
+        {
+            "description": "<h2>Get an array of Lines that represents this triangle's 3 sides</h2>", 
+            "name": "sides", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>an array of 3 lines</p>"
+        }, 
+        {
+            "description": "<h2>Get the triangle's 3 angles</h2>", 
+            "name": "angles", 
+            "param": [
+                "<p><code>axis</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>"
+            ], 
+            "pname": "axis=Const.xy", 
+            "return": "<p>an array of 3 angles</p>"
+        }, 
+        {
+            "description": "<h2>Get the medial, which is an inner triangle formed by connecting the midpoints of this triangle's sides</h2>", 
+            "name": "medial", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>the medial triangle</p>"
+        }, 
+        {
+            "description": "<h2>Get this triangle's perimeter, which is the length of its 3 sides</h2>", 
+            "name": "perimeter", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>an object with 3 properties, where <code>.value</code> is the perimeter value, <code>.sides</code> is an array of 3 sides, <code>lengths</code> is an array of the 3 sides' lengths</p>"
+        }, 
+        {
+            "description": "<h2>Get this triangle's area using Heron's formula for calculating polygon area</h2>", 
+            "name": "area", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>an object with 2 properties, where <code>.value</code> is the area value, and <code>.perimeter</code> is an object returned by <code>perimeter()</code> function</p>"
+        }, 
+        {
+            "description": "<h2>Given a point of the triangle, the opposite side is the side which the point doesn't touch</h2>", 
+            "eg": "<p><code>tri.oppositeSide(\"p1\")</code></p>", 
+            "name": "oppositeSide", 
+            "param": [
+                "<p>specify a point by its id <code>\"p0\"</code> (the anchor point), <code>\"p1\"</code>, or <code>\"p2\"</code></p>"
+            ], 
+            "pname": "id", 
+            "return": "<p>a Line which represents the opposite side</p>"
+        }, 
+        {
+            "description": "<h2>Given a point of the triangle, the adjacent sides are the two side which the point touches</h2>", 
+            "eg": "<p><code>tri.adjacentSides(\"p1\")</code></p>", 
+            "name": "adjacentSides", 
+            "param": [
+                "<p>specify a point by its id <code>\"p0\"</code> (the anchor point), <code>\"p1\"</code>, or <code>\"p2\"</code></p>"
+            ], 
+            "pname": "id", 
+            "return": "<p>an array of 2 Line which represents the adjacent sides</p>"
+        }, 
+        {
+            "description": "<h2>Get a bisector, which is a path that splits a triangle's angle in half.</h2>", 
+            "eg": "<p><code>tri.bisector(\"p1\")</code>, <code>tri.bisector(\"p0\", true)</code>, <code>tri.bisector(\"p2\", false, 10)</code></p>", 
+            "name": "bisector", 
+            "param": [
+                "<p>the first paramter specifies a point by its id <code>\"p0\"</code>, <code>\"p1\"</code>, or <code>\"p2\"</code>. The second parameter determines if the path should be a simple vector from origin (<code>false</code>) or a line connected to the triangle's point (<code>true</code>). Optionally include a third parameter to set the length of the path.</p>"
+            ], 
+            "pname": "id, asLine=false, size=100", 
+            "return": "<p>either a Line or a Vector, based on the second parameter</p>"
+        }, 
+        {
+            "description": "<h2>Get a triangle's altitude, which is a line from a triangle's point to its opposite side, and perpendicular to its opposite side.</h2>", 
+            "eg": "<p><code>tri.altitude(\"p1\")</code> gets a line from p1 to the side formed by p0 and p2</p>", 
+            "name": "altitude", 
+            "param": [
+                "<p>specify a point by its id <code>\"p0\"</code> (the anchor point), <code>\"p1\"</code>, or <code>\"p2\"</code></p>"
+            ], 
+            "pname": "id", 
+            "return": "<p>a Line representing an altitude</p>"
+        }, 
+        {
+            "description": "<h2>Get a triangle's centroid, which is the averge positions of its three points.</h2>", 
+            "name": "centroid", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>the centroid point as Vector</p>"
+        }, 
+        {
+            "description": "<h2>Get orthocenter, which is the intersection point of a triangle's 3 altitudes (the 3 lines that are perpendicular to its 3 opposite sides).</h2>", 
+            "name": "orthocenter", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>the orthocenter point as Vector</p>"
+        }, 
+        {
+            "description": "<h2>Get incenter, which is the center point of its inner circle, and also the intersection point of its 3 angle bisector lines (each of which cuts one of the 3 angles in half).</h2>", 
+            "name": "incenter", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>the incenter point as Vector</p>"
+        }, 
+        {
+            "description": "<h2>Get an interior circle, which is the largest circle completed enclosed by this triangle</h2>", 
+            "name": "incircle", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>a Circle</p>"
+        }, 
+        {
+            "description": "<h2>Get circumcenter, which is the intersection point of its 3 perpendicular bisectors lines ( each of which divides a side in half and is perpendicular to the side)</h2>", 
+            "name": "circumcenter", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>the circumcenter point as Vector</p>"
+        }, 
+        {
+            "description": "<h2>Get circumcircle, which is the smaller circle that encloses this triangle completely</h2>", 
+            "name": "circumcircle", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>a Circle</p>"
+        }, 
+        {
+            "description": "<h2>Check intersections between this Triangle and an infinite Line on xy axis.</h2>", 
+            "name": "intersectPath", 
+            "param": [
+                "<p><code>path</code> a Pair or Line object to specify an infinite line</p>", 
+                "<p><code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>"
+            ], 
+            "pname": "path, get_pts=true, axis=Const.xy", 
+            "return": "<p>s an Array of intersection points (zero or two points), or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }, 
+        {
+            "description": "<h2>Check intersections between this Triangle and a Line segment on xy axis.</h2>", 
+            "name": "intersectLine", 
+            "param": [
+                "<p><code>line</code> a Line to check</p>", 
+                "<p><code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>"
+            ], 
+            "pname": "line, get_pts=true, axis=Const.xy", 
+            "return": "<p>s an Array of intersection points (zero, one, or two points), or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }, 
+        {
+            "description": "<h2>Check if this Triangle intersects with a set of Lines on xy axis</h2>", 
+            "name": "intersectLines", 
+            "param": [
+                "<p><code>lines</code> an array of Line</p>", 
+                "<p><code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>"
+            ], 
+            "pname": "lines, get_pts=true", 
+            "return": "<p>s an Array of intersection points, or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }, 
+        {
+            "description": "<h2>Moller-Trumbore algorithm for 3D ray triangle intersection</h2>", 
+            "name": "intersectPath3D", 
+            "param": [], 
+            "pname": "path, get_pts"
+        }, 
+        {
+            "description": "<h2>Check if this Triangle intersects with a Rectangle</h2>", 
+            "name": "intersectRectangle", 
+            "param": [
+                "<p><code>rect</code> a Rectangle to check</p>", 
+                "<p><code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>"
+            ], 
+            "pname": "rect, get_pts=true", 
+            "return": "<p>s an Array of intersection points (zero or two or four points), or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }, 
+        {
+            "description": "<h2>Check if this Triangle intersects with another Circle</h2>", 
+            "name": "intersectCircle", 
+            "param": [
+                "<p><code>circle</code> a Circle to check</p>", 
+                "<p><code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>"
+            ], 
+            "pname": "circle, get_pts=true", 
+            "return": "<p>s an Array of intersection points (zero or two or four points), or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }, 
+        {
+            "description": "<h2>Check if this Triangle intersects with another Triangle</h2>", 
+            "name": "intersectTriangle", 
+            "param": [
+                "<p><code>tri</code> a Triangle to check</p>", 
+                "<p><code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>"
+            ], 
+            "pname": "tri, get_pts=true", 
+            "return": "<p>s an Array of intersection points (zero or two or four points), or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }
+    ], 
+    "props": [
+        {
+            "description": "<h2>a vertice (corner point) of the triangle as Vector object</h2>", 
+            "name": "p1", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>another vertice (corner point) of the triangle as Vector object</h2>", 
+            "name": "p2", 
+            "param": []
+        }
+    ], 
+    "statics": []
+}

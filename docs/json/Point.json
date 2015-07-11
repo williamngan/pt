@@ -1,0 +1,153 @@
+{
+    "cls": "Point", 
+    "description": "<h3>A point is the smallest expressible concept within a space. To see an infinitesimal point in an infinite space, in your mind's eyes, is to gaze upon being and nothingness. A point defines a precise position, and while formless and unchanging, it provides the basis for creation, for endless possibilities in ideas and forms. Imagine a point not only in physical or visual spaces, but also on conceptual planes, in metaphysical dimensions, and ponder how all tangible and intangible forms can be reduced into points in spaces.</h3>", 
+    "extend": "", 
+    "file": "Point.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a new point using optional parameters which can be a list of numeric values, or an array, or an object with x,y,z properties. If no parameter is specified, this will return a Point at (0,0,0) position.</h2>", 
+            "eg": "<p><code>new Point()</code> <code>new Point(1,2,3)</code> <code>new Point([2,4])</code> <code>new Point({x:3, y:6, z:9})</code></p>", 
+            "name": "Point", 
+            "param": [
+                "<p><code>args(x,y,z)</code> optional comma separated values to specify x, y, and z position</p>", 
+                "<p><code>args([x,y,z])</code> optional array with 1 to 3 values to specify x, y, and z position</p>", 
+                "<p><code>args(pt)</code> an optional object with <code>{x, y, z}</code> properties.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>a new Point object</p>"
+        }, 
+        {
+            "demo": "point.quadrant", 
+            "description": "<h2>Given another point in relation to this point, this returns which side or quadrant the other point is at. Possible</h2>", 
+            "eg": "<p><code>p.quadrant( another_p )</code> <code>p.quadrant( another_p, 2 )</code></p>", 
+            "name": "quadrant", 
+            "param": [
+                "<p><code>pt</code> a Point object</p>", 
+                "<p><code>epsilon</code> an optional value to specify the minimum distance threshold. Default is Const.epsilon.</p>"
+            ], 
+            "pname": "pt, epsilon=Const.epsilon", 
+            "return": "<p>a constant value such as Const.identical, Const.bottom, Const.top_right</p>"
+        }, 
+        {
+            "description": "<h2>Set position of this point</h2>", 
+            "eg": "<p>Eg, <code>p.set( x, y )</code> or <code>p.set( {x, y, z} )</code> or  <code>p.set( [x, y, z] )</code></p>", 
+            "name": "set", 
+            "param": [
+                "<p><code>args</code> comma-separated values, as an array, or as a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>this Point</p>"
+        }, 
+        {
+            "description": "<h2>Copy another point object to this point. Slightly faster than <code>set()</code></h2>", 
+            "name": "copy", 
+            "param": [
+                "<p><code>p</code> a Point object to copy</p>"
+            ], 
+            "pname": "p", 
+            "return": "<p>this Point</p>"
+        }, 
+        {
+            "description": "<h2>Clone this point</h2>", 
+            "name": "clone", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>a new Point that is identical to this point</p>"
+        }, 
+        {
+            "description": "<h2>Describe this point as a text string</h2>", 
+            "name": "toString", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>\"Point x, y, z\" text</p>"
+        }, 
+        {
+            "description": "<h2>When a point has 3 dimensions <code>(x,y,z)</code>, this function converts it to a new point <code>(x,y)</code> of a specific 2D plane (such as <code>yz</code>)</h2>", 
+            "eg": "<p><code>p.get2D( Const.xy )</code> <code>p.get2D(Const.yz, true)</code></p>", 
+            "name": "get2D", 
+            "param": [
+                "<p><code>axis</code> an axis id such as <code>Const.yz</code>.</p>", 
+                "<p><code>reverse</code> optional boolean value. If <code>true</code>, the mapping will be flipped. Default is false.</p>"
+            ], 
+            "pname": "axis, reverse=false", 
+            "return": "<p>a new 2D Point</p>"
+        }, 
+        {
+            "description": "<h2>Evaluate the minimum x,y,z of this point and another point, and get a minimum Point</h2>", 
+            "eg": "<p><code>p.min(1,2)</code> <code>p.min( another_p )</code></p>", 
+            "name": "min", 
+            "param": [
+                "<p><code>args</code> comma-separated values, as an array, or as a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>a new Point</p>"
+        }, 
+        {
+            "description": "<h2>Evaluate the minimum x,y,z of this point and another point, and get a maximum Point</h2>", 
+            "eg": "<p><code>p.max(1,2)</code> <code>p.max( another_p )</code></p>", 
+            "name": "max", 
+            "param": [
+                "<p><code>args</code> comma-separated values, as an array, or as a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>a new Point</p>"
+        }, 
+        {
+            "description": "<h2>Check if this point is at exactly the same position as the other point</h2>", 
+            "eg": "<p><code>p.equal(1,2)</code> <code>p.equal( another_p )</code></p>", 
+            "name": "equal", 
+            "param": [
+                "<p><code>args</code> comma-separated values, as an array, or as a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>boolean, true if they are equal</p>"
+        }, 
+        {
+            "description": "<h2>Check if this point is at exactly the same position as the other point</h2>", 
+            "eg": "<p><code>p.near(another_p)</code> <code>p.near( another_p, 2 )</code> <code>p.near( Point.get(1,2,3) )</code></p>", 
+            "name": "near", 
+            "param": [
+                "<p><code>pt</code> a Point to check against</p>", 
+                "<p><code>epsilon</code> an optional threshold value indicating the minimum distance that's near enough</p>"
+            ], 
+            "pname": "pt, epsilon=Const.epsilon", 
+            "return": "<p>boolean, true if they are near</p>"
+        }, 
+        {
+            "description": "<h2>Snap this point's position to the nearest integer</h2>", 
+            "name": "floor", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>this Point</p>"
+        }
+    ], 
+    "props": [
+        {
+            "description": "<h2>property for x position</h2>", 
+            "name": "x", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>property for y position</h2>", 
+            "name": "y", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>propoerty for z position</h2>", 
+            "name": "z", 
+            "param": []
+        }
+    ], 
+    "statics": [
+        {
+            "description": "<h2>A static function <code>Point.get()</code> which converts arrays or objects to an object with <code>{x, y, z}</code> properties.</h2>", 
+            "eg": "<p><code>Point.get([2,4])</code> <code>Point.get({x:3, y:6, z:9})</code></p>", 
+            "name": "get", 
+            "param": [
+                "<p><code>args</code> Similar to Point constructor, this accepts optional parameters which can be comma-separated values, or an array, or any object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>an Object with {x, y, z} properties</p>"
+        }
+    ]
+}

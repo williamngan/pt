@@ -1,0 +1,43 @@
+{
+    "cls": "ParticleSystem", 
+    "description": "<h3>Particle System</h3>", 
+    "extend": "", 
+    "file": "ParticleSystem.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a ParticleSystem to track a set of particles</h2>", 
+            "name": "ParticleSystem", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>add a particle to the system</h2>", 
+            "name": "add", 
+            "param": [
+                "<p><code>particle</code> a Particle</p>"
+            ], 
+            "pname": "particle"
+        }, 
+        {
+            "description": "<h2>animate callback function which is called by<code>Space.play()</code>. Override this callback function to specify other animation loops</h2>", 
+            "name": "animate", 
+            "param": [
+                "<p><code>time, frame, ctx</code> parameters for current time, fps, and rendering context, which will be passed by <code>Space</code> in callback</p>"
+            ], 
+            "pname": "time, frame, ctx"
+        }
+    ], 
+    "props": [
+        {
+            "description": "<h2>a property to store particles in this system as an Array</h2>", 
+            "name": "particles", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>a property to track time in milliseconds</h2>", 
+            "name": "time", 
+            "param": []
+        }
+    ], 
+    "statics": []
+}

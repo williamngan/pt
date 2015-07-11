@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<link href="css/docgen.css" rel="stylesheet" />
+	<!--<link href='http://fonts.googleapis.com/css?family=Raleway:600,400' rel='stylesheet' type='text/css'>-->
+	<!--<link href='http://fonts.googleapis.com/css?family=Merriweather:400,700,900' rel='stylesheet' type='text/css'>-->
+
+	<!--<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>-->
+	<!--<link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>-->
+
+	<script type="text/javascript" src="underscore-min.js"></script>
+
+	<script type="text/template" id="comp">
+		<h1><%= cls %></h1>
+		<%= description %>
+
+		<% _.each( funcs, function( f ) { %>
+			<section class="funcs" id="func-<%= cls %>-<%= f.name %>">
+				<h1><%= f.name %>
+					<span class="param">(<%= f.pname %>)</span>
+				</h1>
+				<%= f.description %>
+				<% if (f.demo) { %>
+					<div class="demo" data-demo="<%= f.demo %>">
+						<em>demo</em>
+						<div class="group"><p><a href="<%= f.demo %>"><%= f.demo %>.js</a></p></div>
+						<div class="demo-arrow"></div>
+					</div>
+					<% } %>
+				<% if (f.param) { %>
+				<div class="param"><em>parameters</em>
+					<div class="group">
+						<% _.each( f.param, function( pm ) { %>
+							<%= pm %>
+						<% }); %>
+					</div>
+				</div>
+				<% } %>
+				<% if (f.return) { %>
+				<div class="return"><em>returns</em> <div class="group"><%= f.return %></div> </div>
+				<% } %>
+				<% if (f.eg) { %>
+				<div class="eg"><em>example</em> <div class="group"><%= f.eg %></div></div>
+				<% } %>
+			</section>
+		<% }); %>
+
+		<% _.each( statics, function( f ) { %>
+			<section class="statics" id="static-<%= cls %>-<%= f.name %>">
+				<h1><%= cls %>.<%= f.name %> <span class="param">(<%= f.pname %>)</span></h1>
+				<%= f.description %>
+				<% if (f.param) { %>
+				<div class="param"><em>parameters</em>
+					<div class="group">
+						<% _.each( f.param, function( pm ) { %>
+							<%= pm %>
+						<% }); %>
+					</div>
+				</div>
+				<% } %>
+				<% if (f.return) { %>
+					<div class="return"><em>returns</em> <div class="group"><%= f.return %></div></div>
+				<% } %>
+				<% if (f.eg) { %>
+					<div class="eg"><em>example</em><div class="group"><%= f.eg %></div></div>
+				<% } %>
+			</section>
+		<% }); %>
+
+		<% _.each( props, function( f ) { %>
+			<section class="props" id="prop-<%= cls %>-<%= f.name %>">
+				<h1><%= f.name %></h1>
+				<%= f.description %>
+			</section>
+		<% }); %>
+
+		<div id="inherited-<%= cls %>">
+		<% _.each( parents, function( pa ) { %>
+			<% if (pa.funcs.length > 0 || pa.props.length > 0) { %>
+				<section class="inherited">
+					<h1>Inherited from <%= pa.cls %></h1>
+
+					<% if (pa.funcs.length > 0) { %>
+						<ul><li class="label">Function</li>
+							<% _.each( pa.funcs, function( f ) { %>
+								<li><a href="#func-<%= pa.cls %>-<%= f %>"><%= f %></a></li>
+							<% }); %>
+						</ul>
+					<% } %>
+
+					<% if (pa.props.length > 0) { %>
+						<ul><li class="label">Property</li>
+							<% _.each( pa.props, function( f ) { %>
+								<li><a href="#prop-<%= pa.cls %>-<%= f %>"><%= f %></a></li>
+							<% }); %>
+						</ul>
+					<% } %>
+
+				</section>
+			<% } %>
+		<% }); %>
+		</div>
+
+		<p class="source"><a href="<%= file %>">Source code</a></p>
+
+	</script>
+
+
+
+</head>
+<body>
+
+
+
+<div id="head">
+	<div id="overview">
+		<h1>Pt</h1>
+		<h2>Point, Vector, Line.</h2>
+		<h3>Point, Plane, Space.</h3>
+		<p><strong>Concept:</strong> A point is the <em>smallest</em> expressible concept within a space. To see an infinitesimal point in an infinite space, in your mind's eyes, is to gaze upon being and nothingness. A point defines a precise position, and while formless and unchanging, it provides the basis for creation, for endless possibilities in ideas and forms. Imagine a point not only in physical or visual spaces, but also on conceptual planes, in metaphysical dimensions, and ponder how all tangible and intangible forms can be reduced into points in spaces.</p>
+		<p class="small"><strong>A point</strong> is the <em>smallest</em> expressible concept within a space. To see an infinitesimal point in an infinite space, in your mind's eyes, is to gaze upon being and nothingness. A point defines a precise position, and while formless and unchanging, it provides the basis for creation, for endless possibilities in ideas and forms. Imagine a point not only in physical or visual spaces, but also on conceptual planes, in metaphysical dimensions, and ponder how all tangible and intangible forms can be reduced into points in spaces.</p>
+		<a href="#content" data-to="#content" onclick="docs.scrollTo(event, this)">Start</a>
+	</div>
+</div>
+
+
+<div id="page">
+	<div id="menu">
+		<div id="submenu"></div>
+	</div>
+
+	<div id="content"></div>
+
+	<div id="pt">
+		<div id="mask"></div>
+	</div>
+</div>
+
+<div id="header"></div>
+
+<!--<script type="text/javascript" src="index.js"></script>-->
+<script type="text/javascript" src="js/docgen.js"></script>
+<script type="text/javascript" src="js/pt.js"></script>
+
+<script type="text/javascript">
+	var docs = new Docs("#comp");
+ 	docs.getJSON("json/all.json");
+
+	if (document.readyState != 'loading') {
+		docs.resize();
+	} else {
+		document.addEventListener('DOMContentLoaded', docs.resize.bind(docs));
+	}
+
+</script>
+
+
+
+</body>
+</html>

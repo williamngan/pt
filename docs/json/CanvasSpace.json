@@ -1,0 +1,83 @@
+{
+    "cls": "CanvasSpace", 
+    "description": "<h3>An html canvas Space</h3>", 
+    "extend": "Space", 
+    "file": "CanvasSpace.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a CanvasSpace which represents a HTML Canvas Space</h2>", 
+            "name": "CanvasSpace", 
+            "param": [
+                "<p><code>id</code> an id property which refers to the \"id\" attribute of the canvas element in DOM. If no canvas element with this id is found, a new canvas element will be created.</p>", 
+                "<p><code>context</code> a string of canvas context type, such as \"2d\" or \"webgl\". Default is \"2d\"</p>", 
+                "<p><code>bgcolor</code> a background color string to specify the canvas background. Default is <code>false</code> which shows a transparent background.</p>"
+            ], 
+            "pname": "id='pt_space', bgcolor=false, context='2d'"
+        }, 
+        {
+            "description": "<h2>Place a new canvas element to a page dom element. When canvas is ready, a \"ready\" event will be fired. Track this event with <code>space.canvas.addEventListener(\"ready\")</code></h2>", 
+            "name": "display", 
+            "param": [
+                "<p><code>parent_id</code> the DOM element into which the canvas element should be appended</p>", 
+                "<p><code>readyCallback</code> a callback function with parameters <code>width</code>, <code>height</code>, and <code>canvas_element</code>, which will get called when canvas is appended and ready.</p>"
+            ], 
+            "pname": "parent_id=\"#pt\", readyCallback", 
+            "return": "<p>this CanvasSpace</p>"
+        }, 
+        {
+            "description": "<h2>This overrides Space's <code>resize</code> function and it's a callback function for window resize event. The resize event is passed to the Space's added items that has defined a <code>onSpaceResize(w,h,evt)</code></h2>", 
+            "name": "resize", 
+            "param": [], 
+            "pname": "w, h, evt", 
+            "return": "<p>this CanvasSpace</p>"
+        }, 
+        {
+            "description": "<h2>Clear the canvas with its background color. Overrides Space's <code>clear</code> function.</h2>", 
+            "name": "clear", 
+            "param": [
+                "<p><code>bg</code> Optionally specify a custom background color. If evaluated to false, it will use its <code>bgcolor</code> property as background color.</p>"
+            ], 
+            "pname": "bg", 
+            "return": "<p>this CanvasSpace</p>"
+        }, 
+        {
+            "description": "<h2>Overrides Space's <code>animate</code> function for canvas</h2>", 
+            "name": "animate", 
+            "param": [
+                "<p><code>time</code> current time</p>"
+            ], 
+            "pname": "time", 
+            "return": "<p>this CanvasSpace</p>"
+        }, 
+        {
+            "description": "<h2>Bind event listener in canvas element, for events such as mouse events</h2>", 
+            "name": "bind", 
+            "param": [
+                "<p><code>evt</code> Event object</p>", 
+                "<p><code>callback</code> a callback function for this event</p>"
+            ], 
+            "pname": "evt, callback"
+        }, 
+        {
+            "description": "<h2>A convenient method to bind (or unbind) all mouse events in canvas element. All item added to <code>items</code> property that implements an <code>onMouseAction</code> callback will receive mouse event callbacks.</h2>", 
+            "name": "bindMouse", 
+            "param": [
+                "<p><code>bind</code> a boolean value to bind mouse events if set to <code>true</code>. If <code>false</code>, all mouse events will be unbound. Default is true.</p>"
+            ], 
+            "pname": "bind=true"
+        }
+    ], 
+    "props": [
+        {
+            "description": "<h2>A property to store canvas DOM element</h2>", 
+            "name": "canvas", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>A boolean property to track if the canvas element is added to dom or not</h2>", 
+            "name": "appended", 
+            "param": []
+        }
+    ], 
+    "statics": []
+}

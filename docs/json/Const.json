@@ -1,0 +1,125 @@
+{
+    "cls": "Const", 
+    "description": "<h3>Various constants</h3>", 
+    "extend": "", 
+    "file": "Const.coffee", 
+    "funcs": [], 
+    "props": [
+        {
+            "description": "<h2>represents the xy plane</h2>", 
+            "name": "xy", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>represents the yz plane</h2>", 
+            "name": "yz", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>reporesents the xz plane</h2>", 
+            "name": "xz", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>represents xyz space</h2>", 
+            "name": "xyz", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>represents identical point or value</h2>", 
+            "name": "identical", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>represents right position or direction</h2>", 
+            "name": "right", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>represents bottom right position or direction</h2>", 
+            "name": "bottom_right", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>represents bottom position or direction</h2>", 
+            "name": "bottom", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>represents bottom left position or direction</h2>", 
+            "name": "bottom_left", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>represents left position or direction</h2>", 
+            "name": "left", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>represents top left position or direction</h2>", 
+            "name": "top_left", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>represents top position or direction</h2>", 
+            "name": "top", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>represents top right position or direction</h2>", 
+            "name": "top_right", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>an array of strings to label position constants above. Eg, <code>Const.sideLabels[ Const.top_left]</code> will return the string \"top left\"</h2>", 
+            "name": "sideLabels", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>represents an arbitrary very small number. It is set as 0.0001 here.</h2>", 
+            "name": "epsilon", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>two pi radian (360deg)</h2>", 
+            "name": "two_pi", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>half pi radian (90deg)</h2>", 
+            "name": "half_pi", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>pi/4 radian (45deg)</h2>", 
+            "name": "quarter_pi", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>pi/180 = 1 degree in radian</h2>", 
+            "name": "one_degree", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>multiply this constant with a radian to get a degree</h2>", 
+            "name": "rad_to_deg", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>multiply this constant with a degree to get a radian</h2>", 
+            "name": "deg_to_rad", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>Gravity acceleration (unit = m/s^2) and gravity force (unit = Newton) on 1kg of mass.</h2>", 
+            "name": "gravity", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>1 Newton = 0.10197 Kilogram-force</h2>", 
+            "name": "newton", 
+            "param": []
+        }
+    ], 
+    "statics": []
+}

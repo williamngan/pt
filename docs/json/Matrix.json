@@ -1,0 +1,96 @@
+{
+    "cls": "Matrix", 
+    "description": "<h3>Various Matrix transformations</h3>", 
+    "extend": "", 
+    "file": "Matrix.coffee", 
+    "funcs": [], 
+    "props": [], 
+    "statics": [
+        {
+            "description": "<h2>Get a 3x3 matrix for 2D rotation around an anchor point</h2>", 
+            "name": "rotateAnchor2D", 
+            "param": [
+                "<p><code>radian</code> rotation angle in radian</p>", 
+                "<p><code>anchor</code> anchor point of rotation</p>"
+            ], 
+            "pname": "radian, anchor, axis=Const.xy", 
+            "return": "<p>an array representing a 3x3 matrix. Apply this matrix to a homongeneous vector (x,y,1) to rotate it.</p>"
+        }, 
+        {
+            "description": "<h2>Get a 3x3 matrix to reflect a point along a line. See also <code>Line.reflect()</code> for a potentially simpler calculation</h2>", 
+            "name": "reflectAnchor2D", 
+            "param": [
+                "<p><code>line</code> the path to define the reflection</p>"
+            ], 
+            "pname": "line, axis=Const.xy", 
+            "return": "<p>an array representing a 3x3 matrix. apply this matrix to a homongeneous vector (x,y,1) to rotate it.</p>"
+        }, 
+        {
+            "description": "<h2>Get a 3x3 matrix for 2D shear from an anchor point</h2>", 
+            "name": "shearAnchor2D", 
+            "param": [
+                "<p><code>sx, sy</code> shear scale values, usually between -1 to 1, where 0 means no change in shear.</p>", 
+                "<p><code>anchor</code> anchor point of shearing</p>"
+            ], 
+            "pname": "sx, sy, anchor, axis=Const.xy", 
+            "return": "<p>an array representing a 3x3 matrix. apply this matrix to a homongeneous vector (x,y,1) to rotate it.</p>"
+        }, 
+        {
+            "description": "<h2>Get a 3x3 matrix for 2D scale from an anchor point</h2>", 
+            "name": "scaleAnchor2D", 
+            "param": [
+                "<p><code>sx, sy</code> horizontal and vertical scale values, which are usually between 0 to N, where 1 means no change in scale.</p>", 
+                "<p><code>anchor</code> anchor point of scaling</p>"
+            ], 
+            "pname": "sx, sy, anchor, axis=Const.xy", 
+            "return": "<p>an array representing a 3x3 matrix. apply this matrix to a homongeneous vector (x,y,1) to rotate it.</p>"
+        }, 
+        {
+            "description": "<h2>Get a 3x3 scale matrix</h2>", 
+            "name": "scale2D", 
+            "param": [
+                "<p><code>x, y</code> horizontal and vertical scale values, which are usually between 0 to N, where 1 means no change in scale.</p>"
+            ], 
+            "pname": "x, y", 
+            "return": "<p>an array representing a 3x3 matrix. apply this matrix to a homongeneous vector (x,y,1) to rotate it.</p>"
+        }, 
+        {
+            "description": "<h2>Get a 3x3 shear matrix</h2>", 
+            "name": "shear2D", 
+            "param": [
+                "<p><code>x, y</code> shear scale values, usually between -1 to 1, where 0 means no change in shear.</p>"
+            ], 
+            "pname": "x, y", 
+            "return": "<p>an array representing a 3x3 matrix. apply this matrix to a homongeneous vector (x,y,1) to rotate it.</p>"
+        }, 
+        {
+            "description": "<h2>Get a 3x3 rotate matrix</h2>", 
+            "name": "rotate2D", 
+            "param": [
+                "<p><code>cosA, sinA</code> cosine and sine of the rotation angle.</p>"
+            ], 
+            "pname": "cosA, sinA", 
+            "return": "<p>an array representing a 3x3 matrix. apply this matrix to a homongeneous vector (x,y,1) to rotate it.</p>"
+        }, 
+        {
+            "description": "<h2>Get a 3x3 translate matrix.</h2>", 
+            "name": "translate2D", 
+            "param": [
+                "<p><code>x, y</code> horizontal and vertical offsets to move by</p>"
+            ], 
+            "pname": "x, y", 
+            "return": "<p>an array representing a 3x3 matrix. apply this matrix to a homongeneous vector (x,y,1) to rotate it.</p>"
+        }, 
+        {
+            "description": "<h2>Calculate a 2D transform by applying matrix to a homogeneous vector</h2>", 
+            "name": "transform2D", 
+            "param": [
+                "<p><code>pt</code> a Point to transform</p>", 
+                "<p><code>m</code> an array representing 3x3 matrix</p>", 
+                "<p><code>byValue</code> a boolean value to update the values of <code>pt</code> parameter directly if set to true. If false, returns a new Vector object instead. Default is false.</p>"
+            ], 
+            "pname": "pt, m, axis=Const.xy, byValue=false", 
+            "return": "<p>a Vector object, or the <code>pt</code> object if <code>byValue</code> is true</p>"
+        }
+    ]
+}

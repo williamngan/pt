@@ -1,0 +1,308 @@
+{
+    "cls": "Form", 
+    "description": "<h3>Form visualizes the elements</h3>", 
+    "extend": "", 
+    "file": "Form.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a new Form which is based on HTML Canvass</h2>", 
+            "name": "Form", 
+            "param": [
+                "<p><code>cc</code> canvas rendering context object. Eg, <code>canvas.getContext('2d')</code></p>"
+            ], 
+            "pname": "cc", 
+            "return": "<p>a new Form object</p>"
+        }, 
+        {
+            "description": "<h2>Set current fill style</h2>", 
+            "eg": "<p><code>form.fill(\"#F90\")</code> <code>form.fill(\"rgba(0,0,0,.5\")</code> <code>form.fill(false)</code></p>", 
+            "name": "fill", 
+            "param": [
+                "<p><code>c</code> fill color which can be as color, gradient, or pattern. (See <a href=\"https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillStyle\">canvas documentation</a>) Default is false (transparent)</p>"
+            ], 
+            "pname": "c", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Set current stroke style</h2>", 
+            "eg": "<p><code>form.stroke(\"#F90\")</code> <code>form.stroke(\"rgba(0,0,0,.5\")</code> <code>form.stroke(false)</code> <code>form.stroke(\"#000\", 0.5, 'round')</code></p>", 
+            "name": "stroke", 
+            "param": [
+                "<p><code>c</code> stroke color which can be as color, gradient, or pattern. (See <a href=\"https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/strokeStyle\">canvas documentation</a>) Default is false (transparent)</p>", 
+                "<p><code>width</code> Optional value (can be floating point) to set line width</p>", 
+                "<p><code>joint</code> Optional string to set line joint style. Can be \"miter\", \"bevel\", or \"round\".</p>"
+            ], 
+            "pname": "c, width, joint", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Set font size and font face</h2>", 
+            "eg": "<p><code>form.font(24)</code> <code>form.font(12, \"Georgia\")</code></p>", 
+            "name": "font", 
+            "param": [
+                "<p><code>size</code> an integer value to specify font size in pixels</p>", 
+                "<p><code>face</code> optional name to change the font face, such as \"sans-serif\" or \"Helvetica\"</p>"
+            ], 
+            "pname": "size, face=@fontFace", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a shape. Defaults to <code>sketch()</code>. Override this function to draw differently.</h2>", 
+            "name": "draw", 
+            "param": [], 
+            "pname": "shape", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Default draw based on the types of shape (Point, Line, Circle, etc)</h2>", 
+            "name": "sketch", 
+            "param": [
+                "<p><code>shape</code> any shape such as <code>Point</code> or <code>Line</code>, or an array of Points</p>"
+            ], 
+            "pname": "shape", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a point</h2>", 
+            "name": "point", 
+            "param": [
+                "<p><code>p</code> a Point object</p>", 
+                "<p><code>halfsize</code> radius or half size of the point. Default is 2.</p>", 
+                "<p><code>isCircle</code> a boolean value to specify if the point should be drawn as a circle. Default is false.</p>"
+            ], 
+            "pname": "p, halfsize=2, isCircle=false", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a series of points</h2>", 
+            "name": "points", 
+            "param": [
+                "<p><code>ps</code> an array of Points</p>", 
+                "<p><code>halfsize</code> radius or half size of the point. Default is 2.</p>", 
+                "<p><code>isCircle</code> a boolean value to specify if the point should be drawn as a circle. Default is false.</p>"
+            ], 
+            "pname": "ps, halfsize=2, isCircle=false", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a line</h2>", 
+            "name": "line", 
+            "param": [
+                "<p><code>p</code> a Pair object</p>"
+            ], 
+            "pname": "p", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a series of lines</h2>", 
+            "name": "lines", 
+            "param": [
+                "<p><code>ps</code> an array of Lines</p>"
+            ], 
+            "pname": "ps", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a rectangle</h2>", 
+            "name": "rect", 
+            "param": [
+                "<p><code>p</code> a Pair object</p>"
+            ], 
+            "pname": "p", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a circle</h2>", 
+            "name": "circle", 
+            "param": [
+                "<p><code>p</code> a Circle object</p>"
+            ], 
+            "pname": "p", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a triangle</h2>", 
+            "name": "triangle", 
+            "param": [
+                "<p><code>p</code> a Triangle object</p>"
+            ], 
+            "pname": "p", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a polygon</h2>", 
+            "name": "polygon", 
+            "param": [
+                "<p><code>ps</code> an array of Points</p>", 
+                "<p><code>closePath</code> a boolean value to specify if the path should be closed (joining last point with first point)</p>"
+            ], 
+            "pname": "ps, closePath", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a curve</h2>", 
+            "name": "curve", 
+            "param": [
+                "<p><code>ps</code> an array of Points</p>"
+            ], 
+            "pname": "ps", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw text</h2>", 
+            "name": "text", 
+            "param": [
+                "<p><code>p</code> a Point to specify anchor position</p>", 
+                "<p><code>txt</code> a string of text</p>", 
+                "<p><code>maxWidth</code> maximum width per line</p>", 
+                "<p><code>xoff, yoff</code> x and y positional offset values</p>"
+            ], 
+            "pname": "p, txt, maxWidth=1000, xoff, yoff"
+        }
+    ], 
+    "props": [
+        {
+            "description": "<h2>a property to reference the canvas rendering context</h2>", 
+            "name": "cc", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>a boolean property to set if the next drawing should be filled with current fill style</h2>", 
+            "name": "filled", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>a boolean property to set if the next drawing should be stroked with current stroke style</h2>", 
+            "name": "stroked", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>a property to specify the current font size</h2>", 
+            "name": "fontSize", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>a property to specify the current font face</h2>", 
+            "name": "fontFace", 
+            "param": []
+        }
+    ], 
+    "statics": [
+        {
+            "description": "<h2>A static function to get 2d context from a canvas element in the DOM</h2>", 
+            "eg": "<p><code>Form.context('my_canvas')</code></p>", 
+            "name": "context", 
+            "param": [
+                "<p><code>canvas_id</code> the id attribute of the canvas element</p>"
+            ], 
+            "pname": "canvas_id", 
+            "return": "<p>a canvas rendering context object</p>"
+        }, 
+        {
+            "description": "<h2>A static function to draw a line</h2>", 
+            "name": "line", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pair</code> a Pair object</p>"
+            ], 
+            "pname": "ctx, pair"
+        }, 
+        {
+            "description": "<h2>A static function to draw a line</h2>", 
+            "name": "lines", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pairs</code> an array of Pair objects</p>"
+            ], 
+            "pname": "ctx, pairs"
+        }, 
+        {
+            "description": "<h2>A static function to draw a rectangle</h2>", 
+            "name": "rect", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pair</code> a Pair object</p>", 
+                "<p><code>fill</code> a boolean value to specify if the points should be filled. Default to true.</p>", 
+                "<p><code>stroke</code> a boolean value to specify if the points should be stroked. Default to false.</p>"
+            ], 
+            "pname": "ctx, pair, fill=true, stroke=false"
+        }, 
+        {
+            "description": "<h2>A static  function to draw a circle</h2>", 
+            "name": "circle", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>c</code> a Circle object</p>", 
+                "<p><code>fill</code> a boolean value to specify if the points should be filled. Default to true.</p>", 
+                "<p><code>stroke</code> a boolean value to specify if the points should be stroked. Default to false.</p>"
+            ], 
+            "pname": "ctx, c, fill=true, stroke=false"
+        }, 
+        {
+            "description": "<h2>A static function to draw a triangle</h2>", 
+            "name": "triangle", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>c</code> a Triangle object</p>", 
+                "<p><code>fill</code> a boolean value to specify if the points should be filled. Default to true.</p>", 
+                "<p><code>stroke</code> a boolean value to specify if the points should be stroked. Default to false.</p>"
+            ], 
+            "pname": "ctx, tri, fill=true, stroke=false"
+        }, 
+        {
+            "description": "<h2>A static function to draw a point</h2>", 
+            "name": "point", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pt</code> a Point object</p>", 
+                "<p><code>halfsize</code> radius or half size of the point. Default is 2.</p>", 
+                "<p><code>fill</code> a boolean value to specify if the points should be filled. Default to true.</p>", 
+                "<p><code>stroke</code> a boolean value to specify if the points should be stroked. Default to false.</p>", 
+                "<p><code>circle</code> a boolean value to specify if the points should be drawn as a circle. Default to false.</p>"
+            ], 
+            "pname": "ctx, pt, halfsize=2, fill=true, stroke=false, circle=false"
+        }, 
+        {
+            "description": "<h2>A static function similar to <code>Form.point()</code> but draw a series of points</h2>", 
+            "name": "points", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pts</code> an array of Points</p>", 
+                "<p><code>halfsize, fill, stroke, circle</code> same parameters as in <code>Form.point()</code></p>"
+            ], 
+            "pname": "ctx, pts, halfsize=2, fill=true, stroke=false, circle=false"
+        }, 
+        {
+            "description": "<h2>A static function to draw a polygon</h2>", 
+            "name": "polygon", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pts</code> an array of Points</p>", 
+                "<p><code>closePath</code> a boolean value to specify if the path should be closed (joining last point with first point)</p>", 
+                "<p><code>fill</code> a boolean value to specify if the points should be filled. Default to true.</p>", 
+                "<p><code>stroke</code> a boolean value to specify if the points should be stroked. Default to true.</p>"
+            ], 
+            "pname": "ctx, pts, closePath=true, fill=true, stroke=true"
+        }, 
+        {
+            "description": "<h2>A static function to draw a curve</h2>", 
+            "name": "curve", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pts</code> an array of Points</p>"
+            ], 
+            "pname": "ctx, pts"
+        }, 
+        {
+            "description": "<h2>A static function to draw text</h2>", 
+            "name": "text", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pt</code> a Point object to specify the anchor point</p>", 
+                "<p><code>txt</code> a string of text to draw</p>", 
+                "<p><code>maxWidth</code> specify a maximum width per line</p>"
+            ], 
+            "pname": "ctx, pt, txt, maxWidth"
+        }
+    ]
+}

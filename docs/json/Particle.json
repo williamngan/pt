@@ -1,0 +1,168 @@
+{
+    "cls": "Particle", 
+    "description": "<h3>A particle with physics</h3>", 
+    "extend": "Circle", 
+    "file": "Particle.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a new Particle. Like a Circle, specify its center position with a <code>radius</code> property to define its radius.</h2>", 
+            "eg": "<p><code>new Particle()</code> <code>new Particle(1,2,3)</code> <code>new Particle(1,2,3,100)</code></p>", 
+            "name": "Particle", 
+            "param": [
+                "<p><code>args</code> Similar to Point constructor, use comma-separated values, an array, or a Point object as parameters to specify the center of circle. Optionally include a 4th parameter to set the radius directly, or use <code>setRadius()</code> afterwards.</p>"
+            ], 
+            "pname": "", 
+            "return": "<p>a new Circle object</p>"
+        }, 
+        {
+            "description": "<h2>Play the particle for one time-step.</h2>", 
+            "name": "play", 
+            "param": [
+                "<p><code>time</code> current time in milliseconds</p>", 
+                "<p><code>timeDiff</code> time difference between last and current step, ie, the time of a frame.</p>"
+            ], 
+            "pname": "time, timeDiff"
+        }, 
+        {
+            "description": "<h2>Integrate function using Runge-Kutta-4. Override this function to specify other integrator, such as Euler or Verlet.</h2>", 
+            "name": "integrate", 
+            "param": [
+                "<p><code>t</code> current time in <em>seconds</em></p>", 
+                "<p><code>dt</code> time difference between last and current step, in <em>seconds</em></p>"
+            ], 
+            "pname": "t, dt"
+        }, 
+        {
+            "description": "<h2>Calculate all forces acting on this particle. This is called by integrate function. Override this function to implement specific force calculations.</h2>", 
+            "eg": "<p><code>p.forces( {position: new Vector(), momentum: new Vector()}, t+dt )</code></p>", 
+            "name": "forces", 
+            "param": [
+                "<p><code>state</code> a object with <code>position</code> and <code>momentum</code> Vectors</p>", 
+                "<p><code>t</code> curent time in seconds</p>"
+            ], 
+            "pname": "state, t", 
+            "return": "<p>an object with <code>force</code> property</p>"
+        }, 
+        {
+            "description": "<h2>Apply an impulse to this particle's <code>momentum</code> and <code>velocity</code> properties</h2>", 
+            "name": "impulse", 
+            "param": [
+                "<p><code>force_dt</code> a force Vector</p>"
+            ], 
+            "pname": "force_dt"
+        }, 
+        {
+            "description": "<h2>Runge-Kutta-4 integration</h2>", 
+            "name": "integrateRK4", 
+            "param": [
+                "<p><code>t</code> current time in <em>seconds</em></p>", 
+                "<p><code>dt</code> time difference between last and current step, in <em>seconds</em></p>"
+            ], 
+            "pname": "t, dt"
+        }, 
+        {
+            "description": "<h2>Simple Euler integration using momentum</h2>", 
+            "name": "integrateEuler", 
+            "param": [
+                "<p><code>t</code> current time in <em>seconds</em></p>", 
+                "<p><code>dt</code> time difference between last and current step, in <em>seconds</em></p>"
+            ], 
+            "pname": "t, dt"
+        }, 
+        {
+            "description": "<h2>check Collision with a line segment (wall), and calculate the resulting velocity and momentum</h2>", 
+            "name": "collideLine2d", 
+            "param": [
+                "<p><code>wall</code> a Line object to check collision against</p>", 
+                "<p><code>precise</code> a boolean value to specify a precise collision calculation. If <code>true</code>, then the particle position will be recalculated to match the exact collision position with the line. Default is true.</p>"
+            ], 
+            "pname": "wall, precise=true", 
+            "return": "<p>a boolean value to indicate if collision occurs</p>"
+        }, 
+        {
+            "description": "<h2>Check if a particle hits the boundaries within a box, and calculate the resulting velocity and momentum. Precise collision positioning are not implemented.</h2>", 
+            "name": "collideWithinBounds", 
+            "param": [
+                "<p><code>bound</code> a Rectangle object to specify a bounding box`</p>"
+            ], 
+            "pname": "bound", 
+            "return": "<p>a boolean value to indicate if collision occurs</p>"
+        }, 
+        {
+            "description": "<h2>Check 2D collision with another particle, and calculate the resulting velocity and momentum. Precise collision positioning are not implemented.</h2>", 
+            "name": "collideParticle2d", 
+            "param": [
+                "<p><code>pb</code> another Particle</p>"
+            ], 
+            "pname": "pb", 
+            "return": "<p>an array of 2 Vectors, representing this and the other particle's resulting velocity. Or <code>false</code> if collision doesn't occur.</p>"
+        }
+    ], 
+    "props": [
+        {
+            "description": "<h2>A property to store this particle's id</h2>", 
+            "name": "id", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>A property to track this particle's states. An object with properties <code>.age</code> and <code>.maxAge</code> and a boolean proeprty <code>.active</code></h2>", 
+            "name": "life", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>A property to track this particle's momentum as a Vector</h2>", 
+            "name": "momentum", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>A property to track this particle's velocity as a Vector</h2>", 
+            "name": "velocity", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>A property to specify this particle's mass value. Default is 2.</h2>", 
+            "name": "mass", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>A property to specify this particle's friction. Defaulti is 0.</h2>", 
+            "name": "friction", 
+            "param": []
+        }
+    ], 
+    "statics": [
+        {
+            "description": "<h2>Static function to calculate velocity and momentum after 2D collision, without precise coliision positioning. Remember to check intersection/collision before calling this.</h2>", 
+            "name": "collideParticle2d", 
+            "param": [
+                "<p><code>pa, pb</code> two Particles</p>", 
+                "<p><code>update</code> a boolean value to update the velocity and momentum of the two particle directly if set to <code>true</code>. Default is true.</p>"
+            ], 
+            "pname": "pa, pb, update=true", 
+            "return": "<p>an array of 2 Vectors, representing this and the other particle's resulting velocity.</p>"
+        }, 
+        {
+            "description": "<h2>Static function to calculate gravitational forces between 2 particles. This can be used as an implementation of <code>forces()</code> function</h2>", 
+            "name": "force_gravitation", 
+            "param": [
+                "<p><code>state</code> a object with <code>position</code> and <code>momentum</code> Vectors</p>", 
+                "<p><code>t</code> curent time in seconds</p>", 
+                "<p><code>pa, pb</code> two Particles</p>"
+            ], 
+            "pname": "state, t, pa, pb", 
+            "return": "<p>an object with <code>force</code> property</p>"
+        }, 
+        {
+            "description": "<h2>Static function of Runge-Kutta-4 integrator (adopted from gafferongames.com)</h2>", 
+            "name": "RK4", 
+            "param": [
+                "<p><code>c, d</code> the derivative of c is d. If c is position, then d is velocity.</p>", 
+                "<p><code>func</code> acceleration function(c, d, dt, t)</p>", 
+                "<p><code>dt</code> change in time</p>", 
+                "<p><code>t</code> current time</p>"
+            ], 
+            "pname": "c, d, func, dt, t", 
+            "return": "<p>an object with <code>{c, d}</code> properties where the derivative of c is d.</p>"
+        }
+    ]
+}
