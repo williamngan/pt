@@ -17,16 +17,97 @@
 			overflow: hidden;
 		}
 
+        #hint {
+            position: absolute;
+            top: 0; right: 40%; width: 200px;
+            font-size: 11px; color: #999; line-height: 1.5; padding: 20px;
+            text-align: right;
+        }
+
+        .demo {
+            cursor: pointer;
+            font-size: 12px; line-height: 2; margin: 0;
+            color: #666;
+        }
+        .demo:hover { color: #03a9f4;}
 	</style>
+
+    <script>
+        function qs(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        console.log( qs("file") );
+
+        var src = null;
+        if (qs("file")) {
+            src = document.createElement('script');
+            src.setAttribute("type", "text/javascript");
+            src.setAttribute("id", "src");
+            src.setAttribute("src", "demo/" + qs("file"));
+            src.onload = function () {
+                var hint = document.querySelector("#hint");
+                hint.innerHTML = window.demoDescription;
+                console.log("loaded");
+            };
+        }
+
+
+    </script>
 
 </head>
 <body>
 
 <h1>Pt</h1>
+<p id="hint"></p>
+<p class="demo">canvasspace.bindMouse.js</p>
+<p class="demo">canvasspace.resize.js</p>
+<p class="demo">circle.intersectCircle.js</p>
+<p class="demo">circle.intersectPath.js</p>
+<p class="demo">circle.intersectPoint.js</p>
+<p class="demo">color.HSBtoRGB.js</p>
+<p class="demo">color.HSLtoRGB.js</p>
+<p class="demo">color.LABtoRGB.js</p>
+<p class="demo">form.curve.js</p>
+<p class="demo">form.fill.js</p>
+<p class="demo">form.font.js</p>
+<p class="demo">form.points.js</p>
+<p class="demo">pair.interpolate.js</p>
+<p class="demo">particle.collideLine2d.js</p>
+<p class="demo">particle.play.js</p>
+<p class="demo">point.max.js</p>
+<p class="demo">point.quadrant.js</p>
+<p class="demo">space.add.js</p>
+<p class="demo">space.refresh.js</p>
+<p class="demo">vector.add.js</p>
+<p class="demo">vector.normalize.js</p>
+<p class="demo">vector.projection.js</p>
+<p class="demo">vector.rotate2D.js</p>
+<p class="demo">vector.scale2D.js</p>
 
 <div id="pt"></div>
 
-<script type="text/javascript" src="demo/pair.interpolate.js"></script>
+
+<!--<script type="text/javascript" id="src" src="demo/pair.interpolate.js"></script>-->
+
+<script type="text/javascript">
+
+    if (src) document.querySelector("body").appendChild( src );
+
+
+    var demos = document.querySelectorAll(".demo");
+
+	for (var i=0; i<demos.length; i++) {
+        var file = demos[i].textContent;
+		demos[i].addEventListener("click", function() {
+            window.location.href = window.location.origin+window.location.pathname+"?file="+this.textContent;
+        }.bind( demos[i] ) );
+	}
+
+</script>
 
 
 </body>
