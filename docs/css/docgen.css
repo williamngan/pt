@@ -1,8 +1,9 @@
 body {
   background-color: #f3f5f9;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Lato', sans-serif;
   font-size: 10px;
-  margin: 0; }
+  margin: 0;
+  line-height: 1.35; }
 
 html {
   overflow-x: hidden;
@@ -13,11 +14,10 @@ html * {
 
 h1 {
   font-size: 12em;
-  font-weight: 700; }
+  font-weight: 900; }
 
 h2 {
-  font-size: 5em;
-  letter-spacing: -0.03em; }
+  font-size: 5em; }
 
 h3 {
   font-size: 3em;
@@ -31,8 +31,17 @@ p {
 p.small {
   font-size: 1.1em; }
 
+a {
+  color: #334fff;
+  text-decoration: none; }
+
+a:hover {
+  color: #667bff; }
+
 code {
-  font-weight: 600; }
+  font-family: 'Inconsolata', monospace;
+  color: #556070;
+  display: inline-block; }
 
 section {
   padding-top: 40px; }
@@ -42,15 +51,22 @@ section h1 {
   font-size: 2em; }
   section h1 .param {
     font-weight: 400;
-    font-size: .8em; }
+    font-size: 12px;
+    font-family: 'Inconsolata', monospace;
+    color: #556070; }
 section h2 {
   font-size: 1.5em;
   font-weight: 400; }
 section .param > em, section .return > em, section .eg > em, section .demo > em {
   display: inline-block;
   vertical-align: top;
-  color: #999;
-  width: 100px; }
+  color: #8899aa;
+  width: 80px;
+  font-size: 0.9em;
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-top: 0.6em; }
 section .param > .p, section .return > .p, section .eg > .p, section .demo > .p {
   display: inline-block;
   vertical-align: top;
@@ -81,33 +97,49 @@ section.inherited ul {
   font-size: 1.5em; }
   section.inherited ul li {
     display: inline-block;
+    font-family: "Inconsolata", monospace;
     list-style: none; }
+    section.inherited ul li a {
+      color: #334455; }
+    section.inherited ul li a:hover {
+      color: #334fff; }
     section.inherited ul li:after {
-      content: ', '; }
+      content: ', ';
+      margin-right: 5px; }
     section.inherited ul li:last-child:after {
       content: ''; }
     section.inherited ul li.label {
       display: block;
-      color: #999;
-      font-size: 0.75em; }
+      color: #8899aa;
+      font-size: 0.6em;
+      text-transform: uppercase; }
     section.inherited ul li.label:after {
       content: ''; }
 
 .eg code {
   display: block;
-  font-size: 0.8em; }
+  font-size: 0.9em; }
+
+.param .group code {
+  padding-right: 5px; }
 
 #head {
-  position: relative;
-  z-index: 10; }
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1; }
 
 #header {
   position: absolute;
+  z-index: 3;
   height: 30px;
   left: 0;
   right: 0;
   top: -50px;
-  background-color: #334fff;
+  background-color: #fff;
+  border-bottom: 1px solid #334fff;
   transition: top .4s; }
 
 .sticky-step1 #header {
@@ -115,7 +147,11 @@ section.inherited ul {
   top: 0; }
 
 #page {
-  background-color: #fff; }
+  position: relative;
+  z-index: 2;
+  background-color: #fff;
+  border-top: 1px solid #334fff;
+  margin-top: 100vh; }
 
 #content {
   margin-left: 300px;
@@ -123,9 +159,11 @@ section.inherited ul {
   width: 550px;
   background-color: #fff;
   transition: background-color .5s; }
+  #content section h1 {
+    line-height: 1; }
 
 #menu {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Lato', sans-serif;
   font-weight: 400;
   float: left;
   margin-top: 100px;
@@ -135,7 +173,7 @@ section.inherited ul {
   background-color: #fff;
   position: relative;
   transition: background-color .5s, margin-top .5s;
-  font-size: 1.2em;
+  font-size: 1.3em;
   line-height: 1.5; }
   #menu > ul {
     width: 120px;
@@ -171,7 +209,7 @@ section.inherited ul {
     padding: 10px 5px 20px 20px;
     border-left: 1px solid #334fff;
     font-weight: 400;
-    font-size: 0.9em; }
+    font-size: 0.85em; }
     #menu #submenu .subsection {
       margin-bottom: 30px;
       overflow-x: hidden; }
@@ -190,7 +228,6 @@ section.inherited ul {
   left: 0px;
   bottom: 0px;
   height: auto;
-  background-color: #f3f5f9;
   overflow-x: hidden;
   overflow-y: auto;
   margin-top: 0; }

@@ -303,7 +303,7 @@
     };
 
     Docs.prototype.resize = function(evt) {
-      this.dom.head.style.height = window.innerHeight + "px";
+      //this.dom.head.style.height = window.innerHeight + "px";
       this.layout.sticky[0].y = window.innerHeight;
       return this.syncScroll();
     };

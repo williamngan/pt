@@ -1,7 +1,9 @@
 $link: #334fff;
+$link-hover: #4a11df;
 $link-menu: #345;
 $link-hover: lighten( $link, 10 );
 $grey-medium: #89a;
+$grey-dark: #556070;
 
 $bg: #f3f5f9;
 
@@ -10,9 +12,10 @@ $menuW: 300px;
 
 body {
   background-color: $bg;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Lato', sans-serif;
   font-size: 10px;
   margin: 0;
+  line-height: 1.35;
 }
 
 html {
@@ -26,12 +29,11 @@ html * {
 
 h1 {
   font-size: 12em;
-  font-weight: 700;
+  font-weight: 900;
 }
 
 h2 {
   font-size: 5em;
-  letter-spacing: -0.03em;
 }
 
 h3 {
@@ -50,10 +52,20 @@ p.small {
   font-size: 1.1em;
 }
 
+a {
+  color: $link;
+  text-decoration: none;
+}
+
+a:hover { color: $link-hover; }
 
 code {
-  font-weight: 600;
+  font-family: 'Inconsolata', monospace;
+  color: $grey-dark;
+  display: inline-block;
 }
+
+
 
 section {
   padding-top: 40px;
@@ -65,7 +77,9 @@ section {
     font-size: 2em;
     .param {
       font-weight: 400;
-      font-size: .8em;
+      font-size: 12px;
+      font-family: 'Inconsolata', monospace;
+      color: $grey-dark;
     }
   }
 
@@ -75,11 +89,17 @@ section {
   }
 
   .param, .return, .eg, .demo {
+
     > em {
       display: inline-block;
       vertical-align: top;
-      color: #999;
-      width: 100px;
+      color: $grey-medium;
+      width: 80px;
+      font-size: 0.9em;
+      font-style: normal;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-top: 0.6em;
     }
 
     > .p {
@@ -123,11 +143,15 @@ section.inherited ul {
 
   li {
     display: inline-block;
+    font-family: "Inconsolata", monospace;
     list-style: none;
 
-    &:after { content: ', ' }
+    a { color: $link-menu; }
+    a:hover { color: $link; }
+
+    &:after { content: ', '; margin-right: 5px; }
     &:last-child:after { content: '' }
-    &.label { display: block; color: #999; font-size: 0.75em; }
+    &.label { display: block; color: $grey-medium; font-size: 0.6em; text-transform: uppercase }
     &.label:after { content: ''  }
   }
 }
@@ -135,17 +159,27 @@ section.inherited ul {
 
 .eg code {
   display: block;
-  font-size: 0.8em;
+  font-size: 0.9em;
+}
+
+.param .group code {
+  padding-right: 5px;
 }
 
 
 // head
-#head { position: relative; z-index: 10 }
+#head {
+  position: fixed;
+  top: 0; bottom: 0; left: 0; right: 0;
+  z-index: 1
+}
 
 #header {
   position: absolute;
+  z-index: 3;
   height: 30px; left: 0; right: 0; top: -50px;
-  background-color: $link;
+  background-color: #fff;
+  border-bottom: 1px solid $link;
   transition: top .4s;
 }
 
@@ -156,7 +190,11 @@ section.inherited ul {
 
 
 #page {
+  position: relative;
+  z-index: 2;
   background-color: #fff;
+  border-top: 1px solid $link;
+  margin-top: 100vh;
 }
 
 
@@ -168,13 +206,17 @@ section.inherited ul {
 
   background-color: #fff;
   transition: background-color .5s;
+
+  section h1 {
+    line-height: 1;
+  }
 }
 
 
 // Menu
 #menu {
 
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Lato', sans-serif;
   font-weight: 400;
   float: left;
   margin-top: 100px;
@@ -185,7 +227,7 @@ section.inherited ul {
 
   transition: background-color .5s, margin-top .5s;
 
-  font-size: 1.2em;
+  font-size: 1.3em;
   line-height: 1.5;
 
   > ul {
@@ -225,7 +267,7 @@ section.inherited ul {
 
     border-left: 1px solid $link;
     font-weight: 400;
-    font-size: 0.9em;
+    font-size: 0.85em;
 
     .subsection {
       margin-bottom: 30px;
@@ -250,7 +292,7 @@ section.inherited ul {
 .sticky-step1 #menu {
   position: fixed;
   top: 30px; left: 0px; bottom: 0px; height: auto;
-  background-color:$bg;
+
   overflow-x: hidden;
   overflow-y: auto;
   margin-top: 0;
