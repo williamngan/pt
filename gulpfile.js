@@ -126,6 +126,13 @@ gulp.task('pt-ns-min', function() {
 
 });
 
+gulp.task('demos', function() {
+  return gulp.src( "./demo/*.js" )
+    .pipe( insert.prepend("(function() {") ).pipe( insert.append("})();") )
+    .pipe( uglify() )
+    .pipe( gulp.dest( "./docs/demo/" ) );
+});
+
 // Core
 
 gulp.task('core', function() {

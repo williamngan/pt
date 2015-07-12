@@ -47,7 +47,7 @@
             src = document.createElement('script');
             src.setAttribute("type", "text/javascript");
             src.setAttribute("id", "src");
-            src.setAttribute("src", "demo/" + qs("file"));
+            src.setAttribute("src", "./docs/demo/" + qs("file"));
             src.onload = function () {
                 var hint = document.querySelector("#hint");
                 hint.innerHTML = window.demoDescription;
