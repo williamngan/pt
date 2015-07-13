@@ -1,5 +1,5 @@
 //// 0. Describe this demo
-window.demoDescription = "";
+window.demoDescription = "Interpolate each side of a rectangle, and use the interpolated point on each side to define an inner rectangle.";
 
 
 //// 1. Define Space and Form
@@ -7,52 +7,89 @@ var colors = {
   a1: "#ff2d5d", a2: "#42dc8e", a3: "#2e43eb", a4: "#ffe359",
   b1: "#96bfed", b2: "#f5ead6", b3: "#f1f3f7", b4: "#e2e6ef"
 };
-var space = new CanvasSpace("demo", colors.b4 ).display();
+var space = new CanvasSpace("demo", colors.b3 ).display();
 var form = new Form( space.ctx );
 
 
 //// 2. Create Elements
-var steps = 10;
-var area = space.size.$divide( 1, steps );
+var w = Math.min( space.size.x, space.size.y ) * 0.4;
+var center = space.size.$divide(2);
 
-function createSteps() {
-  var ps = [];
-  for (var i = 0; i < steps; i++) {
-    var left = Math.random() * 0.7;
-    var right = left + (1 - left) * Math.random();
-    var p = new Pair(area.$multiply(left, Math.random())).connect(area.$multiply(right, Math.random()));
-    p.moveBy(0, area.y * i);
-    ps.push(p);
+var lastAngle = 0;
+var t = 0;
+var count = 0;
+
+var a = center.$subtract( w, w );
+var b = center.$add( w, w );
+
+// first rectangle
+var ps = [
+  new Pair(a).connect(b.x, a.y),
+  new Pair(b.x, a.y).connect(b),
+  new Pair(b).connect(a.x, b.y),
+  new Pair(a.x, b.y).connect(a)
+];
+
+// create a list of interpolated pairs from a list of original pairs
+function interpolatePairs( _ps, t1, t2 ) {
+  var pn = [];
+  for (var i=0; i<_ps.length; i++) {
+    var next = (i==_ps.length-1) ? 0 : i+1;
+    pn.push( new Pair( _ps[i].interpolate( t1 ) ).connect( _ps[next].interpolate( 1-t2 ) ) );
   }
-  return ps;
+  return pn;
 }
-
-var pairsCurr = createSteps();
-var pairsNext = createSteps();
-var counter = 0;
 
 
 //// 3. Visualize, Animate, Interact
 space.add({
   animate: function(time, fps, context) {
 
+    t = Math.sin( (count++ % 360) * Const.deg_to_rad ); // cycle through 360
 
-    for (var i=0; i<pairsCurr.length; i++) {
+    form.fill( "#fff" ).stroke( false );
+    form.polygon( ps );
 
-      var p = pairsNext[i].$subtract( pairsCurr[i] )
-      var p2 = pairsNext[i].p1.$subtract( pairsCurr[i].p1 )
-      //pairsCurr.add( p );
-      //pairsCurr.p1.add( p2 );
-      form.line( pairsCurr[i] );
-      //form.line( pairsNext[i] );
+    var ps2 = []; // 4 pairs are interpolated at 0.1 and 0.9 of first rectangle's sides
+    form.stroke( "#abc", 0.5 );
+    for (var i = 0; i < ps.length; i++) {
+      ps2[i] = new Pair( ps[i].interpolate( 0.1 + (t * 0.1) ) ).connect( ps[i].interpolate( 0.9 + (t * 0.1) ) );
+      form.line( ps2[i] );
     }
 
-  },
-  onMouseAction: function(type, x, y, evt) {
+    // interpolate inner rectangles
+    var tt = 0.5 + 0.5 * t;
 
+    form.fill( colors.a3 ).stroke( false );
+    var ps3 = interpolatePairs( ps2, 0.2, 0.8 );
+    form.polygon( ps3 );
+
+    form.fill( false ).stroke( colors.a4 );
+    var ps4 = interpolatePairs( ps3, 1 - tt, tt );
+    form.polygon( ps4 );
+
+    form.stroke( "#fff", 1 );
+    var ps5 = interpolatePairs( ps4, 1 - tt, 1 - tt );
+    form.polygon( ps5 );
+
+    form.stroke( "rgba(255,255,255,.2" );
+    form.lines( ps5 );
+
+  },
+
+  onMouseAction: function(type, x, y, evt) {
+    if (type=="move") {
+      var vec = center.$subtract( x, y );
+      ang = Util.boundRadian( vec.angle(), true );
+
+      for (var i=0; i<ps.length; i++) {
+        ps[i].rotate2D( ang-lastAngle, center );
+      }
+
+      lastAngle = ang;
+    }
   }
 });
-
 
 // 4. Start playing
 space.bindMouse();
