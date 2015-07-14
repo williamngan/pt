@@ -68,7 +68,7 @@ class Vector extends Point
   # @return this Vector
   multiply: (args) ->
     # multiply scalar
-    if typeof arguments[0] is 'number' and arguments.length is 1
+    if arguments.length is 1 and (typeof arguments[0] is 'number' or (typeof arguments[0] is 'object' and arguments[0].length == 1) )
       @x *= arguments[0]
       @y *= arguments[0]
       @z *= arguments[0]
@@ -92,7 +92,7 @@ class Vector extends Point
   # @return this Vector
   divide: (args) ->
     # divide scalar
-    if typeof arguments[0] is 'number' and arguments.length is 1
+    if arguments.length is 1 and (typeof arguments[0] is 'number' or (typeof arguments[0] is 'object' and arguments[0].length == 1) )
       @x /= arguments[0]
       @y /= arguments[0]
       @z /= arguments[0]
@@ -406,9 +406,7 @@ class Vector extends Point
   # @return "Vector x, y, z" text
   toString: () -> "Vector #{ @x }, #{ @y }, #{ @z }"
 
-  # ## Put this vector into an array
-  # @return an array with a single point object
-  toArray: () -> [@]
+
 
 
 # namespace

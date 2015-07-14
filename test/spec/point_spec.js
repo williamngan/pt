@@ -197,28 +197,28 @@ describe("Pair", function() {
     return expect(new Pair(8, -3, 1).connect(6, 3).relative().size().equal(new Point(6, 3, 0))).toEqual(true);
   });
   it("can add to both points", function() {
-      return expect(new Pair(2,2,1).connect(3,4).pointsAdd(1,2,3).equal( new Pair(3,4,4).connect(4,6,3) )).toEqual(true);
+      return expect(new Pair(2,2,1).connect(3,4).op("add", 1,2,3).equal( new Pair(3,4,4).connect(4,6,3) )).toEqual(true);
     });
   it("can add to both points as new Pair", function() {
-      return expect(new Pair(2,2,1).connect(3,4).$pointsAdd(1,2,3).equal( new Pair(3,4,4).connect(4,6,3) )).toEqual(true);
+      return expect(new Pair(2,2,1).connect(3,4).$op("add", 1,2,3).equal( new Pair(3,4,4).connect(4,6,3) )).toEqual(true);
     });
   it("can subtract from both points", function() {
-      return expect(new Pair(2,2).connect(3,4,5).pointsSubtract(1,2,3).equal( new Pair(1,0,-3).connect(2,2,2) )).toEqual(true);
+      return expect(new Pair(2,2).connect(3,4,5).op("subtract", 1,2,3).equal( new Pair(1,0,-3).connect(2,2,2) )).toEqual(true);
     });
   it("can subtract from both points as new Pair", function() {
-      return expect(new Pair(2,2).connect(3,4,5).$pointsSubtract(1,2,3).equal( new Pair(1,0,-3).connect(2,2,2) )).toEqual(true);
+      return expect(new Pair(2,2).connect(3,4,5).$op("subtract", 1,2,3).equal( new Pair(1,0,-3).connect(2,2,2) )).toEqual(true);
     });
   it("can multiply with both points", function() {
-      return expect(new Pair(1,2).connect(3,2,1).pointsMultiply(2).equal( new Pair(2,4).connect(6,4,2) )).toEqual(true);
+      return expect(new Pair(1,2).connect(3,2,1).op("multiply", 2).equal( new Pair(2,4).connect(6,4,2) )).toEqual(true);
     });
   it("can multiply with both points as new Pair", function() {
-      return expect(new Pair(1,2).connect(3,2,1).$pointsMultiply(2,3,4).equal( new Pair(2,6).connect(6,6,4) )).toEqual(true);
+      return expect(new Pair(1,2).connect(3,2,1).$op("multiply", 2,3,4).equal( new Pair(2,6).connect(6,6,4) )).toEqual(true);
     });
   it("can divide from both points", function() {
-        return expect(new Pair(1,2).connect(3,2,1).pointsDivide(2).equal( new Pair(0.5,1).connect(3/2, 1, 0.5) )).toEqual(true);
+        return expect(new Pair(1,2).connect(3,2,1).op("divide", 2).equal( new Pair(0.5,1).connect(3/2, 1, 0.5) )).toEqual(true);
       });
   it("can divide with both points as new Pair", function() {
-      return expect(new Pair(1,2).connect(3,2,1).$pointsDivide(2,3,4).equal( new Pair(0.5, 2/3).connect(3/2, 2/3, 1/4) )).toEqual(true);
+      return expect(new Pair(1,2).connect(3,2,1).$op("divide", 2,3,4).equal( new Pair(0.5, 2/3).connect(3/2, 2/3, 1/4) )).toEqual(true);
     });
   it("can find bounding box", function() {
     return expect(new Pair(3, 1, -5).connect(-2, 5, 3).bounds().equal(new Rectangle(-2, 1, -5).connect(3, 5, 3))).toEqual(true);

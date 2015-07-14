@@ -143,14 +143,14 @@ class CanvasSpace extends Space
   # ## Bind event listener in canvas element, for events such as mouse events
   # @param `evt` Event object
   # @param `callback` a callback function for this event
-  bind: ( evt, callback ) ->
+  bindCanvas: ( evt, callback ) ->
     @canvas.addEventListener( evt, callback )
 
 
   # ## A convenient method to bind (or unbind) all mouse events in canvas element. All item added to `items` property that implements an `onMouseAction` callback will receive mouse event callbacks.
   # @param `bind` a boolean value to bind mouse events if set to `true`. If `false`, all mouse events will be unbound. Default is true.
-  bindMouse: ( bind=true ) ->
-    if bind
+  bindMouse: ( _bind=true ) ->
+    if _bind
       @canvas.addEventListener( "mousedown", @_mouseDown.bind(@) )
       @canvas.addEventListener( "mouseup", @_mouseUp.bind(@) )
       @canvas.addEventListener( "mouseover", @_mouseOver.bind(@) )

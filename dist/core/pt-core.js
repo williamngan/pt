@@ -1,6 +1,7 @@
 var CanvasSpace, Circle, Color, Const, Curve, Form, Grid, Line, Matrix, Pair, Particle, ParticleSystem, Point, PointSet, Rectangle, Space, Timer, Triangle, Util, Vector,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  hasProp = {}.hasOwnProperty;
+  hasProp = {}.hasOwnProperty,
+  slice = [].slice;
 
 Const = (function() {
   function Const() {}
@@ -667,15 +668,15 @@ CanvasSpace = (function(superClass) {
     return this;
   };
 
-  CanvasSpace.prototype.bind = function(evt, callback) {
+  CanvasSpace.prototype.bindCanvas = function(evt, callback) {
     return this.canvas.addEventListener(evt, callback);
   };
 
-  CanvasSpace.prototype.bindMouse = function(bind) {
-    if (bind == null) {
-      bind = true;
+  CanvasSpace.prototype.bindMouse = function(_bind) {
+    if (_bind == null) {
+      _bind = true;
     }
-    if (bind) {
+    if (_bind) {
       this.canvas.addEventListener("mousedown", this._mouseDown.bind(this));
       this.canvas.addEventListener("mouseup", this._mouseUp.bind(this));
       this.canvas.addEventListener("mouseover", this._mouseOver.bind(this));
@@ -1168,6 +1169,33 @@ Point = (function() {
     return "Point " + this.x + ", " + this.y + ", " + this.z;
   };
 
+  Point.prototype.toArray = function() {
+    return [this];
+  };
+
+  Point.prototype.op = function() {
+    var args, j, len1, name, p, pts;
+    name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+    pts = this.toArray();
+    for (j = 0, len1 = pts.length; j < len1; j++) {
+      p = pts[j];
+      p[name](args);
+    }
+    return this;
+  };
+
+  Point.prototype.$op = function() {
+    var args, instance, j, len1, name, p, pts;
+    name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+    instance = this.clone();
+    pts = instance.toArray();
+    for (j = 0, len1 = pts.length; j < len1; j++) {
+      p = pts[j];
+      p[name](args);
+    }
+    return instance;
+  };
+
   Point.prototype.get2D = function(axis, reverse) {
     if (reverse == null) {
       reverse = false;
@@ -1287,7 +1315,7 @@ Vector = (function(superClass) {
 
   Vector.prototype.multiply = function(args) {
     var _p;
-    if (typeof arguments[0] === 'number' && arguments.length === 1) {
+    if (arguments.length === 1 && (typeof arguments[0] === 'number' || (typeof arguments[0] === 'object' && arguments[0].length === 1))) {
       this.x *= arguments[0];
       this.y *= arguments[0];
       this.z *= arguments[0];
@@ -1308,7 +1336,7 @@ Vector = (function(superClass) {
 
   Vector.prototype.divide = function(args) {
     var _p;
-    if (typeof arguments[0] === 'number' && arguments.length === 1) {
+    if (arguments.length === 1 && (typeof arguments[0] === 'number' || (typeof arguments[0] === 'object' && arguments[0].length === 1))) {
       this.x /= arguments[0];
       this.y /= arguments[0];
       this.z /= arguments[0];
@@ -1604,10 +1632,6 @@ Vector = (function(superClass) {
 
   Vector.prototype.toString = function() {
     return "Vector " + this.x + ", " + this.y + ", " + this.z;
-  };
-
-  Vector.prototype.toArray = function() {
-    return [this];
   };
 
   return Vector;

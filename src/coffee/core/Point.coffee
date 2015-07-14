@@ -117,6 +117,31 @@ class Point
   # @return "Point x, y, z" text
   toString: () -> "Point #{ @x }, #{ @y }, #{ @z }"
 
+  # ## Put this vector into an array
+  # @return an array with a single point object
+  toArray: () -> [@]
+
+
+  # ## Apply a function to all points in the `toArray()` list. This is usually applied to `Pair`, `PointSet` and other objects to apply a function to all its points.
+  # @param `name` a function of this class
+  # @param `args...` optional, comma-separated arguments to pass to the function
+  # @eg `pair.op("add", 1,2,3)`, `pointset.op("multiply", 2)`
+  op: ( name, args... ) ->
+    pts = @toArray()
+    for p in pts
+      p[name]( args )
+    return @
+
+
+  # ## Similar to `op()` but apply the function to a new instance.
+  $op: ( name, args... ) ->
+    instance = @clone()
+    pts = instance.toArray()
+    for p in pts
+      p[name]( args )
+    return instance
+
+
   # ## When a point has 3 dimensions `(x,y,z)`, this function converts it to a new point `(x,y)` of a specific 2D plane (such as `yz`)
   # @param `axis` an axis id such as `Const.yz`.
   # @param `reverse` optional boolean value. If `true`, the mapping will be flipped. Default is false.
