@@ -54,7 +54,7 @@ function rand(r) { return Math.random() * r - Math.random() * r; }
 //// 3. Visualize, Animate, Interact
 
 // When mouse moved, add dust into space
-space.bind("mousemove", function(evt) {
+space.bindCanvas("mousemove", function(evt) {
 
   // add two Dust into space
   space.add( new Dust( evt.offsetX+rand(5), evt.offsetY+rand(5) ) );

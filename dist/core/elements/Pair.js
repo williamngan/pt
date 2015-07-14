@@ -30,62 +30,6 @@ Pair = (function(superClass) {
     return this.$add(this.p1);
   };
 
-  Pair.prototype.pointsAdd = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    this.add(a);
-    this.p1.add(a);
-    return this;
-  };
-
-  Pair.prototype.$pointsAdd = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    return new this.__proto__.constructor(this.$add(a)).connect(this.p1.$add(a));
-  };
-
-  Pair.prototype.pointsSubtract = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    this.subtract(a);
-    this.p1.subtract(a);
-    return this;
-  };
-
-  Pair.prototype.$pointsSubtract = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    return new this.__proto__.constructor(this.$subtract(a)).connect(this.p1.$subtract(a));
-  };
-
-  Pair.prototype.pointsMultiply = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    this.multiply(a);
-    this.p1.multiply(a);
-    return this;
-  };
-
-  Pair.prototype.$pointsMultiply = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    return new this.__proto__.constructor(this.$multiply(a)).connect(this.p1.$multiply(a));
-  };
-
-  Pair.prototype.pointsDivide = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    this.divide(a);
-    this.p1.divide(a);
-    return this;
-  };
-
-  Pair.prototype.$pointsDivide = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    return new this.__proto__.constructor(this.$divide(a)).connect(this.p1.$divide(a));
-  };
-
   Pair.prototype.bounds = function() {
     return new Pair(this.min(this.p1)).connect(this.max(this.p1));
   };

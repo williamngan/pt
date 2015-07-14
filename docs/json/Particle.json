@@ -138,7 +138,7 @@
                 "<p><code>pa, pb</code> two Particles</p>", 
                 "<p><code>update</code> a boolean value to update the velocity and momentum of the two particle directly if set to <code>true</code>. Default is true.</p>"
             ], 
-            "pname": "pa, pb, update=true", 
+            "pname": "pa, pb, update=true, checkOverlap=true", 
             "return": "<p>an array of 2 Vectors, representing this and the other particle's resulting velocity.</p>"
         }, 
         {
@@ -147,9 +147,10 @@
             "param": [
                 "<p><code>state</code> a object with <code>position</code> and <code>momentum</code> Vectors</p>", 
                 "<p><code>t</code> curent time in seconds</p>", 
-                "<p><code>pa, pb</code> two Particles</p>"
+                "<p><code>pa, pb</code> two Particles</p>", 
+                "<p><code>g</code> optional gravitational constant. Defaults to 0.0067.</p>"
             ], 
-            "pname": "state, t, pa, pb", 
+            "pname": "state, t, pa, pb, g=0.0067", 
             "return": "<p>an object with <code>force</code> property</p>"
         }, 
         {

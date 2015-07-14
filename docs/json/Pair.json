@@ -39,66 +39,6 @@
             "return": "<p>a new Vector</p>"
         }, 
         {
-            "description": "<h2>Add a vector to both points in this <code>Pair</code></h2>", 
-            "name": "pointsAdd", 
-            "param": [
-                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
-            ], 
-            "pname": "args", 
-            "return": "<p>this <code>Pair</code></p>"
-        }, 
-        {
-            "description": "<h2>Same as <code>pointsAdd()</code> but returns a new <code>Pair</code></h2>", 
-            "name": "$pointsAdd", 
-            "param": [], 
-            "pname": "args"
-        }, 
-        {
-            "description": "<h2>Subtract a vector from both points in this <code>Pair</code></h2>", 
-            "name": "pointsSubtract", 
-            "param": [
-                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
-            ], 
-            "pname": "args", 
-            "return": "<p>this <code>Pair</code></p>"
-        }, 
-        {
-            "description": "<h2>Same as <code>pointsSubtract()</code> but returns a new <code>Pair</code></h2>", 
-            "name": "$pointsSubtract", 
-            "param": [], 
-            "pname": "args"
-        }, 
-        {
-            "description": "<h2>Multiply a vector with both points in this <code>Pair</code></h2>", 
-            "name": "pointsMultiply", 
-            "param": [
-                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
-            ], 
-            "pname": "args", 
-            "return": "<p>this <code>Pair</code></p>"
-        }, 
-        {
-            "description": "<h2>Same as <code>pointsMultiply()</code> but returns a new <code>Pair</code></h2>", 
-            "name": "$pointsMultiply", 
-            "param": [], 
-            "pname": "args"
-        }, 
-        {
-            "description": "<h2>Divide with both points in this <code>Pair</code> with a vector</h2>", 
-            "name": "pointsDivide", 
-            "param": [
-                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
-            ], 
-            "pname": "args", 
-            "return": "<p>this <code>Pair</code></p>"
-        }, 
-        {
-            "description": "<h2>Same as <code>pointsDivide()</code> but returns a new <code>Pair</code></h2>", 
-            "name": "$pointsDivide", 
-            "param": [], 
-            "pname": "args"
-        }, 
-        {
             "description": "<h2>Get a new pair that's the bounding box of this pair. This is the same as calculating its top-left (min) and bottom-right (max) points.</h2>", 
             "name": "bounds", 
             "param": [], 

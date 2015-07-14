@@ -3,6 +3,9 @@
 
 # By William Ngan, metaphorical.net
 
+# Command Line Example:
+# python docgen.py -i ./src/coffee/core -o ./docs/json
+
 import sys
 import getopt
 import os

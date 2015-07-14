@@ -52,7 +52,7 @@
       }, 
       {
         "description": "<h2>Bind event listener in canvas element, for events such as mouse events</h2>", 
-        "name": "bind", 
+        "name": "bindCanvas", 
         "param": [
           "<p><code>evt</code> Event object</p>", 
           "<p><code>callback</code> a callback function for this event</p>"
@@ -65,7 +65,7 @@
         "param": [
           "<p><code>bind</code> a boolean value to bind mouse events if set to <code>true</code>. If <code>false</code>, all mouse events will be unbound. Default is true.</p>"
         ], 
-        "pname": "bind=true"
+        "pname": "_bind=true"
       }
     ], 
     "props": [
@@ -152,7 +152,7 @@
           "<p><code>circle</code> another Circle</p>"
         ], 
         "pname": "circle, get_pts=true", 
-        "return": "<p>s an Array of intersection points (zero or two points), or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        "return": "<p>s an Array of intersection points (zero or two points) or a boolean value, based on <code>get_pts</code> parameter.</p>"
       }, 
       {
         "description": "<h2>Check if this cirlce intersect with another element on xy axis</h2>", 
@@ -1379,66 +1379,6 @@
         "return": "<p>a new Vector</p>"
       }, 
       {
-        "description": "<h2>Add a vector to both points in this <code>Pair</code></h2>", 
-        "name": "pointsAdd", 
-        "param": [
-          "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
-        ], 
-        "pname": "args", 
-        "return": "<p>this <code>Pair</code></p>"
-      }, 
-      {
-        "description": "<h2>Same as <code>pointsAdd()</code> but returns a new <code>Pair</code></h2>", 
-        "name": "$pointsAdd", 
-        "param": [], 
-        "pname": "args"
-      }, 
-      {
-        "description": "<h2>Subtract a vector from both points in this <code>Pair</code></h2>", 
-        "name": "pointsSubtract", 
-        "param": [
-          "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
-        ], 
-        "pname": "args", 
-        "return": "<p>this <code>Pair</code></p>"
-      }, 
-      {
-        "description": "<h2>Same as <code>pointsSubtract()</code> but returns a new <code>Pair</code></h2>", 
-        "name": "$pointsSubtract", 
-        "param": [], 
-        "pname": "args"
-      }, 
-      {
-        "description": "<h2>Multiply a vector with both points in this <code>Pair</code></h2>", 
-        "name": "pointsMultiply", 
-        "param": [
-          "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
-        ], 
-        "pname": "args", 
-        "return": "<p>this <code>Pair</code></p>"
-      }, 
-      {
-        "description": "<h2>Same as <code>pointsMultiply()</code> but returns a new <code>Pair</code></h2>", 
-        "name": "$pointsMultiply", 
-        "param": [], 
-        "pname": "args"
-      }, 
-      {
-        "description": "<h2>Divide with both points in this <code>Pair</code> with a vector</h2>", 
-        "name": "pointsDivide", 
-        "param": [
-          "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
-        ], 
-        "pname": "args", 
-        "return": "<p>this <code>Pair</code></p>"
-      }, 
-      {
-        "description": "<h2>Same as <code>pointsDivide()</code> but returns a new <code>Pair</code></h2>", 
-        "name": "$pointsDivide", 
-        "param": [], 
-        "pname": "args"
-      }, 
-      {
         "description": "<h2>Get a new pair that's the bounding box of this pair. This is the same as calculating its top-left (min) and bottom-right (max) points.</h2>", 
         "name": "bounds", 
         "param": [], 
@@ -1700,7 +1640,7 @@
           "<p><code>pa, pb</code> two Particles</p>", 
           "<p><code>update</code> a boolean value to update the velocity and momentum of the two particle directly if set to <code>true</code>. Default is true.</p>"
         ], 
-        "pname": "pa, pb, update=true", 
+        "pname": "pa, pb, update=true, checkOverlap=true", 
         "return": "<p>an array of 2 Vectors, representing this and the other particle's resulting velocity.</p>"
       }, 
       {
@@ -1709,9 +1649,10 @@
         "param": [
           "<p><code>state</code> a object with <code>position</code> and <code>momentum</code> Vectors</p>", 
           "<p><code>t</code> curent time in seconds</p>", 
-          "<p><code>pa, pb</code> two Particles</p>"
+          "<p><code>pa, pb</code> two Particles</p>", 
+          "<p><code>g</code> optional gravitational constant. Defaults to 0.0067.</p>"
         ], 
-        "pname": "state, t, pa, pb", 
+        "pname": "state, t, pa, pb, g=0.0067", 
         "return": "<p>an object with <code>force</code> property</p>"
       }, 
       {
@@ -1746,7 +1687,17 @@
         "param": [
           "<p><code>particle</code> a Particle</p>"
         ], 
-        "pname": "particle"
+        "pname": "particle", 
+        "return": "<p>this system</p>"
+      }, 
+      {
+        "description": "<h2>remove a particle which has a <code>particle.life</code> property. This marks the <code>particle.life.complete</code> as <code>true</code> for removal in next cycle.</h2>", 
+        "name": "remove", 
+        "param": [
+          "<p><code>particle</code> a Particle</p>"
+        ], 
+        "pname": "particle", 
+        "return": "<p>this system</p>"
       }, 
       {
         "description": "<h2>animate callback function which is called by<code>Space.play()</code>. Override this callback function to specify other animation loops</h2>", 
@@ -1760,7 +1711,7 @@
     "props": [
       {
         "description": "<h2>a property to store particles in this system as an Array</h2>", 
-        "name": "particles", 
+        "name": "count", 
         "param": []
       }, 
       {
@@ -1833,6 +1784,29 @@
         "param": [], 
         "pname": "", 
         "return": "<p>\"Point x, y, z\" text</p>"
+      }, 
+      {
+        "description": "<h2>Put this vector into an array</h2>", 
+        "name": "toArray", 
+        "param": [], 
+        "pname": "", 
+        "return": "<p>an array with a single point object</p>"
+      }, 
+      {
+        "description": "<h2>Apply a function to all points in the <code>toArray()</code> list. This is usually applied to <code>Pair</code>, <code>PointSet</code> and other objects to apply a function to all its points.</h2>", 
+        "eg": "<p><code>pair.op(\"add\", 1,2,3)</code>, <code>pointset.op(\"multiply\", 2)</code></p>", 
+        "name": "op", 
+        "param": [
+          "<p><code>name</code> a function of this class</p>", 
+          "<p><code>args...</code> optional, comma-separated arguments to pass to the function</p>"
+        ], 
+        "pname": "name, args..."
+      }, 
+      {
+        "description": "<h2>Similar to <code>op()</code> but apply the function to a new instance.</h2>", 
+        "name": "$op", 
+        "param": [], 
+        "pname": "name, args..."
       }, 
       {
         "description": "<h2>When a point has 3 dimensions <code>(x,y,z)</code>, this function converts it to a new point <code>(x,y)</code> of a specific 2D plane (such as <code>yz</code>)</h2>", 
@@ -1999,54 +1973,12 @@
         "pname": "args"
       }, 
       {
-        "description": "<h2>Subtract a vector from all the points in the <code>points</code> array.</h2>", 
-        "name": "pointsSubtract", 
-        "param": [
-          "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
-        ], 
-        "pname": "args", 
-        "return": "<p>this PointSet</p>"
-      }, 
-      {
-        "description": "<h2>Same as <code>pointsSubtract()</code> but returns a new array of the resulting points.</h2>", 
-        "name": "$pointsSubtract", 
-        "param": [], 
-        "pname": "args"
-      }, 
-      {
-        "description": "<h2>Multiply a vector with all the points in the <code>points</code> array.</h2>", 
-        "name": "pointsMultiply", 
-        "param": [
-          "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
-        ], 
-        "pname": "args", 
-        "return": "<p>this PointSet</p>"
-      }, 
-      {
-        "description": "<h2>Same as <code>pointsMultiply()</code> but returns a new array of the resulting points.</h2>", 
-        "name": "$pointsMultiply", 
-        "param": [], 
-        "pname": "args"
-      }, 
-      {
-        "description": "<h2>Divide all the points in the <code>points</code> array with a vector.</h2>", 
-        "name": "pointsDivide", 
-        "param": [
-          "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
-        ], 
-        "pname": "args", 
-        "return": "<p>this PointSet</p>"
-      }, 
-      {
-        "description": "<h2>Same as <code>pointsDivide()</code> but returns a new array of the resulting points.</h2>", 
-        "name": "$pointsDivide", 
-        "param": [], 
-        "pname": "args"
-      }, 
-      {
-        "description": "<h2>Get an array of Lines that represents this PointSet's sides</h2>", 
+        "description": "<h2>Subtract a vector from all the points in the <code>points</code> array.</h2><p>pointsSubtract: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>for p in @points</p><p>p.subtract( a )</p><p>return @</p><h2>Same as <code>pointsSubtract()</code> but returns a new array of the resulting points.</h2><p>$pointsSubtract: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>return (p.$subtract( a ) for p in @points)</p><h2>Multiply a vector with all the points in the <code>points</code> array.</h2><p>pointsMultiply: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>for p in @points</p><p>p.multiply( a )</p><p>return @</p><h2>Same as <code>pointsMultiply()</code> but returns a new array of the resulting points.</h2><p>$pointsMultiply: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>return (p.$multiply( a ) for p in @points)</p><h2>Divide all the points in the <code>points</code> array with a vector.</h2><p>pointsDivide: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>for p in @points</p><p>p.divide( a )</p><p>return @</p><h2>Same as <code>pointsDivide()</code> but returns a new array of the resulting points.</h2><p>$pointsDivide: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>return (p.$divide( a ) for p in @points)</p><h2>Get an array of Lines that represents this PointSet's sides</h2>", 
         "name": "sides", 
         "param": [
+          "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>", 
+          "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>", 
+          "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>", 
           "<p><code>close_path</code> a boolean value to include the side from last point to first point when set to <code>true</code></p>"
         ], 
         "pname": "close_path=true", 
@@ -2984,9 +2916,9 @@
         "eg": "<p><code>vec.angle()</code> <code>vec.angle(Const.yz)</code> <code>vec.angle(another_pt)</code> <code>vec.angle(Const.xz, another_pt)</code> <code>new Vector(1,1).angle( new Vector(1,2) ) * Const.rad_to_deg = 90</code></p>", 
         "name": "angle", 
         "param": [
-          "<p><code>args(axis)</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>", 
-          "<p><code>args(pt)</code> optional Point object to calculate the angle from this Point to another Point instead</p>", 
-          "<p><code>args(axis, pt)</code> optional axis id and Point object to get the angle to a Point on a specific plane</p>"
+          "<p><code>axis</code> single argument as optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>", 
+          "<p><code>pt</code> single argument as optional Point object to calculate the angle from this Point to another Point instead</p>", 
+          "<p><code>axis, pt</code> 2 arguments in this sequence, as optional axis id and Point object to get the angle to a Point on a specific plane</p>"
         ], 
         "pname": "args", 
         "return": "<p>a radian value</p>"
@@ -3006,10 +2938,10 @@
         "eg": "<p><code>vec.magnitude()</code> <code>vec.magnitude(false)</code> <code>vec.magnitude(Const.yz)</code> <code>vec.magnitude(another_pt)</code> <code>vec.magnitude(Const.xz, another_pt, false)</code>.</p>", 
         "name": "magnitude", 
         "param": [
-          "<p><code>args(axis)</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>", 
-          "<p><code>args(pt)</code> optional Point object to calculate the distance from this Point to another Point instead</p>", 
-          "<p><code>args(sqrt)</code> optional boolean value to get distance-squared value if set to <code>false</code>. Default is true.</p>", 
-          "<p><code>args(axis, pt, sqrt)</code> 3 optional parameters can be used in this sequence to specify a plane, a Point, and whether to get squared value.</p>"
+          "<p><code>axis</code> single argument as optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>", 
+          "<p><code>pt</code> single argument as optional Point object to calculate the distance from this Point to another Point instead</p>", 
+          "<p><code>sqrt</code> single argument as optional boolean value to get distance-squared value if set to <code>false</code>. Default is true.</p>", 
+          "<p><code>axis, pt, sqrt</code> 3 optional parameters can be used in this sequence to specify a plane, a Point, and whether to get squared value.</p>"
         ], 
         "pname": "args", 
         "return": "<p>magnitude value</p>"
@@ -3119,19 +3051,23 @@
         "return": "<p>the normal vector</p>"
       }, 
       {
-        "description": "<h2>move origin to a new position</h2>", 
+        "description": "<h2>move origin to a new position. In subclasses of <code>Vector</code>, such as <code>Pair</code> or <code>PointSet</code>, this will move all the points.</h2>", 
         "name": "moveTo", 
-        "param": [], 
-        "pname": ""
+        "param": [
+          "<p><code>args</code> new position as 0-3 comma-separated values, or as an array, or a Point object.</p>"
+        ], 
+        "pname": "args"
       }, 
       {
-        "description": "<h2>move origin by a certain amount</h2>", 
+        "description": "<h2>move origin by a certain amount. In subclasses of <code>Vector</code>, such as <code>Pair</code> or <code>PointSet</code>, this will move all the points.</h2>", 
         "name": "moveBy", 
-        "param": [], 
-        "pname": ""
+        "param": [
+          "<p><code>args</code> move amount as 0-3 comma-separated values, or as an array, or a Point object.</p>"
+        ], 
+        "pname": "args"
       }, 
       {
-        "description": "<h2>Rotate this vector around an anchor point on a 2D plane.</h2>", 
+        "description": "<h2>Rotate this vector around an anchor point on a 2D plane. In subclasses of <code>Vector</code>, such as <code>Pair</code> or <code>PointSet</code>, this will rotate all the points.</h2>", 
         "eg": "<p><code>vec.rotate2D( Math.PI/2, anchor_pt )</code> <code>vec.rotate2D( 30*Const.deg_to_rad, another_pt, Const.xz )</code></p>", 
         "name": "rotate2D", 
         "param": [
@@ -3143,7 +3079,7 @@
         "return": "<p>this vector</p>"
       }, 
       {
-        "description": "<h2>Reflect this vector along a path</h2>", 
+        "description": "<h2>Reflect this vector along a path. In subclasses of <code>Vector</code>, such as <code>Pair</code> or <code>PointSet</code>, this will reflect all the points.</h2>", 
         "eg": "<p><code>vec.reflect2D( line )</code> <code>vec.reflect2D( line, Const.xz )</code></p>", 
         "name": "reflect2D", 
         "param": [
@@ -3154,7 +3090,7 @@
         "return": "<p>this vector</p>"
       }, 
       {
-        "description": "<h2>Rescale this vector from an anchor point</h2>", 
+        "description": "<h2>Rescale this vector from an anchor point. In subclasses of <code>Vector</code>, such as <code>Pair</code> or <code>PointSet</code>, this will scale all the points together.</h2>", 
         "eg": "<p><code>vec.scale2D( 0.7, 1.2, anchor_pt )</code> <code>vec.scale2D( 1, 3, anchor_pt, Const.xz )</code></p>", 
         "name": "scale2D", 
         "param": [
@@ -3167,7 +3103,7 @@
         "return": "<p>this vector</p>"
       }, 
       {
-        "description": "<h2>Shear this vector from an anchor point</h2>", 
+        "description": "<h2>Shear this vector from an anchor point. In subclasses of <code>Vector</code>, such as <code>Pair</code> or <code>PointSet</code>, this will shear all the points together.</h2>", 
         "eg": "<p><code>vec.scale2D( 0.7, 1.2, anchor_pt )</code> <code>vec.scale2D( 1, 3, anchor_pt, Const.xz )</code></p>", 
         "name": "shear2D", 
         "param": [
@@ -3192,13 +3128,6 @@
         "param": [], 
         "pname": "", 
         "return": "<p>\"Vector x, y, z\" text</p>"
-      }, 
-      {
-        "description": "<h2>Put this vector into an array</h2>", 
-        "name": "toArray", 
-        "param": [], 
-        "pname": "", 
-        "return": "<p>an array with a single point object</p>"
       }
     ], 
     "props": [], 

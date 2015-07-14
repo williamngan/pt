@@ -61,7 +61,7 @@ Vector = (function(superClass) {
 
   Vector.prototype.multiply = function(args) {
     var _p;
-    if (typeof arguments[0] === 'number' && arguments.length === 1) {
+    if (arguments.length === 1 && (typeof arguments[0] === 'number' || (typeof arguments[0] === 'object' && arguments[0].length === 1))) {
       this.x *= arguments[0];
       this.y *= arguments[0];
       this.z *= arguments[0];
@@ -82,7 +82,7 @@ Vector = (function(superClass) {
 
   Vector.prototype.divide = function(args) {
     var _p;
-    if (typeof arguments[0] === 'number' && arguments.length === 1) {
+    if (arguments.length === 1 && (typeof arguments[0] === 'number' || (typeof arguments[0] === 'object' && arguments[0].length === 1))) {
       this.x /= arguments[0];
       this.y /= arguments[0];
       this.z /= arguments[0];
@@ -378,10 +378,6 @@ Vector = (function(superClass) {
 
   Vector.prototype.toString = function() {
     return "Vector " + this.x + ", " + this.y + ", " + this.z;
-  };
-
-  Vector.prototype.toArray = function() {
-    return [this];
   };
 
   return Vector;

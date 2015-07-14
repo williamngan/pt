@@ -43,66 +43,6 @@ Triangle = (function(superClass) {
     return new PointSet(p0).connect([p0, this.p1, this.p2]);
   };
 
-  Triangle.prototype.pointsAdd = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    this.add(a);
-    this.p1.add(a);
-    this.p2.add(a);
-    return this;
-  };
-
-  Triangle.prototype.$pointsAdd = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    return new this.__proto__.constructor(this.$add(a)).connect(this.p1.$add(a), this.p2.$add(a));
-  };
-
-  Triangle.prototype.pointsSubtract = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    this.subtract(a);
-    this.p1.subtract(a);
-    this.p2.subtract(a);
-    return this;
-  };
-
-  Triangle.prototype.$pointsSubtract = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    return new this.__proto__.constructor(this.$subtract(a)).connect(this.p1.$subtract(a), this.p2.$subtract(a));
-  };
-
-  Triangle.prototype.pointsMultiply = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    this.multiply(a);
-    this.p1.multiply(a);
-    this.p2.multiply(a);
-    return this;
-  };
-
-  Triangle.prototype.$pointsMultiply = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    return new this.__proto__.constructor(this.$multiply(a)).connect(this.p1.$multiply(a), this.p2.$multiply(a));
-  };
-
-  Triangle.prototype.pointsDivide = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    this.divide(a);
-    this.p1.divide(a);
-    this.p2.divide(a);
-    return this;
-  };
-
-  Triangle.prototype.$pointsDivide = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    return new this.__proto__.constructor(this.$divide(a)).connect(this.p1.$divide(a), this.p2.$divide(a));
-  };
-
   Triangle.prototype.sides = function() {
     return [new Line(this).connect(this.p1), new Line(this.p1).connect(this.p2), new Line(this.p2).connect(this)];
   };

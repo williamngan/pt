@@ -68,7 +68,7 @@
                 "<p><code>circle</code> another Circle</p>"
             ], 
             "pname": "circle, get_pts=true", 
-            "return": "<p>s an Array of intersection points (zero or two points), or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+            "return": "<p>s an Array of intersection points (zero or two points) or a boolean value, based on <code>get_pts</code> parameter.</p>"
         }, 
         {
             "description": "<h2>Check if this cirlce intersect with another element on xy axis</h2>", 

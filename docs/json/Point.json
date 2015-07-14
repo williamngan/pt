@@ -62,6 +62,29 @@
             "return": "<p>\"Point x, y, z\" text</p>"
         }, 
         {
+            "description": "<h2>Put this vector into an array</h2>", 
+            "name": "toArray", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>an array with a single point object</p>"
+        }, 
+        {
+            "description": "<h2>Apply a function to all points in the <code>toArray()</code> list. This is usually applied to <code>Pair</code>, <code>PointSet</code> and other objects to apply a function to all its points.</h2>", 
+            "eg": "<p><code>pair.op(\"add\", 1,2,3)</code>, <code>pointset.op(\"multiply\", 2)</code></p>", 
+            "name": "op", 
+            "param": [
+                "<p><code>name</code> a function of this class</p>", 
+                "<p><code>args...</code> optional, comma-separated arguments to pass to the function</p>"
+            ], 
+            "pname": "name, args..."
+        }, 
+        {
+            "description": "<h2>Similar to <code>op()</code> but apply the function to a new instance.</h2>", 
+            "name": "$op", 
+            "param": [], 
+            "pname": "name, args..."
+        }, 
+        {
             "description": "<h2>When a point has 3 dimensions <code>(x,y,z)</code>, this function converts it to a new point <code>(x,y)</code> of a specific 2D plane (such as <code>yz</code>)</h2>", 
             "eg": "<p><code>p.get2D( Const.xy )</code> <code>p.get2D(Const.yz, true)</code></p>", 
             "name": "get2D", 

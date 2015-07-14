@@ -1,6 +1,7 @@
 window.Pt = {};(function() {var CanvasSpace, Circle, Color, Const, Curve, Easing, Form, Grid, GridCascade, Line, Matrix, Noise, Pair, Particle, ParticleEmitter, ParticleField, ParticleSystem, Point, PointSet, QuadTree, Rectangle, SamplePoints, Space, StripeBound, Timer, Triangle, UI, Util, Vector,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  hasProp = {}.hasOwnProperty;
+  hasProp = {}.hasOwnProperty,
+  slice = [].slice;
 
 Const = (function() {
   function Const() {}
@@ -667,15 +668,15 @@ CanvasSpace = (function(superClass) {
     return this;
   };
 
-  CanvasSpace.prototype.bind = function(evt, callback) {
+  CanvasSpace.prototype.bindCanvas = function(evt, callback) {
     return this.canvas.addEventListener(evt, callback);
   };
 
-  CanvasSpace.prototype.bindMouse = function(bind) {
-    if (bind == null) {
-      bind = true;
+  CanvasSpace.prototype.bindMouse = function(_bind) {
+    if (_bind == null) {
+      _bind = true;
     }
-    if (bind) {
+    if (_bind) {
       this.canvas.addEventListener("mousedown", this._mouseDown.bind(this));
       this.canvas.addEventListener("mouseup", this._mouseUp.bind(this));
       this.canvas.addEventListener("mouseover", this._mouseOver.bind(this));
@@ -1168,6 +1169,33 @@ Point = (function() {
     return "Point " + this.x + ", " + this.y + ", " + this.z;
   };
 
+  Point.prototype.toArray = function() {
+    return [this];
+  };
+
+  Point.prototype.op = function() {
+    var aa, args, len1, name, p, pts;
+    name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+    pts = this.toArray();
+    for (aa = 0, len1 = pts.length; aa < len1; aa++) {
+      p = pts[aa];
+      p[name](args);
+    }
+    return this;
+  };
+
+  Point.prototype.$op = function() {
+    var aa, args, instance, len1, name, p, pts;
+    name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+    instance = this.clone();
+    pts = instance.toArray();
+    for (aa = 0, len1 = pts.length; aa < len1; aa++) {
+      p = pts[aa];
+      p[name](args);
+    }
+    return instance;
+  };
+
   Point.prototype.get2D = function(axis, reverse) {
     if (reverse == null) {
       reverse = false;
@@ -1287,7 +1315,7 @@ Vector = (function(superClass) {
 
   Vector.prototype.multiply = function(args) {
     var _p;
-    if (typeof arguments[0] === 'number' && arguments.length === 1) {
+    if (arguments.length === 1 && (typeof arguments[0] === 'number' || (typeof arguments[0] === 'object' && arguments[0].length === 1))) {
       this.x *= arguments[0];
       this.y *= arguments[0];
       this.z *= arguments[0];
@@ -1308,7 +1336,7 @@ Vector = (function(superClass) {
 
   Vector.prototype.divide = function(args) {
     var _p;
-    if (typeof arguments[0] === 'number' && arguments.length === 1) {
+    if (arguments.length === 1 && (typeof arguments[0] === 'number' || (typeof arguments[0] === 'object' && arguments[0].length === 1))) {
       this.x /= arguments[0];
       this.y /= arguments[0];
       this.z /= arguments[0];
@@ -1604,10 +1632,6 @@ Vector = (function(superClass) {
 
   Vector.prototype.toString = function() {
     return "Vector " + this.x + ", " + this.y + ", " + this.z;
-  };
-
-  Vector.prototype.toArray = function() {
-    return [this];
   };
 
   return Vector;
@@ -2610,62 +2634,6 @@ Pair = (function(superClass) {
     return this.$add(this.p1);
   };
 
-  Pair.prototype.pointsAdd = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    this.add(a);
-    this.p1.add(a);
-    return this;
-  };
-
-  Pair.prototype.$pointsAdd = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    return new this.__proto__.constructor(this.$add(a)).connect(this.p1.$add(a));
-  };
-
-  Pair.prototype.pointsSubtract = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    this.subtract(a);
-    this.p1.subtract(a);
-    return this;
-  };
-
-  Pair.prototype.$pointsSubtract = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    return new this.__proto__.constructor(this.$subtract(a)).connect(this.p1.$subtract(a));
-  };
-
-  Pair.prototype.pointsMultiply = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    this.multiply(a);
-    this.p1.multiply(a);
-    return this;
-  };
-
-  Pair.prototype.$pointsMultiply = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    return new this.__proto__.constructor(this.$multiply(a)).connect(this.p1.$multiply(a));
-  };
-
-  Pair.prototype.pointsDivide = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    this.divide(a);
-    this.p1.divide(a);
-    return this;
-  };
-
-  Pair.prototype.$pointsDivide = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    return new this.__proto__.constructor(this.$divide(a)).connect(this.p1.$divide(a));
-  };
-
   Pair.prototype.bounds = function() {
     return new Pair(this.min(this.p1)).connect(this.max(this.p1));
   };
@@ -3524,84 +3492,6 @@ PointSet = (function(superClass) {
     }).call(this);
   };
 
-  PointSet.prototype.pointsSubtract = function(args) {
-    var a, aa, len1, p, ref;
-    a = this._getArgs(arguments);
-    ref = this.points;
-    for (aa = 0, len1 = ref.length; aa < len1; aa++) {
-      p = ref[aa];
-      p.subtract(a);
-    }
-    return this;
-  };
-
-  PointSet.prototype.$pointsSubtract = function(args) {
-    var a, p;
-    a = this._getArgs(arguments);
-    return (function() {
-      var aa, len1, ref, results;
-      ref = this.points;
-      results = [];
-      for (aa = 0, len1 = ref.length; aa < len1; aa++) {
-        p = ref[aa];
-        results.push(p.$subtract(a));
-      }
-      return results;
-    }).call(this);
-  };
-
-  PointSet.prototype.pointsMultiply = function(args) {
-    var a, aa, len1, p, ref;
-    a = this._getArgs(arguments);
-    ref = this.points;
-    for (aa = 0, len1 = ref.length; aa < len1; aa++) {
-      p = ref[aa];
-      p.multiply(a);
-    }
-    return this;
-  };
-
-  PointSet.prototype.$pointsMultiply = function(args) {
-    var a, p;
-    a = this._getArgs(arguments);
-    return (function() {
-      var aa, len1, ref, results;
-      ref = this.points;
-      results = [];
-      for (aa = 0, len1 = ref.length; aa < len1; aa++) {
-        p = ref[aa];
-        results.push(p.$multiply(a));
-      }
-      return results;
-    }).call(this);
-  };
-
-  PointSet.prototype.pointsDivide = function(args) {
-    var a, aa, len1, p, ref;
-    a = this._getArgs(arguments);
-    ref = this.points;
-    for (aa = 0, len1 = ref.length; aa < len1; aa++) {
-      p = ref[aa];
-      p.divide(a);
-    }
-    return this;
-  };
-
-  PointSet.prototype.$pointsDivide = function(args) {
-    var a, p;
-    a = this._getArgs(arguments);
-    return (function() {
-      var aa, len1, ref, results;
-      ref = this.points;
-      results = [];
-      for (aa = 0, len1 = ref.length; aa < len1; aa++) {
-        p = ref[aa];
-        results.push(p.$divide(a));
-      }
-      return results;
-    }).call(this);
-  };
-
   PointSet.prototype.sides = function(close_path) {
     var aa, lastP, len1, p, ref, sides;
     if (close_path == null) {
@@ -4000,66 +3890,6 @@ Triangle = (function(superClass) {
     var p0;
     p0 = new Vector(this);
     return new PointSet(p0).connect([p0, this.p1, this.p2]);
-  };
-
-  Triangle.prototype.pointsAdd = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    this.add(a);
-    this.p1.add(a);
-    this.p2.add(a);
-    return this;
-  };
-
-  Triangle.prototype.$pointsAdd = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    return new this.__proto__.constructor(this.$add(a)).connect(this.p1.$add(a), this.p2.$add(a));
-  };
-
-  Triangle.prototype.pointsSubtract = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    this.subtract(a);
-    this.p1.subtract(a);
-    this.p2.subtract(a);
-    return this;
-  };
-
-  Triangle.prototype.$pointsSubtract = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    return new this.__proto__.constructor(this.$subtract(a)).connect(this.p1.$subtract(a), this.p2.$subtract(a));
-  };
-
-  Triangle.prototype.pointsMultiply = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    this.multiply(a);
-    this.p1.multiply(a);
-    this.p2.multiply(a);
-    return this;
-  };
-
-  Triangle.prototype.$pointsMultiply = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    return new this.__proto__.constructor(this.$multiply(a)).connect(this.p1.$multiply(a), this.p2.$multiply(a));
-  };
-
-  Triangle.prototype.pointsDivide = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    this.divide(a);
-    this.p1.divide(a);
-    this.p2.divide(a);
-    return this;
-  };
-
-  Triangle.prototype.$pointsDivide = function(args) {
-    var a;
-    a = this._getArgs(arguments);
-    return new this.__proto__.constructor(this.$divide(a)).connect(this.p1.$divide(a), this.p2.$divide(a));
   };
 
   Triangle.prototype.sides = function() {

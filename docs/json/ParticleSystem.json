@@ -16,7 +16,17 @@
             "param": [
                 "<p><code>particle</code> a Particle</p>"
             ], 
-            "pname": "particle"
+            "pname": "particle", 
+            "return": "<p>this system</p>"
+        }, 
+        {
+            "description": "<h2>remove a particle which has a <code>particle.life</code> property. This marks the <code>particle.life.complete</code> as <code>true</code> for removal in next cycle.</h2>", 
+            "name": "remove", 
+            "param": [
+                "<p><code>particle</code> a Particle</p>"
+            ], 
+            "pname": "particle", 
+            "return": "<p>this system</p>"
         }, 
         {
             "description": "<h2>animate callback function which is called by<code>Space.play()</code>. Override this callback function to specify other animation loops</h2>", 
@@ -30,7 +40,7 @@
     "props": [
         {
             "description": "<h2>a property to store particles in this system as an Array</h2>", 
-            "name": "particles", 
+            "name": "count", 
             "param": []
         }, 
         {

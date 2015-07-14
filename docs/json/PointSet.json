@@ -73,54 +73,12 @@
             "pname": "args"
         }, 
         {
-            "description": "<h2>Subtract a vector from all the points in the <code>points</code> array.</h2>", 
-            "name": "pointsSubtract", 
-            "param": [
-                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
-            ], 
-            "pname": "args", 
-            "return": "<p>this PointSet</p>"
-        }, 
-        {
-            "description": "<h2>Same as <code>pointsSubtract()</code> but returns a new array of the resulting points.</h2>", 
-            "name": "$pointsSubtract", 
-            "param": [], 
-            "pname": "args"
-        }, 
-        {
-            "description": "<h2>Multiply a vector with all the points in the <code>points</code> array.</h2>", 
-            "name": "pointsMultiply", 
-            "param": [
-                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
-            ], 
-            "pname": "args", 
-            "return": "<p>this PointSet</p>"
-        }, 
-        {
-            "description": "<h2>Same as <code>pointsMultiply()</code> but returns a new array of the resulting points.</h2>", 
-            "name": "$pointsMultiply", 
-            "param": [], 
-            "pname": "args"
-        }, 
-        {
-            "description": "<h2>Divide all the points in the <code>points</code> array with a vector.</h2>", 
-            "name": "pointsDivide", 
-            "param": [
-                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
-            ], 
-            "pname": "args", 
-            "return": "<p>this PointSet</p>"
-        }, 
-        {
-            "description": "<h2>Same as <code>pointsDivide()</code> but returns a new array of the resulting points.</h2>", 
-            "name": "$pointsDivide", 
-            "param": [], 
-            "pname": "args"
-        }, 
-        {
-            "description": "<h2>Get an array of Lines that represents this PointSet's sides</h2>", 
+            "description": "<h2>Subtract a vector from all the points in the <code>points</code> array.</h2><p>pointsSubtract: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>for p in @points</p><p>p.subtract( a )</p><p>return @</p><h2>Same as <code>pointsSubtract()</code> but returns a new array of the resulting points.</h2><p>$pointsSubtract: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>return (p.$subtract( a ) for p in @points)</p><h2>Multiply a vector with all the points in the <code>points</code> array.</h2><p>pointsMultiply: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>for p in @points</p><p>p.multiply( a )</p><p>return @</p><h2>Same as <code>pointsMultiply()</code> but returns a new array of the resulting points.</h2><p>$pointsMultiply: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>return (p.$multiply( a ) for p in @points)</p><h2>Divide all the points in the <code>points</code> array with a vector.</h2><p>pointsDivide: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>for p in @points</p><p>p.divide( a )</p><p>return @</p><h2>Same as <code>pointsDivide()</code> but returns a new array of the resulting points.</h2><p>$pointsDivide: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>return (p.$divide( a ) for p in @points)</p><h2>Get an array of Lines that represents this PointSet's sides</h2>", 
             "name": "sides", 
             "param": [
+                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>", 
+                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>", 
+                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>", 
                 "<p><code>close_path</code> a boolean value to include the side from last point to first point when set to <code>true</code></p>"
             ], 
             "pname": "close_path=true", 

@@ -1,4 +1,5 @@
-var Point;
+var Point,
+  slice = [].slice;
 
 Point = (function() {
   function Point(args) {
@@ -91,6 +92,33 @@ Point = (function() {
 
   Point.prototype.toString = function() {
     return "Point " + this.x + ", " + this.y + ", " + this.z;
+  };
+
+  Point.prototype.toArray = function() {
+    return [this];
+  };
+
+  Point.prototype.op = function() {
+    var args, i, len, name, p, pts;
+    name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+    pts = this.toArray();
+    for (i = 0, len = pts.length; i < len; i++) {
+      p = pts[i];
+      p[name](args);
+    }
+    return this;
+  };
+
+  Point.prototype.$op = function() {
+    var args, i, instance, len, name, p, pts;
+    name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+    instance = this.clone();
+    pts = instance.toArray();
+    for (i = 0, len = pts.length; i < len; i++) {
+      p = pts[i];
+      p[name](args);
+    }
+    return instance;
   };
 
   Point.prototype.get2D = function(axis, reverse) {

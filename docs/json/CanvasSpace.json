@@ -51,7 +51,7 @@
         }, 
         {
             "description": "<h2>Bind event listener in canvas element, for events such as mouse events</h2>", 
-            "name": "bind", 
+            "name": "bindCanvas", 
             "param": [
                 "<p><code>evt</code> Event object</p>", 
                 "<p><code>callback</code> a callback function for this event</p>"
@@ -64,7 +64,7 @@
             "param": [
                 "<p><code>bind</code> a boolean value to bind mouse events if set to <code>true</code>. If <code>false</code>, all mouse events will be unbound. Default is true.</p>"
             ], 
-            "pname": "bind=true"
+            "pname": "_bind=true"
         }
     ], 
     "props": [

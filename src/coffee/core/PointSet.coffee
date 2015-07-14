@@ -91,49 +91,50 @@ class PointSet extends Vector
   # ## Subtract a vector from all the points in the `points` array.
   # @param `args` comma-separated values, or as an array, or a Point object.
   # @return this PointSet
-  pointsSubtract: (args) ->
-    a = @_getArgs( arguments )
-    for p in @points
-      p.subtract( a )
-    return @
+  #  pointsSubtract: (args) ->
+  #    a = @_getArgs( arguments )
+  #    for p in @points
+  #      p.subtract( a )
+  #    return @
 
 
   # ## Same as `pointsSubtract()` but returns a new array of the resulting points.
-  $pointsSubtract: (args) ->
-    a = @_getArgs( arguments )
-    return (p.$subtract( a ) for p in @points)
+  #  $pointsSubtract: (args) ->
+  #    a = @_getArgs( arguments )
+  #    return (p.$subtract( a ) for p in @points)
 
 
   # ## Multiply a vector with all the points in the `points` array.
   # @param `args` comma-separated values, or as an array, or a Point object.
   # @return this PointSet
-  pointsMultiply: (args) ->
-    a = @_getArgs( arguments )
-    for p in @points
-      p.multiply( a )
-    return @
+  #  pointsMultiply: (args) ->
+  #    a = @_getArgs( arguments )
+  #    for p in @points
+  #      p.multiply( a )
+  #    return @
 
 
   # ## Same as `pointsMultiply()` but returns a new array of the resulting points.
-  $pointsMultiply: (args) ->
-    a = @_getArgs( arguments )
-    return (p.$multiply( a ) for p in @points)
+  #  $pointsMultiply: (args) ->
+  #    a = @_getArgs( arguments )
+  #    return (p.$multiply( a ) for p in @points)
 
 
   # ## Divide all the points in the `points` array with a vector.
   # @param `args` comma-separated values, or as an array, or a Point object.
   # @return this PointSet
-  pointsDivide: (args) ->
-    a = @_getArgs( arguments )
-    for p in @points
-      p.divide( a )
-    return @
+  #  pointsDivide: (args) ->
+  #    a = @_getArgs( arguments )
+  #    for p in @points
+  #      p.divide( a )
+  #    return @
 
 
   # ## Same as `pointsDivide()` but returns a new array of the resulting points.
-  $pointsDivide: (args) ->
-    a = @_getArgs( arguments )
-    return (p.$divide( a ) for p in @points)
+  #  $pointsDivide: (args) ->
+  #    a = @_getArgs( arguments )
+  #    return (p.$divide( a ) for p in @points)
+
 
   # ## Get an array of Lines that represents this PointSet's sides
   # @param `close_path` a boolean value to include the side from last point to first point when set to `true`

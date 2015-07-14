@@ -111,15 +111,15 @@ CanvasSpace = (function(superClass) {
     return this;
   };
 
-  CanvasSpace.prototype.bind = function(evt, callback) {
+  CanvasSpace.prototype.bindCanvas = function(evt, callback) {
     return this.canvas.addEventListener(evt, callback);
   };
 
-  CanvasSpace.prototype.bindMouse = function(bind) {
-    if (bind == null) {
-      bind = true;
+  CanvasSpace.prototype.bindMouse = function(_bind) {
+    if (_bind == null) {
+      _bind = true;
     }
-    if (bind) {
+    if (_bind) {
       this.canvas.addEventListener("mousedown", this._mouseDown.bind(this));
       this.canvas.addEventListener("mouseup", this._mouseUp.bind(this));
       this.canvas.addEventListener("mouseover", this._mouseOver.bind(this));
