@@ -111,6 +111,27 @@ class Vector extends Point
     return new Vector( @ ).divide( a )
 
 
+  # ## Apply a function to all points in the `toArray()` list. This is usually applied to `Pair`, `PointSet` and other objects to apply a function to all its points.
+  # @param `name` a function of this class
+  # @param `args...` optional, comma-separated arguments to pass to the function
+  # @eg `pair.op("add", 1,2,3)`, `pointset.op("multiply", 2)`
+  op: ( name, args... ) ->
+    pts = @toArray()
+    for p in pts
+      p[name]( args )
+    return @
+
+
+  # ## Similar to `op()` but apply the function to a new instance.
+  $op: ( name, args... ) ->
+    instance = @clone()
+    pts = instance.toArray()
+    for p in pts
+      p[name]( args )
+    return instance
+
+
+
   # ## Get the angle of this vector on a plane. Or get the angle from this vector to another point. If no parameter specified, this will return the angle on xy plane.
   # @param `axis` single argument as optional axis id (eg, `Const.yz`) to specify a plane
   # @param `pt` single argument as optional Point object to calculate the angle from this Point to another Point instead

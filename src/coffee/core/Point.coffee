@@ -23,7 +23,7 @@ class Point
 
       if typeof args[0] is 'object'
 
-        # if it's Array or arguments (object with length property). Note that arguments is not considered as an Array by javascript.
+        # if it's Array or arguments (object with length property). Note that "arguments" is not considered as an Array by javascript.
         if args[0] instanceof Array or args[0].length > 0
 
           return {
@@ -122,25 +122,6 @@ class Point
   toArray: () -> [@]
 
 
-  # ## Apply a function to all points in the `toArray()` list. This is usually applied to `Pair`, `PointSet` and other objects to apply a function to all its points.
-  # @param `name` a function of this class
-  # @param `args...` optional, comma-separated arguments to pass to the function
-  # @eg `pair.op("add", 1,2,3)`, `pointset.op("multiply", 2)`
-  op: ( name, args... ) ->
-    pts = @toArray()
-    for p in pts
-      p[name]( args )
-    return @
-
-
-  # ## Similar to `op()` but apply the function to a new instance.
-  $op: ( name, args... ) ->
-    instance = @clone()
-    pts = instance.toArray()
-    for p in pts
-      p[name]( args )
-    return instance
-
 
   # ## When a point has 3 dimensions `(x,y,z)`, this function converts it to a new point `(x,y)` of a specific 2D plane (such as `yz`)
   # @param `axis` an axis id such as `Const.yz`.
@@ -167,7 +148,7 @@ class Point
   # @return a new Point
   min: (args) ->
     _p = Point.get(arguments)
-    return new Point( Math.min(@x, _p.x), Math.min(@y, _p.y), Math.min(@z, _p.z) )
+    return new this.__proto__.constructor( Math.min(@x, _p.x), Math.min(@y, _p.y), Math.min(@z, _p.z) )
 
 
   # ## Evaluate the minimum x,y,z of this point and another point, and get a maximum Point
@@ -176,7 +157,7 @@ class Point
   # @return a new Point
   max: (args) ->
     _p = Point.get(arguments)
-    return new Point( Math.max(@x, _p.x), Math.max(@y, _p.y), Math.max(@z, _p.z) )
+    return new this.__proto__.constructor( Math.max(@x, _p.x), Math.max(@y, _p.y), Math.max(@z, _p.z) )
 
 
   # ## Check if this point is at exactly the same position as the other point

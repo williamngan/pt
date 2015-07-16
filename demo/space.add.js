@@ -15,7 +15,7 @@ var form = new Form( space.ctx );
 form.stroke( false );
 
 
-//// 2. Organize Elements
+//// 2. Create Elements
 
 // A Dust is a kind of Vector
 function Dust() {
