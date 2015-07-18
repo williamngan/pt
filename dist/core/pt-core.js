@@ -2821,7 +2821,7 @@ Line = (function(superClass) {
     return Line.intercept(this, this.p1, axis);
   };
 
-  Line.prototype.getPerpendicularLine = function(t, len, reverse, axis) {
+  Line.prototype.getPerpendicular = function(t, len, reverse, axis) {
     var line, pn, pp;
     if (len == null) {
       len = 10;

@@ -47,8 +47,7 @@ space.add({
 
     t = Math.sin( (count++ % 360) * Const.deg_to_rad ); // cycle through 360
 
-    form.fill( "#fff" ).stroke( false );
-    form.polygon( ps );
+    form.fill( "#fff" ).stroke( false ).polygon( ps );
 
     var ps2 = []; // 4 pairs are interpolated at 0.1 and 0.9 of first rectangle's sides
     form.stroke( "#abc", 0.5 );
@@ -60,20 +59,16 @@ space.add({
     // interpolate inner rectangles
     var tt = 0.5 + 0.5 * t;
 
-    form.fill( colors.a3 ).stroke( false );
     var ps3 = interpolatePairs( ps2, 0.2, 0.8 );
-    form.polygon( ps3 );
+    form.fill( colors.a3 ).stroke( false ).polygon( ps3 );
 
-    form.fill( false ).stroke( colors.a4 );
     var ps4 = interpolatePairs( ps3, 1 - tt, tt );
-    form.polygon( ps4 );
+    form.fill( false ).stroke( colors.a4 ).polygon( ps4 );
 
-    form.stroke( "#fff", 1 );
     var ps5 = interpolatePairs( ps4, 1 - tt, 1 - tt );
-    form.polygon( ps5 );
+    form.stroke( "#fff", 1 ).polygon( ps5 );
 
-    form.stroke( "rgba(255,255,255,.2" );
-    form.lines( ps5 );
+    form.stroke( "rgba(255,255,255,.2" ).lines( ps5 );
 
   },
 

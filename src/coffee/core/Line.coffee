@@ -73,9 +73,9 @@ class Line extends Pair
   # @param `len` an optional value to specify a length for the new line. Defaults to 10.
   # @param `reverse` a boolean value to reverse the direction of the new line if set to `true`
   # @param `axis` optional axis id (eg, `Const.yz`) to specify a plane
-  # @eg `ln.getPerpendicularLine(0.5)`, `ln.getPerpendicularLine(0.2, 100, true, Const.yz)`
+  # @eg `ln.getPerpendicular(0.5)`, `ln.getPerpendicular(0.2, 100, true, Const.yz)`
   # @return a new Line that's perpendicular to this line
-  getPerpendicularLine: ( t, len=10, reverse=false, axis=Const.xy ) ->
+  getPerpendicular: ( t, len=10, reverse=false, axis=Const.xy ) ->
     pn = @direction().normalize().perpendicular( axis ) # get normal vector
     pp = if reverse then pn[1] else pn[0] # from which side of the dividing line
     line = new Line( @interpolate( t ) ) # the start-point in the new line

@@ -48,8 +48,7 @@ Nest.prototype.animate = function(time, fps, context) {
     // determine fill color by checking if mouse is within bounds
     var fill = false;
     if ( this.inner[i].withinBounds( mouse ) ) fill = new Color( this.color.interpolate( i/this.inner.length ) ).rgb();
-    form.fill( fill ).stroke( ((fill) ? fill : "#fff") , 0.5 );
-    form.rect( this.inner[i] );
+    form.fill( fill ).stroke( ((fill) ? fill : "#fff") , 0.5 ).rect( this.inner[i] );
   }
 };
 

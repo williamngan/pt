@@ -48,14 +48,11 @@ space.add({
 
       // not collinear, check whether mouse is on left or right side
       } else {
-        form.stroke( ( (col<0) ? "rgba(255,255,0,.1)" : "rgba(0,255,255,.1)") );
-        form.line( pr );
-        form.stroke(false ).fill("#fff");
-        form.points( pr.toArray(), 0.5) ;
+        form.stroke( ( (col<0) ? "rgba(255,255,0,.1)" : "rgba(0,255,255,.1)") ).line( pr );
+        form.stroke(false ).fill("#fff").points( pr.toArray(), 0.5) ;
       }
 
-      form.fill( colors.a1 ).stroke(false);
-      form.point( mouse, 1.5, true );
+      form.fill( colors.a1 ).stroke(false).point( mouse, 1.5, true );
     }
   },
   onMouseAction: function(type, x, y, evt) {
