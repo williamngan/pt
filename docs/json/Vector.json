@@ -77,6 +77,22 @@
             "pname": "args"
         }, 
         {
+            "description": "<h2>Apply a function to all points in the <code>toArray()</code> list. This is usually applied to <code>Pair</code>, <code>PointSet</code> and other objects to apply a function to all its points.</h2>", 
+            "eg": "<p><code>pair.op(\"add\", 1,2,3)</code>, <code>pointset.op(\"multiply\", 2)</code></p>", 
+            "name": "op", 
+            "param": [
+                "<p><code>name</code> a function of this class</p>", 
+                "<p><code>args...</code> optional, comma-separated arguments to pass to the function</p>"
+            ], 
+            "pname": "name, args..."
+        }, 
+        {
+            "description": "<h2>Similar to <code>op()</code> but apply the function to a new instance.</h2>", 
+            "name": "$op", 
+            "param": [], 
+            "pname": "name, args..."
+        }, 
+        {
             "description": "<h2>Get the angle of this vector on a plane. Or get the angle from this vector to another point. If no parameter specified, this will return the angle on xy plane.</h2>", 
             "eg": "<p><code>vec.angle()</code> <code>vec.angle(Const.yz)</code> <code>vec.angle(another_pt)</code> <code>vec.angle(Const.xz, another_pt)</code> <code>new Vector(1,1).angle( new Vector(1,2) ) * Const.rad_to_deg = 90</code></p>", 
             "name": "angle", 

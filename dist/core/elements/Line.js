@@ -73,7 +73,7 @@ Line = (function(superClass) {
     return Line.intercept(this, this.p1, axis);
   };
 
-  Line.prototype.getPerpendicularLine = function(t, len, reverse, axis) {
+  Line.prototype.getPerpendicular = function(t, len, reverse, axis) {
     var line, pn, pp;
     if (len == null) {
       len = 10;
@@ -87,7 +87,7 @@ Line = (function(superClass) {
     pn = this.direction().normalize().perpendicular(axis);
     pp = reverse ? pn[1] : pn[0];
     line = new Line(this.interpolate(t));
-    line.connect(pp.multiply(len).add(line));
+    line.to(pp.multiply(len).add(line));
     return line;
   };
 
@@ -239,7 +239,7 @@ Line = (function(superClass) {
   };
 
   Line.prototype.clone = function(deep) {
-    return new Line(this).connect(this.p1);
+    return new Line(this).to(this.p1);
   };
 
   return Line;

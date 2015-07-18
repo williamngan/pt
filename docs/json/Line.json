@@ -6,10 +6,10 @@
     "funcs": [
         {
             "description": "<h2>Create a new Line. A Line is a Pair defined by two vectors. It can be treated as an infinite line, or as a line segment with two end points.</h2>", 
-            "eg": "<p><code>new Line()</code> <code>new Line(1,2,3)</code> <code>new Line([2,4])</code> <code>new Line({x:3, y:6, z:9}).connect(1,2,3)</code></p>", 
+            "eg": "<p><code>new Line()</code> <code>new Line(1,2,3)</code> <code>new Line([2,4])</code> <code>new Line({x:3, y:6, z:9}).to(1,2,3)</code></p>", 
             "name": "Line", 
             "param": [
-                "<p><code>args</code> Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>connect()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
+                "<p><code>args</code> Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>to()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
             ], 
             "pname": "", 
             "return": "<p>a new Pair object</p>"
@@ -33,8 +33,8 @@
         }, 
         {
             "description": "<h2>Given an interpolated point on this line, return another line of specific length that is perpendicular to this line.</h2>", 
-            "eg": "<p><code>ln.getPerpendicularLine(0.5)</code>, <code>ln.getPerpendicularLine(0.2, 100, true, Const.yz)</code></p>", 
-            "name": "getPerpendicularLine", 
+            "eg": "<p><code>ln.getPerpendicular(0.5)</code>, <code>ln.getPerpendicular(0.2, 100, true, Const.yz)</code></p>", 
+            "name": "getPerpendicular", 
             "param": [
                 "<p><code>t</code> a value between 0 to 1 to interpolate a point on this line</p>", 
                 "<p><code>len</code> an optional value to specify a length for the new line. Defaults to 10.</p>", 

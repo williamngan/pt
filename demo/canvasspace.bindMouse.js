@@ -42,7 +42,7 @@ Chain.prototype.onMouseAction = function(type, x, y, evt) {
 
   // when mouse move, add a point to the trail
   if (type == "move") {
-    this.connect(x,y);
+    this.to(x,y);
     if (this.hold) this.lineSize += 0.02;
   }
 

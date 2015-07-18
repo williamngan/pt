@@ -6,10 +6,10 @@
     "funcs": [
         {
             "description": "<h2>Create a new Grid. Like a Rectangle, a Grid's area are defined by two Vectors.</h2>", 
-            "eg": "<p><code>new Grid()</code> <code>new Grid(1,2,3)</code> <code>new Grid([2,4])</code> <code>new Grid({x:3, y:6, z:9}).connect(1,2,3)</code></p>", 
+            "eg": "<p><code>new Grid()</code> <code>new Grid(1,2,3)</code> <code>new Grid([2,4])</code> <code>new Grid({x:3, y:6, z:9}).to(1,2,3)</code></p>", 
             "name": "Grid", 
             "param": [
-                "<p><code>args</code> Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>connect()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
+                "<p><code>args</code> Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>to()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
             ], 
             "pname": "", 
             "return": "<p>a new Grid object</p>"

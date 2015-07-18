@@ -27,15 +27,15 @@ space.add({
 
     // red catmull rom curve
     form.stroke(colors.a1, 2);
-    form.curve( new Curve().connect(pts).catmullRom() );
+    form.curve( new Curve().to(pts).catmullRom() );
 
     // green cardinal curve with tension
     form.stroke(colors.a2, 2);
-    form.curve( new Curve().connect(pts).cardinal( 15, 0.8) );
+    form.curve( new Curve().to(pts).cardinal( 15, 0.8) );
 
     // blue bezier curve with higher precision curver (20 steps)
     form.stroke(colors.a3, 2);
-    form.curve( new Curve().connect(pts).bezier(20) );
+    form.curve( new Curve().to(pts).bezier(20) );
 
     // fill color for points
     form.stroke(false).fill( "#fff" );

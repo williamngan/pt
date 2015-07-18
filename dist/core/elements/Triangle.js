@@ -11,7 +11,7 @@ Triangle = (function(superClass) {
     this.p2 = new Vector(this.x + 1, this.y + 1, this.z);
   }
 
-  Triangle.prototype.connect = function(args) {
+  Triangle.prototype.to = function(args) {
     if (arguments.length > 0) {
       if (typeof arguments[0] === 'object' && arguments.length === 2) {
         this.p1.set(arguments[0]);
@@ -40,11 +40,11 @@ Triangle = (function(superClass) {
   Triangle.prototype.toPointSet = function() {
     var p0;
     p0 = new Vector(this);
-    return new PointSet(p0).connect([p0, this.p1, this.p2]);
+    return new PointSet(p0).to([p0, this.p1, this.p2]);
   };
 
   Triangle.prototype.sides = function() {
-    return [new Line(this).connect(this.p1), new Line(this.p1).connect(this.p2), new Line(this.p2).connect(this)];
+    return [new Line(this).to(this.p1), new Line(this.p1).to(this.p2), new Line(this.p2).to(this)];
   };
 
   Triangle.prototype.angles = function(axis) {
@@ -69,7 +69,7 @@ Triangle = (function(superClass) {
       }
       return results;
     })();
-    return new Triangle(pts[0]).connect(pts[1], pts[2]);
+    return new Triangle(pts[0]).to(pts[1], pts[2]);
   };
 
   Triangle.prototype.perimeter = function() {
@@ -95,21 +95,21 @@ Triangle = (function(superClass) {
 
   Triangle.prototype.oppositeSide = function(id) {
     if (id === "p1") {
-      return new Line(this).connect(this.p2);
+      return new Line(this).to(this.p2);
     } else if (id === "p2") {
-      return new Line(this).connect(this.p1);
+      return new Line(this).to(this.p1);
     } else {
-      return new Line(this.p1).connect(this.p2);
+      return new Line(this.p1).to(this.p2);
     }
   };
 
   Triangle.prototype.adjacentSides = function(id) {
     if (id === "p1") {
-      return [new Line(this.p1).connect(this), new Line(this.p1).connect(this.p2)];
+      return [new Line(this.p1).to(this), new Line(this.p1).to(this.p2)];
     } else if (id === "p2") {
-      return [new Line(this.p2).connect(this), new Line(this.p2).connect(this.p1)];
+      return [new Line(this.p2).to(this), new Line(this.p2).to(this.p1)];
     } else {
-      return [new Line(this).connect(this.p1), new Line(this).connect(this.p2)];
+      return [new Line(this).to(this.p1), new Line(this).to(this.p2)];
     }
   };
 
@@ -127,7 +127,7 @@ Triangle = (function(superClass) {
     ad[1].moveTo(0, 0);
     bp = ad[0].p1.bisect(ad[1].p1);
     if (asLine) {
-      return new Line(p).connect(bp.multiply(size).add(p));
+      return new Line(p).to(bp.multiply(size).add(p));
     } else {
       return bp;
     }
@@ -135,9 +135,9 @@ Triangle = (function(superClass) {
 
   Triangle.prototype.altitude = function(id) {
     if (id === "p1" || id === "p2") {
-      return new Line(this[id]).connect(this.oppositeSide(id).getPerpendicularFromPoint(this[id]));
+      return new Line(this[id]).to(this.oppositeSide(id).getPerpendicularFromPoint(this[id]));
     } else {
-      return new Line(this).connect(this.oppositeSide().getPerpendicularFromPoint(this));
+      return new Line(this).to(this.oppositeSide().getPerpendicularFromPoint(this));
     }
   };
 
@@ -174,7 +174,7 @@ Triangle = (function(superClass) {
   Triangle.prototype.circumcenter = function() {
     var medial, pbs;
     medial = this.medial();
-    pbs = [new Line(medial).connect(this.$subtract(medial).perpendicular()[0].$add(medial)), new Line(medial.p1).connect(this.p1.$subtract(medial.p1).perpendicular()[0].$add(medial.p1)), new Line(medial.p2).connect(this.p2.$subtract(medial.p2).perpendicular()[0].$add(medial.p2))];
+    pbs = [new Line(medial).to(this.$subtract(medial).perpendicular()[0].$add(medial)), new Line(medial.p1).to(this.p1.$subtract(medial.p1).perpendicular()[0].$add(medial.p1)), new Line(medial.p2).to(this.p2.$subtract(medial.p2).perpendicular()[0].$add(medial.p2))];
     return {
       center: pbs[0].intersectPath(pbs[1], Const.xyz),
       bisectors: pbs
@@ -318,7 +318,7 @@ Triangle = (function(superClass) {
   };
 
   Triangle.prototype.clone = function() {
-    return new Triangle(this).connect(this.p1, this.p2);
+    return new Triangle(this).to(this.p1, this.p2);
   };
 
   return Triangle;

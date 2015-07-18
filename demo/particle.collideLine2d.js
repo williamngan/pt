@@ -13,8 +13,8 @@ var form = new Form( space.ctx );
 
 //// 2. Create Elements
 
-var wall = new Line( space.size.$multiply( 0.33, 0.33)).connect( space.size.$multiply(0.66, 0.66) );
-var bound = new Pair().connect( space.size );
+var wall = new Line( space.size.$multiply( 0.33, 0.33)).to( space.size.$multiply(0.66, 0.66) );
+var bound = new Pair().to( space.size );
 
 // A Ball is a kind of Particle
 function Ball() {

@@ -23,7 +23,7 @@ var scale = 0.5;
 
 // create rectangles in each quadrant
 for (var i=0; i<steps; i++) {
-  var tl = new Rectangle( step.$multiply( i) ).connect( center );
+  var tl = new Rectangle( step.$multiply( i) ).to( center );
   quads.topleft.push( tl );
   quads.topright.push( tl.clone().moveBy( step.x * (steps-i), 0 ) );
   quads.bottomleft.push( tl.clone().moveBy( 0, step.y * (steps-i) ) );

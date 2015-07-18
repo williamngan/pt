@@ -6,10 +6,10 @@
     "funcs": [
         {
             "description": "<h2>Create a new Curve. A Curve uses a set of anchor and/or control points to interpolate a curve.</h2>", 
-            "eg": "<p><code>new PointSet()</code> <code>new PointSet(1,2,3)</code> <code>new PointSet([2,4])</code> <code>new PointSet({x:3, y:6, z:9}).connect(1,2,3)</code> <code>new PointSet(1,2,3).connect([p1, p2, p3, p4, p5])</code></p>", 
+            "eg": "<p><code>new PointSet()</code> <code>new PointSet(1,2,3)</code> <code>new PointSet([2,4])</code> <code>new PointSet({x:3, y:6, z:9}).to(1,2,3)</code> <code>new PointSet(1,2,3).to([p1, p2, p3, p4, p5])</code></p>", 
             "name": "Curve", 
             "param": [
-                "<p><code>args</code> Similar to PointSet constructor, use comma-separated values, an array, or an object as parameters to specify the anchor point. Use <code>connect()</code> to add points to the set.</p>"
+                "<p><code>args</code> Similar to PointSet constructor, use comma-separated values, an array, or an object as parameters to specify the anchor point. Use <code>to()</code> to add points to the set.</p>"
             ], 
             "pname": "", 
             "return": "<p>a new Curve object</p>"

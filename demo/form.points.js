@@ -39,7 +39,7 @@ function connect() {
   pts.forEach( function(a) {
     pts.forEach( function(b) {
       // connect if distance is less than 100
-      if (a.distance(b) < 100) lines.push( new Pair(a).connect(b) );
+      if (a.distance(b) < 100) lines.push( new Pair(a).to(b) );
     });
   });
 }

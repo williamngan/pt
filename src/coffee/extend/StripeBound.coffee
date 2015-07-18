@@ -32,14 +32,14 @@ class StripeBound extends Rectangle
     # rows
     for d in [0..freq.y-1]
       dy = diff.y*d
-      p = new Pair(0, dy).connect(size.x, dy+diff.y).add(@)
+      p = new Pair(0, dy).to(size.x, dy+diff.y).add(@)
       p.p1.add(@)
       result.rows.push( p )
 
     # columns
     for d in [0..freq.x-1]
       dx = diff.x*d
-      p = new Pair(dx, 0).connect(dx+diff.x+0.5, size.y).add(@)
+      p = new Pair(dx, 0).to(dx+diff.x+0.5, size.y).add(@)
       p.p1.add(@)
       result.columns.push( p )
 
@@ -57,14 +57,14 @@ class StripeBound extends Rectangle
     # rows
     for d in [0..freq.y]
       dy = diff.y*d
-      p = new Pair(0, dy).connect(size.x, dy).add(@)
+      p = new Pair(0, dy).to(size.x, dy).add(@)
       p.p1.add(@)
       result.rows.push( p )
 
     # columns
     for d in [0..freq.x]
       dx = diff.x*d
-      p = new Pair(dx, 0).connect(dx, size.y).add(@)
+      p = new Pair(dx, 0).to(dx, size.y).add(@)
       p.p1.add(@)
       result.columns.push( p )
 

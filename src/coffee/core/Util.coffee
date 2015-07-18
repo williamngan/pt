@@ -93,7 +93,7 @@ class Util
         if p.z < minPt.z then minPt.z = p.z
         if p.z > maxPt.z then maxPt.z = p.z
 
-    return new Rectangle( minPt ).connect( maxPt )
+    return new Rectangle( minPt ).to( maxPt )
 
 
   # ## A static function to get linear interpolation between two values

@@ -45,7 +45,7 @@ space.add({
       // rotate around mouse position as anchor, if rotateAroundMouse is true
       if (rotateAroundMouse) { next.vec.rotate2D( next.angle/80, mouse ); }
 
-      form.line( new Line( last.vec ).connect( next.vec) );
+      form.line( new Line( last.vec ).to( next.vec) );
       last = next;
     }
 

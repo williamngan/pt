@@ -22,9 +22,9 @@ var labB = 50;
 for (var r=0; r<cells; r++) {
   for (var c=0; c<cells; c++) {
     var pos = unit.$multiply( c, r );
-    var rect =  new Rectangle( pos ).connect( pos.$add(unit).add(0.5) );
+    var rect =  new Rectangle( pos ).to( pos.$add(unit).add(0.5) );
     var _ps = rect.corners();
-    var tri = new Triangle( _ps.topLeft).connect( _ps.bottomLeft, _ps.bottomRight );
+    var tri = new Triangle( _ps.topLeft).to( _ps.bottomLeft, _ps.bottomRight );
     rects.push( { a: rect, b: tri } );
   }
 }

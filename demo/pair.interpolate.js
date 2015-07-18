@@ -24,10 +24,10 @@ var b = center.$add( w, w );
 
 // first rectangle
 var ps = [
-  new Pair(a).connect(b.x, a.y),
-  new Pair(b.x, a.y).connect(b),
-  new Pair(b).connect(a.x, b.y),
-  new Pair(a.x, b.y).connect(a)
+  new Pair(a).to(b.x, a.y),
+  new Pair(b.x, a.y).to(b),
+  new Pair(b).to(a.x, b.y),
+  new Pair(a.x, b.y).to(a)
 ];
 
 // create a list of interpolated pairs from a list of original pairs
@@ -35,7 +35,7 @@ function interpolatePairs( _ps, t1, t2 ) {
   var pn = [];
   for (var i=0; i<_ps.length; i++) {
     var next = (i==_ps.length-1) ? 0 : i+1;
-    pn.push( new Pair( _ps[i].interpolate( t1 ) ).connect( _ps[next].interpolate( 1-t2 ) ) );
+    pn.push( new Pair( _ps[i].interpolate( t1 ) ).to( _ps[next].interpolate( 1-t2 ) ) );
   }
   return pn;
 }
@@ -52,7 +52,7 @@ space.add({
     var ps2 = []; // 4 pairs are interpolated at 0.1 and 0.9 of first rectangle's sides
     form.stroke( "#abc", 0.5 );
     for (var i = 0; i < ps.length; i++) {
-      ps2[i] = new Pair( ps[i].interpolate( 0.1 + (t * 0.1) ) ).connect( ps[i].interpolate( 0.9 + (t * 0.1) ) );
+      ps2[i] = new Pair( ps[i].interpolate( 0.1 + (t * 0.1) ) ).to( ps[i].interpolate( 0.9 + (t * 0.1) ) );
       form.line( ps2[i] );
     }
 

@@ -34,7 +34,7 @@ function spin() {
   // break or continue drawing the line
   if (p.$subtract(lastPos).magnitude() < 20 ) {
     form.stroke( "rgba(255,255,255,.4)" );
-    form.line( new Pair(lastPos).connect( p ) );
+    form.line( new Pair(lastPos).to( p ) );
   }
 
   lastPos.set( p );

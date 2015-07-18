@@ -1,9 +1,9 @@
 # ### A Pair of Vector
 class Pair extends Vector
 
-  # ## Create a new Pair. A Pair is a Vector which defines its anchor point, and connected to another Vector through the `connect()` function.
-  # @param `args` Similar to Point constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to `connect()`, you can also pass 4 or 6 values to set both anchor and `p1` points directly as a 2d or 3d vector.
-  # @eg `new Pair()` `new Pair(1,2,3)` `new Pair([2,4])` `new Pair({x:3, y:6, z:9}).connect(1,2,3)`, `new Pair(10,10, 20,20)`
+  # ## Create a new Pair. A Pair is a Vector which defines its anchor point, and connected to another Vector through the `to()` function.
+  # @param `args` Similar to Point constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to `to()`, you can also pass 4 or 6 values to set both anchor and `p1` points directly as a 2d or 3d vector.
+  # @eg `new Pair()` `new Pair(1,2,3)` `new Pair([2,4])` `new Pair({x:3, y:6, z:9}).to(1,2,3)`, `new Pair(10,10, 20,20)`
   # @return a new Pair object
   constructor: () ->
     super
@@ -20,9 +20,9 @@ class Pair extends Vector
 
   # ## connect the other point
   # @param `args` comma-separated values, or an array, or an object
-  # @eg `pair.connect(1,2,3)` `new Pair(1,2).connect(3,4)`
+  # @eg `pair.to(1,2,3)` `new Pair(1,2).to(3,4)`
   # @return this Pair
-  connect: () ->
+  to: () ->
     @p1 = new Vector( Point.get(arguments) )
     return @
 
@@ -40,7 +40,7 @@ class Pair extends Vector
   # ## Get a new pair that's the bounding box of this pair. This is the same as calculating its top-left (min) and bottom-right (max) points.
   # @return a new Pair
   bounds: () ->
-    return new Pair( @min(@p1) ).connect( @max(@p1) )
+    return new Pair( @min(@p1) ).to( @max(@p1) )
 
   # ## Check if a point is within the bounds of this pair
   # @param `pt` a Point object to check.
@@ -136,7 +136,7 @@ class Pair extends Vector
   # ## Override clone() from parent class
   clone: () ->
     p = new Pair( @ )
-    p.connect( @p1.clone() )
+    p.to( @p1.clone() )
     return p
 
   # ## Override floor() from parent class

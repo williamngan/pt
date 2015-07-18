@@ -2,8 +2,8 @@
 class PointSet extends Vector
 
   # ## Create a new PointSet. A PointSet is a set of points which can repsent a polygon or a polyline or a time series.
-  # @param `args` Similar to Point constructor, use comma-separated values, an array, or an object as parameters to specify the anchor point. Use `connect()` to add points to the set.
-  # @eg `new PointSet()` `new PointSet(1,2,3)` `new PointSet([2,4])` `new PointSet({x:3, y:6, z:9}).connect(1,2,3)` `new PointSet(1,2,3).connect([p1, p2, p3, p4, p5])`
+  # @param `args` Similar to Point constructor, use comma-separated values, an array, or an object as parameters to specify the anchor point. Use `to()` to add points to the set.
+  # @eg `new PointSet()` `new PointSet(1,2,3)` `new PointSet([2,4])` `new PointSet({x:3, y:6, z:9}).to(1,2,3)` `new PointSet(1,2,3).to([p1, p2, p3, p4, p5])`
   # @return a new PointSet object
   constructor: () ->
     super
@@ -27,9 +27,9 @@ class PointSet extends Vector
 
   # ## Add a point or an array of points to this PointSet
   # @param `args` either an Array of Points, or a single point defined by comma-separated values, an array, or an object.
-  # @eg `pset.connect( 1,2,3 )` `pset.connect([1,2,3]` `pset.connect({x:3, y:6, z:9})` `pset.connect([p1, p2, p3, p4...])`
+  # @eg `pset.to( 1,2,3 )` `pset.to([1,2,3]` `pset.to({x:3, y:6, z:9})` `pset.to([p1, p2, p3, p4...])`
   # @return this PointSet
-  connect: ( args ) ->
+  to: ( args ) ->
 
     if arguments.length > 0
       # if it's an array of objects.
@@ -143,11 +143,11 @@ class PointSet extends Vector
     lastP = null
     sides = []
     for p in @points
-      if lastP then sides.push( new Line(lastP).connect(p) )
+      if lastP then sides.push( new Line(lastP).to(p) )
       lastP = p
 
     if close_path
-      sides.push( new Line( lastP ).connect( @points[0] ) )
+      sides.push( new Line( lastP ).to( @points[0] ) )
 
     return sides
 
@@ -233,7 +233,7 @@ class PointSet extends Vector
 
   # overrides clone
   clone: () ->
-    new PointSet(@).connect( Util.clonePoints( @points ) )
+    new PointSet(@).to( Util.clonePoints( @points ) )
 
 
 # namespace

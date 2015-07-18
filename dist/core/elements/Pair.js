@@ -16,7 +16,7 @@ Pair = (function(superClass) {
     }
   }
 
-  Pair.prototype.connect = function() {
+  Pair.prototype.to = function() {
     this.p1 = new Vector(Point.get(arguments));
     return this;
   };
@@ -31,7 +31,7 @@ Pair = (function(superClass) {
   };
 
   Pair.prototype.bounds = function() {
-    return new Pair(this.min(this.p1)).connect(this.max(this.p1));
+    return new Pair(this.min(this.p1)).to(this.max(this.p1));
   };
 
   Pair.prototype.withinBounds = function(pt, axis) {
@@ -123,7 +123,7 @@ Pair = (function(superClass) {
   Pair.prototype.clone = function() {
     var p;
     p = new Pair(this);
-    p.connect(this.p1.clone());
+    p.to(this.p1.clone());
     return p;
   };
 

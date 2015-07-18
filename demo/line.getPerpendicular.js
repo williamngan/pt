@@ -12,7 +12,7 @@ var form = new Form( space.ctx );
 
 
 //// 2. Create Elements
-var line = new Line( space.size.x * 0.3, 0 ).connect( space.size.x * 0.8, space.size.y );
+var line = new Line( space.size.x * 0.3, 0 ).to( space.size.x * 0.8, space.size.y );
 var steps = 100;
 var amp = Math.min( space.size.x, space.size.y ) / 4;
 var angle = 0;

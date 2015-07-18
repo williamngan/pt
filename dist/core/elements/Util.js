@@ -113,7 +113,7 @@ Util = (function() {
         }
       }
     }
-    return new Rectangle(minPt).connect(maxPt);
+    return new Rectangle(minPt).to(maxPt);
   };
 
   Util.lerp = function(a, b, t) {

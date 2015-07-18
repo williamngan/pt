@@ -114,7 +114,7 @@ Particle = (function(superClass) {
     if (precise) {
       next_pos = this.$add(this.velocity);
       next_dist = Math.abs(wall.getDistanceFromPoint(next_pos));
-      crossed = wall.intersectLine(new Line(curr_pos).connect(next_pos));
+      crossed = wall.intersectLine(new Line(curr_pos).to(next_pos));
       if (crossed) {
         next_pos = crossed.$add(this.velocity.$normalize().$multiply(-this.radius / 2));
         next_dist = Math.abs(wall.getDistanceFromPoint(next_pos));
@@ -146,9 +146,9 @@ Particle = (function(superClass) {
       this.velocity = proj.$add(tangent);
       this.momentum = this.velocity.$multiply(this.mass);
       if (precise && !collideEndPt) {
-        perpend = new Line(pt_on_wall).connect(curr_pos);
+        perpend = new Line(pt_on_wall).to(curr_pos);
         prev_pt_on_wall = wall.getPerpendicularFromPoint(next_pos);
-        path = new Line(pt_on_wall).connect(prev_pt_on_wall);
+        path = new Line(pt_on_wall).to(prev_pt_on_wall);
         pvec = path.direction();
         r = (this.radius - curr_dist) / (next_dist - curr_dist);
         pt = pvec.$multiply(r).$add(path);

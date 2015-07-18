@@ -23,10 +23,10 @@ Rectangle = (function(superClass) {
   Rectangle.prototype.toPointSet = function() {
     var c;
     c = this.corners();
-    return new PointSet(this).connect([c.topRight, c.bottomRight, c.bottomLeft, c.topLeft]);
+    return new PointSet(this).to([c.topRight, c.bottomRight, c.bottomLeft, c.topLeft]);
   };
 
-  Rectangle.prototype.connect = function(args) {
+  Rectangle.prototype.to = function(args) {
     this.p1 = new Vector(Point.get(arguments));
     this.resetBounds();
     this.center = this.midpoint();
@@ -249,24 +249,24 @@ Rectangle = (function(superClass) {
   Rectangle.prototype.sides = function() {
     var c;
     c = this.corners();
-    return [new Line(c.topLeft).connect(c.topRight), new Line(c.topRight).connect(c.bottomRight), new Line(c.bottomRight).connect(c.bottomLeft), new Line(c.bottomLeft).connect(c.topLeft)];
+    return [new Line(c.topLeft).to(c.topRight), new Line(c.topRight).to(c.bottomRight), new Line(c.bottomRight).to(c.bottomLeft), new Line(c.bottomLeft).to(c.topLeft)];
   };
 
   Rectangle.prototype.quadrants = function() {
     var c;
     c = this.corners();
     return {
-      topLeft: new this.__proto__.constructor(c.topLeft).connect(this.center),
-      topRight: new this.__proto__.constructor(c.topRight).connect(this.center),
-      bottomLeft: new this.__proto__.constructor(c.bottomLeft).connect(this.center),
-      bottomRight: new this.__proto__.constructor(c.bottomRight).connect(this.center)
+      topLeft: new this.__proto__.constructor(c.topLeft).to(this.center),
+      topRight: new this.__proto__.constructor(c.topRight).to(this.center),
+      bottomLeft: new this.__proto__.constructor(c.bottomLeft).to(this.center),
+      bottomRight: new this.__proto__.constructor(c.bottomRight).to(this.center)
     };
   };
 
   Rectangle.prototype.clone = function() {
     var p;
-    p = new Rectangle(this).connect(this.p1);
-    p.connect(this.p1.clone());
+    p = new Rectangle(this).to(this.p1);
+    p.to(this.p1.clone());
     return p;
   };
 

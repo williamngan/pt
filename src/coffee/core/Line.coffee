@@ -2,8 +2,8 @@
 class Line extends Pair
 
   # ## Create a new Line. A Line is a Pair defined by two vectors. It can be treated as an infinite line, or as a line segment with two end points.
-  # @param `args` Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to `connect()`, you can also pass 4 or 6 values to set both anchor and `p1` points directly as a 2d or 3d vector.
-  # @eg `new Line()` `new Line(1,2,3)` `new Line([2,4])` `new Line({x:3, y:6, z:9}).connect(1,2,3)`
+  # @param `args` Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to `to()`, you can also pass 4 or 6 values to set both anchor and `p1` points directly as a 2d or 3d vector.
+  # @eg `new Line()` `new Line(1,2,3)` `new Line([2,4])` `new Line({x:3, y:6, z:9}).to(1,2,3)`
   # @return a new Pair object
   constructor: () ->
     super
@@ -79,7 +79,7 @@ class Line extends Pair
     pn = @direction().normalize().perpendicular( axis ) # get normal vector
     pp = if reverse then pn[1] else pn[0] # from which side of the dividing line
     line = new Line( @interpolate( t ) ) # the start-point in the new line
-    line.connect( pp.multiply(len).add( line ) ) # connect the end point
+    line.to( pp.multiply(len).add( line ) ) # connect the end point
     return line
 
   # ## Find the shortest distance from a point to this line (as infinite line, not line segment)
@@ -212,7 +212,7 @@ class Line extends Pair
 
   # ## override clone
   clone: (deep) ->
-    return new Line(@).connect(@p1)
+    return new Line(@).to(@p1)
 
 
 # namespace

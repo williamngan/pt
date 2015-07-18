@@ -45,16 +45,16 @@ space.add({
 
     // connect lines
     form.stroke( "rgba(255,0,0,.3)", r*2 );
-    form.line( new Line( center ).connect( pt ) );
+    form.line( new Line( center ).to( pt ) );
 
     form.stroke( "rgba(0,100,255,.3)", r*2 );
-    form.line( new Line( center ).connect( mouse ) );
-    form.line( new Line( center ).connect( mouse.$subtract(center).multiply(-0.5).add(center) ) );
+    form.line( new Line( center ).to( mouse ) );
+    form.line( new Line( center ).to( mouse.$subtract(center).multiply(-0.5).add(center) ) );
 
     // Find mouse-to-pendulum projection vector and connect with a line
     var proj = mouse.$subtract( center ).projection( pt.$subtract( center ) );
     form.stroke( "rgba(255,255,0,.8)", r*2 );
-    form.line( new Line( proj.$add( center ) ).connect( pt ) );
+    form.line( new Line( proj.$add( center ) ).to( pt ) );
 
     // draw "hinges"
     form.stroke( false ).fill( "rgba(0,0,0,.1)" );

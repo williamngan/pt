@@ -18,7 +18,7 @@ var mouse = new Circle( space.size.$divide(2) ).setRadius(100);
 var pairs = [];
 for (var i=0; i<70; i++) {
   var r = new Vector( space.size.x/3*(Math.random()-Math.random()), space.size.x/3*(Math.random()-Math.random()) );
-  pairs.push( new Pair( space.size.$multiply( Math.random(), Math.random()) ).connect( r).relative());
+  pairs.push( new Pair( space.size.$multiply( Math.random(), Math.random()) ).to( r).relative());
 }
 
 //// 3. Visualize, Animate, Interact
@@ -40,7 +40,7 @@ space.add({
           form.point( inpath[j], 0.5 );
 
           form.stroke("rgba(255,255,255,.05)");
-          form.line( new Line(inpath[j]).connect( pairs[i] ) )
+          form.line( new Line(inpath[j]).to( pairs[i] ) )
         }
 
         // check line segment intersections

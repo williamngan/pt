@@ -20,9 +20,9 @@ var op2 = 0.5;
 var op3 = 0.5;
 
 function setSizes() {
-  rect1.set( space.size.$multiply(0.25)).connect( space.center.x + space.size.x/4, space.center.y+space.size.y/8 );
-  rect2.set( space.size.$multiply(0.75)).connect( space.center.x - space.size.x/4, space.center.y-space.size.y/8);
-  rect3.set( space.size.$multiply(0.2, 0.3) ).connect( space.size.$multiply(0.8, 0.7) );
+  rect1.set( space.size.$multiply(0.25)).to( space.center.x + space.size.x/4, space.center.y+space.size.y/8 );
+  rect2.set( space.size.$multiply(0.75)).to( space.center.x - space.size.x/4, space.center.y-space.size.y/8);
+  rect3.set( space.size.$multiply(0.2, 0.3) ).to( space.size.$multiply(0.8, 0.7) );
 }
 
 setSizes();

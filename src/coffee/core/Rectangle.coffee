@@ -2,8 +2,8 @@
 class Rectangle extends Pair
 
   # ## Create a new Rectangle. A Rectangle is a Pair whose rectangular bounding box are defined by two Vectors. Use `toPointSet()` to convert it to a PointSet with 4 points if you need to rotate or shear it.
-  # @param `args` Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to `connect()`, you can also pass 4 or 6 values to set both anchor and `p1` points directly as a 2d or 3d vector.
-  # @eg `new Rectangle()` `new Rectangle(1,2,3)` `new Rectangle([2,4])` `new Rectangle({x:3, y:6, z:9}).connect(1,2,3)`
+  # @param `args` Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to `to()`, you can also pass 4 or 6 values to set both anchor and `p1` points directly as a 2d or 3d vector.
+  # @eg `new Rectangle()` `new Rectangle(1,2,3)` `new Rectangle([2,4])` `new Rectangle({x:3, y:6, z:9}).to(1,2,3)`
   # @return a new Rectangle object
   constructor: () ->
     super
@@ -32,14 +32,14 @@ class Rectangle extends Pair
   # @return a PointSet with 4 points. (top-right, bottom-right, bottom-left, top-left)
   toPointSet: () ->
     c = @corners()
-    return new PointSet( @ ).connect( [c.topRight, c.bottomRight, c.bottomLeft, c.topLeft ] )
+    return new PointSet( @ ).to( [c.topRight, c.bottomRight, c.bottomLeft, c.topLeft ] )
 
 
   # ## Similar to `Pair`, this function connects the anchor with another point to define the rectangular bounds. This also calls Pair's `resetBounds()` to make sure anchor point is at top-left and `p1` is at bottom-right
   # @param `args` comma-separated values, or an array, or an object
-  # @eg `rect.connect(1,2,3)` `new Rect(pt).connect([3,4])`
+  # @eg `rect.to(1,2,3)` `new Rect(pt).to([3,4])`
   # @return this Rectangle
-  connect: ( args ) ->
+  to: ( args ) ->
     @p1 = new Vector( Point.get(arguments) )
     @resetBounds()
     @center = @midpoint() # get center point also
@@ -275,10 +275,10 @@ class Rectangle extends Pair
   sides: () ->
     c = @corners()
     return [
-      new Line( c.topLeft ).connect( c.topRight )
-      new Line( c.topRight ).connect( c.bottomRight )
-      new Line( c.bottomRight ).connect( c.bottomLeft )
-      new Line( c.bottomLeft ).connect( c.topLeft )
+      new Line( c.topLeft ).to( c.topRight )
+      new Line( c.topRight ).to( c.bottomRight )
+      new Line( c.bottomRight ).to( c.bottomLeft )
+      new Line( c.bottomLeft ).to( c.topLeft )
     ]
 
   # ## Get 4 rectangles from this rectangle by subdividing the quadrants
@@ -286,17 +286,17 @@ class Rectangle extends Pair
   quadrants: () ->
     c = @corners()
     return {
-      topLeft: new this.__proto__.constructor(  c.topLeft ).connect( @center )
-      topRight: new this.__proto__.constructor(  c.topRight ).connect( @center )
-      bottomLeft: new this.__proto__.constructor( c.bottomLeft ).connect( @center )
-      bottomRight: new this.__proto__.constructor(  c.bottomRight ).connect( @center )
+      topLeft: new this.__proto__.constructor(  c.topLeft ).to( @center )
+      topRight: new this.__proto__.constructor(  c.topRight ).to( @center )
+      bottomLeft: new this.__proto__.constructor( c.bottomLeft ).to( @center )
+      bottomRight: new this.__proto__.constructor(  c.bottomRight ).to( @center )
     }
 
 
   # override clone
   clone: () ->
-    p = new Rectangle(@).connect(@p1)
-    p.connect( @p1.clone() )
+    p = new Rectangle(@).to(@p1)
+    p.to( @p1.clone() )
     return p
 
 

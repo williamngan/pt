@@ -11,8 +11,8 @@ var form = new Form( space.ctx );
 
 
 //// 2. Create Elements
-var path = new Line().connect( space.size );
-var path2 = new Line( space.size.$multiply(0.9, 0) ).connect( space.size.$multiply(0, 0.9) );
+var path = new Line().to( space.size );
+var path2 = new Line( space.size.$multiply(0.9, 0) ).to( space.size.$multiply(0, 0.9) );
 var mouse = new Vector( space.size.$divide(2) );
 var spaceSize = space.size.magnitude();
 
@@ -48,10 +48,10 @@ space.add({
       form.point(_p, 10*normalSize/2, true );
 
       form.stroke("rgba(0,0,0,.1)", 1);
-      form.line( new Line(p).connect(_p) );
+      form.line( new Line(p).to(_p) );
 
       form.stroke(colors.a2);
-      form.line( new Line(p2).connect(_p2) );
+      form.line( new Line(p2).to(_p2) );
 
       form.stroke(false).fill(colors.a2);
       form.point(p2, 15*normalSize2, true );
@@ -60,9 +60,9 @@ space.add({
 
     // draw mouse point
     form.stroke(colors.a1);
-    form.line( new Line( mouse).connect( normal ) );
+    form.line( new Line( mouse).to( normal ) );
     form.stroke(colors.a2);
-    form.line( new Line( mouse).connect( normal2 ) );
+    form.line( new Line( mouse).to( normal2 ) );
 
   },
   onMouseAction: function(type, x, y, evt) {

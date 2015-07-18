@@ -6,10 +6,10 @@
     "funcs": [
         {
             "description": "<h2>Create a new Rectangle. A Rectangle is a Pair whose rectangular bounding box are defined by two Vectors. Use <code>toPointSet()</code> to convert it to a PointSet with 4 points if you need to rotate or shear it.</h2>", 
-            "eg": "<p><code>new Rectangle()</code> <code>new Rectangle(1,2,3)</code> <code>new Rectangle([2,4])</code> <code>new Rectangle({x:3, y:6, z:9}).connect(1,2,3)</code></p>", 
+            "eg": "<p><code>new Rectangle()</code> <code>new Rectangle(1,2,3)</code> <code>new Rectangle([2,4])</code> <code>new Rectangle({x:3, y:6, z:9}).to(1,2,3)</code></p>", 
             "name": "Rectangle", 
             "param": [
-                "<p><code>args</code> Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>connect()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
+                "<p><code>args</code> Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>to()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
             ], 
             "pname": "", 
             "return": "<p>a new Rectangle object</p>"
@@ -30,8 +30,8 @@
         }, 
         {
             "description": "<h2>Similar to <code>Pair</code>, this function connects the anchor with another point to define the rectangular bounds. This also calls Pair's <code>resetBounds()</code> to make sure anchor point is at top-left and <code>p1</code> is at bottom-right</h2>", 
-            "eg": "<p><code>rect.connect(1,2,3)</code> <code>new Rect(pt).connect([3,4])</code></p>", 
-            "name": "connect", 
+            "eg": "<p><code>rect.to(1,2,3)</code> <code>new Rect(pt).to([3,4])</code></p>", 
+            "name": "to", 
             "param": [
                 "<p><code>args</code> comma-separated values, or an array, or an object</p>"
             ], 

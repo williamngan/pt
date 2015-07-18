@@ -17,7 +17,7 @@ var form = new Form( space.ctx );
 function Nest() {
   Pair.call( this, arguments ); // call Pair's constructor
   this.inner = [];
-  this.color = new Pair().connect(255,255,255);
+  this.color = new Pair().to(255,255,255);
 }
 Util.extend( Nest, Pair ); // extends Pair class
 
@@ -27,7 +27,7 @@ Nest.prototype.nest = function( outer ) {
 
   var a = outer.size().$divide( 5 + Math.random() * 10, 10 + Math.random() * 15 );
   var b = outer.size().$divide( 5 + Math.random() * 10, 10 + Math.random() * 15 );
-  var inner = new Pair( outer.$add( a ) ).connect( outer.p1.$subtract( b ) );
+  var inner = new Pair( outer.$add( a ) ).to( outer.p1.$subtract( b ) );
 
   this.inner.push( inner );
   this.nest( inner );
@@ -35,7 +35,7 @@ Nest.prototype.nest = function( outer ) {
 
 Nest.prototype.init = function(id) {
   // 2-stop linear color gradient defined as a pair
-  this.color = new Pair( Color.parseHex(colors["a"+id], true) ).connect( Color.parseHex(colors["a"+(id+1)], true) );
+  this.color = new Pair( Color.parseHex(colors["a"+id], true) ).to( Color.parseHex(colors["a"+(id+1)], true) );
 
   this.nest( this );
   return this;
@@ -55,9 +55,9 @@ Nest.prototype.animate = function(time, fps, context) {
 var mouse = new Vector( space.size.$divide(3, 2));
 
 var h = space.size.y/3;
-space.add( new Nest().connect( space.size.x, h ).init(1) );
-space.add( new Nest( 0, h ).connect( space.size.x, h*2 ).init(2) );
-space.add( new Nest( 0, h*2 ).connect( space.size.x, h*3 ).init(3) );
+space.add( new Nest().to( space.size.x, h ).init(1) );
+space.add( new Nest( 0, h ).to( space.size.x, h*2 ).init(2) );
+space.add( new Nest( 0, h*2 ).to( space.size.x, h*3 ).init(3) );
 
 
 

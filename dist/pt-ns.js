@@ -260,7 +260,7 @@ Util = (function() {
         }
       }
     }
-    return new Rectangle(minPt).connect(maxPt);
+    return new Rectangle(minPt).to(maxPt);
   };
 
   Util.lerp = function(a, b, t) {
@@ -1173,29 +1173,6 @@ Point = (function() {
     return [this];
   };
 
-  Point.prototype.op = function() {
-    var aa, args, len1, name, p, pts;
-    name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
-    pts = this.toArray();
-    for (aa = 0, len1 = pts.length; aa < len1; aa++) {
-      p = pts[aa];
-      p[name](args);
-    }
-    return this;
-  };
-
-  Point.prototype.$op = function() {
-    var aa, args, instance, len1, name, p, pts;
-    name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
-    instance = this.clone();
-    pts = instance.toArray();
-    for (aa = 0, len1 = pts.length; aa < len1; aa++) {
-      p = pts[aa];
-      p[name](args);
-    }
-    return instance;
-  };
-
   Point.prototype.get2D = function(axis, reverse) {
     if (reverse == null) {
       reverse = false;
@@ -1219,13 +1196,13 @@ Point = (function() {
   Point.prototype.min = function(args) {
     var _p;
     _p = Point.get(arguments);
-    return new Point(Math.min(this.x, _p.x), Math.min(this.y, _p.y), Math.min(this.z, _p.z));
+    return new this.__proto__.constructor(Math.min(this.x, _p.x), Math.min(this.y, _p.y), Math.min(this.z, _p.z));
   };
 
   Point.prototype.max = function(args) {
     var _p;
     _p = Point.get(arguments);
-    return new Point(Math.max(this.x, _p.x), Math.max(this.y, _p.y), Math.max(this.z, _p.z));
+    return new this.__proto__.constructor(Math.max(this.x, _p.x), Math.max(this.y, _p.y), Math.max(this.z, _p.z));
   };
 
   Point.prototype.equal = function(args) {
@@ -1353,6 +1330,29 @@ Vector = (function(superClass) {
     var a;
     a = this._getArgs(arguments);
     return new Vector(this).divide(a);
+  };
+
+  Vector.prototype.op = function() {
+    var aa, args, len1, name, p, pts;
+    name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+    pts = this.toArray();
+    for (aa = 0, len1 = pts.length; aa < len1; aa++) {
+      p = pts[aa];
+      p[name](args);
+    }
+    return this;
+  };
+
+  Vector.prototype.$op = function() {
+    var aa, args, instance, len1, name, p, pts;
+    name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+    instance = this.clone();
+    pts = instance.toArray();
+    for (aa = 0, len1 = pts.length; aa < len1; aa++) {
+      p = pts[aa];
+      p[name](args);
+    }
+    return instance;
   };
 
   Vector.prototype.angle = function(args) {
@@ -2399,7 +2399,7 @@ Particle = (function(superClass) {
     if (precise) {
       next_pos = this.$add(this.velocity);
       next_dist = Math.abs(wall.getDistanceFromPoint(next_pos));
-      crossed = wall.intersectLine(new Line(curr_pos).connect(next_pos));
+      crossed = wall.intersectLine(new Line(curr_pos).to(next_pos));
       if (crossed) {
         next_pos = crossed.$add(this.velocity.$normalize().$multiply(-this.radius / 2));
         next_dist = Math.abs(wall.getDistanceFromPoint(next_pos));
@@ -2431,9 +2431,9 @@ Particle = (function(superClass) {
       this.velocity = proj.$add(tangent);
       this.momentum = this.velocity.$multiply(this.mass);
       if (precise && !collideEndPt) {
-        perpend = new Line(pt_on_wall).connect(curr_pos);
+        perpend = new Line(pt_on_wall).to(curr_pos);
         prev_pt_on_wall = wall.getPerpendicularFromPoint(next_pos);
-        path = new Line(pt_on_wall).connect(prev_pt_on_wall);
+        path = new Line(pt_on_wall).to(prev_pt_on_wall);
         pvec = path.direction();
         r = (this.radius - curr_dist) / (next_dist - curr_dist);
         pt = pvec.$multiply(r).$add(path);
@@ -2620,7 +2620,7 @@ Pair = (function(superClass) {
     }
   }
 
-  Pair.prototype.connect = function() {
+  Pair.prototype.to = function() {
     this.p1 = new Vector(Point.get(arguments));
     return this;
   };
@@ -2635,7 +2635,7 @@ Pair = (function(superClass) {
   };
 
   Pair.prototype.bounds = function() {
-    return new Pair(this.min(this.p1)).connect(this.max(this.p1));
+    return new Pair(this.min(this.p1)).to(this.max(this.p1));
   };
 
   Pair.prototype.withinBounds = function(pt, axis) {
@@ -2727,7 +2727,7 @@ Pair = (function(superClass) {
   Pair.prototype.clone = function() {
     var p;
     p = new Pair(this);
-    p.connect(this.p1.clone());
+    p.to(this.p1.clone());
     return p;
   };
 
@@ -2821,7 +2821,7 @@ Line = (function(superClass) {
     return Line.intercept(this, this.p1, axis);
   };
 
-  Line.prototype.getPerpendicularLine = function(t, len, reverse, axis) {
+  Line.prototype.getPerpendicular = function(t, len, reverse, axis) {
     var line, pn, pp;
     if (len == null) {
       len = 10;
@@ -2835,7 +2835,7 @@ Line = (function(superClass) {
     pn = this.direction().normalize().perpendicular(axis);
     pp = reverse ? pn[1] : pn[0];
     line = new Line(this.interpolate(t));
-    line.connect(pp.multiply(len).add(line));
+    line.to(pp.multiply(len).add(line));
     return line;
   };
 
@@ -2987,7 +2987,7 @@ Line = (function(superClass) {
   };
 
   Line.prototype.clone = function(deep) {
-    return new Line(this).connect(this.p1);
+    return new Line(this).to(this.p1);
   };
 
   return Line;
@@ -3017,10 +3017,10 @@ Rectangle = (function(superClass) {
   Rectangle.prototype.toPointSet = function() {
     var c;
     c = this.corners();
-    return new PointSet(this).connect([c.topRight, c.bottomRight, c.bottomLeft, c.topLeft]);
+    return new PointSet(this).to([c.topRight, c.bottomRight, c.bottomLeft, c.topLeft]);
   };
 
-  Rectangle.prototype.connect = function(args) {
+  Rectangle.prototype.to = function(args) {
     this.p1 = new Vector(Point.get(arguments));
     this.resetBounds();
     this.center = this.midpoint();
@@ -3243,24 +3243,24 @@ Rectangle = (function(superClass) {
   Rectangle.prototype.sides = function() {
     var c;
     c = this.corners();
-    return [new Line(c.topLeft).connect(c.topRight), new Line(c.topRight).connect(c.bottomRight), new Line(c.bottomRight).connect(c.bottomLeft), new Line(c.bottomLeft).connect(c.topLeft)];
+    return [new Line(c.topLeft).to(c.topRight), new Line(c.topRight).to(c.bottomRight), new Line(c.bottomRight).to(c.bottomLeft), new Line(c.bottomLeft).to(c.topLeft)];
   };
 
   Rectangle.prototype.quadrants = function() {
     var c;
     c = this.corners();
     return {
-      topLeft: new this.__proto__.constructor(c.topLeft).connect(this.center),
-      topRight: new this.__proto__.constructor(c.topRight).connect(this.center),
-      bottomLeft: new this.__proto__.constructor(c.bottomLeft).connect(this.center),
-      bottomRight: new this.__proto__.constructor(c.bottomRight).connect(this.center)
+      topLeft: new this.__proto__.constructor(c.topLeft).to(this.center),
+      topRight: new this.__proto__.constructor(c.topRight).to(this.center),
+      bottomLeft: new this.__proto__.constructor(c.bottomLeft).to(this.center),
+      bottomRight: new this.__proto__.constructor(c.bottomRight).to(this.center)
     };
   };
 
   Rectangle.prototype.clone = function() {
     var p;
-    p = new Rectangle(this).connect(this.p1);
-    p.connect(this.p1.clone());
+    p = new Rectangle(this).to(this.p1);
+    p.to(this.p1.clone());
     return p;
   };
 
@@ -3422,7 +3422,7 @@ PointSet = (function(superClass) {
     return this.points.slice();
   };
 
-  PointSet.prototype.connect = function(args) {
+  PointSet.prototype.to = function(args) {
     var aa, len1, p, ref;
     if (arguments.length > 0) {
       if (Array.isArray(arguments[0]) && arguments[0].length > 0 && typeof arguments[0][0] === 'object') {
@@ -3503,12 +3503,12 @@ PointSet = (function(superClass) {
     for (aa = 0, len1 = ref.length; aa < len1; aa++) {
       p = ref[aa];
       if (lastP) {
-        sides.push(new Line(lastP).connect(p));
+        sides.push(new Line(lastP).to(p));
       }
       lastP = p;
     }
     if (close_path) {
-      sides.push(new Line(lastP).connect(this.points[0]));
+      sides.push(new Line(lastP).to(this.points[0]));
     }
     return sides;
   };
@@ -3590,7 +3590,7 @@ PointSet = (function(superClass) {
   };
 
   PointSet.prototype.clone = function() {
-    return new PointSet(this).connect(Util.clonePoints(this.points));
+    return new PointSet(this).to(Util.clonePoints(this.points));
   };
 
   return PointSet;
@@ -3860,7 +3860,7 @@ Triangle = (function(superClass) {
     this.p2 = new Vector(this.x + 1, this.y + 1, this.z);
   }
 
-  Triangle.prototype.connect = function(args) {
+  Triangle.prototype.to = function(args) {
     if (arguments.length > 0) {
       if (typeof arguments[0] === 'object' && arguments.length === 2) {
         this.p1.set(arguments[0]);
@@ -3889,11 +3889,11 @@ Triangle = (function(superClass) {
   Triangle.prototype.toPointSet = function() {
     var p0;
     p0 = new Vector(this);
-    return new PointSet(p0).connect([p0, this.p1, this.p2]);
+    return new PointSet(p0).to([p0, this.p1, this.p2]);
   };
 
   Triangle.prototype.sides = function() {
-    return [new Line(this).connect(this.p1), new Line(this.p1).connect(this.p2), new Line(this.p2).connect(this)];
+    return [new Line(this).to(this.p1), new Line(this.p1).to(this.p2), new Line(this.p2).to(this)];
   };
 
   Triangle.prototype.angles = function(axis) {
@@ -3918,7 +3918,7 @@ Triangle = (function(superClass) {
       }
       return results;
     })();
-    return new Triangle(pts[0]).connect(pts[1], pts[2]);
+    return new Triangle(pts[0]).to(pts[1], pts[2]);
   };
 
   Triangle.prototype.perimeter = function() {
@@ -3944,21 +3944,21 @@ Triangle = (function(superClass) {
 
   Triangle.prototype.oppositeSide = function(id) {
     if (id === "p1") {
-      return new Line(this).connect(this.p2);
+      return new Line(this).to(this.p2);
     } else if (id === "p2") {
-      return new Line(this).connect(this.p1);
+      return new Line(this).to(this.p1);
     } else {
-      return new Line(this.p1).connect(this.p2);
+      return new Line(this.p1).to(this.p2);
     }
   };
 
   Triangle.prototype.adjacentSides = function(id) {
     if (id === "p1") {
-      return [new Line(this.p1).connect(this), new Line(this.p1).connect(this.p2)];
+      return [new Line(this.p1).to(this), new Line(this.p1).to(this.p2)];
     } else if (id === "p2") {
-      return [new Line(this.p2).connect(this), new Line(this.p2).connect(this.p1)];
+      return [new Line(this.p2).to(this), new Line(this.p2).to(this.p1)];
     } else {
-      return [new Line(this).connect(this.p1), new Line(this).connect(this.p2)];
+      return [new Line(this).to(this.p1), new Line(this).to(this.p2)];
     }
   };
 
@@ -3976,7 +3976,7 @@ Triangle = (function(superClass) {
     ad[1].moveTo(0, 0);
     bp = ad[0].p1.bisect(ad[1].p1);
     if (asLine) {
-      return new Line(p).connect(bp.multiply(size).add(p));
+      return new Line(p).to(bp.multiply(size).add(p));
     } else {
       return bp;
     }
@@ -3984,9 +3984,9 @@ Triangle = (function(superClass) {
 
   Triangle.prototype.altitude = function(id) {
     if (id === "p1" || id === "p2") {
-      return new Line(this[id]).connect(this.oppositeSide(id).getPerpendicularFromPoint(this[id]));
+      return new Line(this[id]).to(this.oppositeSide(id).getPerpendicularFromPoint(this[id]));
     } else {
-      return new Line(this).connect(this.oppositeSide().getPerpendicularFromPoint(this));
+      return new Line(this).to(this.oppositeSide().getPerpendicularFromPoint(this));
     }
   };
 
@@ -4023,7 +4023,7 @@ Triangle = (function(superClass) {
   Triangle.prototype.circumcenter = function() {
     var medial, pbs;
     medial = this.medial();
-    pbs = [new Line(medial).connect(this.$subtract(medial).perpendicular()[0].$add(medial)), new Line(medial.p1).connect(this.p1.$subtract(medial.p1).perpendicular()[0].$add(medial.p1)), new Line(medial.p2).connect(this.p2.$subtract(medial.p2).perpendicular()[0].$add(medial.p2))];
+    pbs = [new Line(medial).to(this.$subtract(medial).perpendicular()[0].$add(medial)), new Line(medial.p1).to(this.p1.$subtract(medial.p1).perpendicular()[0].$add(medial.p1)), new Line(medial.p2).to(this.p2.$subtract(medial.p2).perpendicular()[0].$add(medial.p2))];
     return {
       center: pbs[0].intersectPath(pbs[1], Const.xyz),
       bisectors: pbs
@@ -4167,7 +4167,7 @@ Triangle = (function(superClass) {
   };
 
   Triangle.prototype.clone = function() {
-    return new Triangle(this).connect(this.p1, this.p2);
+    return new Triangle(this).to(this.p1, this.p2);
   };
 
   return Triangle;
@@ -4831,13 +4831,13 @@ StripeBound = (function(superClass) {
     diff = size.$divide(freq);
     for (d = aa = 0, ref = freq.y - 1; 0 <= ref ? aa <= ref : aa >= ref; d = 0 <= ref ? ++aa : --aa) {
       dy = diff.y * d;
-      p = new Pair(0, dy).connect(size.x, dy + diff.y).add(this);
+      p = new Pair(0, dy).to(size.x, dy + diff.y).add(this);
       p.p1.add(this);
       result.rows.push(p);
     }
     for (d = ab = 0, ref1 = freq.x - 1; 0 <= ref1 ? ab <= ref1 : ab >= ref1; d = 0 <= ref1 ? ++ab : --ab) {
       dx = diff.x * d;
-      p = new Pair(dx, 0).connect(dx + diff.x + 0.5, size.y).add(this);
+      p = new Pair(dx, 0).to(dx + diff.x + 0.5, size.y).add(this);
       p.p1.add(this);
       result.columns.push(p);
     }
@@ -4855,13 +4855,13 @@ StripeBound = (function(superClass) {
     diff = size.$divide(freq);
     for (d = aa = 0, ref = freq.y; 0 <= ref ? aa <= ref : aa >= ref; d = 0 <= ref ? ++aa : --aa) {
       dy = diff.y * d;
-      p = new Pair(0, dy).connect(size.x, dy).add(this);
+      p = new Pair(0, dy).to(size.x, dy).add(this);
       p.p1.add(this);
       result.rows.push(p);
     }
     for (d = ab = 0, ref1 = freq.x; 0 <= ref1 ? ab <= ref1 : ab >= ref1; d = 0 <= ref1 ? ++ab : --ab) {
       dx = diff.x * d;
-      p = new Pair(dx, 0).connect(dx, size.y).add(this);
+      p = new Pair(dx, 0).to(dx, size.y).add(this);
       p.p1.add(this);
       result.columns.push(p);
     }

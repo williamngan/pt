@@ -146,7 +146,7 @@ class Particle extends Circle
     if precise
       next_pos = @$add( @velocity )
       next_dist = Math.abs( wall.getDistanceFromPoint( next_pos ) )
-      crossed = wall.intersectLine( new Line( curr_pos ).connect( next_pos ) )
+      crossed = wall.intersectLine( new Line( curr_pos ).to( next_pos ) )
 
       if crossed
         next_pos = crossed.$add( @velocity.$normalize().$multiply(-@radius/2) )
@@ -191,11 +191,11 @@ class Particle extends Circle
       if precise and !collideEndPt
 
         # normal on wall to curr_pos
-        perpend = new Line( pt_on_wall ).connect( curr_pos )
+        perpend = new Line( pt_on_wall ).to( curr_pos )
 
         # line segment of two points on wall
         prev_pt_on_wall = wall.getPerpendicularFromPoint( next_pos )
-        path = new Line( pt_on_wall ).connect( prev_pt_on_wall )
+        path = new Line( pt_on_wall ).to( prev_pt_on_wall )
         pvec = path.direction()
 
         # interpolate the point where the collision occurs

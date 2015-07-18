@@ -22,7 +22,7 @@ var dr = Math.min( space.size.x, space.size.y ) * 0.4 / steps;
 
 // create pairs
 for (var i=0; i<steps; i++) {
-  var p = new Pair( Math.random()*r, Math.random()*r ).connect( Math.random()*-r, Math.random()*-r );
+  var p = new Pair( Math.random()*r, Math.random()*r ).to( Math.random()*-r, Math.random()*-r );
   p.moveBy( center ).rotate2D( i*Math.PI/steps, center );
   pairs.push( p );
 }
@@ -44,7 +44,7 @@ space.add({
       if ( Math.abs( col ) < 200 ) {
         form.stroke("#fff");
         form.line( pr );
-        form.line( pr.clone().connect( mouse ) );
+        form.line( pr.clone().to( mouse ) );
 
       // not collinear, check whether mouse is on left or right side
       } else {

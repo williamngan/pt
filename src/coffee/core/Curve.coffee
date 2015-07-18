@@ -2,8 +2,8 @@
 class Curve extends PointSet
 
   # ## Create a new Curve. A Curve uses a set of anchor and/or control points to interpolate a curve.
-  # @param `args` Similar to PointSet constructor, use comma-separated values, an array, or an object as parameters to specify the anchor point. Use `connect()` to add points to the set.
-  # @eg `new PointSet()` `new PointSet(1,2,3)` `new PointSet([2,4])` `new PointSet({x:3, y:6, z:9}).connect(1,2,3)` `new PointSet(1,2,3).connect([p1, p2, p3, p4, p5])`
+  # @param `args` Similar to PointSet constructor, use comma-separated values, an array, or an object as parameters to specify the anchor point. Use `to()` to add points to the set.
+  # @eg `new PointSet()` `new PointSet(1,2,3)` `new PointSet([2,4])` `new PointSet({x:3, y:6, z:9}).to(1,2,3)` `new PointSet(1,2,3).to([p1, p2, p3, p4, p5])`
   # @return a new Curve object
   constructor: () ->
     super

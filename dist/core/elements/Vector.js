@@ -1,6 +1,7 @@
 var Vector,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  hasProp = {}.hasOwnProperty;
+  hasProp = {}.hasOwnProperty,
+  slice = [].slice;
 
 Vector = (function(superClass) {
   extend(Vector, superClass);
@@ -99,6 +100,29 @@ Vector = (function(superClass) {
     var a;
     a = this._getArgs(arguments);
     return new Vector(this).divide(a);
+  };
+
+  Vector.prototype.op = function() {
+    var args, i, len, name, p, pts;
+    name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+    pts = this.toArray();
+    for (i = 0, len = pts.length; i < len; i++) {
+      p = pts[i];
+      p[name](args);
+    }
+    return this;
+  };
+
+  Vector.prototype.$op = function() {
+    var args, i, instance, len, name, p, pts;
+    name = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+    instance = this.clone();
+    pts = instance.toArray();
+    for (i = 0, len = pts.length; i < len; i++) {
+      p = pts[i];
+      p[name](args);
+    }
+    return instance;
   };
 
   Vector.prototype.angle = function(args) {

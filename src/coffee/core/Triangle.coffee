@@ -17,9 +17,9 @@ class Triangle extends Vector
 
   # ## Connect triangle's anchor point with the other two points
   # @param Parameters can be 2 objects or 2 arrays, or 4 or 6 numeric values to specify x, y, and optionally z positions
-  # @eg `tri.connect( p1, p2)` `tri.connect([1,2], [3,4]` `tri.connect(1,2,3,4)` `tri.connect(1,3,5,2,4,6)`
+  # @eg `tri.to( p1, p2)` `tri.to([1,2], [3,4]` `tri.to(1,2,3,4)` `tri.to(1,3,5,2,4,6)`
   # @return this triangle
-  connect:( args ) ->
+  to:( args ) ->
 
     if arguments.length > 0
 
@@ -53,16 +53,16 @@ class Triangle extends Vector
   # @return a PointSet with 3 points.
   toPointSet: () ->
     p0 = new Vector(@)
-    return new PointSet( p0 ).connect( [p0, @p1, @p2 ] )
+    return new PointSet( p0 ).to( [p0, @p1, @p2 ] )
 
 
   # ## Get an array of Lines that represents this triangle's 3 sides
   # @return an array of 3 lines
   sides: () ->
     return [
-      new Line(@).connect(@p1)
-      new Line(@p1).connect(@p2)
-      new Line(@p2).connect(@)
+      new Line(@).to(@p1)
+      new Line(@p1).to(@p2)
+      new Line(@p2).to(@)
     ]
 
 
@@ -83,7 +83,7 @@ class Triangle extends Vector
   medial: () ->
     sides = @sides()
     pts = ( side.midpoint() for side in sides )
-    return new Triangle( pts[0] ).connect( pts[1], pts[2] )
+    return new Triangle( pts[0] ).to( pts[1], pts[2] )
 
 
   # ## Get this triangle's perimeter, which is the length of its 3 sides
@@ -119,11 +119,11 @@ class Triangle extends Vector
   # @return a Line which represents the opposite side
   oppositeSide: ( id ) ->
     if id=="p1"
-      return new Line(@).connect(@p2)
+      return new Line(@).to(@p2)
     else if id == "p2"
-      return new Line(@).connect(@p1)
+      return new Line(@).to(@p1)
     else
-      return new Line(@p1).connect(@p2)
+      return new Line(@p1).to(@p2)
 
 
   # ## Given a point of the triangle, the adjacent sides are the two side which the point touches
@@ -132,11 +132,11 @@ class Triangle extends Vector
   # @return an array of 2 Line which represents the adjacent sides
   adjacentSides: (id) ->
     if id=="p1"
-      return [new Line(@p1).connect(@), new Line(@p1).connect(@p2)]
+      return [new Line(@p1).to(@), new Line(@p1).to(@p2)]
     else if id == "p2"
-      return [new Line(@p2).connect(@), new Line(@p2).connect(@p1)]
+      return [new Line(@p2).to(@), new Line(@p2).to(@p1)]
     else
-      return [new Line(@).connect(@p1), new Line(@).connect(@p2)]
+      return [new Line(@).to(@p1), new Line(@).to(@p2)]
 
 
   # ## Get a bisector, which is a path that splits a triangle's angle in half.
@@ -150,7 +150,7 @@ class Triangle extends Vector
     ad[1].moveTo(0,0)
     bp = ad[0].p1.bisect(ad[1].p1) # bisect vector from origin
 
-    return if asLine then new Line(p).connect( bp.multiply(size).add(p) ) else bp
+    return if asLine then new Line(p).to( bp.multiply(size).add(p) ) else bp
 
 
   # ## Get a triangle's altitude, which is a line from a triangle's point to its opposite side, and perpendicular to its opposite side.
@@ -159,9 +159,9 @@ class Triangle extends Vector
   # @return a Line representing an altitude
   altitude: ( id ) ->
     if id=="p1" or id=="p2"
-      return new Line(@[id]).connect( @oppositeSide(id).getPerpendicularFromPoint( @[id] ) )
+      return new Line(@[id]).to( @oppositeSide(id).getPerpendicularFromPoint( @[id] ) )
     else
-      return new Line(@).connect( @oppositeSide().getPerpendicularFromPoint( @ ) )
+      return new Line(@).to( @oppositeSide().getPerpendicularFromPoint( @ ) )
 
 
   # ## Get a triangle's centroid, which is the averge positions of its three points.
@@ -202,9 +202,9 @@ class Triangle extends Vector
 
     # find perpendicular bisectors
     pbs = [
-      new Line( medial ).connect( @.$subtract( medial ).perpendicular()[0].$add(medial) )
-      new Line( medial.p1 ).connect( @p1.$subtract( medial.p1 ).perpendicular()[0].$add(medial.p1) )
-      new Line( medial.p2 ).connect( @p2.$subtract( medial.p2 ).perpendicular()[0].$add(medial.p2) )
+      new Line( medial ).to( @.$subtract( medial ).perpendicular()[0].$add(medial) )
+      new Line( medial.p1 ).to( @p1.$subtract( medial.p1 ).perpendicular()[0].$add(medial.p1) )
+      new Line( medial.p2 ).to( @p2.$subtract( medial.p2 ).perpendicular()[0].$add(medial.p2) )
     ]
 
     return {
@@ -319,7 +319,7 @@ class Triangle extends Vector
 
 
   # overrides clone
-  clone: () -> new Triangle(@).connect( @p1, @p2 )
+  clone: () -> new Triangle(@).to( @p1, @p2 )
 
 
 # namespace

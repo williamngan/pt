@@ -14,7 +14,7 @@ var form = new Form( space.ctx );
 //// 2. Create Elements
 var pts = [];
 var center = space.size.$divide(2);
-var line = new Line(center).connect( space.size );
+var line = new Line(center).to( space.size );
 
 var count = 200;
 var r = Math.min( space.size.x, space.size.y ) * 0.8;
@@ -37,7 +37,7 @@ space.add({
       form.stroke( false ).fill( colors["a" + (i % 4)] ).point( pt, 1 );
 
       // get line from pt to the mouse line
-      var ln = new Line( pt ).connect( line.getPerpendicularFromPoint( pt ) );
+      var ln = new Line( pt ).to( line.getPerpendicularFromPoint( pt ) );
 
       // opacity of line derived from distance to the line
       var opacity = Math.min( 0.8, 1 - Math.abs( line.getDistanceFromPoint( pt ) ) / r );

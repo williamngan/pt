@@ -33,13 +33,13 @@ space.add({
     // calculate the normalized vector from center to mouse position
     var direction = mouse.$subtract( center).normalize();
     form.stroke( colors.a4 );
-    form.line( new Line( center ).connect( mouse ) );
+    form.line( new Line( center ).to( mouse ) );
 
     // draw a grid of vectors, whose direction follows the mouse and magnitude is related to its position from center.
     form.stroke( "#fff" );
     for (var i=0; i<vecs.length; i++) {
       var mag = vecs[i].distance( center ) / spaceSize;
-      form.line( new Line( vecs[i] ).connect( direction.$multiply( mag * 30 )).relative() );
+      form.line( new Line( vecs[i] ).to( direction.$multiply( mag * 30 )).relative() );
     }
 
   },

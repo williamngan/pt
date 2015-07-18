@@ -191,55 +191,55 @@ describe("Vector", function() {
 
 describe("Pair", function() {
   it("can connect to another point", function() {
-    return expect(new Pair(8, -3).connect(6, 3, 2).p1.equal(new Point(6, 3, 2))).toEqual(true);
+    return expect(new Pair(8, -3).to(6, 3, 2).p1.equal(new Point(6, 3, 2))).toEqual(true);
   });
   it("can find relative point", function() {
-    return expect(new Pair(8, -3, 1).connect(6, 3).relative().size().equal(new Point(6, 3, 0))).toEqual(true);
+    return expect(new Pair(8, -3, 1).to(6, 3).relative().size().equal(new Point(6, 3, 0))).toEqual(true);
   });
   it("can add to both points", function() {
-      return expect(new Pair(2,2,1).connect(3,4).op("add", 1,2,3).equal( new Pair(3,4,4).connect(4,6,3) )).toEqual(true);
+      return expect(new Pair(2,2,1).to(3,4).op("add", 1,2,3).equal( new Pair(3,4,4).to(4,6,3) )).toEqual(true);
     });
   it("can add to both points as new Pair", function() {
-      return expect(new Pair(2,2,1).connect(3,4).$op("add", 1,2,3).equal( new Pair(3,4,4).connect(4,6,3) )).toEqual(true);
+      return expect(new Pair(2,2,1).to(3,4).$op("add", 1,2,3).equal( new Pair(3,4,4).to(4,6,3) )).toEqual(true);
     });
   it("can subtract from both points", function() {
-      return expect(new Pair(2,2).connect(3,4,5).op("subtract", 1,2,3).equal( new Pair(1,0,-3).connect(2,2,2) )).toEqual(true);
+      return expect(new Pair(2,2).to(3,4,5).op("subtract", 1,2,3).equal( new Pair(1,0,-3).to(2,2,2) )).toEqual(true);
     });
   it("can subtract from both points as new Pair", function() {
-      return expect(new Pair(2,2).connect(3,4,5).$op("subtract", 1,2,3).equal( new Pair(1,0,-3).connect(2,2,2) )).toEqual(true);
+      return expect(new Pair(2,2).to(3,4,5).$op("subtract", 1,2,3).equal( new Pair(1,0,-3).to(2,2,2) )).toEqual(true);
     });
   it("can multiply with both points", function() {
-      return expect(new Pair(1,2).connect(3,2,1).op("multiply", 2).equal( new Pair(2,4).connect(6,4,2) )).toEqual(true);
+      return expect(new Pair(1,2).to(3,2,1).op("multiply", 2).equal( new Pair(2,4).to(6,4,2) )).toEqual(true);
     });
   it("can multiply with both points as new Pair", function() {
-      return expect(new Pair(1,2).connect(3,2,1).$op("multiply", 2,3,4).equal( new Pair(2,6).connect(6,6,4) )).toEqual(true);
+      return expect(new Pair(1,2).to(3,2,1).$op("multiply", 2,3,4).equal( new Pair(2,6).to(6,6,4) )).toEqual(true);
     });
   it("can divide from both points", function() {
-        return expect(new Pair(1,2).connect(3,2,1).op("divide", 2).equal( new Pair(0.5,1).connect(3/2, 1, 0.5) )).toEqual(true);
+        return expect(new Pair(1,2).to(3,2,1).op("divide", 2).equal( new Pair(0.5,1).to(3/2, 1, 0.5) )).toEqual(true);
       });
   it("can divide with both points as new Pair", function() {
-      return expect(new Pair(1,2).connect(3,2,1).$op("divide", 2,3,4).equal( new Pair(0.5, 2/3).connect(3/2, 2/3, 1/4) )).toEqual(true);
+      return expect(new Pair(1,2).to(3,2,1).$op("divide", 2,3,4).equal( new Pair(0.5, 2/3).to(3/2, 2/3, 1/4) )).toEqual(true);
     });
   it("can find bounding box", function() {
-    return expect(new Pair(3, 1, -5).connect(-2, 5, 3).bounds().equal(new Rectangle(-2, 1, -5).connect(3, 5, 3))).toEqual(true);
+    return expect(new Pair(3, 1, -5).to(-2, 5, 3).bounds().equal(new Rectangle(-2, 1, -5).to(3, 5, 3))).toEqual(true);
   });
   it("can intepolate between 2 points", function() {
-    return expect(new Pair(8, -3).connect(6, 3).interpolate(0.5).equal(new Point(7, 0))).toEqual(true);
+    return expect(new Pair(8, -3).to(6, 3).interpolate(0.5).equal(new Point(7, 0))).toEqual(true);
   });
   it("can intepolate between relative vector", function() {
-    return expect(new Pair(8, -3, 2).connect(6, 3, 1).interpolate(0.5, true).equal(new Point(11, -1.5, 2.5))).toEqual(true);
+    return expect(new Pair(8, -3, 2).to(6, 3, 1).interpolate(0.5, true).equal(new Point(11, -1.5, 2.5))).toEqual(true);
   });
   it("can find distance", function() {
-    return expect(new Pair(3, 2, 1).connect(2, 3, 4).length(false)).toEqual(1 + 1 + 9);
+    return expect(new Pair(3, 2, 1).to(2, 3, 4).length(false)).toEqual(1 + 1 + 9);
   });
   it("can find width and height", function() {
-    return expect(new Pair(3, 2, 1).connect(2, 3, 4).size().equal(new Point(1, 1, 3))).toBe(true);
+    return expect(new Pair(3, 2, 1).to(2, 3, 4).size().equal(new Point(1, 1, 3))).toBe(true);
   });
   it("can move to new location", function() {
-    return expect(new Pair(10, 10).connect(30, 20).moveTo(20, -40).p1.equal(new Point(40, -30))).toBe(true);
+    return expect(new Pair(10, 10).to(30, 20).moveTo(20, -40).p1.equal(new Point(40, -30))).toBe(true);
   });
   return it("can move by certain amount", function() {
-    return expect(new Pair(10, 10).connect(30, 20).moveBy(20, -40).p1.equal(new Point(50, -20))).toBe(true);
+    return expect(new Pair(10, 10).to(30, 20).moveBy(20, -40).p1.equal(new Point(50, -20))).toBe(true);
   });
 });
 
@@ -254,49 +254,49 @@ describe("Line", function() {
     return expect(Line.intercept(new Point(6, 4), new Point(2, 2), Const.xy).yi).toBe(1);
   });
   it("can check perpendicular lines", function() {
-    return expect(Line.isPerpendicularLine(new Pair(2, 3).connect(4, -1), new Pair(6, 0).connect(-2, -4))).toBe(true);
+    return expect(Line.isPerpendicularLine(new Pair(2, 3).to(4, -1), new Pair(6, 0).to(-2, -4))).toBe(true);
   });
   it("can create perpendicular line", function() {
-    return expect(new Line(20, 30).connect(120, 70).getPerpendicularLine(0.9, 20, true).p1.x).toBe(117.42781352708208);
+    return expect(new Line(20, 30).to(120, 70).getPerpendicular(0.9, 20, true).p1.x).toBe(117.42781352708208);
   });
   it("can check infinite line intersection", function() {
-    return expect(new Line(5, 4.5).connect(10, 2).intersectPath(new Line(0, 3).connect(-4, -5)).equal(new Point(1.6, 6.2))).toBe(true);
+    return expect(new Line(5, 4.5).to(10, 2).intersectPath(new Line(0, 3).to(-4, -5)).equal(new Point(1.6, 6.2))).toBe(true);
   });
   it("can check infinite line intersection in different axis", function() {
-    return expect(new Line(0, 5, 4.5).connect(0, 10, 2).intersectPath(new Line(0, 0, 3).connect(0, -4, -5), Const.yz).equal(new Vector(0, 1.6, 6.2))).toBe(true);
+    return expect(new Line(0, 5, 4.5).to(0, 10, 2).intersectPath(new Line(0, 0, 3).to(0, -4, -5), Const.yz).equal(new Vector(0, 1.6, 6.2))).toBe(true);
   });
   it("can distinguish path and segment intersection", function() {
-    return expect(new Line(5, 4.5).connect(10, 2).intersectLine(new Line(0, 3).connect(-4, -5))).toBe(false);
+    return expect(new Line(5, 4.5).to(10, 2).intersectLine(new Line(0, 3).to(-4, -5))).toBe(false);
   });
   it("can check line segment intersection", function() {
-    return expect(new Line(0, 0).connect(60, 160).intersectPath(new Line(0, 80).connect(80, 0)).equal(new Point(21.81818181818182, 58.18181818181819))).toBe(true);
+    return expect(new Line(0, 0).to(60, 160).intersectPath(new Line(0, 80).to(80, 0)).equal(new Point(21.81818181818182, 58.18181818181819))).toBe(true);
   });
   return it("can reflect a point along a line", function() {
-    return expect(new Vector(228, 100).reflect2D(new Line(200, 100).connect(500, 300)).floor().equal(new Point(210, 125))).toBe(true);
+    return expect(new Vector(228, 100).reflect2D(new Line(200, 100).to(500, 300)).floor().equal(new Point(210, 125))).toBe(true);
   });
 });
 
 describe("Rectangle", function() {
   it("can connect like Pair and calculate center", function() {
-    return expect(new Rectangle(2, 1).connect(12, 7).center.equal(new Point(7, 4))).toBe(true);
+    return expect(new Rectangle(2, 1).to(12, 7).center.equal(new Point(7, 4))).toBe(true);
   });
   it("can resize", function() {
-    return expect(new Rectangle(2, 1).connect(12, 7).resizeBy(-2, -2).center.equal(new Point(6, 3))).toBe(true);
+    return expect(new Rectangle(2, 1).to(12, 7).resizeBy(-2, -2).center.equal(new Point(6, 3))).toBe(true);
   });
   it("can resize from center without moving center", function() {
-    return expect(new Rectangle(2, 1).connect(12, 7).resizeCenterBy(-2, -2).center.equal(new Point(7, 4))).toBe(true);
+    return expect(new Rectangle(2, 1).to(12, 7).resizeCenterBy(-2, -2).center.equal(new Point(7, 4))).toBe(true);
   });
   it("can resize from center", function() {
-    return expect(new Rectangle(2, 1).connect(12, 7).resizeCenterBy(-2, -2).equal(new Point(3, 2))).toBe(true);
+    return expect(new Rectangle(2, 1).to(12, 7).resizeCenterBy(-2, -2).equal(new Point(3, 2))).toBe(true);
   });
   it("can find union of 2 bounds", function() {
-    return expect(new Rectangle(10, 10).connect(20, 12).$enclose(new Rectangle(8, 8).connect(2.8, 2.8)).equal(new Rectangle(2.8, 2.8).connect(20, 12))).toBe(true);
+    return expect(new Rectangle(10, 10).to(20, 12).$enclose(new Rectangle(8, 8).to(2.8, 2.8)).equal(new Rectangle(2.8, 2.8).to(20, 12))).toBe(true);
   });
   it("can check intersection of 2 bounds", function() {
-    return expect(new Rectangle(0, 2).connect(2.99, 7).hasIntersect(new Rectangle(3, 2).connect(5, 7))).toBe(false);
+    return expect(new Rectangle(0, 2).to(2.99, 7).hasIntersect(new Rectangle(3, 2).to(5, 7))).toBe(false);
   });
   return it("can find intersect bounds", function() {
-    return expect(new Rectangle(0, 2).connect(3, 7).hasIntersect(new Rectangle(-2, 3).connect(7, 5), true)[1].equal(new Point(3, 5))).toBe(true);
+    return expect(new Rectangle(0, 2).to(3, 7).hasIntersect(new Rectangle(-2, 3).to(7, 5), true)[1].equal(new Point(3, 5))).toBe(true);
   });
 });
 
@@ -308,10 +308,10 @@ describe("Circle", function() {
     return expect(new Circle(200, 200).setRadius(100).hasIntersect(new Circle(285, 76).setRadius(50))).toBe(false);
   });
   it("can check ray intersection with circle", function() {
-    return expect(new Circle(200, 200, 0, 100).intersectPath(new Line(476, 229).connect(579, 249))[1].near(new Point(299.76532199555754, 194.79896202481237), 0.1)).toBe(true);
+    return expect(new Circle(200, 200, 0, 100).intersectPath(new Line(476, 229).to(579, 249))[1].near(new Point(299.76532199555754, 194.79896202481237), 0.1)).toBe(true);
   });
   return it("can check line segment intersection with circle", function() {
-    return expect(new Circle(200, 200, 0, 100).intersectPath(new Line(41, 140).connect(141, 160))[0].near(new Point(111.18857935162289, 154.03771587032458), 0.1)).toBe(true);
+    return expect(new Circle(200, 200, 0, 100).intersectPath(new Line(41, 140).to(141, 160))[0].near(new Point(111.18857935162289, 154.03771587032458), 0.1)).toBe(true);
   });
 });
 

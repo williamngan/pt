@@ -6,10 +6,10 @@
     "funcs": [
         {
             "description": "<h2>Create a new PointSet. A PointSet is a set of points which can repsent a polygon or a polyline or a time series.</h2>", 
-            "eg": "<p><code>new PointSet()</code> <code>new PointSet(1,2,3)</code> <code>new PointSet([2,4])</code> <code>new PointSet({x:3, y:6, z:9}).connect(1,2,3)</code> <code>new PointSet(1,2,3).connect([p1, p2, p3, p4, p5])</code></p>", 
+            "eg": "<p><code>new PointSet()</code> <code>new PointSet(1,2,3)</code> <code>new PointSet([2,4])</code> <code>new PointSet({x:3, y:6, z:9}).to(1,2,3)</code> <code>new PointSet(1,2,3).to([p1, p2, p3, p4, p5])</code></p>", 
             "name": "PointSet", 
             "param": [
-                "<p><code>args</code> Similar to Point constructor, use comma-separated values, an array, or an object as parameters to specify the anchor point. Use <code>connect()</code> to add points to the set.</p>"
+                "<p><code>args</code> Similar to Point constructor, use comma-separated values, an array, or an object as parameters to specify the anchor point. Use <code>to()</code> to add points to the set.</p>"
             ], 
             "pname": "", 
             "return": "<p>a new PointSet object</p>"
@@ -29,8 +29,8 @@
         }, 
         {
             "description": "<h2>Add a point or an array of points to this PointSet</h2>", 
-            "eg": "<p><code>pset.connect( 1,2,3 )</code> <code>pset.connect([1,2,3]</code> <code>pset.connect({x:3, y:6, z:9})</code> <code>pset.connect([p1, p2, p3, p4...])</code></p>", 
-            "name": "connect", 
+            "eg": "<p><code>pset.to( 1,2,3 )</code> <code>pset.to([1,2,3]</code> <code>pset.to({x:3, y:6, z:9})</code> <code>pset.to([p1, p2, p3, p4...])</code></p>", 
+            "name": "to", 
             "param": [
                 "<p><code>args</code> either an Array of Points, or a single point defined by comma-separated values, an array, or an object.</p>"
             ], 

@@ -657,13 +657,13 @@ StripeBound = (function(superClass) {
     diff = size.$divide(freq);
     for (d = l = 0, ref = freq.y - 1; 0 <= ref ? l <= ref : l >= ref; d = 0 <= ref ? ++l : --l) {
       dy = diff.y * d;
-      p = new Pair(0, dy).connect(size.x, dy + diff.y).add(this);
+      p = new Pair(0, dy).to(size.x, dy + diff.y).add(this);
       p.p1.add(this);
       result.rows.push(p);
     }
     for (d = m = 0, ref1 = freq.x - 1; 0 <= ref1 ? m <= ref1 : m >= ref1; d = 0 <= ref1 ? ++m : --m) {
       dx = diff.x * d;
-      p = new Pair(dx, 0).connect(dx + diff.x + 0.5, size.y).add(this);
+      p = new Pair(dx, 0).to(dx + diff.x + 0.5, size.y).add(this);
       p.p1.add(this);
       result.columns.push(p);
     }
@@ -681,13 +681,13 @@ StripeBound = (function(superClass) {
     diff = size.$divide(freq);
     for (d = l = 0, ref = freq.y; 0 <= ref ? l <= ref : l >= ref; d = 0 <= ref ? ++l : --l) {
       dy = diff.y * d;
-      p = new Pair(0, dy).connect(size.x, dy).add(this);
+      p = new Pair(0, dy).to(size.x, dy).add(this);
       p.p1.add(this);
       result.rows.push(p);
     }
     for (d = m = 0, ref1 = freq.x; 0 <= ref1 ? m <= ref1 : m >= ref1; d = 0 <= ref1 ? ++m : --m) {
       dx = diff.x * d;
-      p = new Pair(dx, 0).connect(dx, size.y).add(this);
+      p = new Pair(dx, 0).to(dx, size.y).add(this);
       p.p1.add(this);
       result.columns.push(p);
     }

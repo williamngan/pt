@@ -26,38 +26,38 @@ space.add({
 
     // mouse vector. Gray line.
     var mouseVec = mouse.$subtract( center );
-    form.line( new Line( center ).connect( mouseVec.$add( center ) ) );
+    form.line( new Line( center ).to( mouseVec.$add( center ) ) );
 
     form.stroke("#fff");
 
     // Two fixed vectors vec1 and vec2, connected to center as blue lines.
     form.stroke( colors.b1, 2 );
-    form.line( new Line( center ).connect( vec1.$add( center ) ) );
-    form.line( new Line( center ).connect( vec2.$add( center ) ) );
+    form.line( new Line( center ).to( vec1.$add( center ) ) );
+    form.line( new Line( center ).to( vec2.$add( center ) ) );
 
     // vector addition between mouse vector and vec1/vec1, and then connect to center as red line.
     form.stroke( colors.a1 );
     var add1 = vec1.$add( mouseVec );
-    form.line( new Line( center ).connect( add1.$add( center ) ) );
+    form.line( new Line( center ).to( add1.$add( center ) ) );
     var add2 = vec2.$add( mouseVec );
-    form.line( new Line( center ).connect( add2.$add( center ) ) );
+    form.line( new Line( center ).to( add2.$add( center ) ) );
 
     // vector subtraction between mouse vector and vec1/vec1, and then connect to center as green line.
     form.stroke( colors.a2 );
     var sub1 = vec1.$subtract( mouseVec );
-    var subline1 = new Line( center ).connect( sub1.$add( center ) );
+    var subline1 = new Line( center ).to( sub1.$add( center ) );
     form.line( subline1 );
     var sub2 = vec2.$subtract( mouseVec );
-    var subline2 = new Line( center ).connect( sub2.$add( center ) );
+    var subline2 = new Line( center ).to( sub2.$add( center ) );
     form.line( subline2 );
 
     // add the subtracted vectors to mouse position instead of to center. White lines.
     form.stroke( colors.b3, 1 );
     var sub3 = vec1.$subtract( mouseVec );
-    var subline3 = new Line( mouse ).connect( sub3.$add( mouse ) );
+    var subline3 = new Line( mouse ).to( sub3.$add( mouse ) );
     form.line( subline3 );
     var sub4 = vec2.$subtract( mouseVec );
-    var subline4 = new Line( mouse ).connect( sub4.$add( mouse ) );
+    var subline4 = new Line( mouse ).to( sub4.$add( mouse ) );
     form.line( subline4 );
 
     // Draw mouse

@@ -17,8 +17,8 @@ var pts = [
   new Point( space.size.$divide(3) ),
   new Point( space.size.$divide(3).multiply(2) )
 ];
-var rect = new Rectangle( pts[1]).connect( pts[2] );
-var nextRect = new Rectangle( pts[1]).connect( pts[2] );
+var rect = new Rectangle( pts[1]).to( pts[2] );
+var nextRect = new Rectangle( pts[1]).to( pts[2] );
 
 
 // Calculate min and max points, and set the rectangular bound.
@@ -31,7 +31,7 @@ function getMinMax() {
   for (i=1; i<pts.length; i++) {
     maxPt = maxPt.max( pts[i] );
   }
-  nextRect.set( minPt).connect( maxPt );
+  nextRect.set( minPt).to( maxPt );
 }
 
 

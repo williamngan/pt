@@ -25,7 +25,7 @@ PointSet = (function(superClass) {
     return this.points.slice();
   };
 
-  PointSet.prototype.connect = function(args) {
+  PointSet.prototype.to = function(args) {
     var j, len, p, ref;
     if (arguments.length > 0) {
       if (Array.isArray(arguments[0]) && arguments[0].length > 0 && typeof arguments[0][0] === 'object') {
@@ -106,12 +106,12 @@ PointSet = (function(superClass) {
     for (j = 0, len = ref.length; j < len; j++) {
       p = ref[j];
       if (lastP) {
-        sides.push(new Line(lastP).connect(p));
+        sides.push(new Line(lastP).to(p));
       }
       lastP = p;
     }
     if (close_path) {
-      sides.push(new Line(lastP).connect(this.points[0]));
+      sides.push(new Line(lastP).to(this.points[0]));
     }
     return sides;
   };
@@ -193,7 +193,7 @@ PointSet = (function(superClass) {
   };
 
   PointSet.prototype.clone = function() {
-    return new PointSet(this).connect(Util.clonePoints(this.points));
+    return new PointSet(this).to(Util.clonePoints(this.points));
   };
 
   return PointSet;

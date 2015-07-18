@@ -58,7 +58,7 @@ space.add({
 
     // fill background
     form.fill("rgba(0,0,0,0.1)");
-    form.rect( new Pair().connect(space.size) );
+    form.rect( new Pair().to(space.size) );
 
     // fill speckles
     form.fill( "rgba(255,255,200,.1)" );

@@ -556,10 +556,10 @@
     "funcs": [
       {
         "description": "<h2>Create a new Curve. A Curve uses a set of anchor and/or control points to interpolate a curve.</h2>", 
-        "eg": "<p><code>new PointSet()</code> <code>new PointSet(1,2,3)</code> <code>new PointSet([2,4])</code> <code>new PointSet({x:3, y:6, z:9}).connect(1,2,3)</code> <code>new PointSet(1,2,3).connect([p1, p2, p3, p4, p5])</code></p>", 
+        "eg": "<p><code>new PointSet()</code> <code>new PointSet(1,2,3)</code> <code>new PointSet([2,4])</code> <code>new PointSet({x:3, y:6, z:9}).to(1,2,3)</code> <code>new PointSet(1,2,3).to([p1, p2, p3, p4, p5])</code></p>", 
         "name": "Curve", 
         "param": [
-          "<p><code>args</code> Similar to PointSet constructor, use comma-separated values, an array, or an object as parameters to specify the anchor point. Use <code>connect()</code> to add points to the set.</p>"
+          "<p><code>args</code> Similar to PointSet constructor, use comma-separated values, an array, or an object as parameters to specify the anchor point. Use <code>to()</code> to add points to the set.</p>"
         ], 
         "pname": "", 
         "return": "<p>a new Curve object</p>"
@@ -990,10 +990,10 @@
     "funcs": [
       {
         "description": "<h2>Create a new Grid. Like a Rectangle, a Grid's area are defined by two Vectors.</h2>", 
-        "eg": "<p><code>new Grid()</code> <code>new Grid(1,2,3)</code> <code>new Grid([2,4])</code> <code>new Grid({x:3, y:6, z:9}).connect(1,2,3)</code></p>", 
+        "eg": "<p><code>new Grid()</code> <code>new Grid(1,2,3)</code> <code>new Grid([2,4])</code> <code>new Grid({x:3, y:6, z:9}).to(1,2,3)</code></p>", 
         "name": "Grid", 
         "param": [
-          "<p><code>args</code> Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>connect()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
+          "<p><code>args</code> Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>to()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
         ], 
         "pname": "", 
         "return": "<p>a new Grid object</p>"
@@ -1091,10 +1091,10 @@
     "funcs": [
       {
         "description": "<h2>Create a new Line. A Line is a Pair defined by two vectors. It can be treated as an infinite line, or as a line segment with two end points.</h2>", 
-        "eg": "<p><code>new Line()</code> <code>new Line(1,2,3)</code> <code>new Line([2,4])</code> <code>new Line({x:3, y:6, z:9}).connect(1,2,3)</code></p>", 
+        "eg": "<p><code>new Line()</code> <code>new Line(1,2,3)</code> <code>new Line([2,4])</code> <code>new Line({x:3, y:6, z:9}).to(1,2,3)</code></p>", 
         "name": "Line", 
         "param": [
-          "<p><code>args</code> Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>connect()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
+          "<p><code>args</code> Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>to()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
         ], 
         "pname": "", 
         "return": "<p>a new Pair object</p>"
@@ -1118,8 +1118,8 @@
       }, 
       {
         "description": "<h2>Given an interpolated point on this line, return another line of specific length that is perpendicular to this line.</h2>", 
-        "eg": "<p><code>ln.getPerpendicularLine(0.5)</code>, <code>ln.getPerpendicularLine(0.2, 100, true, Const.yz)</code></p>", 
-        "name": "getPerpendicularLine", 
+        "eg": "<p><code>ln.getPerpendicular(0.5)</code>, <code>ln.getPerpendicular(0.2, 100, true, Const.yz)</code></p>", 
+        "name": "getPerpendicular", 
         "param": [
           "<p><code>t</code> a value between 0 to 1 to interpolate a point on this line</p>", 
           "<p><code>len</code> an optional value to specify a length for the new line. Defaults to 10.</p>", 
@@ -1345,19 +1345,19 @@
     "file": "Pair.coffee", 
     "funcs": [
       {
-        "description": "<h2>Create a new Pair. A Pair is a Vector which defines its anchor point, and connected to another Vector through the <code>connect()</code> function.</h2>", 
-        "eg": "<p><code>new Pair()</code> <code>new Pair(1,2,3)</code> <code>new Pair([2,4])</code> <code>new Pair({x:3, y:6, z:9}).connect(1,2,3)</code>, <code>new Pair(10,10, 20,20)</code></p>", 
+        "description": "<h2>Create a new Pair. A Pair is a Vector which defines its anchor point, and connected to another Vector through the <code>to()</code> function.</h2>", 
+        "eg": "<p><code>new Pair()</code> <code>new Pair(1,2,3)</code> <code>new Pair([2,4])</code> <code>new Pair({x:3, y:6, z:9}).to(1,2,3)</code>, <code>new Pair(10,10, 20,20)</code></p>", 
         "name": "Pair", 
         "param": [
-          "<p><code>args</code> Similar to Point constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>connect()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
+          "<p><code>args</code> Similar to Point constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>to()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
         ], 
         "pname": "", 
         "return": "<p>a new Pair object</p>"
       }, 
       {
         "description": "<h2>connect the other point</h2>", 
-        "eg": "<p><code>pair.connect(1,2,3)</code> <code>new Pair(1,2).connect(3,4)</code></p>", 
-        "name": "connect", 
+        "eg": "<p><code>pair.to(1,2,3)</code> <code>new Pair(1,2).to(3,4)</code></p>", 
+        "name": "to", 
         "param": [
           "<p><code>args</code> comma-separated values, or an array, or an object</p>"
         ], 
@@ -1793,22 +1793,6 @@
         "return": "<p>an array with a single point object</p>"
       }, 
       {
-        "description": "<h2>Apply a function to all points in the <code>toArray()</code> list. This is usually applied to <code>Pair</code>, <code>PointSet</code> and other objects to apply a function to all its points.</h2>", 
-        "eg": "<p><code>pair.op(\"add\", 1,2,3)</code>, <code>pointset.op(\"multiply\", 2)</code></p>", 
-        "name": "op", 
-        "param": [
-          "<p><code>name</code> a function of this class</p>", 
-          "<p><code>args...</code> optional, comma-separated arguments to pass to the function</p>"
-        ], 
-        "pname": "name, args..."
-      }, 
-      {
-        "description": "<h2>Similar to <code>op()</code> but apply the function to a new instance.</h2>", 
-        "name": "$op", 
-        "param": [], 
-        "pname": "name, args..."
-      }, 
-      {
         "description": "<h2>When a point has 3 dimensions <code>(x,y,z)</code>, this function converts it to a new point <code>(x,y)</code> of a specific 2D plane (such as <code>yz</code>)</h2>", 
         "eg": "<p><code>p.get2D( Const.xy )</code> <code>p.get2D(Const.yz, true)</code></p>", 
         "name": "get2D", 
@@ -1906,10 +1890,10 @@
     "funcs": [
       {
         "description": "<h2>Create a new PointSet. A PointSet is a set of points which can repsent a polygon or a polyline or a time series.</h2>", 
-        "eg": "<p><code>new PointSet()</code> <code>new PointSet(1,2,3)</code> <code>new PointSet([2,4])</code> <code>new PointSet({x:3, y:6, z:9}).connect(1,2,3)</code> <code>new PointSet(1,2,3).connect([p1, p2, p3, p4, p5])</code></p>", 
+        "eg": "<p><code>new PointSet()</code> <code>new PointSet(1,2,3)</code> <code>new PointSet([2,4])</code> <code>new PointSet({x:3, y:6, z:9}).to(1,2,3)</code> <code>new PointSet(1,2,3).to([p1, p2, p3, p4, p5])</code></p>", 
         "name": "PointSet", 
         "param": [
-          "<p><code>args</code> Similar to Point constructor, use comma-separated values, an array, or an object as parameters to specify the anchor point. Use <code>connect()</code> to add points to the set.</p>"
+          "<p><code>args</code> Similar to Point constructor, use comma-separated values, an array, or an object as parameters to specify the anchor point. Use <code>to()</code> to add points to the set.</p>"
         ], 
         "pname": "", 
         "return": "<p>a new PointSet object</p>"
@@ -1929,8 +1913,8 @@
       }, 
       {
         "description": "<h2>Add a point or an array of points to this PointSet</h2>", 
-        "eg": "<p><code>pset.connect( 1,2,3 )</code> <code>pset.connect([1,2,3]</code> <code>pset.connect({x:3, y:6, z:9})</code> <code>pset.connect([p1, p2, p3, p4...])</code></p>", 
-        "name": "connect", 
+        "eg": "<p><code>pset.to( 1,2,3 )</code> <code>pset.to([1,2,3]</code> <code>pset.to({x:3, y:6, z:9})</code> <code>pset.to([p1, p2, p3, p4...])</code></p>", 
+        "name": "to", 
         "param": [
           "<p><code>args</code> either an Array of Points, or a single point defined by comma-separated values, an array, or an object.</p>"
         ], 
@@ -2034,10 +2018,10 @@
     "funcs": [
       {
         "description": "<h2>Create a new Rectangle. A Rectangle is a Pair whose rectangular bounding box are defined by two Vectors. Use <code>toPointSet()</code> to convert it to a PointSet with 4 points if you need to rotate or shear it.</h2>", 
-        "eg": "<p><code>new Rectangle()</code> <code>new Rectangle(1,2,3)</code> <code>new Rectangle([2,4])</code> <code>new Rectangle({x:3, y:6, z:9}).connect(1,2,3)</code></p>", 
+        "eg": "<p><code>new Rectangle()</code> <code>new Rectangle(1,2,3)</code> <code>new Rectangle([2,4])</code> <code>new Rectangle({x:3, y:6, z:9}).to(1,2,3)</code></p>", 
         "name": "Rectangle", 
         "param": [
-          "<p><code>args</code> Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>connect()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
+          "<p><code>args</code> Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to <code>to()</code>, you can also pass 4 or 6 values to set both anchor and <code>p1</code> points directly as a 2d or 3d vector.</p>"
         ], 
         "pname": "", 
         "return": "<p>a new Rectangle object</p>"
@@ -2058,8 +2042,8 @@
       }, 
       {
         "description": "<h2>Similar to <code>Pair</code>, this function connects the anchor with another point to define the rectangular bounds. This also calls Pair's <code>resetBounds()</code> to make sure anchor point is at top-left and <code>p1</code> is at bottom-right</h2>", 
-        "eg": "<p><code>rect.connect(1,2,3)</code> <code>new Rect(pt).connect([3,4])</code></p>", 
-        "name": "connect", 
+        "eg": "<p><code>rect.to(1,2,3)</code> <code>new Rect(pt).to([3,4])</code></p>", 
+        "name": "to", 
         "param": [
           "<p><code>args</code> comma-separated values, or an array, or an object</p>"
         ], 
@@ -2420,8 +2404,8 @@
       }, 
       {
         "description": "<h2>Connect triangle's anchor point with the other two points</h2>", 
-        "eg": "<p><code>tri.connect( p1, p2)</code> <code>tri.connect([1,2], [3,4]</code> <code>tri.connect(1,2,3,4)</code> <code>tri.connect(1,3,5,2,4,6)</code></p>", 
-        "name": "connect", 
+        "eg": "<p><code>tri.to( p1, p2)</code> <code>tri.to([1,2], [3,4]</code> <code>tri.to(1,2,3,4)</code> <code>tri.to(1,3,5,2,4,6)</code></p>", 
+        "name": "to", 
         "param": [
           "<p>Parameters can be 2 objects or 2 arrays, or 4 or 6 numeric values to specify x, y, and optionally z positions</p>"
         ], 
@@ -2910,6 +2894,22 @@
         "name": "$divide", 
         "param": [], 
         "pname": "args"
+      }, 
+      {
+        "description": "<h2>Apply a function to all points in the <code>toArray()</code> list. This is usually applied to <code>Pair</code>, <code>PointSet</code> and other objects to apply a function to all its points.</h2>", 
+        "eg": "<p><code>pair.op(\"add\", 1,2,3)</code>, <code>pointset.op(\"multiply\", 2)</code></p>", 
+        "name": "op", 
+        "param": [
+          "<p><code>name</code> a function of this class</p>", 
+          "<p><code>args...</code> optional, comma-separated arguments to pass to the function</p>"
+        ], 
+        "pname": "name, args..."
+      }, 
+      {
+        "description": "<h2>Similar to <code>op()</code> but apply the function to a new instance.</h2>", 
+        "name": "$op", 
+        "param": [], 
+        "pname": "name, args..."
       }, 
       {
         "description": "<h2>Get the angle of this vector on a plane. Or get the angle from this vector to another point. If no parameter specified, this will return the angle on xy plane.</h2>", 

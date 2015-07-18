@@ -2,8 +2,8 @@
 class Grid extends Rectangle
 
   # ## Create a new Grid. Like a Rectangle, a Grid's area are defined by two Vectors.
-  # @param `args` Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to `connect()`, you can also pass 4 or 6 values to set both anchor and `p1` points directly as a 2d or 3d vector.
-  # @eg `new Grid()` `new Grid(1,2,3)` `new Grid([2,4])` `new Grid({x:3, y:6, z:9}).connect(1,2,3)`
+  # @param `args` Similar to Pair constructor, use comma-separated values, an array, or an object as parameters to specify the first point. As a shortcut to `to()`, you can also pass 4 or 6 values to set both anchor and `p1` points directly as a 2d or 3d vector.
+  # @eg `new Grid()` `new Grid(1,2,3)` `new Grid([2,4])` `new Grid({x:3, y:6, z:9}).to(1,2,3)`
   # @return a new Grid object
   constructor: () ->
     super

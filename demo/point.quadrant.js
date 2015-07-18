@@ -27,14 +27,14 @@ for (var i=0; i<gap.x; i++) {
 function cornerLine(p, quadrant, size) {
 
   switch (quadrant) {
-    case Const.top_left: return new Pair(p).connect(p.$add(size, size));
-    case Const.top_right: return new Pair(p).connect(p.$add(-size, size));
-    case Const.bottom_left: return new Pair(p).connect(p.$add(size, -size));
-    case Const.bottom_right: return new Pair(p).connect(p.$add(-size, -size));
-    case Const.top: return new Pair(p).connect(p.$add(0, size));
-    case Const.bottom: return new Pair(p).connect(p.$add(0, -size));
-    case Const.left: return new Pair(p).connect(p.$add(size, 0));
-    default: return new Pair(p).connect(p.$add(-size, 0));
+    case Const.top_left: return new Pair(p).to(p.$add(size, size));
+    case Const.top_right: return new Pair(p).to(p.$add(-size, size));
+    case Const.bottom_left: return new Pair(p).to(p.$add(size, -size));
+    case Const.bottom_right: return new Pair(p).to(p.$add(-size, -size));
+    case Const.top: return new Pair(p).to(p.$add(0, size));
+    case Const.bottom: return new Pair(p).to(p.$add(0, -size));
+    case Const.left: return new Pair(p).to(p.$add(size, 0));
+    default: return new Pair(p).to(p.$add(-size, 0));
   }
 };
 
@@ -48,8 +48,8 @@ function draw() {
     var ln = cornerLine(pts[i], q, 12);
 
     form.stroke( colors["a"+(q%4+1)], 1.5);
-    form.line( new Pair(ln.p1.x, ln.y).connect( ln.x, ln.y) );
-    form.line( new Pair(ln.x, ln.y).connect( ln.x, ln.p1.y) );
+    form.line( new Pair(ln.p1.x, ln.y).to( ln.x, ln.y) );
+    form.line( new Pair(ln.x, ln.y).to( ln.x, ln.p1.y) );
 
     // draw point
     form.fill( colors.c4 ).stroke( false );
