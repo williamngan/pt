@@ -17,11 +17,11 @@ var mouse = new Vector( space.size.x/2, space.size.y/1.35);
 var spaceSize = space.size.magnitude()/2;
 
 // define a grid of vectors
-var gap = {x: Math.floor( (space.size.x-20)/10), y: Math.floor( (space.size.y-20) /20)};
+var gap = space.size.$subtract( 20, 20 ).divide( 10, 20 );
 var vecs = [];
-for (var i=0; i<gap.x; i++) {
-  for (var j = 0; j < gap.y; j++) {
-    vecs.push(new Vector(10 + gap.x * i, 10 + gap.y * j));
+for (var i=0; i<=10; i++) {
+  for (var j = 0; j <= 20; j++) {
+    vecs.push( new Vector( 10 + gap.x * i, 10 + gap.y * j ) );
   }
 }
 

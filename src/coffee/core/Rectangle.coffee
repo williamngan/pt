@@ -46,32 +46,19 @@ class Rectangle extends Pair
     return @
 
 
+  # ## Set center to new location and move this rectangle, or reset the center point based on current size and position.
+  # @param `args` comma-separated values, or an array, or an object to specify the new position
+  # @eg `rect.setCenter()`, `rect.setCenter(100,50)`, `rect.setCenter( pt )`
+  # @return this Rectangle
   setCenter: ( args ) ->
+    if arguments.length == 0
+      @center = @midpoint();
+      return;
+
     halfsize = @size().$divide(2)
     @center.set( Point.get(arguments) )
     @set( @center.$subtract( halfsize ) )
     @p1.set( @center.$add( halfsize ) )
-    return @
-
-  # ## Resize this rectangle by a certain amount from top left
-  # @param `args` comma-separated values, or an array, or an object to specify the size change
-  # @eg `rect.resizeBy(1,2,3)` `rect.resizeBy( delta_vec )`
-  # @return this Rectangle
-  resizeBy: ( args ) ->
-    size = new Vector( Point.get(arguments) ) # get full size
-    @p1.add( size )
-    @center = @midpoint()
-    return @
-
-
-  # ## resize this rectangle by a certain amount from center
-  # @param `args` comma-separated values, or an array, or an object to specify the size change
-  # @eg `rect.resizeCenterBy(1,2,3)` `rect.resizeCenterBy( delta_vec )`
-  # @return this Rectangle
-  resizeCenterBy: () ->
-    size = new Vector( Point.get(arguments) ).divide( 2 ) # get half size
-    @subtract( size )
-    @p1.add( size )
     return @
 
 
@@ -87,7 +74,7 @@ class Rectangle extends Pair
 
 
   # ## resize to a specific size from center point
-  # @param `args` comma-separated values, or an array, or an object to specify the new size
+  # @param `args` comma-separated values, or an array, or an object to specify the new size.
   # @eg `rect.resizeCenterTo(10,10)` `rect.resizeCenterTo( size_vec )`
   # @return this Rectangle
   resizeCenterTo: () ->

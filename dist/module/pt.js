@@ -3029,26 +3029,14 @@ Rectangle = (function(superClass) {
 
   Rectangle.prototype.setCenter = function(args) {
     var halfsize;
+    if (arguments.length === 0) {
+      this.center = this.midpoint();
+      return;
+    }
     halfsize = this.size().$divide(2);
     this.center.set(Point.get(arguments));
     this.set(this.center.$subtract(halfsize));
     this.p1.set(this.center.$add(halfsize));
-    return this;
-  };
-
-  Rectangle.prototype.resizeBy = function(args) {
-    var size;
-    size = new Vector(Point.get(arguments));
-    this.p1.add(size);
-    this.center = this.midpoint();
-    return this;
-  };
-
-  Rectangle.prototype.resizeCenterBy = function() {
-    var size;
-    size = new Vector(Point.get(arguments)).divide(2);
-    this.subtract(size);
-    this.p1.add(size);
     return this;
   };
 

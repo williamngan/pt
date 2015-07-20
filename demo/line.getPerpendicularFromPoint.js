@@ -41,7 +41,7 @@ space.add({
 
       // opacity of line derived from distance to the line
       var opacity = Math.min( 0.8, 1 - Math.abs( line.getDistanceFromPoint( pt ) ) / r );
-      form.stroke( "rgba(255,255,255," + opacity + ")" ).fill( false ).line( ln, 0.5 );
+      form.stroke( "rgba(255,255,255," + opacity + ")", 2*(i%20)/20 ).fill( false ).line( ln );
     }
   },
   onMouseAction: function(type, x, y, evt) {

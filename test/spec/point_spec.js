@@ -280,14 +280,8 @@ describe("Rectangle", function() {
   it("can connect like Pair and calculate center", function() {
     return expect(new Rectangle(2, 1).to(12, 7).center.equal(new Point(7, 4))).toBe(true);
   });
-  it("can resize", function() {
-    return expect(new Rectangle(2, 1).to(12, 7).resizeBy(-2, -2).center.equal(new Point(6, 3))).toBe(true);
-  });
-  it("can resize from center without moving center", function() {
-    return expect(new Rectangle(2, 1).to(12, 7).resizeCenterBy(-2, -2).center.equal(new Point(7, 4))).toBe(true);
-  });
   it("can resize from center", function() {
-    return expect(new Rectangle(2, 1).to(12, 7).resizeCenterBy(-2, -2).equal(new Point(3, 2))).toBe(true);
+    return expect(new Rectangle(2, 1).to(12, 7).resizeCenterTo(2, 4).equal(new Point(6, 2))).toBe(true);
   });
   it("can find union of 2 bounds", function() {
     return expect(new Rectangle(10, 10).to(20, 12).$enclose(new Rectangle(8, 8).to(2.8, 2.8)).equal(new Rectangle(2.8, 2.8).to(20, 12))).toBe(true);

@@ -16,9 +16,9 @@ var form = new Form( space.ctx );
 var pts = [];
 var mouseP = new Vector();
 
-var gap = {x: Math.floor( (space.size.x-20)/10), y: Math.floor( (space.size.y-20) /20)};
-for (var i=0; i<gap.x; i++) {
-  for (var j=0; j<gap.y; j++) {
+var gap = space.size.$subtract( 20, 20 ).divide( 10, 20 );
+for (var i=0; i<=10; i++) {
+  for (var j=0; j<=20; j++) {
     pts.push(new Vector( 10+gap.x*i, 10+gap.y*j));
   }
 }
