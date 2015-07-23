@@ -134,8 +134,8 @@ class Rectangle extends Pair
     sides = @sides()
     pts = []
     for s in sides
-      p = line.intersectPath( s )
-      if p
+      p = s.intersectPath( line )
+      if p and @intersectPoint( p )
         if get_pts
           pts.push( p )
         else
@@ -177,7 +177,7 @@ class Rectangle extends Pair
 
   # ## Check if this Rectangle intersects with a list of Lines ( useful for polygon or polyline such as `rectangle.sides()` ) on xy axis.
   # @param `lines` an array of Line
-  # @get_pts `get_pts` a boolean value to specify whether the results should include the intersection points. If `false`, then only the intersection state (true or false) will be returned.
+  # @param `get_pts` a boolean value to specify whether the results should include the intersection points. If `false`, then only the intersection state (true or false) will be returned.
   # @returns an Array of intersection points, or a boolean value. (Based on `get_pts` parameter)
   intersectLines: (lines, get_pts=true) ->
     return Line.intersectLines( @, lines, get_pts )

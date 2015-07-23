@@ -3095,8 +3095,8 @@ Rectangle = (function(superClass) {
     pts = [];
     for (j = 0, len1 = sides.length; j < len1; j++) {
       s = sides[j];
-      p = line.intersectPath(s);
-      if (p) {
+      p = s.intersectPath(line);
+      if (p && this.intersectPoint(p)) {
         if (get_pts) {
           pts.push(p);
         } else {
