@@ -213,7 +213,7 @@ class Point
     @y = Math.ceil( @y )
     @z = Math.ceil( @z )
     return @
-    
+
 
 # namespace
 this.Point = Point

@@ -3361,6 +3361,10 @@ Grid = (function(superClass) {
     return this;
   };
 
+  Grid.prototype.getCellSize = function() {
+    return this.cell.size.clone();
+  };
+
   Grid.prototype.cellToRectangle = function(c, r, allowOutofBound) {
     var rect;
     if (allowOutofBound == null) {
@@ -3397,8 +3401,11 @@ Grid = (function(superClass) {
     return this;
   };
 
-  Grid.prototype.occupy = function(x, y, w, h) {
+  Grid.prototype.occupy = function(x, y, w, h, occupy) {
     var c, j, o, r, ref, ref1;
+    if (occupy == null) {
+      occupy = true;
+    }
     if (this.rows <= 0 || this.columns <= 0) {
       return this;
     }
@@ -3407,10 +3414,23 @@ Grid = (function(superClass) {
     }
     for (c = j = 0, ref = w; 0 <= ref ? j < ref : j > ref; c = 0 <= ref ? ++j : --j) {
       for (r = o = 0, ref1 = h; 0 <= ref1 ? o < ref1 : o > ref1; r = 0 <= ref1 ? ++o : --o) {
-        this.layout[Math.min(this.layout.length - 1, y + r)][x + c] = 1;
+        this.layout[Math.min(this.layout.length - 1, y + r)][x + c] = (occupy ? 1 : 0);
       }
     }
     return this;
+  };
+
+  Grid.prototype.canFit = function(x, y, w, h) {
+    var cell, currCol, currRow, j, o, ref, ref1, ref2, ref3;
+    for (currRow = j = ref = y, ref1 = Math.min(this.rows, y + h); ref <= ref1 ? j < ref1 : j > ref1; currRow = ref <= ref1 ? ++j : --j) {
+      for (currCol = o = ref2 = x, ref3 = Math.min(this.columns, x + w); ref2 <= ref3 ? o < ref3 : o > ref3; currCol = ref2 <= ref3 ? ++o : --o) {
+        cell = this.layout[currRow][currCol];
+        if ((cell != null) && cell > 0) {
+          return false;
+        }
+      }
+    }
+    return true;
   };
 
   Grid.prototype.fit = function(cols, rows) {

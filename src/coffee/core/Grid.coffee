@@ -102,6 +102,10 @@ class Grid extends Rectangle
     return @
 
 
+  # ## Get the cell's size as a Vector
+  # @return a cloned `cell.size` property as Vector
+  getCellSize: () -> return @cell.size.clone()
+
   # ## Give a column and a row, get a rectangle which indicates the cell position and size
   # @param `c, r` column and row index, respectively
   # @param `allowOutofBound` a boolean value to set if the returned rectangle can be outside of the grid
@@ -142,20 +146,39 @@ class Grid extends Rectangle
 
 
   # ## Mark a certain area in the grid layout as occupied
-  # @param `x` column index
-  # @param `y` row index
+  # @param `x, y` column and row index
   # @param `w` column width
   # @param `h` row size
+  # @param `occupy` a boolean value to set if this cell should be occupied. Defaults to `true`
   # @eg `grid.occupy(0,0, 5,3)`
   # @return this grid
-  occupy : ( x, y, w, h ) ->
+  occupy : ( x, y, w, h, occupy=true ) ->
     if (@rows <= 0 or @columns <=0) then return @
     if (@layout.length < 1) then @resetLayout()
     for c in [0...w]
       for r in [0...h]
-        @layout[ Math.min( @layout.length-1, y+r) ][ x+c] = 1
+        @layout[ Math.min( @layout.length-1, y+r) ][ x+c] = (if (occupy) then 1 else 0)
 
     return @
+
+    
+  # ## Check a certain area in the grid is unoccupied
+  # @param `x, y` column and row index
+  # @param `w` column width
+  # @param `h` row size
+  # @eg `grid.canFit(0,0, 5,3)`
+  # @return a boolean value where `true` means the area is unoccupied
+  canFit : ( x, y, w, h ) ->
+
+    # each cell in specific rows and columns
+    for currRow in [y...Math.min(@rows, y+h)]
+      for currCol in [x...Math.min(@columns, x+w)]
+        cell = @layout[currRow][currCol]
+        # if cell is filled
+        if cell? and cell > 0
+          return false
+
+    return true
 
 
   # ## Fit this area as much as possible within the grid's free ceels

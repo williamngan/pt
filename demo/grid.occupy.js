@@ -1,5 +1,5 @@
 //// 0. Describe this demo
-window.demoDescription = "Draw three kinds of grids: with fixed size cells, with flexible size cells, and with cell sizes based on grid's rows and columns. Resize the browser window to update grid layouts.";
+window.demoDescription = "In a grid of cells, mark some cells as occupied. Then draw a grid area around the mouse position and check if the area is unoccupied.";
 
 
 //// 1. Define Space and Form
@@ -12,51 +12,53 @@ var form = new Form( space.ctx );
 
 
 //// 2. Create Elements
+var grid = new Grid( space.size.$multiply( 0.1 ) ).to( space.size.$multiply(0.9) ).init(15, 20, "stretch", "stretch");
 
-var grid = new Grid( space.size.$multiply( 0.1 ) ).to( space.size.$multiply(0.9) ).init(20, 18, "stretch", "stretch");
+// occupy and unoccupy cells in grid
 grid.occupy( 2,3, 5,6);
-grid.occupy( 15,15, 5,3);
-
-var mouse = new Vector();
-var mouseCell = new Rectangle();
+grid.occupy( 6,8, 1,1, false);
+grid.occupy( 2,3, 1,1, false);
+grid.occupy( 12,15, 3,2);
+grid.occupy( 3,12, 14,1);
 
 // Use grid.generate() to specify a callback function to render each grid cell
 grid.generate( function ( size, position, row, column, type, isOccupied ) {
-  var fill = (isOccupied) ? colors.a1 : false;
+  var fill = (isOccupied) ? "#fff" : false;
   form.stroke( "#fff" ).fill( fill ).rect( new Rectangle( position ).resizeTo( size ) );
 }.bind( grid ) );
 
-
+var mouse = new Vector( space.size.$divide(1.5, 2) );
 
 //// 3. Visualize, Animate, Interact
 space.add({
   animate: function(time, fps, context) {
+    // positions to cell
+    var p1 = grid.positionToCell( mouse.x-50, mouse.y-50);
+    var p2 = grid.positionToCell( mouse.x+50, mouse.y+50);
+
+    // cell to rectangles
+    var topLeft = grid.cellToRectangle( p1.x, p1.y );
+    var bottomRight = grid.cellToRectangle( p2.x, p2.y );
+
+    // check if the rectangle can fit within the free cells in the grid
+    var canFit = grid.canFit( p1.x, p1.y, p2.x-p1.x+1, p2.y-p1.y+1 );
+
+    // draw rectange and grid
+    var rect = new Rectangle( topLeft ).to( bottomRight.add( grid.getCellSize() ) );
+    form.fill( ( (canFit) ? "rgba(0,0,0,.2)" : colors.a1 ) ).rect( rect );
     grid.create(); // draw grid cells (via generate() callback)
-
-    c = grid.positionToCell( mouse.x, mouse.y);
-    mouseCell = grid.cellToRectangle( c.x, c.y );
-    if (mouseCell) form.fill(colors.a3 ).rect( mouseCell );
-
-    var ns = grid.neighbors( c.x, c.y );
-    for (var i=0; i<ns.length; i++) {
-      if (ns[i]) {
-        form.fill("#999" ).rect( grid.cellToRectangle( ns[i].x, ns[i].y ) );
-      }
-    }
 
   },
 
   onMouseAction: function(type, x, y, evt) {
     if (type=="move") {
       mouse.set(x,y);
-
     }
   },
 
   // callback to reset grid when space is resized
   onSpaceResize: function(w, h) {
-    grid.set( space.size.$multiply( 0.1 ) ).to( space.size.$multiply( 0.9 ) ).init( 20, 18, "stretch", "stretch" );
-
+    grid.set( space.size.$multiply( 0.1 ) ).to( space.size.$multiply( 0.9 ) ).init( 15, 20, "stretch", "stretch" );
   }
 });
 
