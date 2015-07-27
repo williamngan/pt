@@ -83,7 +83,7 @@ class Vector extends Point
 
   # ## Same as `multiply()` but returns a new Vector. The values of this vector is not changed.
   $multiply: (args) ->
-    a = arg = @_getArgs( arguments )
+    a = @_getArgs( arguments )
     return new Vector( @ ).multiply( a )
 
 

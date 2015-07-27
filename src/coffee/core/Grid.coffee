@@ -23,6 +23,9 @@ class Grid extends Rectangle
     # ## property to store layout and cell states
     @layout = []
 
+    # callback from cell generation
+    @cellCallback = null
+
 
   # ## Describe this grid as a text string
   # @return "Grid width, height, columns, rows, cell" text
@@ -38,7 +41,7 @@ class Grid extends Rectangle
   # @param `xtype, ytype` a string to specify how columns and rows should be calculated. Use "fix" to specify exact cell width or height in pixels, "flex" to specify ideal cell width or height in pixels (which allows for flexible rounding to rows or columns), "stretch" to specify number of rows or columns only
   # @eg `grid.create(100,50)` `grid.create( 10,10, "stretch","stretch")` `grid.create( 20,20, "flex","fix")`
   # @return this grid
-  create : ( x, y, xtype='fix', ytype='fix' ) ->
+  init : ( x, y, xtype='fix', ytype='fix' ) ->
 
     size = @size()
 
@@ -58,7 +61,7 @@ class Grid extends Rectangle
     # fix: cell width is fixed
     else # fix
       @cell.size.x = x
-      @columns = Math.ceil( size.x / @cell.size.x )
+      @columns = Math.floor( size.x / @cell.size.x )
 
     # calculate y and rows
     # stretch: always fit number of rows
@@ -72,23 +75,56 @@ class Grid extends Rectangle
     # fix: cell height is fixed
     else # fix
       @cell.size.y = y
-      @rows = Math.ceil( size.y / @cell.size.y )
+      @rows = Math.floor( size.y / @cell.size.y )
 
     return @
 
 
-  # ## Generate or draw cell contents with a callback function. This will loop through each cell in the grid and call the callback function.
-  # @param `callback` a callback function with these parameters ( this_grid, cell_size, cell_position, cell_row, cell_column )
+  # ##  Define a callback function for cell creation. This will loop through each cell in the grid and call the callback function.
+  # @param `callback` a callback function with these parameters `( cell_size, cell_position, cell_row, cell_column, cell_type )`
   # @return this grid
   generate : ( callback ) ->
+    if (typeof callback == "function")
+      @cellCallback = callback
+    return @
+
+
+  # ## Generate the grid by looping through each cell
+  create : () ->
+    if !@cellCallback then return @
 
     for c in [0...@columns]
       for r in [0...@rows]
         cell = @cell.size.clone()
         pos = @$add( cell.$multiply( c, r ) ) # cellsize * row-column + grid-position
-        callback( @, cell, pos, r, c, @cell.type )
+        @cellCallback( cell, pos, r, c, @cell.type, @layout[r][c]==1 )
 
     return @
+
+
+  # ## Give a column and a row, get a rectangle which indicates the cell position and size
+  # @param `c, r` column and row index, respectively
+  # @param `allowOutofBound` a boolean value to set if the returned rectangle can be outside of the grid
+  # @eg `grid.cellToRectangle(2, 3)`, `grid.cellToRectangle(2, 5, true)`
+  # @return a Rectangle
+  cellToRectangle : (c, r, allowOutofBound=false) ->
+    # cellsize * row-column + grid-position
+    if allowOutofBound or (c >= 0 and c < @columns and r >= 0 and r < @rows)
+      rect = new Rectangle( @$add( @cell.size.$multiply( c, r ) ) ).resizeTo( @cell.size )
+      return rect
+    else
+      return false
+
+
+  # ## Give a x,y position, get the corresponding cell on the grid.
+  # @param `args` 0-3 comma-separated values, or as an array, or a Point object.
+  # @eg `grid.positionToCell( 100, 50 )`, `grid.positionToCell( [100, 50] )`, `grid.positionToCell( pt )`,
+  # @return a Vector object whose `x` is the column index and `y` is the row index
+  positionToCell : (args) ->
+    pos = new Vector( @_getArgs( arguments ) )
+    cellpos = pos.$subtract( @ ).$divide( @cell.size ).floor()
+    cellpos.max( 0, 0 ).min( @columns-1, @rows-1 );
+    return cellpos
 
 
   # ## Reset the layout and its cell states
@@ -113,6 +149,8 @@ class Grid extends Rectangle
   # @eg `grid.occupy(0,0, 5,3)`
   # @return this grid
   occupy : ( x, y, w, h ) ->
+    if (@rows <= 0 or @columns <=0) then return @
+    if (@layout.length < 1) then @resetLayout()
     for c in [0...w]
       for r in [0...h]
         @layout[ Math.min( @layout.length-1, y+r) ][ x+c] = 1
@@ -171,6 +209,21 @@ class Grid extends Rectangle
     # cannot fit
     return false
 
+
+  # ## Given a cell's position, get an array of the neighboring cells that surround it
+  # @param `c` column index
+  # @param `r` row index
+  # @eg `grid.neighbors( 3, 2 )`, `(grid.neighbors(3, 2))[Const.top_right]`
+  # @return an array of neighbors starting from top-left going clockwise. The array values can be Vectors whose `x` is column index and `y` is row index, or `false` if the neighbor cell is out of bounds. You may access the cells semantically by using Const.top_right etc.
+  neighbors: (c, r) ->
+    temp = [ [c-1, r-1], [c, r-1], [c+1, r-1], [c+1, r], [c+1, r+1], [c, r+1], [c-1, r+1], [c-1, r] ];
+    ns = []
+    for n in temp
+      if n[0] >= 0 and n[0] < @columns and n[1] >= 0 and n[1] < @rows
+        ns.push( new Vector( n[0], n[1], @layout[ n[1] ][ n[0] ] ) )
+      else
+        ns.push( false )
+    return ns;
 
 
 

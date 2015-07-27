@@ -36,10 +36,10 @@ space.add({
 
       // find distance as well as x y differences
       var mag = 100 - Math.min( 100, rect.center.distance( mouse ) );
-      var diff = rect.center.$subtract( mouse ).abs().min( 200, 200);
+      var diff = rect.center.$subtract( mouse ).abs().$min( 200, 200);
 
       // resize rectangles from center point based on distance and diffs
-      rect.resizeCenterTo( diff.subtract(50).divide(6).add( mag/2 ).max(5,5) );
+      rect.resizeCenterTo( diff.subtract(50).divide(6).add( mag/2 ).$max(5,5) );
       form.fill( colors.a3 ).rect( rect );
     }
   },

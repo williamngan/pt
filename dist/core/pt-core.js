@@ -14,23 +14,23 @@ Const = (function() {
 
   Const.xyz = 'xyz';
 
-  Const.identical = 0;
+  Const.identical = -1;
 
-  Const.right = 1;
+  Const.right = 3;
 
-  Const.bottom_right = 2;
+  Const.bottom_right = 4;
 
-  Const.bottom = 3;
+  Const.bottom = 5;
 
-  Const.bottom_left = 4;
+  Const.bottom_left = 6;
 
-  Const.left = 5;
+  Const.left = 7;
 
-  Const.top_left = 6;
+  Const.top_left = 0;
 
-  Const.top = 7;
+  Const.top = 1;
 
-  Const.top_right = 8;
+  Const.top_right = 2;
 
   Const.sideLabels = ["identical", "right", "bottom right", "bottom", "bottom left", "left", "top left", "top", "top right"];
 
@@ -1196,10 +1196,28 @@ Point = (function() {
   Point.prototype.min = function(args) {
     var _p;
     _p = Point.get(arguments);
+    this.x = Math.min(this.x, _p.x);
+    this.y = Math.min(this.y, _p.y);
+    this.z = Math.min(this.z, _p.z);
+    return this;
+  };
+
+  Point.prototype.$min = function(args) {
+    var _p;
+    _p = Point.get(arguments);
     return new this.__proto__.constructor(Math.min(this.x, _p.x), Math.min(this.y, _p.y), Math.min(this.z, _p.z));
   };
 
   Point.prototype.max = function(args) {
+    var _p;
+    _p = Point.get(arguments);
+    this.x = Math.max(this.x, _p.x);
+    this.y = Math.max(this.y, _p.y);
+    this.z = Math.max(this.z, _p.z);
+    return this;
+  };
+
+  Point.prototype.$max = function(args) {
     var _p;
     _p = Point.get(arguments);
     return new this.__proto__.constructor(Math.max(this.x, _p.x), Math.max(this.y, _p.y), Math.max(this.z, _p.z));
@@ -1224,6 +1242,13 @@ Point = (function() {
     this.x = Math.floor(this.x);
     this.y = Math.floor(this.y);
     this.z = Math.floor(this.z);
+    return this;
+  };
+
+  Point.prototype.ceil = function() {
+    this.x = Math.ceil(this.x);
+    this.y = Math.ceil(this.y);
+    this.z = Math.ceil(this.z);
     return this;
   };
 
@@ -1306,8 +1331,8 @@ Vector = (function(superClass) {
   };
 
   Vector.prototype.$multiply = function(args) {
-    var a, arg;
-    a = arg = this._getArgs(arguments);
+    var a;
+    a = this._getArgs(arguments);
     return new Vector(this).multiply(a);
   };
 
@@ -2635,7 +2660,7 @@ Pair = (function(superClass) {
   };
 
   Pair.prototype.bounds = function() {
-    return new Pair(this.min(this.p1)).to(this.max(this.p1));
+    return new Pair(this.$min(this.p1)).to(this.$max(this.p1));
   };
 
   Pair.prototype.withinBounds = function(pt, axis) {
@@ -2707,8 +2732,8 @@ Pair = (function(superClass) {
 
   Pair.prototype.resetBounds = function() {
     var temp;
-    temp = this.min(this.p1);
-    this.p1.set(this.max(this.p1));
+    temp = this.$min(this.p1);
+    this.p1.set(this.$max(this.p1));
     this.set(temp);
     return this;
   };
@@ -3056,8 +3081,8 @@ Rectangle = (function(superClass) {
   };
 
   Rectangle.prototype.enclose = function(rect) {
-    this.set(this.min(rect));
-    this.p1.set(this.p1.max(rect.p1));
+    this.set(this.$min(rect));
+    this.p1.set(this.p1.$max(rect.p1));
     this.center = this.midpoint();
     return this;
   };
@@ -3270,6 +3295,7 @@ Grid = (function(superClass) {
     this.rows = 0;
     this.columns = 0;
     this.layout = [];
+    this.cellCallback = null;
   }
 
   Grid.prototype.toString = function() {
@@ -3278,7 +3304,7 @@ Grid = (function(superClass) {
     return ("Grid width " + s.x + ", height " + s.y + ", columns " + this.columns + ", rows " + this.rows + ", ") + ("cell (" + this.cell.size.x + ", " + this.cell.size.y + "), type " + this.cell.type);
   };
 
-  Grid.prototype.create = function(x, y, xtype, ytype) {
+  Grid.prototype.init = function(x, y, xtype, ytype) {
     var size;
     if (xtype == null) {
       xtype = 'fix';
@@ -3298,7 +3324,7 @@ Grid = (function(superClass) {
       this.cell.size.x = size.x / this.columns;
     } else {
       this.cell.size.x = x;
-      this.columns = Math.ceil(size.x / this.cell.size.x);
+      this.columns = Math.floor(size.x / this.cell.size.x);
     }
     if (ytype === 'stretch') {
       this.cell.size.y = size.y / y;
@@ -3308,21 +3334,52 @@ Grid = (function(superClass) {
       this.cell.size.y = size.y / this.rows;
     } else {
       this.cell.size.y = y;
-      this.rows = Math.ceil(size.y / this.cell.size.y);
+      this.rows = Math.floor(size.y / this.cell.size.y);
     }
     return this;
   };
 
   Grid.prototype.generate = function(callback) {
+    if (typeof callback === "function") {
+      this.cellCallback = callback;
+    }
+    return this;
+  };
+
+  Grid.prototype.create = function() {
     var c, cell, j, o, pos, r, ref, ref1;
+    if (!this.cellCallback) {
+      return this;
+    }
     for (c = j = 0, ref = this.columns; 0 <= ref ? j < ref : j > ref; c = 0 <= ref ? ++j : --j) {
       for (r = o = 0, ref1 = this.rows; 0 <= ref1 ? o < ref1 : o > ref1; r = 0 <= ref1 ? ++o : --o) {
         cell = this.cell.size.clone();
         pos = this.$add(cell.$multiply(c, r));
-        callback(this, cell, pos, r, c, this.cell.type);
+        this.cellCallback(cell, pos, r, c, this.cell.type, this.layout[r][c] === 1);
       }
     }
     return this;
+  };
+
+  Grid.prototype.cellToRectangle = function(c, r, allowOutofBound) {
+    var rect;
+    if (allowOutofBound == null) {
+      allowOutofBound = false;
+    }
+    if (allowOutofBound || (c >= 0 && c < this.columns && r >= 0 && r < this.rows)) {
+      rect = new Rectangle(this.$add(this.cell.size.$multiply(c, r))).resizeTo(this.cell.size);
+      return rect;
+    } else {
+      return false;
+    }
+  };
+
+  Grid.prototype.positionToCell = function(args) {
+    var cellpos, pos;
+    pos = new Vector(this._getArgs(arguments));
+    cellpos = pos.$subtract(this).$divide(this.cell.size).floor();
+    cellpos.max(0, 0).min(this.columns - 1, this.rows - 1);
+    return cellpos;
   };
 
   Grid.prototype.resetLayout = function(callback) {
@@ -3342,6 +3399,12 @@ Grid = (function(superClass) {
 
   Grid.prototype.occupy = function(x, y, w, h) {
     var c, j, o, r, ref, ref1;
+    if (this.rows <= 0 || this.columns <= 0) {
+      return this;
+    }
+    if (this.layout.length < 1) {
+      this.resetLayout();
+    }
     for (c = j = 0, ref = w; 0 <= ref ? j < ref : j > ref; c = 0 <= ref ? ++j : --j) {
       for (r = o = 0, ref1 = h; 0 <= ref1 ? o < ref1 : o > ref1; r = 0 <= ref1 ? ++o : --o) {
         this.layout[Math.min(this.layout.length - 1, y + r)][x + c] = 1;
@@ -3379,6 +3442,21 @@ Grid = (function(superClass) {
       }
     }
     return false;
+  };
+
+  Grid.prototype.neighbors = function(c, r) {
+    var j, len1, n, ns, temp;
+    temp = [[c - 1, r - 1], [c, r - 1], [c + 1, r - 1], [c + 1, r], [c + 1, r + 1], [c, r + 1], [c - 1, r + 1], [c - 1, r]];
+    ns = [];
+    for (j = 0, len1 = temp.length; j < len1; j++) {
+      n = temp[j];
+      if (n[0] >= 0 && n[0] < this.columns && n[1] >= 0 && n[1] < this.rows) {
+        ns.push(new Vector(n[0], n[1], this.layout[n[1]][n[0]]));
+      } else {
+        ns.push(false);
+      }
+    }
+    return ns;
   };
 
   return Grid;

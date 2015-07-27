@@ -40,7 +40,7 @@ class Pair extends Vector
   # ## Get a new pair that's the bounding box of this pair. This is the same as calculating its top-left (min) and bottom-right (max) points.
   # @return a new Pair
   bounds: () ->
-    return new Pair( @min(@p1) ).to( @max(@p1) )
+    return new Pair( @$min(@p1) ).to( @$max(@p1) )
 
   # ## Check if a point is within the bounds of this pair
   # @param `pt` a Point object to check.
@@ -121,8 +121,8 @@ class Pair extends Vector
   # ## Recalculate the origin and vec so that origin is at top-left and vec is at bottom-right
   # @return this Pair
   resetBounds: () ->
-    temp = @min( @p1 )
-    @p1.set( @max( @p1 ) )
+    temp = @$min( @p1 )
+    @p1.set( @$max( @p1 ) )
     @set( temp )
     return @
 

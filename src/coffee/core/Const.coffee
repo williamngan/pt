@@ -14,31 +14,31 @@ class Const
   @xyz = 'xyz'
 
   # ## represents identical point or value
-  @identical = 0
+  @identical = -1
 
   # ## represents right position or direction
-  @right = 1
+  @right = 3
 
   # ## represents bottom right position or direction
-  @bottom_right = 2
+  @bottom_right = 4
 
   # ## represents bottom position or direction
-  @bottom = 3
+  @bottom = 5
 
   # ## represents bottom left position or direction
-  @bottom_left = 4
+  @bottom_left = 6
 
   # ## represents left position or direction
-  @left = 5
+  @left = 7
 
   # ## represents top left position or direction
-  @top_left = 6
+  @top_left = 0
 
   # ## represents top position or direction
-  @top = 7
+  @top = 1
 
   # ## represents top right position or direction
-  @top_right = 8
+  @top_right = 2
 
   # ## an array of strings to label position constants above. Eg, `Const.sideLabels[ Const.top_left]` will return the string "top left"
   @sideLabels = ["identical", "right", "bottom right", "bottom", "bottom left", "left", "top left", "top", "top right"]

@@ -88,8 +88,8 @@ class Rectangle extends Pair
   # @param `rect` another Rectangle or Pair object
   # @return this Rectangle which has the new size
   enclose: ( rect ) ->
-    @set( @min( rect ) )
-    @p1.set( @p1.max( rect.p1 ) )
+    @set( @$min( rect ) )
+    @p1.set( @p1.$max( rect.p1 ) )
     @center = @midpoint() # get center point also
     return @
 

@@ -26,10 +26,10 @@ function getMinMax() {
   var minPt = pts[0];
   var maxPt = pts[0];
   for (var i=1; i<pts.length; i++) {
-    minPt = minPt.min( pts[i] );
+    minPt = minPt.$min( pts[i] );
   }
   for (i=1; i<pts.length; i++) {
-    maxPt = maxPt.max( pts[i] );
+    maxPt = maxPt.$max( pts[i] );
   }
   nextRect.set( minPt).to( maxPt );
 }

@@ -145,8 +145,17 @@ class Point
   # ## Evaluate the minimum x,y,z of this point and another point, and get a minimum Point
   # @param `args` comma-separated values, as an array, or as a Point object.
   # @eg `p.min(1,2)` `p.min( another_p )`
-  # @return a new Point
+  # @return this Point
   min: (args) ->
+    _p = Point.get(arguments)
+    @x = Math.min(@x, _p.x)
+    @y = Math.min(@y, _p.y)
+    @z = Math.min(@z, _p.z)
+    return @
+
+
+  # ## Similar to `min()` but returns a new instance
+  $min: (args) ->
     _p = Point.get(arguments)
     return new this.__proto__.constructor( Math.min(@x, _p.x), Math.min(@y, _p.y), Math.min(@z, _p.z) )
 
@@ -154,8 +163,17 @@ class Point
   # ## Evaluate the minimum x,y,z of this point and another point, and get a maximum Point
   # @param `args` comma-separated values, as an array, or as a Point object.
   # @eg `p.max(1,2)` `p.max( another_p )`
-  # @return a new Point
+  # @return this Point
   max: (args) ->
+    _p = Point.get(arguments)
+    @x = Math.max(@x, _p.x)
+    @y = Math.max(@y, _p.y)
+    @z = Math.max(@z, _p.z)
+    return @
+
+
+  # ## Similar to `max()` but returns a new instance
+  $max: (args) ->
     _p = Point.get(arguments)
     return new this.__proto__.constructor( Math.max(@x, _p.x), Math.max(@y, _p.y), Math.max(@z, _p.z) )
 
@@ -179,7 +197,7 @@ class Point
     return (Math.abs(_p.x-@x) < epsilon) and (Math.abs(_p.y-@y) < epsilon) and (Math.abs(_p.z-@z) < epsilon)
 
 
-  # ## Snap this point's position to the nearest integer
+  # ## Snap this point's position to the nearest integer by its floor
   # @return this Point
   floor: () ->
     @x = Math.floor( @x )
@@ -187,6 +205,15 @@ class Point
     @z = Math.floor( @z )
     return @
 
+
+  # ## Snap this point's position to the nearest integer by its ceiling
+  # @return this Point
+  ceil: () ->
+    @x = Math.ceil( @x )
+    @y = Math.ceil( @y )
+    @z = Math.ceil( @z )
+    return @
+    
 
 # namespace
 this.Point = Point
