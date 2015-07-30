@@ -36,6 +36,8 @@ Const = (function() {
 
   Const.epsilon = 0.0001;
 
+  Const.pi = Math.PI;
+
   Const.two_pi = 6.283185307179586;
 
   Const.half_pi = 1.5707963267948966;
@@ -294,7 +296,7 @@ Util = (function() {
       b = 0;
     }
     r = a > b ? a - b : b - a;
-    return b + Math.random() * r;
+    return a + Math.random() * r;
   };
 
   Util.mixin = function(klass, mix) {
@@ -3552,32 +3554,6 @@ PointSet = (function(superClass) {
     return this;
   };
 
-  PointSet.prototype.pointsAdd = function(args) {
-    var a, j, len1, p, ref;
-    a = this._getArgs(arguments);
-    ref = this.points;
-    for (j = 0, len1 = ref.length; j < len1; j++) {
-      p = ref[j];
-      p.add(a);
-    }
-    return this;
-  };
-
-  PointSet.prototype.$pointsAdd = function(args) {
-    var a, p;
-    a = this._getArgs(arguments);
-    return (function() {
-      var j, len1, ref, results;
-      ref = this.points;
-      results = [];
-      for (j = 0, len1 = ref.length; j < len1; j++) {
-        p = ref[j];
-        results.push(p.$add(a));
-      }
-      return results;
-    }).call(this);
-  };
-
   PointSet.prototype.sides = function(close_path) {
     var j, lastP, len1, p, ref, sides;
     if (close_path == null) {
@@ -3593,7 +3569,7 @@ PointSet = (function(superClass) {
       }
       lastP = p;
     }
-    if (close_path) {
+    if (this.points.length > 1 && close_path) {
       sides.push(new Line(lastP).to(this.points[0]));
     }
     return sides;

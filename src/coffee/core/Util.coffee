@@ -134,7 +134,7 @@ class Util
   # @return a random number within the range
   @randomRange : (a, b=0) ->
     r = if a > b then ( a - b ) else ( b - a )
-    return b + Math.random() * r
+    return a + Math.random() * r
 
 
   # ## Simple mixin implementataion

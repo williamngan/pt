@@ -46,6 +46,9 @@ class Const
   # ## represents an arbitrary very small number. It is set as 0.0001 here.
   @epsilon  = 0.0001
 
+  # ## pi radian (180 deg)
+  @pi = Math.PI
+
   # ## two pi radian (360deg)
   @two_pi  = 6.283185307179586
 

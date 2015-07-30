@@ -161,7 +161,7 @@ class Grid extends Rectangle
 
     return @
 
-    
+
   # ## Check a certain area in the grid is unoccupied
   # @param `x, y` column and row index
   # @param `w` column width
