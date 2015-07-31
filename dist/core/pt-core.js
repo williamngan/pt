@@ -3526,6 +3526,15 @@ PointSet = (function(superClass) {
     return this;
   };
 
+  PointSet.prototype.getAt = function(index) {
+    console.log(index, this.points.length);
+    return this.points[Math.min(this.points.length - 1, Math.max(0, index))];
+  };
+
+  PointSet.prototype.count = function() {
+    return this.points.length;
+  };
+
   PointSet.prototype.connectFromAnchor = function(args) {
     var j, len1, p, ref;
     if (arguments.length > 0) {

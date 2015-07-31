@@ -43,6 +43,17 @@ class PointSet extends Vector
     return @
 
 
+  # ## Get a point from the set of points based on its index position
+  # @param `index` index position
+  # @return a point in the set
+  getAt: ( index ) ->
+    console.log( index, this.points.length );
+    return this.points[ Math.min( this.points.length-1, Math.max(0, index) ) ];
+
+
+  # ## Get the number of points in the set
+  count: () -> return this.points.length;
+
   # ## Add a point whose position is calculated relative to this PointSet's anchor point
   # @param `args` 0-3 comma-separated values, or as an array, or a Point object.
   # @eg `pset.connectFromAnchor(1,2)` `pset.connectFromAnchor([2,4])` `pset.connectFromAnchor({x:3, y:6, z:9})`
