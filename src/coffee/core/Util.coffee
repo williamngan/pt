@@ -204,6 +204,12 @@ class Util
   @chance: (p) -> return (Math.random() < p);
 
 
+  # ## A static function to calculate Gaussian curve
+  @gaussian: (x, mean=0, sigma=1) ->
+    x = (x - mean) / sigma
+    return Const.gaussian * Math.exp( -0.5 * x * x) / sigma
+
+
 # namespace
 this.Util = Util;
 

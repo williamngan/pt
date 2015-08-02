@@ -73,6 +73,9 @@ class Const
   # ## 1 Newton = 0.10197 Kilogram-force
   @newton = 0.10197
 
+  # ## Gaussian constant (1 / Math.sqrt(2 * Math.PI))
+  @gaussian = 0.3989422804014327;
+
 
 
 

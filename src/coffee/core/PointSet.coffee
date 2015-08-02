@@ -47,8 +47,20 @@ class PointSet extends Vector
   # @param `index` index position
   # @return a point in the set
   getAt: ( index ) ->
-    console.log( index, this.points.length );
-    return this.points[ Math.min( this.points.length-1, Math.max(0, index) ) ];
+    return @points[ Math.min( @points.length-1, Math.max(0, index) ) ];
+
+
+  # ## Same as `getAt()` but returns a new point
+  $getAt: ( index ) ->
+    return @getAt( index ).clone();
+
+  # ## Set a point at a specific index position
+  # @param `index` index position
+  # @param `p` new point
+  # @return this set
+  setAt: ( index, p ) ->
+    @points[ index ] = p;
+    return this;
 
 
   # ## Get the number of points in the set

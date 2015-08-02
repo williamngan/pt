@@ -54,6 +54,8 @@ Const = (function() {
 
   Const.newton = 0.10197;
 
+  Const.gaussian = 0.3989422804014327;
+
   return Const;
 
 })();
@@ -362,6 +364,17 @@ Util = (function() {
 
   Util.chance = function(p) {
     return Math.random() < p;
+  };
+
+  Util.gaussian = function(x, mean, sigma) {
+    if (mean == null) {
+      mean = 0;
+    }
+    if (sigma == null) {
+      sigma = 1;
+    }
+    x = (x - mean) / sigma;
+    return Const.gaussian * Math.exp(-0.5 * x * x) / sigma;
   };
 
   return Util;
@@ -3349,7 +3362,7 @@ Grid = (function(superClass) {
   };
 
   Grid.prototype.create = function() {
-    var c, cell, j, o, pos, r, ref, ref1;
+    var c, cell, isOccupied, j, o, pos, r, ref, ref1;
     if (!this.cellCallback) {
       return this;
     }
@@ -3357,7 +3370,8 @@ Grid = (function(superClass) {
       for (r = o = 0, ref1 = this.rows; 0 <= ref1 ? o < ref1 : o > ref1; r = 0 <= ref1 ? ++o : --o) {
         cell = this.cell.size.clone();
         pos = this.$add(cell.$multiply(c, r));
-        this.cellCallback(cell, pos, r, c, this.cell.type, this.layout[r][c] === 1);
+        isOccupied = this.layout.length > 0 && this.layout[0].length > 0 ? this.layout[r][c] === 1 : false;
+        this.cellCallback(cell, pos, r, c, this.cell.type, isOccupied);
       }
     }
     return this;
@@ -3527,8 +3541,16 @@ PointSet = (function(superClass) {
   };
 
   PointSet.prototype.getAt = function(index) {
-    console.log(index, this.points.length);
     return this.points[Math.min(this.points.length - 1, Math.max(0, index))];
+  };
+
+  PointSet.prototype.$getAt = function(index) {
+    return this.getAt(index).clone();
+  };
+
+  PointSet.prototype.setAt = function(index, p) {
+    this.points[index] = p;
+    return this;
   };
 
   PointSet.prototype.count = function() {

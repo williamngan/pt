@@ -97,7 +97,8 @@ class Grid extends Rectangle
       for r in [0...@rows]
         cell = @cell.size.clone()
         pos = @$add( cell.$multiply( c, r ) ) # cellsize * row-column + grid-position
-        @cellCallback( cell, pos, r, c, @cell.type, @layout[r][c]==1 )
+        isOccupied = if (@layout.length > 0 and @layout[0].length > 0) then @layout[r][c]==1 else false;
+        @cellCallback( cell, pos, r, c, @cell.type, isOccupied )
 
     return @
 
