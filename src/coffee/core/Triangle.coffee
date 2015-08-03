@@ -193,12 +193,14 @@ class Triangle extends Vector
     b = @altitude("p1")
     return a.intersectPath( b, Const.xyz )
 
+
   # ## Get incenter, which is the center point of its inner circle, and also the intersection point of its 3 angle bisector lines (each of which cuts one of the 3 angles in half).
   # @return the incenter point as Vector
   incenter: () ->
     a = @bisector("p0", true)
     b = @bisector("p1", true)
     return a.intersectPath( b, Const.xyz )
+
 
   # ## Get an interior circle, which is the largest circle completed enclosed by this triangle
   # @return a Circle
@@ -208,8 +210,9 @@ class Triangle extends Vector
     radius = 2 * area.value / area.perimeter.value
     return new Circle(center).setRadius( radius )
 
+
   # ## Get circumcenter, which is the intersection point of its 3 perpendicular bisectors lines ( each of which divides a side in half and is perpendicular to the side)
-  # @return the circumcenter point as Vector
+  # @return an object with { `center`: circumcenter point as Vector, `bisector`: an array of bisectors }
   circumcenter: () ->
     medial = @medial()
 
@@ -224,6 +227,7 @@ class Triangle extends Vector
       center: pbs[0].intersectPath( pbs[1], Const.xyz )
       bisectors: pbs
     }
+
 
   # ## Get circumcircle, which is the smaller circle that encloses this triangle completely
   # @return a Circle

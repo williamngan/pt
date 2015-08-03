@@ -81,7 +81,7 @@ Tri.prototype.unfold = function(id) {
 
 // Create initial triangle
 var center = space.size.$divide(2);
-space.add( new Tri( center.$subtract(0, 50) ) .to( center.$add( -43.3, 25),  center.$add( 43.3, 25) ) );
+space.add( new Tri( center.$subtract(0, 50) ) .to( center.$add( -43.3, 25),  center.$add( 43.3, 25) ));
 
 
 // 4. Start playing
