@@ -49,6 +49,19 @@ class Triangle extends Vector
   toString:() -> "Triangle (#{@x}, #{@y}, #{@z}), (#{@p1.x}, #{@p1.y}, #{@p1.z}), (#{@p2.x}, #{@p2.y}, #{@p2.z})"
 
 
+  # ## Get a point from the set of points based on its index position
+  # @param `index` index position as number (0, 1, 2) or as string "p0", "p1", "p2"
+  # @return a point in the triangle
+  getAt: (index) ->
+    if (index==1 or index=="p1") then return @p1;
+    if (index==2 or index=="p2") then return @p2;
+    return @;
+
+
+  # ## Same as `getAt()` but return as a new Vector
+  $getAt: (index) -> return new Vector( @getAt(index) );
+
+
   # ## Convert this Triangle to a `PointSet`
   # @return a PointSet with 3 points.
   toPointSet: () ->

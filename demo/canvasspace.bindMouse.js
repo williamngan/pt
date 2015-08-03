@@ -15,7 +15,7 @@ var form = new Form( space.ctx );
 
 // A Chain is a kind of Curve, which is a set of points
 function Chain() {
-  Curve.call( this, arguments );
+  Curve.apply( this, arguments );
 
   this.hold = false; // whether mouse is pressed
   this.lineSize = 0.2;

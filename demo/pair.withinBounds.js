@@ -15,7 +15,7 @@ var form = new Form( space.ctx );
 
 // A Nest is a kind of Pair, which also contains nested pairs
 function Nest() {
-  Pair.call( this, arguments ); // call Pair's constructor
+  Pair.apply( this, arguments ); // call Pair's constructor
   this.inner = [];
   this.color = new Pair().to(255,255,255);
 }

@@ -19,7 +19,7 @@ form.stroke( false );
 
 // A Dust is a kind of Vector
 function Dust() {
-  Vector.call( this, arguments ); // call Vector's constructor
+  Vector.apply( this, arguments ); // call Vector's constructor
   this.age = 0;
   this.maxAge = Math.random() * 500 + 50;
   this.weight =  0.25 + Math.random()*0.5;

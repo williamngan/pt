@@ -26,6 +26,19 @@ class Pair extends Vector
     @p1 = new Vector( Point.get(arguments) )
     return @
 
+
+  # ## Get a point from the set of points based on its index position
+  # @param `index` index position
+  # @return a point in the pair
+  getAt: (index) ->
+    if (index==1 or index=="p1") then return @p1;
+    return @;
+
+
+  # ## Same as `getAt()` but return as a new Vector
+  $getAt: (index) -> return new Vector( @getAt(index) );
+
+
   # ## Update p1's new position by recalculating it as a relative position to the anchor point
   # @return this Pair
   relative: () ->

@@ -50,9 +50,9 @@ class PointSet extends Vector
     return @points[ Math.min( @points.length-1, Math.max(0, index) ) ];
 
 
-  # ## Same as `getAt()` but returns a new point
-  $getAt: ( index ) ->
-    return @getAt( index ).clone();
+  # ## Same as `getAt()` but returns a new Vector
+  $getAt: ( index ) -> return new Vector( @getAt( index ) );
+
 
   # ## Set a point at a specific index position
   # @param `index` index position

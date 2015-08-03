@@ -2665,6 +2665,17 @@ Pair = (function(superClass) {
     return this;
   };
 
+  Pair.prototype.getAt = function(index) {
+    if (index === 1 || index === "p1") {
+      return this.p1;
+    }
+    return this;
+  };
+
+  Pair.prototype.$getAt = function(index) {
+    return new Vector(this.getAt(index));
+  };
+
   Pair.prototype.relative = function() {
     this.p1.add(this);
     return this;
@@ -3545,7 +3556,7 @@ PointSet = (function(superClass) {
   };
 
   PointSet.prototype.$getAt = function(index) {
-    return this.getAt(index).clone();
+    return new Vector(this.getAt(index));
   };
 
   PointSet.prototype.setAt = function(index, p) {
@@ -3977,6 +3988,20 @@ Triangle = (function(superClass) {
 
   Triangle.prototype.toString = function() {
     return "Triangle (" + this.x + ", " + this.y + ", " + this.z + "), (" + this.p1.x + ", " + this.p1.y + ", " + this.p1.z + "), (" + this.p2.x + ", " + this.p2.y + ", " + this.p2.z + ")";
+  };
+
+  Triangle.prototype.getAt = function(index) {
+    if (index === 1 || index === "p1") {
+      return this.p1;
+    }
+    if (index === 2 || index === "p2") {
+      return this.p2;
+    }
+    return this;
+  };
+
+  Triangle.prototype.$getAt = function(index) {
+    return new Vector(this.getAt(index));
   };
 
   Triangle.prototype.toPointSet = function() {

@@ -18,7 +18,7 @@ var bound = new Pair().to( space.size );
 
 // A Ball is a kind of Particle
 function Ball() {
-  Particle.call( this, arguments );
+  Particle.apply( this, arguments );
 }
 Util.extend( Ball, Particle );
 
