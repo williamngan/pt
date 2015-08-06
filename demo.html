@@ -108,6 +108,9 @@
 <p class="demo">vector.projection.js</p>
 <p class="demo">vector.rotate2D.js</p>
 <p class="demo">vector.scale2D.js</p>
+<p></p>
+<p class="demo" data-folder="es6/dist/">vector.field.js</p>
+<p class="demo">samplepoints.poisson.js</p>
 
 <div id="pt"></div>
 
@@ -124,7 +127,8 @@
 	for (var i=0; i<demos.length; i++) {
         var file = demos[i].textContent;
 		demos[i].addEventListener("click", function() {
-            window.location.href = window.location.origin+window.location.pathname+"?file="+this.textContent+"&cacheBust="+(Math.random());
+            var filepath =  (this.getAttribute("data-folder") || "") + this.textContent;
+            window.location.href = window.location.origin+window.location.pathname+"?file="+filepath+"&cacheBust="+(Math.random());
         }.bind( demos[i] ) );
 	}
 

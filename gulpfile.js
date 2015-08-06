@@ -7,6 +7,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var coffee = require('gulp-coffee');
 var insert = require('gulp-insert');
 var es = require('event-stream');
+var babel = require('gulp-babel');
 
 // Define Paths
 var path = {
@@ -18,6 +19,10 @@ var path = {
     core: "./dist/core/",
     extend: "./dist/extend/",
     path: "./dist/"
+  },
+  demoEs6: {
+    src: "./demo/es6/src/",
+    dist: "./demo/es6/dist/"
   }
 };
 
@@ -50,6 +55,7 @@ gulp.task('default', ["watch"]);
 gulp.task('watch', function() {
   gulp.watch( path.src.core+"*.coffee", ['core']);
   gulp.watch( path.src.extend+"*.coffee", ['extend']);
+  gulp.watch( path.demoEs6.src+"*.js", ['es6-demo']);
 });
 
 
@@ -201,4 +207,12 @@ gulp.task('extend-files', function() {
     .pipe( coffee({bare:true}).on('error', gutil.log))
     .pipe(sourcemaps.write("./map"))
     .pipe( gulp.dest( path.dist.extend+"/elements/" ) )
+});
+
+
+// ES6 Babel
+gulp.task('es6-demo', function () {
+    return gulp.src( path.demoEs6.src+"/*.js" )
+        .pipe(babel()).on('error', gutil.log)
+        .pipe(gulp.dest( path.demoEs6.dist ));
 });
