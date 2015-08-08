@@ -159,10 +159,10 @@ var VectorLine = (function (_Vector) {
             } else {
               this.pulled = false;
             }
-            this.intensity = Math.min(0.4, Math.max(5, _mag / (this.mag * 5)));
+            this.intensity = Math.min(0.5, Math.max(5, _mag / (this.mag * 5)));
           }
 
-          color = this.pointer.y > 0 ? "rgba(255,0,50" : "rgba(255,210,230";
+          color = this.pointer.y > 0 ? "rgba(255,255,0" : "rgba(200,220,255";
         }
 
       return color + "," + this.intensity + ")";
@@ -202,11 +202,12 @@ space.add({
 
     // add 50 points per 25ms
     var count = 0;
+    form.stroke(false);
     while (time - lastTime < 25 && count++ < 50) {
       var s = samples.sample(10, 'poisson');
       ctx.fillStyle = '#fff';
       if (s) {
-        form.fill("rgba(255,210,230,.3)").stroke(false).point(s, 1);
+        form.fill("rgba(255,255,255,.3)").point(s, 1);
 
         // add to sample point set and increment counter
         samples.to(s);

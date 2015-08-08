@@ -54,7 +54,8 @@
             src.setAttribute("src", "./demo/" + qs("file"));
             src.onload = function () {
                 var hint = document.querySelector("#hint");
-                hint.innerHTML = window.demoDescription;
+                console.log( window.demoDescription );
+                hint.innerHTML = window.demoDescription || "";
                 console.log("loaded");
             };
         }
@@ -120,7 +121,6 @@
 <script type="text/javascript">
 
     if (src) document.querySelector("body").appendChild( src );
-
 
     var demos = document.querySelectorAll(".demo");
 
