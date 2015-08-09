@@ -2,38 +2,186 @@
 <html>
 <head>
 	<title></title>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300' rel='stylesheet' type='text/css'>
+
+    <meta charset="UTF-8">
 	<script type="text/javascript" src="dist/core/pt-core.js"></script>
 	<script type="text/javascript" src="dist/extend/pt-extend.js"></script>
 
 	<style>
 
-		body {
-			background: #f3f5f7;
-			font-family: "Lato", sans-serif;
-		}
-		#pt {
-			position: absolute;
-			right: 0; top: 0; bottom: 0; left: 60%;
-			overflow: hidden;
-		}
+
+
+        body {
+            background: #fff;
+            font-family: "Helvetica", sans-serif;
+            font-size: 10px;
+            line-height: 1.35;
+        }
+        html {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        html * {
+            box-sizing: border-box;
+        }
+
+        #board {
+            position: absolute;
+            left: 0; top: 0; bottom: 0; right: 50%;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        #pt {
+            position: absolute;
+            left: 0px; top: 0px; bottom: 0px; right: 0px;
+            overflow: hidden;
+        }
+
+        #page {
+            position: absolute;
+            right: 0; top: 0; bottom: 0; left: 50%;
+            overflow: auto;
+            padding: 0 10px 0 5vw;
+            background-color: #fff;
+        }
+        #page:before {
+            display: inline-block;
+            content: " ";
+            width: 0;
+            height: 100%;
+            vertical-align: middle;
+            background: transparent;
+        }
+
+        #cover {
+            display: inline-block;
+            vertical-align: middle;
+            width: 90%;
+            white-space: normal;
+            margin-bottom: 5vh;
+
+            -webkit-column-count: 3;
+            -moz-column-count: 3;
+            -ms-column-count: 3;
+            column-count: 3;
+
+            -webkit-column-gap: 50px;
+            -moz-column-gap: 50px;
+            -ms-column-gap: 50px;
+            column-gap: 50px;
+
+            text-overflow: ellipsis;
+            background: #fff;
+        }
+
+        #menu {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            padding-left: 5vw;
+            background-color: #fff;
+            z-index: 1;
+        }
+
+        #menu > span {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 1.2em;
+            padding-right: 30px;
+            margin-top: 20px;
+            font-family: "Roboto Slab", sans-serif;
+        }
+
+
+        #menu > span.title {
+            font-size: 4em;
+
+        }
+
+
 
         #hint {
             position: absolute;
-            top: 0; right: 40%; width: 200px;
-            font-size: 11px; color: #999; line-height: 1.5; padding: 20px;
-            text-align: right;
+            bottom: 30px;
+            left: 5vw;
+            right: 5vw;
+
+            font-size: 11px; color: #aab;
+            line-height: 1.35;
+            word-wrap: normal;
+            max-width: 350px;
         }
 
-        .demo {
-            cursor: pointer;
-            font-size: 12px; line-height: 1.35; margin: 0;
-            color: #666;
+        #hint a {
+            border: none;
+            text-decoration: underline;
+            color: #aab;
         }
-        .demo:hover { color: #03a9f4;}
+
+        #hint a:hover {
+            color: #334fff;
+        }
+
+        h1 {
+            font-family: "Roboto Slab", sans-serif;
+            font-size: 8em;
+            color: #fff;
+            font-weight: 300;
+            margin: 0;
+        }
 
         p {
-            width: 30%;
+            font-size: 1.4em;
+            color: rgba(255,255,255,.8);
         }
+
+        h3 {
+            font-weight: 400;
+            font-size: 1.4em;
+            color: #fff;
+            margin: 1em 0 2em 0.15em;
+        }
+
+        a {
+            color: #334fff;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a:hover {
+            border-bottom: 1px solid #334fff;
+        }
+
+        .demo, .section {
+            cursor: pointer;
+            font-size: 12px; line-height: 1.5; margin: 0;
+            color: #667;
+            white-space: nowrap;
+        }
+
+        .demo > span {
+            font-size: 10px;
+        }
+        .demo > strong {
+            font-weight: 400;
+        }
+        .demo:hover { color: #334fff;}
+
+        .section {
+            font-weight: 600;
+            color: #222;
+        }
+
+        @media (max-height: 500px) {
+            .demo, #hint {
+                font-size: 10px;
+                line-height: 1.2;
+            }
+        }
+
 	</style>
 
     <script>
@@ -44,18 +192,25 @@
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         }
 
-        console.log( qs("file") );
-
         var src = null;
-        if (qs("file")) {
+        var qfile = qs("file");
+        if (qfile) {
             src = document.createElement('script');
             src.setAttribute("type", "text/javascript");
             src.setAttribute("id", "src");
-            src.setAttribute("src", "./demo/" + qs("file"));
+            src.setAttribute("src", "./demo/" + qfile);
+
+            var link = document.createElement("a");
+            link.setAttribute("href", "https://github.com/williamngan/pt/blob/master/demo/" + qfile);
+            link.setAttribute("target", "_blank");
+            link.textContent = "View source code";
+
             src.onload = function () {
                 var hint = document.querySelector("#hint");
-                console.log( window.demoDescription );
-                hint.innerHTML = window.demoDescription || "";
+                hint.innerHTML = "";
+                hint.textContent = "← " + (window.demoDescription || "") + " ";
+                hint.appendChild( link );
+
                 console.log("loaded");
             };
         }
@@ -66,55 +221,72 @@
 </head>
 <body>
 
-<h1>Pt</h1>
-<p id="hint"></p>
-<p class="demo">canvasspace.bindMouse.js</p>
-<p class="demo">canvasspace.resize.js</p>
-<p class="demo">circle.intersectCircle.js</p>
-<p class="demo">circle.intersectPath.js</p>
-<p class="demo">circle.intersectPoint.js</p>
-<p class="demo">color.HSBtoRGB.js</p>
-<p class="demo">color.HSLtoRGB.js</p>
-<p class="demo">color.LABtoRGB.js</p>
-<p class="demo">curve.bezier.js</p>
-<p class="demo">curve.cardinal.js</p>
-<p class="demo">curve.bspline.js</p>
-<p class="demo">form.curve.js</p>
-<p class="demo">form.fill.js</p>
-<p class="demo">form.font.js</p>
-<p class="demo">form.points.js</p>
-<p class="demo">grid.generate.js</p>
-<p class="demo">grid.occupy.js</p>
-<p class="demo">pair.interpolate.js</p>
-<p class="demo">pair.collinear.js</p>
-<p class="demo">pair.withinBounds.js</p>
-<p class="demo">line.getPerpendicular.js</p>
-<p class="demo">line.getPerpendicularFromPoint.js</p>
-<p class="demo">line.intersectLine.js</p>
-<p class="demo">particle.collideLine2d.js</p>
-<p class="demo">particle.play.js</p>
-<p class="demo">point.max.js</p>
-<p class="demo">point.quadrant.js</p>
-<p class="demo">pointset.convexhull.js</p>
-<p class="demo">pointset.sides.js</p>
-<p class="demo">rectangle.resizeCenterTo.js</p>
-<p class="demo">rectangle.enclose.js</p>
-<p class="demo">rectangle.intersectPath.js</p>
-<p class="demo">triangle.oppositeSide.js</p>
-<p class="demo">triangle.incenter.js</p>
-<p class="demo">space.add.js</p>
-<p class="demo">space.refresh.js</p>
-<p class="demo">vector.add.js</p>
-<p class="demo">vector.normalize.js</p>
-<p class="demo">vector.projection.js</p>
-<p class="demo">vector.rotate2D.js</p>
-<p class="demo">vector.scale2D.js</p>
-<p></p>
-<p class="demo" data-folder="es6/dist/">vector.field.js</p>
-<p class="demo">samplepoints.poisson.js</p>
+<div id="page">
 
-<div id="pt"></div>
+    <div id="menu">
+        <span class="title"><a href="index.html">Pt</a></span>
+        <span><a href="#" target="_blank">Description</a></span>
+        <span><a href="https://github.com/williamngan/pt/" target="_blank">Source code</a></span>
+    </div>
 
+    <div id="cover">
+
+        <p class="section">core demos</p>
+        <p class="section">&nbsp;</p>
+        <p class="demo" data-src="canvasspace.bindMouse.js"><span>canvasspace.</span><strong>bindMouse</strong></p>
+        <p class="demo" data-src="canvasspace.resize.js"><span>canvasspace.</span><strong>resize</strong></p>
+        <p class="demo" data-src="circle.intersectCircle.js"><span>circle.</span><strong>intersectCircle</strong></p>
+        <p class="demo" data-src="circle.intersectPath.js"><span>circle.</span><strong>intersectPath</strong></p>
+        <p class="demo" data-src="circle.intersectPoint.js"><span>circle.</span><strong>intersectPoint</strong></p>
+        <p class="demo" data-src="color.HSBtoRGB.js"><span>color.</span><strong>HSBtoRGB</strong></p>
+        <p class="demo" data-src="color.HSLtoRGB.js"><span>color.</span><strong>HSLtoRGB</strong></p>
+        <p class="demo" data-src="color.LABtoRGB.js"><span>color.</span><strong>LABtoRGB</strong></p>
+        <p class="demo" data-src="curve.bezier.js"><span>curve.</span><strong>bezier</strong></p>
+        <p class="demo" data-src="curve.cardinal.js"><span>curve.</span><strong>cardinal</strong></p>
+        <p class="demo" data-src="curve.bspline.js"><span>curve.</span><strong>bspline</strong></p>
+        <p class="demo" data-src="form.curve.js"><span>form.</span><strong>curve</strong></p>
+        <p class="demo" data-src="form.fill.js"><span>form.</span><strong>fill</strong></p>
+        <p class="demo" data-src="form.font.js"><span>form.</span><strong>font</strong></p>
+        <p class="demo" data-src="form.points.js"><span>form.</span><strong>points</strong></p>
+        <p class="demo" data-src="grid.generate.js"><span>grid.</span><strong>generate</strong></p>
+        <p class="demo" data-src="grid.occupy.js"><span>grid.</span><strong>occupy</strong></p>
+        <p class="demo" data-src="pair.interpolate.js"><span>pair.</span><strong>interpolate</strong></p>
+        <p class="demo" data-src="pair.collinear.js"><span>pair.</span><strong>collinear</strong></p>
+        <p class="demo" data-src="pair.withinBounds.js"><span>pair.</span><strong>withinBounds</strong></p>
+        <p class="demo" data-src="line.getPerpendicular.js"><span>line.</span><strong>getPerpendicular</strong></p>
+        <p class="demo" data-src="line.getPerpendicularFromPoint.js"><span>line.</span><strong>getPerpendicularFromPoint</strong></p>
+        <p class="demo" data-src="line.intersectLine.js"><span>line.</span><strong>intersectLine</strong></p>
+        <p class="demo" data-src="particle.collideLine2d.js"><span>particle.</span><strong>collideLine2d</strong></p>
+        <p class="demo" data-src="particle.play.js"><span>particle.</span><strong>play</strong></p>
+        <p class="demo" data-src="point.max.js"><span>point.</span><strong>max</strong></p>
+        <p class="demo" data-src="point.quadrant.js"><span>point.</span><strong>quadrant</strong></p>
+        <p class="demo" data-src="pointset.convexhull.js"><span>pointset.</span><strong>convexhull</strong></p>
+        <p class="demo" data-src="pointset.sides.js"><span>pointset.</span><strong>sides</strong></p>
+        <p class="demo" data-src="rectangle.resizeCenterTo.js"><span>rectangle.</span><strong>resizeCenterTo</strong></p>
+        <p class="demo" data-src="rectangle.enclose.js"><span>rectangle.</span><strong>enclose</strong></p>
+        <p class="demo" data-src="rectangle.intersectPath.js"><span>rectangle.</span><strong>intersectPath</strong></p>
+        <p class="demo" data-src="triangle.oppositeSide.js"><span>triangle.</span><strong>oppositeSide</strong></p>
+        <p class="demo" data-src="triangle.incenter.js"><span>triangle.</span><strong>incenter</strong></p>
+        <p class="demo" data-src="space.add.js"><span>space.</span><strong>add</strong></p>
+        <p class="demo" data-src="space.refresh.js"><span>space.</span><strong>refresh</strong></p>
+        <p class="demo" data-src="vector.add.js"><span>vector.</span><strong>add</strong></p>
+        <p class="demo" data-src="vector.normalize.js"><span>vector.</span><strong>normalize</strong></p>
+        <p class="demo" data-src="vector.projection.js"><span>vector.</span><strong>projection</strong></p>
+        <p class="demo" data-src="vector.rotate2D.js"><span>vector.</span><strong>rotate2D</strong></p>
+        <p class="demo" data-src="vector.scale2D.js"><span>vector.</span><strong>scale2D</strong></p>
+        <p class="section">&nbsp;</p>
+        <p class="section">extended demos</p>
+        <p class="section">&nbsp;</p>
+        <p class="demo" data-src="./es6/dist/vector.field.js"><span>vector.</span><strong>field</strong></p>
+        <p class="demo" data-src="samplepoints.poisson.js"><span>samplepoints.</span><strong>poisson</strong></p>
+    </div>
+    <div id="hint"></div>
+</div>
+
+
+<div id="board">
+    <div id="pt"></div>
+</div>
 
 <!--<script type="text/javascript" id="src" src="demo/pair.interpolate.js"></script>-->
 
@@ -125,9 +297,9 @@
     var demos = document.querySelectorAll(".demo");
 
 	for (var i=0; i<demos.length; i++) {
-        var file = demos[i].textContent;
+        var file = demos[i].getAttribute("data-src");
 		demos[i].addEventListener("click", function() {
-            var filepath =  (this.getAttribute("data-folder") || "") + this.textContent;
+            var filepath = this.getAttribute("data-src");
             window.location.href = window.location.origin+window.location.pathname+"?file="+filepath+"&cacheBust="+(Math.random());
         }.bind( demos[i] ) );
 	}

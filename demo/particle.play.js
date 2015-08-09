@@ -57,7 +57,7 @@ space.add({
   animate: function(time, fps, context) {
 
     // fill background
-    form.fill("rgba(0,0,0,0.1)");
+    form.fill("rgba(0,0,0,0.05)");
     form.rect( new Pair().to(space.size) );
 
     // fill speckles

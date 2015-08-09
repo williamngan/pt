@@ -2,10 +2,12 @@
 <html>
 <head>
 	<title></title>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300' rel='stylesheet' type='text/css'>
+
 	<script type="text/javascript" src="dist/core/pt-core.js"></script>
 	<script type="text/javascript" src="dist/extend/pt-extend.js"></script>
 
-    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300' rel='stylesheet' type='text/css'>
+
     <!--<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>-->
     <!--<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>-->
     <!--<link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>-->
@@ -31,11 +33,12 @@
 			position: absolute;
 			left: 0; top: 0; bottom: 0; right: 30%;
 			overflow: hidden;
+            cursor: pointer;
 		}
 
         #pt {
             position: absolute;
-            left: 60px; top: 60px; bottom: 60px; right: 60px;
+            left: 20px; top: 20px; bottom: 20px; right: 20px;
             overflow: hidden;
         }
 
@@ -44,15 +47,15 @@
             right: 0; top: 0; bottom: 0; left: 70%;
             overflow: auto;
             padding: 0 5vw;
-            background-color: rgba(51,79,255,.05);
-            border-left: 1px solid rgba(51,79,255,.1);
-            transition: border-color 1s, background-color 1s;
+            background-color: rgba(51,79,255,.0);
+            border-left: 1px solid rgba(51,79,255,.0);
+            /*transition: border-color .5s, background-color .5s;*/
             white-space: nowrap;
         }
 
         #page:hover {
-            background-color: rgba(51,79,255,.15);
-            border-left-color: rgba(51,79,255,.9);
+            /*background-color: rgba(51,79,255,.15);*/
+            /*border-left-color: rgba(51,79,255,.9);*/
         }
 
         #page:before {
@@ -101,6 +104,8 @@
         p {
             font-size: 1.4em;
             color: rgba(255,255,255,.8);
+            margin: 0;
+            margin-bottom: 5px;
         }
 
         h3 {
@@ -116,12 +121,12 @@
             font-weight: 500;
             text-decoration: none;
             display: inline-block;
-            border-bottom: 1px solid #334fff;
-            transition: border-color .5s;
+            border-bottom: 1px solid transparent;
         }
 
         a:hover {
-          border-bottom-color: #fe0;
+            color: #fff;
+            border-bottom-color: #fe0;
         }
 	</style>
 
@@ -141,10 +146,10 @@
 <div id="page">
     <div id="cover">
         <h1>Pt</h1>
-        <h3>An experiment on visual forms in code.</h3>
-        <p><a href="#">Demos</a></p>
+        <h3>An experiment on visual&nbsp;forms in&nbsp;code.</h3>
+        <p><a href="./demo.html?file=canvasspace.bindMouse.js">Demos</a></p>
         <p><a href="#">Motivations</a></p>
-        <p><a href="#">Quick start guide</a></p>
+        <p><a href="#">Source code</a></p>
     </div>
     <div id="info">An open source project started by <a href="https://twitter.com/williamngan">@williamngan</a></div>
 </div>

@@ -60,8 +60,7 @@ var Comb = (function (_Circle) {
   return Comb;
 })(Circle);
 
-var comb = new Comb();
-space.add(comb);
+var comb = null;
 
 // VectorLine is a hair-like point that can be "combed"
 
@@ -162,7 +161,7 @@ var VectorLine = (function (_Vector) {
             this.intensity = Math.min(0.5, Math.max(5, _mag / (this.mag * 5)));
           }
 
-          color = this.pointer.y > 0 ? "rgba(255,255,0" : "rgba(200,220,255";
+          color = this.pointer.y > 0 ? "rgba(255,240,30" : "rgba(180,200,255";
         }
 
       return color + "," + this.intensity + ")";
@@ -172,53 +171,82 @@ var VectorLine = (function (_Vector) {
   return VectorLine;
 })(Vector);
 
-var samples = new SamplePoints();
-samples.setBounds(new Rectangle().size(space.size.x, space.size.y), true);
-samples.poissonSampler(5); // target 5px radius
+var samples = null;
 var lastTime = 0;
 var counter = 0;
+
+
 
 // fill canvas in white initially and no refresh
 space.refresh(false);
 space.clear("#222");
 
-space.add({
-  animate: function animate(time, frameTime, ctx) {
+function create() {
+  return {
+    animate: function animate( time, frameTime, ctx ) {
 
-    if (counter > 3000) {
-      // to complete at 3000 points
-      for (var i = 0; i < samples.count(); i++) {
-        form.point(samples.getAt(i), 2, true);
-        var vecline = new VectorLine(samples.getAt(i));
-        var dir = center.$subtract(samples.getAt(i)).angle();
-        vecline.initVec(Math.cos(dir), Math.sin(dir));
-        space.add(vecline);
+      if (counter > 3000) {
+        // to complete at 3000 points
+        for (var i = 0; i < samples.count(); i++) {
+          form.point( samples.getAt( i ), 2, true );
+          var vecline = new VectorLine( samples.getAt( i ) );
+          var dir = center.$subtract( samples.getAt( i ) ).angle();
+          vecline.initVec( Math.cos( dir ), Math.sin( dir ) );
+          space.add( vecline );
+        }
+
+        // remove this actor when done
+        space.remove( this );
+        space.refresh( true );
       }
 
-      // remove this actor when done
-      space.remove(this);
-      space.refresh(true);
-    }
+      // add 50 points per 25ms
+      var count = 0;
+      form.stroke( false );
+      while (time - lastTime < 25 && count++ < 50) {
+        var s = samples.sample( 10, 'poisson' );
+        ctx.fillStyle = '#fff';
+        if (s) {
+          form.fill( "rgba(255,255,255,.3)" ).point( s, 1 );
 
-    // add 50 points per 25ms
-    var count = 0;
-    form.stroke(false);
-    while (time - lastTime < 25 && count++ < 50) {
-      var s = samples.sample(10, 'poisson');
-      ctx.fillStyle = '#fff';
-      if (s) {
-        form.fill("rgba(255,255,255,.3)").point(s, 1);
-
-        // add to sample point set and increment counter
-        samples.to(s);
-        counter++;
+          // add to sample point set and increment counter
+          samples.to( s );
+          counter++;
+        }
       }
-    }
 
-    // fade out effect
-    form.fill("rgba(34,34,34,.1").rect(new Rectangle().to(space.size));
-    lastTime = time;
+      // fade out effect
+      form.fill( "rgba(34,34,34,.1" ).rect( new Rectangle().to( space.size ) );
+      lastTime = time;
+    }
   }
+}
+
+function init() {
+  samples = new SamplePoints();
+  samples.setBounds( new Rectangle().size( space.size.x, space.size.y ), true );
+  samples.poissonSampler( 5 ); // target 5px radius
+  lastTime = 0;
+  counter = 0;
+  space.removeAll();
+  space.add( create() );
+
+  comb = new Comb();
+  space.add(comb);
+}
+
+init();
+
+
+window.addEventListener( 'resize', function(evt) {
+
+  var frame = document.querySelector( "#pt" );
+  var frame_rect = frame.getBoundingClientRect();
+
+  init();
+  space.resize( frame_rect.width, frame_rect.height, evt );
+  center = space.size.$divide( 2 );
+
 });
 
 // 4. Start playing

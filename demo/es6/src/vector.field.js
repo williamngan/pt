@@ -1,4 +1,4 @@
-window.demoDescription = "Visualize Hairy Ball Theorem: you can't comb a hairy ball flat without creating a cowlick";
+window.demoDescription = "Visualize Hairy Ball Theorem: you can't comb a hairy ball flat without creating a cowlick. This demo was done in javascript ES6 and compiled with babel.";
 
 var space = new CanvasSpace("demo", "#222" ).display();
 var form = new Form( space.ctx );
