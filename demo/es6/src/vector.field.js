@@ -1,6 +1,6 @@
 window.demoDescription = "Visualize Hairy Ball Theorem: you can't comb a hairy ball flat without creating a cowlick. This demo was done in javascript ES6 and compiled with babel.";
 
-var space = new CanvasSpace("demo", "#222" ).display();
+var space = new CanvasSpace("demo", "#f5ead6" ).display();
 var form = new Form( space.ctx );
 
 var center = space.size.$divide(2);
@@ -119,7 +119,7 @@ class VectorLine extends Vector {
         this.intensity = Math.min( 0.4, Math.max( 5, _mag / (this.mag * 5) ) );
       }
 
-      color = (this.pointer.y > 0) ? "rgba(255,0,50" : "rgba(255,210,230"
+      color = (this.pointer.y > 0) ? "rgba(255,0,50" : "rgba(50,0,20"
     }
 
     return `${color},${this.intensity})`;
@@ -136,7 +136,7 @@ var counter = 0;
 
 // fill canvas in white initially and no refresh
 space.refresh( false );
-space.clear("#222");
+space.clear("#f5ead6");
 
 space.add({
   animate: function(time, frameTime, ctx) {
@@ -161,7 +161,7 @@ space.add({
       let s = samples.sample( 10, 'poisson' );
       ctx.fillStyle = '#fff';
       if (s) {
-        form.fill( "rgba(255,210,230,.3)" ).stroke( false ).point( s, 1 );
+        form.fill( "rgba(50,0,20,.3)" ).stroke( false ).point( s, 1 );
 
         // add to sample point set and increment counter
         samples.to( s );
@@ -170,7 +170,7 @@ space.add({
     }
 
     // fade out effect
-    form.fill( "rgba(34,34,34,.1" ).rect( new Rectangle().to( space.size ) );
+    form.fill( "rgba(245,234,214,.1" ).rect( new Rectangle().to( space.size ) );
     lastTime = time;
   }
 });

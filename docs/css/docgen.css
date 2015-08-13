@@ -1,6 +1,6 @@
 body {
   background-color: #f3f5f9;
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 10px;
   margin: 0;
   line-height: 1.35; }
@@ -12,16 +12,19 @@ html {
 html * {
   box-sizing: border-box; }
 
+h1, h2, h3 {
+  font-family: "Roboto Slab", sans-serif; }
+
 h1 {
   font-size: 12em;
-  font-weight: 900; }
+  font-weight: 300; }
 
 h2 {
   font-size: 5em; }
 
 h3 {
   font-size: 3em;
-  font-weight: 700;
+  font-weight: 300;
   letter-spacing: -0.03em; }
 
 p {
@@ -39,34 +42,46 @@ a:hover {
   color: #667bff; }
 
 code {
-  font-family: 'Inconsolata', monospace;
-  color: #556070;
-  display: inline-block; }
+  font-family: "Inconsolata", monospace;
+  display: inline-block;
+  font-size: 0.9em;
+  padding: 0 3px; }
 
 section {
   padding-top: 40px; }
 
 section h1 {
   position: relative;
-  font-size: 2em; }
+  font-size: 2em;
+  font-weight: 700; }
   section h1 .param {
     font-weight: 400;
     font-size: 12px;
-    font-family: 'Inconsolata', monospace;
+    font-family: "Inconsolata", monospace;
     color: #556070; }
 section h2 {
-  font-size: 1.5em;
-  font-weight: 400; }
+  font-size: 1.4em;
+  font-weight: 400;
+  font-family: "Helvetica Neue", Helvetica, sans-serif; }
+section.element > h1 {
+  font-weight: 300;
+  font-size: 4.5em;
+  color: #334fff; }
+section.element > h3 {
+  font-size: 2em;
+  color: #8899aa;
+  letter-spacing: 0.01em; }
 section .param > em, section .return > em, section .eg > em, section .demo > em {
+  font-family: "Inconsolata", monospace;
   display: inline-block;
   vertical-align: top;
   color: #8899aa;
   width: 80px;
-  font-size: 0.9em;
+  font-size: 1.1em;
   font-style: normal;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  margin-top: 0.6em; }
+  margin-top: 0.4em; }
 section .param > .p, section .return > .p, section .eg > .p, section .demo > .p {
   display: inline-block;
   vertical-align: top;
@@ -117,11 +132,11 @@ section.inherited ul {
       content: ''; }
 
 .eg code {
-  display: block;
-  font-size: 0.9em; }
+  display: block; }
 
 .param .group code {
-  padding-right: 5px; }
+  padding-right: 5px;
+  padding-left: 0; }
 
 #head {
   position: fixed;
@@ -163,7 +178,7 @@ section.inherited ul {
     line-height: 1; }
 
 #menu {
-  font-family: 'Lato', sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 400;
   float: left;
   margin-top: 100px;

@@ -10,9 +10,13 @@ $bg: #f3f5f9;
 $contentW: 550px;
 $menuW: 300px;
 
+$sans:  'Helvetica Neue', Helvetica, sans-serif;
+$slab: "Roboto Slab", sans-serif;
+$monospace: 'Inconsolata', monospace;
+
 body {
   background-color: $bg;
-  font-family: 'Lato', sans-serif;
+  font-family: $sans;
   font-size: 10px;
   margin: 0;
   line-height: 1.35;
@@ -27,9 +31,13 @@ html * {
   box-sizing: border-box;
 }
 
+h1, h2, h3 {
+  font-family: $slab;
+}
+
 h1 {
   font-size: 12em;
-  font-weight: 900;
+  font-weight: 300;
 }
 
 h2 {
@@ -38,7 +46,7 @@ h2 {
 
 h3 {
   font-size: 3em;
-  font-weight: 700;
+  font-weight: 300;
   letter-spacing: -0.03em;
 }
 
@@ -60,9 +68,11 @@ a {
 a:hover { color: $link-hover; }
 
 code {
-  font-family: 'Inconsolata', monospace;
-  color: $grey-dark;
+  font-family: $monospace;
   display: inline-block;
+
+  font-size: 0.9em;
+  padding: 0 3px;
 }
 
 
@@ -75,31 +85,48 @@ section {
   h1 {
     position: relative;
     font-size: 2em;
+    font-weight: 700;
     .param {
       font-weight: 400;
       font-size: 12px;
-      font-family: 'Inconsolata', monospace;
+      font-family: $monospace;
       color: $grey-dark;
     }
   }
 
   h2 {
-    font-size: 1.5em;
+    font-size: 1.4em;
     font-weight: 400;
+    font-family: $sans;
+  }
+
+  &.element {
+    > h1 {
+      font-weight: 300;
+      font-size: 4.5em;
+      color: $link;
+    }
+
+    > h3 {
+      font-size: 2em;
+      color: $grey-medium;
+      letter-spacing: 0.01em;
+    }
   }
 
   .param, .return, .eg, .demo {
 
     > em {
+      font-family: $monospace;
       display: inline-block;
       vertical-align: top;
       color: $grey-medium;
       width: 80px;
-      font-size: 0.9em;
+      font-size: 1.1em;
       font-style: normal;
       text-transform: uppercase;
       letter-spacing: 0.02em;
-      margin-top: 0.6em;
+      margin-top: 0.4em;
     }
 
     > .p {
@@ -143,7 +170,7 @@ section.inherited ul {
 
   li {
     display: inline-block;
-    font-family: "Inconsolata", monospace;
+    font-family: $monospace;
     list-style: none;
 
     a { color: $link-menu; }
@@ -159,11 +186,11 @@ section.inherited ul {
 
 .eg code {
   display: block;
-  font-size: 0.9em;
 }
 
 .param .group code {
   padding-right: 5px;
+  padding-left: 0;
 }
 
 
@@ -216,7 +243,7 @@ section.inherited ul {
 // Menu
 #menu {
 
-  font-family: 'Lato', sans-serif;
+  font-family: $sans;
   font-weight: 400;
   float: left;
   margin-top: 100px;
