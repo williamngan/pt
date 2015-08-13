@@ -65,7 +65,7 @@ gulp.task('watch', function() {
 // 3) "module" to add npm module.exports versions,
 // 4) "min" to create minified version
 
-gulp.task('build', ["pt", "core", "extend", "core-files", "extend-files"]);
+gulp.task('build', ["pt", "core", "core-files"]);
 
 gulp.task('namespace', function() {
   var before = "window.Pt = {};(function() {";
@@ -81,12 +81,14 @@ gulp.task('namespace', function() {
     .pipe( insert.prepend(before) ).pipe( insert.append(after) )
     .pipe( gulp.dest( path.dist.core ) );
 
+  /*
   var extend = gulp.src( path.dist.extend+'pt-extend.js' )
     .pipe( rename('pt-extend-ns.js') )
     .pipe( insert.prepend(before) ).pipe( insert.append(after) )
     .pipe( gulp.dest( path.dist.extend ) );
+  */
 
-  return es.concat(pt, core, extend);
+  return es.concat(pt, core);
 
 });
 
@@ -101,7 +103,7 @@ gulp.task('module', function() {
 
 });
 
-gulp.task('min', ["core-min", "core-ns-min", "extend-min", "extend-ns-min", "pt-min", "pt-ns-min"]);
+gulp.task('min', ["core-min", "core-ns-min", "pt-min", "pt-ns-min"]);
 
 
 // Pt

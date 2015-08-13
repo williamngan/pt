@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# By William Ngan, metaphorical.net
+# A quick and dirty documentation generator for coffeescript. Outputs JSON files.
+# Based on Docco and Pycco (https://fitzgen.github.io/pycco/).
 
 # Command Line Example:
 # python docgen.py -i ./src/coffee/core -o ./docs/json

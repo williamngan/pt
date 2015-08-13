@@ -11,27 +11,29 @@ Const = (function() {
 
   Const.xyz = 'xyz';
 
-  Const.identical = 0;
+  Const.identical = -1;
 
-  Const.right = 1;
+  Const.right = 3;
 
-  Const.bottom_right = 2;
+  Const.bottom_right = 4;
 
-  Const.bottom = 3;
+  Const.bottom = 5;
 
-  Const.bottom_left = 4;
+  Const.bottom_left = 6;
 
-  Const.left = 5;
+  Const.left = 7;
 
-  Const.top_left = 6;
+  Const.top_left = 0;
 
-  Const.top = 7;
+  Const.top = 1;
 
-  Const.top_right = 8;
+  Const.top_right = 2;
 
   Const.sideLabels = ["identical", "right", "bottom right", "bottom", "bottom left", "left", "top left", "top", "top right"];
 
   Const.epsilon = 0.0001;
+
+  Const.pi = Math.PI;
 
   Const.two_pi = 6.283185307179586;
 
@@ -48,6 +50,8 @@ Const = (function() {
   Const.gravity = 9.81;
 
   Const.newton = 0.10197;
+
+  Const.gaussian = 0.3989422804014327;
 
   return Const;
 

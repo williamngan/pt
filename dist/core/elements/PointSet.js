@@ -41,6 +41,23 @@ PointSet = (function(superClass) {
     return this;
   };
 
+  PointSet.prototype.getAt = function(index) {
+    return this.points[Math.min(this.points.length - 1, Math.max(0, index))];
+  };
+
+  PointSet.prototype.$getAt = function(index) {
+    return new Vector(this.getAt(index));
+  };
+
+  PointSet.prototype.setAt = function(index, p) {
+    this.points[index] = p;
+    return this;
+  };
+
+  PointSet.prototype.count = function() {
+    return this.points.length;
+  };
+
   PointSet.prototype.connectFromAnchor = function(args) {
     var j, len, p, ref;
     if (arguments.length > 0) {
@@ -69,32 +86,6 @@ PointSet = (function(superClass) {
     return this;
   };
 
-  PointSet.prototype.pointsAdd = function(args) {
-    var a, j, len, p, ref;
-    a = this._getArgs(arguments);
-    ref = this.points;
-    for (j = 0, len = ref.length; j < len; j++) {
-      p = ref[j];
-      p.add(a);
-    }
-    return this;
-  };
-
-  PointSet.prototype.$pointsAdd = function(args) {
-    var a, p;
-    a = this._getArgs(arguments);
-    return (function() {
-      var j, len, ref, results;
-      ref = this.points;
-      results = [];
-      for (j = 0, len = ref.length; j < len; j++) {
-        p = ref[j];
-        results.push(p.$add(a));
-      }
-      return results;
-    }).call(this);
-  };
-
   PointSet.prototype.sides = function(close_path) {
     var j, lastP, len, p, ref, sides;
     if (close_path == null) {
@@ -110,7 +101,7 @@ PointSet = (function(superClass) {
       }
       lastP = p;
     }
-    if (close_path) {
+    if (this.points.length > 1 && close_path) {
       sides.push(new Line(lastP).to(this.points[0]));
     }
     return sides;

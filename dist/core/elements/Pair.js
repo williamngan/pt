@@ -21,6 +21,17 @@ Pair = (function(superClass) {
     return this;
   };
 
+  Pair.prototype.getAt = function(index) {
+    if (index === 1 || index === "p1") {
+      return this.p1;
+    }
+    return this;
+  };
+
+  Pair.prototype.$getAt = function(index) {
+    return new Vector(this.getAt(index));
+  };
+
   Pair.prototype.relative = function() {
     this.p1.add(this);
     return this;
@@ -31,7 +42,7 @@ Pair = (function(superClass) {
   };
 
   Pair.prototype.bounds = function() {
-    return new Pair(this.min(this.p1)).to(this.max(this.p1));
+    return new Pair(this.$min(this.p1)).to(this.$max(this.p1));
   };
 
   Pair.prototype.withinBounds = function(pt, axis) {
@@ -103,8 +114,8 @@ Pair = (function(superClass) {
 
   Pair.prototype.resetBounds = function() {
     var temp;
-    temp = this.min(this.p1);
-    this.p1.set(this.max(this.p1));
+    temp = this.$min(this.p1);
+    this.p1.set(this.$max(this.p1));
     this.set(temp);
     return this;
   };

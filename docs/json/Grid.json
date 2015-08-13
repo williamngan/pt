@@ -24,7 +24,7 @@
         {
             "description": "<h2>Initiate a grid</h2>", 
             "eg": "<p><code>grid.create(100,50)</code> <code>grid.create( 10,10, \"stretch\",\"stretch\")</code> <code>grid.create( 20,20, \"flex\",\"fix\")</code></p>", 
-            "name": "create", 
+            "name": "init", 
             "param": [
                 "<p><code>x</code> a value to specify cell width (if <code>xtype</code> parameter is \"fix\" or \"flex\") or column count  (if <code>xtype</code> parameter is \"stretch\")</p>", 
                 "<p><code>y</code> a value to specify cell height (if <code>ytype</code> parameter is \"fix\" or \"flex\") or row count (if <code>ytype</code> parameter is \"stretch\")</p>", 
@@ -34,13 +34,47 @@
             "return": "<p>this grid</p>"
         }, 
         {
-            "description": "<h2>Generate or draw cell contents with a callback function. This will loop through each cell in the grid and call the callback function.</h2>", 
+            "description": "<h2>Define a callback function for cell creation. This will loop through each cell in the grid and call the callback function.</h2>", 
             "name": "generate", 
             "param": [
-                "<p><code>callback</code> a callback function with these parameters ( this_grid, cell_size, cell_position, cell_row, cell_column )</p>"
+                "<p><code>callback</code> a callback function with these parameters <code>( cell_size, cell_position, cell_row, cell_column, cell_type )</code></p>"
             ], 
             "pname": "callback", 
             "return": "<p>this grid</p>"
+        }, 
+        {
+            "description": "<h2>Generate the grid by looping through each cell</h2>", 
+            "name": "create", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>Get the cell's size as a Vector</h2>", 
+            "name": "getCellSize", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>a cloned <code>cell.size</code> property as Vector</p>"
+        }, 
+        {
+            "description": "<h2>Give a column and a row, get a rectangle which indicates the cell position and size</h2>", 
+            "eg": "<p><code>grid.cellToRectangle(2, 3)</code>, <code>grid.cellToRectangle(2, 5, true)</code></p>", 
+            "name": "cellToRectangle", 
+            "param": [
+                "<p><code>c, r</code> column and row index, respectively</p>", 
+                "<p><code>allowOutofBound</code> a boolean value to set if the returned rectangle can be outside of the grid</p>"
+            ], 
+            "pname": "c, r, allowOutofBound=false", 
+            "return": "<p>a Rectangle</p>"
+        }, 
+        {
+            "description": "<h2>Give a x,y position, get the corresponding cell on the grid.</h2>", 
+            "eg": "<p><code>grid.positionToCell( 100, 50 )</code>, <code>grid.positionToCell( [100, 50] )</code>, <code>grid.positionToCell( pt )</code>,</p>", 
+            "name": "positionToCell", 
+            "param": [
+                "<p><code>args</code> 0-3 comma-separated values, or as an array, or a Point object.</p>"
+            ], 
+            "pname": "args", 
+            "return": "<p>a Vector object whose <code>x</code> is the column index and <code>y</code> is the row index</p>"
         }, 
         {
             "description": "<h2>Reset the layout and its cell states</h2>", 
@@ -56,13 +90,25 @@
             "eg": "<p><code>grid.occupy(0,0, 5,3)</code></p>", 
             "name": "occupy", 
             "param": [
-                "<p><code>x</code> column index</p>", 
-                "<p><code>y</code> row index</p>", 
+                "<p><code>x, y</code> column and row index</p>", 
+                "<p><code>w</code> column width</p>", 
+                "<p><code>h</code> row size</p>", 
+                "<p><code>occupy</code> a boolean value to set if this cell should be occupied. Defaults to <code>true</code></p>"
+            ], 
+            "pname": "x, y, w, h, occupy=true", 
+            "return": "<p>this grid</p>"
+        }, 
+        {
+            "description": "<h2>Check a certain area in the grid is unoccupied</h2>", 
+            "eg": "<p><code>grid.canFit(0,0, 5,3)</code></p>", 
+            "name": "canFit", 
+            "param": [
+                "<p><code>x, y</code> column and row index</p>", 
                 "<p><code>w</code> column width</p>", 
                 "<p><code>h</code> row size</p>"
             ], 
             "pname": "x, y, w, h", 
-            "return": "<p>this grid</p>"
+            "return": "<p>a boolean value where <code>true</code> means the area is unoccupied</p>"
         }, 
         {
             "description": "<h2>Fit this area as much as possible within the grid's free ceels</h2>", 
@@ -73,6 +119,17 @@
             ], 
             "pname": "cols, rows", 
             "return": "<p>an object with properties <code>row</code> and <code>column</code> to specify the top left position, <code>columnSize</code> and <code>rowSize</code> to specify the resulting size in grid units, and <code>bound</code> which is the actual area as a Rectangle object.</p>"
+        }, 
+        {
+            "description": "<h2>Given a cell's position, get an array of the neighboring cells that surround it</h2>", 
+            "eg": "<p><code>grid.neighbors( 3, 2 )</code>, <code>(grid.neighbors(3, 2))[Const.top_right]</code></p>", 
+            "name": "neighbors", 
+            "param": [
+                "<p><code>c</code> column index</p>", 
+                "<p><code>r</code> row index</p>"
+            ], 
+            "pname": "c, r", 
+            "return": "<p>an array of neighbors starting from top-left going clockwise. The array values can be Vectors whose <code>x</code> is column index and <code>y</code> is row index, or <code>false</code> if the neighbor cell is out of bounds. You may access the cells semantically by using Const.top_right etc.</p>"
         }
     ], 
     "props": [

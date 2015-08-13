@@ -147,7 +147,7 @@ Util = (function() {
       b = 0;
     }
     r = a > b ? a - b : b - a;
-    return b + Math.random() * r;
+    return a + Math.random() * r;
   };
 
   Util.mixin = function(klass, mix) {
@@ -213,6 +213,17 @@ Util = (function() {
 
   Util.chance = function(p) {
     return Math.random() < p;
+  };
+
+  Util.gaussian = function(x, mean, sigma) {
+    if (mean == null) {
+      mean = 0;
+    }
+    if (sigma == null) {
+      sigma = 1;
+    }
+    x = (x - mean) / sigma;
+    return Const.gaussian * Math.exp(-0.5 * x * x) / sigma;
   };
 
   return Util;

@@ -87,7 +87,13 @@
                 "<p><code>args</code> comma-separated values, as an array, or as a Point object.</p>"
             ], 
             "pname": "args", 
-            "return": "<p>a new Point</p>"
+            "return": "<p>this Point</p>"
+        }, 
+        {
+            "description": "<h2>Similar to <code>min()</code> but returns a new instance</h2>", 
+            "name": "$min", 
+            "param": [], 
+            "pname": "args"
         }, 
         {
             "description": "<h2>Evaluate the minimum x,y,z of this point and another point, and get a maximum Point</h2>", 
@@ -97,7 +103,13 @@
                 "<p><code>args</code> comma-separated values, as an array, or as a Point object.</p>"
             ], 
             "pname": "args", 
-            "return": "<p>a new Point</p>"
+            "return": "<p>this Point</p>"
+        }, 
+        {
+            "description": "<h2>Similar to <code>max()</code> but returns a new instance</h2>", 
+            "name": "$max", 
+            "param": [], 
+            "pname": "args"
         }, 
         {
             "description": "<h2>Check if this point is at exactly the same position as the other point</h2>", 
@@ -121,8 +133,15 @@
             "return": "<p>boolean, true if they are near</p>"
         }, 
         {
-            "description": "<h2>Snap this point's position to the nearest integer</h2>", 
+            "description": "<h2>Snap this point's position to the nearest integer by its floor</h2>", 
             "name": "floor", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>this Point</p>"
+        }, 
+        {
+            "description": "<h2>Snap this point's position to the nearest integer by its ceiling</h2>", 
+            "name": "ceil", 
             "param": [], 
             "pname": "", 
             "return": "<p>this Point</p>"

@@ -14,27 +14,29 @@ Const = (function() {
 
   Const.xyz = 'xyz';
 
-  Const.identical = 0;
+  Const.identical = -1;
 
-  Const.right = 1;
+  Const.right = 3;
 
-  Const.bottom_right = 2;
+  Const.bottom_right = 4;
 
-  Const.bottom = 3;
+  Const.bottom = 5;
 
-  Const.bottom_left = 4;
+  Const.bottom_left = 6;
 
-  Const.left = 5;
+  Const.left = 7;
 
-  Const.top_left = 6;
+  Const.top_left = 0;
 
-  Const.top = 7;
+  Const.top = 1;
 
-  Const.top_right = 8;
+  Const.top_right = 2;
 
   Const.sideLabels = ["identical", "right", "bottom right", "bottom", "bottom left", "left", "top left", "top", "top right"];
 
   Const.epsilon = 0.0001;
+
+  Const.pi = Math.PI;
 
   Const.two_pi = 6.283185307179586;
 
@@ -51,6 +53,8 @@ Const = (function() {
   Const.gravity = 9.81;
 
   Const.newton = 0.10197;
+
+  Const.gaussian = 0.3989422804014327;
 
   return Const;
 
@@ -294,7 +298,7 @@ Util = (function() {
       b = 0;
     }
     r = a > b ? a - b : b - a;
-    return b + Math.random() * r;
+    return a + Math.random() * r;
   };
 
   Util.mixin = function(klass, mix) {
@@ -360,6 +364,17 @@ Util = (function() {
 
   Util.chance = function(p) {
     return Math.random() < p;
+  };
+
+  Util.gaussian = function(x, mean, sigma) {
+    if (mean == null) {
+      mean = 0;
+    }
+    if (sigma == null) {
+      sigma = 1;
+    }
+    x = (x - mean) / sigma;
+    return Const.gaussian * Math.exp(-0.5 * x * x) / sigma;
   };
 
   return Util;
@@ -1196,10 +1211,28 @@ Point = (function() {
   Point.prototype.min = function(args) {
     var _p;
     _p = Point.get(arguments);
+    this.x = Math.min(this.x, _p.x);
+    this.y = Math.min(this.y, _p.y);
+    this.z = Math.min(this.z, _p.z);
+    return this;
+  };
+
+  Point.prototype.$min = function(args) {
+    var _p;
+    _p = Point.get(arguments);
     return new this.__proto__.constructor(Math.min(this.x, _p.x), Math.min(this.y, _p.y), Math.min(this.z, _p.z));
   };
 
   Point.prototype.max = function(args) {
+    var _p;
+    _p = Point.get(arguments);
+    this.x = Math.max(this.x, _p.x);
+    this.y = Math.max(this.y, _p.y);
+    this.z = Math.max(this.z, _p.z);
+    return this;
+  };
+
+  Point.prototype.$max = function(args) {
     var _p;
     _p = Point.get(arguments);
     return new this.__proto__.constructor(Math.max(this.x, _p.x), Math.max(this.y, _p.y), Math.max(this.z, _p.z));
@@ -1224,6 +1257,13 @@ Point = (function() {
     this.x = Math.floor(this.x);
     this.y = Math.floor(this.y);
     this.z = Math.floor(this.z);
+    return this;
+  };
+
+  Point.prototype.ceil = function() {
+    this.x = Math.ceil(this.x);
+    this.y = Math.ceil(this.y);
+    this.z = Math.ceil(this.z);
     return this;
   };
 
@@ -1306,8 +1346,8 @@ Vector = (function(superClass) {
   };
 
   Vector.prototype.$multiply = function(args) {
-    var a, arg;
-    a = arg = this._getArgs(arguments);
+    var a;
+    a = this._getArgs(arguments);
     return new Vector(this).multiply(a);
   };
 
@@ -2625,6 +2665,17 @@ Pair = (function(superClass) {
     return this;
   };
 
+  Pair.prototype.getAt = function(index) {
+    if (index === 1 || index === "p1") {
+      return this.p1;
+    }
+    return this;
+  };
+
+  Pair.prototype.$getAt = function(index) {
+    return new Vector(this.getAt(index));
+  };
+
   Pair.prototype.relative = function() {
     this.p1.add(this);
     return this;
@@ -2635,7 +2686,7 @@ Pair = (function(superClass) {
   };
 
   Pair.prototype.bounds = function() {
-    return new Pair(this.min(this.p1)).to(this.max(this.p1));
+    return new Pair(this.$min(this.p1)).to(this.$max(this.p1));
   };
 
   Pair.prototype.withinBounds = function(pt, axis) {
@@ -2707,8 +2758,8 @@ Pair = (function(superClass) {
 
   Pair.prototype.resetBounds = function() {
     var temp;
-    temp = this.min(this.p1);
-    this.p1.set(this.max(this.p1));
+    temp = this.$min(this.p1);
+    this.p1.set(this.$max(this.p1));
     this.set(temp);
     return this;
   };
@@ -3056,8 +3107,8 @@ Rectangle = (function(superClass) {
   };
 
   Rectangle.prototype.enclose = function(rect) {
-    this.set(this.min(rect));
-    this.p1.set(this.p1.max(rect.p1));
+    this.set(this.$min(rect));
+    this.p1.set(this.p1.$max(rect.p1));
     this.center = this.midpoint();
     return this;
   };
@@ -3270,6 +3321,7 @@ Grid = (function(superClass) {
     this.rows = 0;
     this.columns = 0;
     this.layout = [];
+    this.cellCallback = null;
   }
 
   Grid.prototype.toString = function() {
@@ -3278,7 +3330,7 @@ Grid = (function(superClass) {
     return ("Grid width " + s.x + ", height " + s.y + ", columns " + this.columns + ", rows " + this.rows + ", ") + ("cell (" + this.cell.size.x + ", " + this.cell.size.y + "), type " + this.cell.type);
   };
 
-  Grid.prototype.create = function(x, y, xtype, ytype) {
+  Grid.prototype.init = function(x, y, xtype, ytype) {
     var size;
     if (xtype == null) {
       xtype = 'fix';
@@ -3298,7 +3350,7 @@ Grid = (function(superClass) {
       this.cell.size.x = size.x / this.columns;
     } else {
       this.cell.size.x = x;
-      this.columns = Math.ceil(size.x / this.cell.size.x);
+      this.columns = Math.floor(size.x / this.cell.size.x);
     }
     if (ytype === 'stretch') {
       this.cell.size.y = size.y / y;
@@ -3308,21 +3360,57 @@ Grid = (function(superClass) {
       this.cell.size.y = size.y / this.rows;
     } else {
       this.cell.size.y = y;
-      this.rows = Math.ceil(size.y / this.cell.size.y);
+      this.rows = Math.floor(size.y / this.cell.size.y);
     }
     return this;
   };
 
   Grid.prototype.generate = function(callback) {
-    var aa, ab, c, cell, pos, r, ref, ref1;
+    if (typeof callback === "function") {
+      this.cellCallback = callback;
+    }
+    return this;
+  };
+
+  Grid.prototype.create = function() {
+    var aa, ab, c, cell, isOccupied, pos, r, ref, ref1;
+    if (!this.cellCallback) {
+      return this;
+    }
     for (c = aa = 0, ref = this.columns; 0 <= ref ? aa < ref : aa > ref; c = 0 <= ref ? ++aa : --aa) {
       for (r = ab = 0, ref1 = this.rows; 0 <= ref1 ? ab < ref1 : ab > ref1; r = 0 <= ref1 ? ++ab : --ab) {
         cell = this.cell.size.clone();
         pos = this.$add(cell.$multiply(c, r));
-        callback(this, cell, pos, r, c, this.cell.type);
+        isOccupied = this.layout.length > 0 && this.layout[0].length > 0 ? this.layout[r][c] === 1 : false;
+        this.cellCallback(cell, pos, r, c, this.cell.type, isOccupied);
       }
     }
     return this;
+  };
+
+  Grid.prototype.getCellSize = function() {
+    return this.cell.size.clone();
+  };
+
+  Grid.prototype.cellToRectangle = function(c, r, allowOutofBound) {
+    var rect;
+    if (allowOutofBound == null) {
+      allowOutofBound = false;
+    }
+    if (allowOutofBound || (c >= 0 && c < this.columns && r >= 0 && r < this.rows)) {
+      rect = new Rectangle(this.$add(this.cell.size.$multiply(c, r))).resizeTo(this.cell.size);
+      return rect;
+    } else {
+      return false;
+    }
+  };
+
+  Grid.prototype.positionToCell = function(args) {
+    var cellpos, pos;
+    pos = new Vector(this._getArgs(arguments));
+    cellpos = pos.$subtract(this).$divide(this.cell.size).floor();
+    cellpos.max(0, 0).min(this.columns - 1, this.rows - 1);
+    return cellpos;
   };
 
   Grid.prototype.resetLayout = function(callback) {
@@ -3340,14 +3428,36 @@ Grid = (function(superClass) {
     return this;
   };
 
-  Grid.prototype.occupy = function(x, y, w, h) {
+  Grid.prototype.occupy = function(x, y, w, h, occupy) {
     var aa, ab, c, r, ref, ref1;
+    if (occupy == null) {
+      occupy = true;
+    }
+    if (this.rows <= 0 || this.columns <= 0) {
+      return this;
+    }
+    if (this.layout.length < 1) {
+      this.resetLayout();
+    }
     for (c = aa = 0, ref = w; 0 <= ref ? aa < ref : aa > ref; c = 0 <= ref ? ++aa : --aa) {
       for (r = ab = 0, ref1 = h; 0 <= ref1 ? ab < ref1 : ab > ref1; r = 0 <= ref1 ? ++ab : --ab) {
-        this.layout[Math.min(this.layout.length - 1, y + r)][x + c] = 1;
+        this.layout[Math.min(this.layout.length - 1, y + r)][x + c] = (occupy ? 1 : 0);
       }
     }
     return this;
+  };
+
+  Grid.prototype.canFit = function(x, y, w, h) {
+    var aa, ab, cell, currCol, currRow, ref, ref1, ref2, ref3;
+    for (currRow = aa = ref = y, ref1 = Math.min(this.rows, y + h); ref <= ref1 ? aa < ref1 : aa > ref1; currRow = ref <= ref1 ? ++aa : --aa) {
+      for (currCol = ab = ref2 = x, ref3 = Math.min(this.columns, x + w); ref2 <= ref3 ? ab < ref3 : ab > ref3; currCol = ref2 <= ref3 ? ++ab : --ab) {
+        cell = this.layout[currRow][currCol];
+        if ((cell != null) && cell > 0) {
+          return false;
+        }
+      }
+    }
+    return true;
   };
 
   Grid.prototype.fit = function(cols, rows) {
@@ -3379,6 +3489,21 @@ Grid = (function(superClass) {
       }
     }
     return false;
+  };
+
+  Grid.prototype.neighbors = function(c, r) {
+    var aa, len1, n, ns, temp;
+    temp = [[c - 1, r - 1], [c, r - 1], [c + 1, r - 1], [c + 1, r], [c + 1, r + 1], [c, r + 1], [c - 1, r + 1], [c - 1, r]];
+    ns = [];
+    for (aa = 0, len1 = temp.length; aa < len1; aa++) {
+      n = temp[aa];
+      if (n[0] >= 0 && n[0] < this.columns && n[1] >= 0 && n[1] < this.rows) {
+        ns.push(new Vector(n[0], n[1], this.layout[n[1]][n[0]]));
+      } else {
+        ns.push(false);
+      }
+    }
+    return ns;
   };
 
   return Grid;
@@ -3426,6 +3551,23 @@ PointSet = (function(superClass) {
     return this;
   };
 
+  PointSet.prototype.getAt = function(index) {
+    return this.points[Math.min(this.points.length - 1, Math.max(0, index))];
+  };
+
+  PointSet.prototype.$getAt = function(index) {
+    return new Vector(this.getAt(index));
+  };
+
+  PointSet.prototype.setAt = function(index, p) {
+    this.points[index] = p;
+    return this;
+  };
+
+  PointSet.prototype.count = function() {
+    return this.points.length;
+  };
+
   PointSet.prototype.connectFromAnchor = function(args) {
     var aa, len1, p, ref;
     if (arguments.length > 0) {
@@ -3454,32 +3596,6 @@ PointSet = (function(superClass) {
     return this;
   };
 
-  PointSet.prototype.pointsAdd = function(args) {
-    var a, aa, len1, p, ref;
-    a = this._getArgs(arguments);
-    ref = this.points;
-    for (aa = 0, len1 = ref.length; aa < len1; aa++) {
-      p = ref[aa];
-      p.add(a);
-    }
-    return this;
-  };
-
-  PointSet.prototype.$pointsAdd = function(args) {
-    var a, p;
-    a = this._getArgs(arguments);
-    return (function() {
-      var aa, len1, ref, results;
-      ref = this.points;
-      results = [];
-      for (aa = 0, len1 = ref.length; aa < len1; aa++) {
-        p = ref[aa];
-        results.push(p.$add(a));
-      }
-      return results;
-    }).call(this);
-  };
-
   PointSet.prototype.sides = function(close_path) {
     var aa, lastP, len1, p, ref, sides;
     if (close_path == null) {
@@ -3495,7 +3611,7 @@ PointSet = (function(superClass) {
       }
       lastP = p;
     }
-    if (close_path) {
+    if (this.points.length > 1 && close_path) {
       sides.push(new Line(lastP).to(this.points[0]));
     }
     return sides;
@@ -3872,6 +3988,20 @@ Triangle = (function(superClass) {
 
   Triangle.prototype.toString = function() {
     return "Triangle (" + this.x + ", " + this.y + ", " + this.z + "), (" + this.p1.x + ", " + this.p1.y + ", " + this.p1.z + "), (" + this.p2.x + ", " + this.p2.y + ", " + this.p2.z + ")";
+  };
+
+  Triangle.prototype.getAt = function(index) {
+    if (index === 1 || index === "p1") {
+      return this.p1;
+    }
+    if (index === 2 || index === "p2") {
+      return this.p2;
+    }
+    return this;
+  };
+
+  Triangle.prototype.$getAt = function(index) {
+    return new Vector(this.getAt(index));
   };
 
   Triangle.prototype.toPointSet = function() {

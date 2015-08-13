@@ -37,6 +37,20 @@ Triangle = (function(superClass) {
     return "Triangle (" + this.x + ", " + this.y + ", " + this.z + "), (" + this.p1.x + ", " + this.p1.y + ", " + this.p1.z + "), (" + this.p2.x + ", " + this.p2.y + ", " + this.p2.z + ")";
   };
 
+  Triangle.prototype.getAt = function(index) {
+    if (index === 1 || index === "p1") {
+      return this.p1;
+    }
+    if (index === 2 || index === "p2") {
+      return this.p2;
+    }
+    return this;
+  };
+
+  Triangle.prototype.$getAt = function(index) {
+    return new Vector(this.getAt(index));
+  };
+
   Triangle.prototype.toPointSet = function() {
     var p0;
     p0 = new Vector(this);

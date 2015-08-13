@@ -506,6 +506,11 @@
         "param": []
       }, 
       {
+        "description": "<h2>pi radian (180 deg)</h2>", 
+        "name": "pi", 
+        "param": []
+      }, 
+      {
         "description": "<h2>two pi radian (360deg)</h2>", 
         "name": "two_pi", 
         "param": []
@@ -543,6 +548,11 @@
       {
         "description": "<h2>1 Newton = 0.10197 Kilogram-force</h2>", 
         "name": "newton", 
+        "param": []
+      }, 
+      {
+        "description": "<h2>Gaussian constant (1 / Math.sqrt(2 * Math.PI))</h2>", 
+        "name": "gaussian", 
         "param": []
       }
     ], 
@@ -1008,7 +1018,7 @@
       {
         "description": "<h2>Initiate a grid</h2>", 
         "eg": "<p><code>grid.create(100,50)</code> <code>grid.create( 10,10, \"stretch\",\"stretch\")</code> <code>grid.create( 20,20, \"flex\",\"fix\")</code></p>", 
-        "name": "create", 
+        "name": "init", 
         "param": [
           "<p><code>x</code> a value to specify cell width (if <code>xtype</code> parameter is \"fix\" or \"flex\") or column count  (if <code>xtype</code> parameter is \"stretch\")</p>", 
           "<p><code>y</code> a value to specify cell height (if <code>ytype</code> parameter is \"fix\" or \"flex\") or row count (if <code>ytype</code> parameter is \"stretch\")</p>", 
@@ -1018,13 +1028,47 @@
         "return": "<p>this grid</p>"
       }, 
       {
-        "description": "<h2>Generate or draw cell contents with a callback function. This will loop through each cell in the grid and call the callback function.</h2>", 
+        "description": "<h2>Define a callback function for cell creation. This will loop through each cell in the grid and call the callback function.</h2>", 
         "name": "generate", 
         "param": [
-          "<p><code>callback</code> a callback function with these parameters ( this_grid, cell_size, cell_position, cell_row, cell_column )</p>"
+          "<p><code>callback</code> a callback function with these parameters <code>( cell_size, cell_position, cell_row, cell_column, cell_type )</code></p>"
         ], 
         "pname": "callback", 
         "return": "<p>this grid</p>"
+      }, 
+      {
+        "description": "<h2>Generate the grid by looping through each cell</h2>", 
+        "name": "create", 
+        "param": [], 
+        "pname": ""
+      }, 
+      {
+        "description": "<h2>Get the cell's size as a Vector</h2>", 
+        "name": "getCellSize", 
+        "param": [], 
+        "pname": "", 
+        "return": "<p>a cloned <code>cell.size</code> property as Vector</p>"
+      }, 
+      {
+        "description": "<h2>Give a column and a row, get a rectangle which indicates the cell position and size</h2>", 
+        "eg": "<p><code>grid.cellToRectangle(2, 3)</code>, <code>grid.cellToRectangle(2, 5, true)</code></p>", 
+        "name": "cellToRectangle", 
+        "param": [
+          "<p><code>c, r</code> column and row index, respectively</p>", 
+          "<p><code>allowOutofBound</code> a boolean value to set if the returned rectangle can be outside of the grid</p>"
+        ], 
+        "pname": "c, r, allowOutofBound=false", 
+        "return": "<p>a Rectangle</p>"
+      }, 
+      {
+        "description": "<h2>Give a x,y position, get the corresponding cell on the grid.</h2>", 
+        "eg": "<p><code>grid.positionToCell( 100, 50 )</code>, <code>grid.positionToCell( [100, 50] )</code>, <code>grid.positionToCell( pt )</code>,</p>", 
+        "name": "positionToCell", 
+        "param": [
+          "<p><code>args</code> 0-3 comma-separated values, or as an array, or a Point object.</p>"
+        ], 
+        "pname": "args", 
+        "return": "<p>a Vector object whose <code>x</code> is the column index and <code>y</code> is the row index</p>"
       }, 
       {
         "description": "<h2>Reset the layout and its cell states</h2>", 
@@ -1040,13 +1084,25 @@
         "eg": "<p><code>grid.occupy(0,0, 5,3)</code></p>", 
         "name": "occupy", 
         "param": [
-          "<p><code>x</code> column index</p>", 
-          "<p><code>y</code> row index</p>", 
+          "<p><code>x, y</code> column and row index</p>", 
+          "<p><code>w</code> column width</p>", 
+          "<p><code>h</code> row size</p>", 
+          "<p><code>occupy</code> a boolean value to set if this cell should be occupied. Defaults to <code>true</code></p>"
+        ], 
+        "pname": "x, y, w, h, occupy=true", 
+        "return": "<p>this grid</p>"
+      }, 
+      {
+        "description": "<h2>Check a certain area in the grid is unoccupied</h2>", 
+        "eg": "<p><code>grid.canFit(0,0, 5,3)</code></p>", 
+        "name": "canFit", 
+        "param": [
+          "<p><code>x, y</code> column and row index</p>", 
           "<p><code>w</code> column width</p>", 
           "<p><code>h</code> row size</p>"
         ], 
         "pname": "x, y, w, h", 
-        "return": "<p>this grid</p>"
+        "return": "<p>a boolean value where <code>true</code> means the area is unoccupied</p>"
       }, 
       {
         "description": "<h2>Fit this area as much as possible within the grid's free ceels</h2>", 
@@ -1057,6 +1113,17 @@
         ], 
         "pname": "cols, rows", 
         "return": "<p>an object with properties <code>row</code> and <code>column</code> to specify the top left position, <code>columnSize</code> and <code>rowSize</code> to specify the resulting size in grid units, and <code>bound</code> which is the actual area as a Rectangle object.</p>"
+      }, 
+      {
+        "description": "<h2>Given a cell's position, get an array of the neighboring cells that surround it</h2>", 
+        "eg": "<p><code>grid.neighbors( 3, 2 )</code>, <code>(grid.neighbors(3, 2))[Const.top_right]</code></p>", 
+        "name": "neighbors", 
+        "param": [
+          "<p><code>c</code> column index</p>", 
+          "<p><code>r</code> row index</p>"
+        ], 
+        "pname": "c, r", 
+        "return": "<p>an array of neighbors starting from top-left going clockwise. The array values can be Vectors whose <code>x</code> is column index and <code>y</code> is row index, or <code>false</code> if the neighbor cell is out of bounds. You may access the cells semantically by using Const.top_right etc.</p>"
       }
     ], 
     "props": [
@@ -1363,6 +1430,21 @@
         ], 
         "pname": "", 
         "return": "<p>this Pair</p>"
+      }, 
+      {
+        "description": "<h2>Get a point from the set of points based on its index position</h2>", 
+        "name": "getAt", 
+        "param": [
+          "<p><code>index</code> index position</p>"
+        ], 
+        "pname": "index", 
+        "return": "<p>a point in the pair</p>"
+      }, 
+      {
+        "description": "<h2>Same as <code>getAt()</code> but return as a new Vector</h2>", 
+        "name": "$getAt", 
+        "param": [], 
+        "pname": "index"
       }, 
       {
         "description": "<h2>Update p1's new position by recalculating it as a relative position to the anchor point</h2>", 
@@ -1811,7 +1893,13 @@
           "<p><code>args</code> comma-separated values, as an array, or as a Point object.</p>"
         ], 
         "pname": "args", 
-        "return": "<p>a new Point</p>"
+        "return": "<p>this Point</p>"
+      }, 
+      {
+        "description": "<h2>Similar to <code>min()</code> but returns a new instance</h2>", 
+        "name": "$min", 
+        "param": [], 
+        "pname": "args"
       }, 
       {
         "description": "<h2>Evaluate the minimum x,y,z of this point and another point, and get a maximum Point</h2>", 
@@ -1821,7 +1909,13 @@
           "<p><code>args</code> comma-separated values, as an array, or as a Point object.</p>"
         ], 
         "pname": "args", 
-        "return": "<p>a new Point</p>"
+        "return": "<p>this Point</p>"
+      }, 
+      {
+        "description": "<h2>Similar to <code>max()</code> but returns a new instance</h2>", 
+        "name": "$max", 
+        "param": [], 
+        "pname": "args"
       }, 
       {
         "description": "<h2>Check if this point is at exactly the same position as the other point</h2>", 
@@ -1845,8 +1939,15 @@
         "return": "<p>boolean, true if they are near</p>"
       }, 
       {
-        "description": "<h2>Snap this point's position to the nearest integer</h2>", 
+        "description": "<h2>Snap this point's position to the nearest integer by its floor</h2>", 
         "name": "floor", 
+        "param": [], 
+        "pname": "", 
+        "return": "<p>this Point</p>"
+      }, 
+      {
+        "description": "<h2>Snap this point's position to the nearest integer by its ceiling</h2>", 
+        "name": "ceil", 
         "param": [], 
         "pname": "", 
         "return": "<p>this Point</p>"
@@ -1922,6 +2023,37 @@
         "return": "<p>this PointSet</p>"
       }, 
       {
+        "description": "<h2>Get a point from the set of points based on its index position</h2>", 
+        "name": "getAt", 
+        "param": [
+          "<p><code>index</code> index position</p>"
+        ], 
+        "pname": "index", 
+        "return": "<p>a point in the set</p>"
+      }, 
+      {
+        "description": "<h2>Same as <code>getAt()</code> but returns a new Vector</h2>", 
+        "name": "$getAt", 
+        "param": [], 
+        "pname": "index"
+      }, 
+      {
+        "description": "<h2>Set a point at a specific index position</h2>", 
+        "name": "setAt", 
+        "param": [
+          "<p><code>index</code> index position</p>", 
+          "<p><code>p</code> new point</p>"
+        ], 
+        "pname": "index, p", 
+        "return": "<p>this set</p>"
+      }, 
+      {
+        "description": "<h2>Get the number of points in the set</h2>", 
+        "name": "count", 
+        "param": [], 
+        "pname": ""
+      }, 
+      {
         "description": "<h2>Add a point whose position is calculated relative to this PointSet's anchor point</h2>", 
         "eg": "<p><code>pset.connectFromAnchor(1,2)</code> <code>pset.connectFromAnchor([2,4])</code> <code>pset.connectFromAnchor({x:3, y:6, z:9})</code></p>", 
         "name": "connectFromAnchor", 
@@ -1942,27 +2074,9 @@
         "return": "<p>this PointSet</p>"
       }, 
       {
-        "description": "<h2>Add a vector to all the points in the <code>points</code> array.</h2>", 
-        "name": "pointsAdd", 
-        "param": [
-          "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
-        ], 
-        "pname": "args", 
-        "return": "<p>this PointSet</p>"
-      }, 
-      {
-        "description": "<h2>Same as <code>pointsAdd()</code> but returns a new array of the resulting points.</h2>", 
-        "name": "$pointsAdd", 
-        "param": [], 
-        "pname": "args"
-      }, 
-      {
-        "description": "<h2>Subtract a vector from all the points in the <code>points</code> array.</h2><p>pointsSubtract: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>for p in @points</p><p>p.subtract( a )</p><p>return @</p><h2>Same as <code>pointsSubtract()</code> but returns a new array of the resulting points.</h2><p>$pointsSubtract: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>return (p.$subtract( a ) for p in @points)</p><h2>Multiply a vector with all the points in the <code>points</code> array.</h2><p>pointsMultiply: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>for p in @points</p><p>p.multiply( a )</p><p>return @</p><h2>Same as <code>pointsMultiply()</code> but returns a new array of the resulting points.</h2><p>$pointsMultiply: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>return (p.$multiply( a ) for p in @points)</p><h2>Divide all the points in the <code>points</code> array with a vector.</h2><p>pointsDivide: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>for p in @points</p><p>p.divide( a )</p><p>return @</p><h2>Same as <code>pointsDivide()</code> but returns a new array of the resulting points.</h2><p>$pointsDivide: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>return (p.$divide( a ) for p in @points)</p><h2>Get an array of Lines that represents this PointSet's sides</h2>", 
+        "description": "<h2>Get an array of Lines that represents this PointSet's sides</h2>", 
         "name": "sides", 
         "param": [
-          "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>", 
-          "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>", 
-          "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>", 
           "<p><code>close_path</code> a boolean value to include the side from last point to first point when set to <code>true</code></p>"
         ], 
         "pname": "close_path=true", 
@@ -1975,7 +2089,7 @@
           "<p><code>axis</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>"
         ], 
         "pname": "axis=Const.xy", 
-        "return": "<p>an array of angles in radian</p>"
+        "return": "<p>an array of objects <code>{p0, p1, p2, angle}</code></p>"
       }, 
       {
         "description": "<h2>Get the bounding box for this point set.</h2>", 
@@ -2051,23 +2165,13 @@
         "return": "<p>this Rectangle</p>"
       }, 
       {
-        "description": "<h2>Resize this rectangle by a certain amount from top left</h2>", 
-        "eg": "<p><code>rect.resizeBy(1,2,3)</code> <code>rect.resizeBy( delta_vec )</code></p>", 
-        "name": "resizeBy", 
+        "description": "<h2>Set center to new location and move this rectangle, or reset the center point based on current size and position.</h2>", 
+        "eg": "<p><code>rect.setCenter()</code>, <code>rect.setCenter(100,50)</code>, <code>rect.setCenter( pt )</code></p>", 
+        "name": "setCenter", 
         "param": [
-          "<p><code>args</code> comma-separated values, or an array, or an object to specify the size change</p>"
+          "<p><code>args</code> comma-separated values, or an array, or an object to specify the new position</p>"
         ], 
         "pname": "args", 
-        "return": "<p>this Rectangle</p>"
-      }, 
-      {
-        "description": "<h2>resize this rectangle by a certain amount from center</h2>", 
-        "eg": "<p><code>rect.resizeCenterBy(1,2,3)</code> <code>rect.resizeCenterBy( delta_vec )</code></p>", 
-        "name": "resizeCenterBy", 
-        "param": [
-          "<p><code>args</code> comma-separated values, or an array, or an object to specify the size change</p>"
-        ], 
-        "pname": "", 
         "return": "<p>this Rectangle</p>"
       }, 
       {
@@ -2085,7 +2189,7 @@
         "eg": "<p><code>rect.resizeCenterTo(10,10)</code> <code>rect.resizeCenterTo( size_vec )</code></p>", 
         "name": "resizeCenterTo", 
         "param": [
-          "<p><code>args</code> comma-separated values, or an array, or an object to specify the new size</p>"
+          "<p><code>args</code> comma-separated values, or an array, or an object to specify the new size.</p>"
         ], 
         "pname": "", 
         "return": "<p>this Rectangle</p>"
@@ -2155,10 +2259,11 @@
         "return": "<p>s an Array of intersection points (zero, one, or two points), or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
       }, 
       {
-        "description": "<h2>Check if this Rectangle intersects with a list of Lines ( useful for polygon or polyline such as <code>rectangle.sides()</code> ) on xy axis.</h2><p>@get_pts <code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>", 
+        "description": "<h2>Check if this Rectangle intersects with a list of Lines ( useful for polygon or polyline such as <code>rectangle.sides()</code> ) on xy axis.</h2>", 
         "name": "intersectLines", 
         "param": [
-          "<p><code>lines</code> an array of Line</p>"
+          "<p><code>lines</code> an array of Line</p>", 
+          "<p><code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>"
         ], 
         "pname": "lines, get_pts=true", 
         "return": "<p>s an Array of intersection points, or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
@@ -2426,6 +2531,21 @@
         "pname": ""
       }, 
       {
+        "description": "<h2>Get a point from the set of points based on its index position</h2>", 
+        "name": "getAt", 
+        "param": [
+          "<p><code>index</code> index position as number (0, 1, 2) or as string \"p0\", \"p1\", \"p2\"</p>"
+        ], 
+        "pname": "index", 
+        "return": "<p>a point in the triangle</p>"
+      }, 
+      {
+        "description": "<h2>Same as <code>getAt()</code> but return as a new Vector</h2>", 
+        "name": "$getAt", 
+        "param": [], 
+        "pname": "index"
+      }, 
+      {
         "description": "<h2>Convert this Triangle to a <code>PointSet</code></h2>", 
         "name": "toPointSet", 
         "param": [], 
@@ -2542,7 +2662,7 @@
         "name": "circumcenter", 
         "param": [], 
         "pname": "", 
-        "return": "<p>the circumcenter point as Vector</p>"
+        "return": "<p>an object with { <code>center</code>: circumcenter point as Vector, <code>bisector</code>: an array of bisectors }</p>"
       }, 
       {
         "description": "<h2>Get circumcircle, which is the smaller circle that encloses this triangle completely</h2>", 
@@ -2814,6 +2934,12 @@
         ], 
         "pname": "p", 
         "return": "<p>a boolean value where true means a random number is smaller than the supplied parameter</p>"
+      }, 
+      {
+        "description": "<h2>A static function to calculate Gaussian curve</h2>", 
+        "name": "gaussian", 
+        "param": [], 
+        "pname": "x, mean=0, sigma=1"
       }
     ]
   }, 

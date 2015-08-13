@@ -25,6 +25,21 @@
             "return": "<p>this Pair</p>"
         }, 
         {
+            "description": "<h2>Get a point from the set of points based on its index position</h2>", 
+            "name": "getAt", 
+            "param": [
+                "<p><code>index</code> index position</p>"
+            ], 
+            "pname": "index", 
+            "return": "<p>a point in the pair</p>"
+        }, 
+        {
+            "description": "<h2>Same as <code>getAt()</code> but return as a new Vector</h2>", 
+            "name": "$getAt", 
+            "param": [], 
+            "pname": "index"
+        }, 
+        {
             "description": "<h2>Update p1's new position by recalculating it as a relative position to the anchor point</h2>", 
             "name": "relative", 
             "param": [], 

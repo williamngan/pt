@@ -76,8 +76,8 @@ Vector = (function(superClass) {
   };
 
   Vector.prototype.$multiply = function(args) {
-    var a, arg;
-    a = arg = this._getArgs(arguments);
+    var a;
+    a = this._getArgs(arguments);
     return new Vector(this).multiply(a);
   };
 

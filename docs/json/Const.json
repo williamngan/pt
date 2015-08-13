@@ -81,6 +81,11 @@
             "param": []
         }, 
         {
+            "description": "<h2>pi radian (180 deg)</h2>", 
+            "name": "pi", 
+            "param": []
+        }, 
+        {
             "description": "<h2>two pi radian (360deg)</h2>", 
             "name": "two_pi", 
             "param": []
@@ -118,6 +123,11 @@
         {
             "description": "<h2>1 Newton = 0.10197 Kilogram-force</h2>", 
             "name": "newton", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>Gaussian constant (1 / Math.sqrt(2 * Math.PI))</h2>", 
+            "name": "gaussian", 
             "param": []
         }
     ], 

@@ -62,8 +62,8 @@ Rectangle = (function(superClass) {
   };
 
   Rectangle.prototype.enclose = function(rect) {
-    this.set(this.min(rect));
-    this.p1.set(this.p1.max(rect.p1));
+    this.set(this.$min(rect));
+    this.p1.set(this.p1.$max(rect.p1));
     this.center = this.midpoint();
     return this;
   };

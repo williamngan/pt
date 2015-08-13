@@ -120,10 +120,28 @@ Point = (function() {
   Point.prototype.min = function(args) {
     var _p;
     _p = Point.get(arguments);
+    this.x = Math.min(this.x, _p.x);
+    this.y = Math.min(this.y, _p.y);
+    this.z = Math.min(this.z, _p.z);
+    return this;
+  };
+
+  Point.prototype.$min = function(args) {
+    var _p;
+    _p = Point.get(arguments);
     return new this.__proto__.constructor(Math.min(this.x, _p.x), Math.min(this.y, _p.y), Math.min(this.z, _p.z));
   };
 
   Point.prototype.max = function(args) {
+    var _p;
+    _p = Point.get(arguments);
+    this.x = Math.max(this.x, _p.x);
+    this.y = Math.max(this.y, _p.y);
+    this.z = Math.max(this.z, _p.z);
+    return this;
+  };
+
+  Point.prototype.$max = function(args) {
     var _p;
     _p = Point.get(arguments);
     return new this.__proto__.constructor(Math.max(this.x, _p.x), Math.max(this.y, _p.y), Math.max(this.z, _p.z));
@@ -148,6 +166,13 @@ Point = (function() {
     this.x = Math.floor(this.x);
     this.y = Math.floor(this.y);
     this.z = Math.floor(this.z);
+    return this;
+  };
+
+  Point.prototype.ceil = function() {
+    this.x = Math.ceil(this.x);
+    this.y = Math.ceil(this.y);
+    this.z = Math.ceil(this.z);
     return this;
   };
 

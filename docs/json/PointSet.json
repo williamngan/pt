@@ -38,6 +38,37 @@
             "return": "<p>this PointSet</p>"
         }, 
         {
+            "description": "<h2>Get a point from the set of points based on its index position</h2>", 
+            "name": "getAt", 
+            "param": [
+                "<p><code>index</code> index position</p>"
+            ], 
+            "pname": "index", 
+            "return": "<p>a point in the set</p>"
+        }, 
+        {
+            "description": "<h2>Same as <code>getAt()</code> but returns a new Vector</h2>", 
+            "name": "$getAt", 
+            "param": [], 
+            "pname": "index"
+        }, 
+        {
+            "description": "<h2>Set a point at a specific index position</h2>", 
+            "name": "setAt", 
+            "param": [
+                "<p><code>index</code> index position</p>", 
+                "<p><code>p</code> new point</p>"
+            ], 
+            "pname": "index, p", 
+            "return": "<p>this set</p>"
+        }, 
+        {
+            "description": "<h2>Get the number of points in the set</h2>", 
+            "name": "count", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
             "description": "<h2>Add a point whose position is calculated relative to this PointSet's anchor point</h2>", 
             "eg": "<p><code>pset.connectFromAnchor(1,2)</code> <code>pset.connectFromAnchor([2,4])</code> <code>pset.connectFromAnchor({x:3, y:6, z:9})</code></p>", 
             "name": "connectFromAnchor", 
@@ -58,27 +89,9 @@
             "return": "<p>this PointSet</p>"
         }, 
         {
-            "description": "<h2>Add a vector to all the points in the <code>points</code> array.</h2>", 
-            "name": "pointsAdd", 
-            "param": [
-                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>"
-            ], 
-            "pname": "args", 
-            "return": "<p>this PointSet</p>"
-        }, 
-        {
-            "description": "<h2>Same as <code>pointsAdd()</code> but returns a new array of the resulting points.</h2>", 
-            "name": "$pointsAdd", 
-            "param": [], 
-            "pname": "args"
-        }, 
-        {
-            "description": "<h2>Subtract a vector from all the points in the <code>points</code> array.</h2><p>pointsSubtract: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>for p in @points</p><p>p.subtract( a )</p><p>return @</p><h2>Same as <code>pointsSubtract()</code> but returns a new array of the resulting points.</h2><p>$pointsSubtract: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>return (p.$subtract( a ) for p in @points)</p><h2>Multiply a vector with all the points in the <code>points</code> array.</h2><p>pointsMultiply: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>for p in @points</p><p>p.multiply( a )</p><p>return @</p><h2>Same as <code>pointsMultiply()</code> but returns a new array of the resulting points.</h2><p>$pointsMultiply: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>return (p.$multiply( a ) for p in @points)</p><h2>Divide all the points in the <code>points</code> array with a vector.</h2><p>pointsDivide: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>for p in @points</p><p>p.divide( a )</p><p>return @</p><h2>Same as <code>pointsDivide()</code> but returns a new array of the resulting points.</h2><p>$pointsDivide: (args) -&gt;</p><p>a = @_getArgs( arguments )</p><p>return (p.$divide( a ) for p in @points)</p><h2>Get an array of Lines that represents this PointSet's sides</h2>", 
+            "description": "<h2>Get an array of Lines that represents this PointSet's sides</h2>", 
             "name": "sides", 
             "param": [
-                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>", 
-                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>", 
-                "<p><code>args</code> comma-separated values, or as an array, or a Point object.</p>", 
                 "<p><code>close_path</code> a boolean value to include the side from last point to first point when set to <code>true</code></p>"
             ], 
             "pname": "close_path=true", 
@@ -91,7 +104,7 @@
                 "<p><code>axis</code> optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>"
             ], 
             "pname": "axis=Const.xy", 
-            "return": "<p>an array of angles in radian</p>"
+            "return": "<p>an array of objects <code>{p0, p1, p2, angle}</code></p>"
         }, 
         {
             "description": "<h2>Get the bounding box for this point set.</h2>", 

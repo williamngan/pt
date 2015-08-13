@@ -39,23 +39,13 @@
             "return": "<p>this Rectangle</p>"
         }, 
         {
-            "description": "<h2>Resize this rectangle by a certain amount from top left</h2>", 
-            "eg": "<p><code>rect.resizeBy(1,2,3)</code> <code>rect.resizeBy( delta_vec )</code></p>", 
-            "name": "resizeBy", 
+            "description": "<h2>Set center to new location and move this rectangle, or reset the center point based on current size and position.</h2>", 
+            "eg": "<p><code>rect.setCenter()</code>, <code>rect.setCenter(100,50)</code>, <code>rect.setCenter( pt )</code></p>", 
+            "name": "setCenter", 
             "param": [
-                "<p><code>args</code> comma-separated values, or an array, or an object to specify the size change</p>"
+                "<p><code>args</code> comma-separated values, or an array, or an object to specify the new position</p>"
             ], 
             "pname": "args", 
-            "return": "<p>this Rectangle</p>"
-        }, 
-        {
-            "description": "<h2>resize this rectangle by a certain amount from center</h2>", 
-            "eg": "<p><code>rect.resizeCenterBy(1,2,3)</code> <code>rect.resizeCenterBy( delta_vec )</code></p>", 
-            "name": "resizeCenterBy", 
-            "param": [
-                "<p><code>args</code> comma-separated values, or an array, or an object to specify the size change</p>"
-            ], 
-            "pname": "", 
             "return": "<p>this Rectangle</p>"
         }, 
         {
@@ -73,7 +63,7 @@
             "eg": "<p><code>rect.resizeCenterTo(10,10)</code> <code>rect.resizeCenterTo( size_vec )</code></p>", 
             "name": "resizeCenterTo", 
             "param": [
-                "<p><code>args</code> comma-separated values, or an array, or an object to specify the new size</p>"
+                "<p><code>args</code> comma-separated values, or an array, or an object to specify the new size.</p>"
             ], 
             "pname": "", 
             "return": "<p>this Rectangle</p>"
@@ -143,10 +133,11 @@
             "return": "<p>s an Array of intersection points (zero, one, or two points), or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
         }, 
         {
-            "description": "<h2>Check if this Rectangle intersects with a list of Lines ( useful for polygon or polyline such as <code>rectangle.sides()</code> ) on xy axis.</h2><p>@get_pts <code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>", 
+            "description": "<h2>Check if this Rectangle intersects with a list of Lines ( useful for polygon or polyline such as <code>rectangle.sides()</code> ) on xy axis.</h2>", 
             "name": "intersectLines", 
             "param": [
-                "<p><code>lines</code> an array of Line</p>"
+                "<p><code>lines</code> an array of Line</p>", 
+                "<p><code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>"
             ], 
             "pname": "lines, get_pts=true", 
             "return": "<p>s an Array of intersection points, or a boolean value. (Based on <code>get_pts</code> parameter)</p>"

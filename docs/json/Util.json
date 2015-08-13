@@ -180,6 +180,12 @@
             ], 
             "pname": "p", 
             "return": "<p>a boolean value where true means a random number is smaller than the supplied parameter</p>"
+        }, 
+        {
+            "description": "<h2>A static function to calculate Gaussian curve</h2>", 
+            "name": "gaussian", 
+            "param": [], 
+            "pname": "x, mean=0, sigma=1"
         }
     ]
 }

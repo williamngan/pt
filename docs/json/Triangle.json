@@ -38,6 +38,21 @@
             "pname": ""
         }, 
         {
+            "description": "<h2>Get a point from the set of points based on its index position</h2>", 
+            "name": "getAt", 
+            "param": [
+                "<p><code>index</code> index position as number (0, 1, 2) or as string \"p0\", \"p1\", \"p2\"</p>"
+            ], 
+            "pname": "index", 
+            "return": "<p>a point in the triangle</p>"
+        }, 
+        {
+            "description": "<h2>Same as <code>getAt()</code> but return as a new Vector</h2>", 
+            "name": "$getAt", 
+            "param": [], 
+            "pname": "index"
+        }, 
+        {
             "description": "<h2>Convert this Triangle to a <code>PointSet</code></h2>", 
             "name": "toPointSet", 
             "param": [], 
@@ -154,7 +169,7 @@
             "name": "circumcenter", 
             "param": [], 
             "pname": "", 
-            "return": "<p>the circumcenter point as Vector</p>"
+            "return": "<p>an object with { <code>center</code>: circumcenter point as Vector, <code>bisector</code>: an array of bisectors }</p>"
         }, 
         {
             "description": "<h2>Get circumcircle, which is the smaller circle that encloses this triangle completely</h2>", 
