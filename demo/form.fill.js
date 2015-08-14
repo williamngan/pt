@@ -31,15 +31,27 @@ setSizes();
 space.add({
   animate: function(time, fps, context) {
 
-      form.stroke(false).fill( "rgba(150, 191, 237, "+op1+")" );
-      form.rect( rect1 );
+    var ypos = 0.27;
 
-      form.fill( "rgba(46, 67, 235, "+op2+")" );
-      form.rect( rect2 );
+    form.stroke(false).fill( colors.a3 );
+    form.rect(
+        new Rectangle( space.size.$multiply( 0.25 ) ).to( space.size.x * 0.75, space.size.y * ypos )
+    );
 
-      form.fill(false).stroke( "rgba(255, 255, 255, "+op3+")", 2 );
-      form.rect( rect3 );
+    form.stroke( "rgba(255, 255, 255, " + op1 + ")" ).fill( "rgba(150, 191, 237, " + op2 + ")" );
+    form.rect(
+        new Rectangle( space.size.$multiply( 0.25, (ypos += 0.05) ) ).to( space.size.x * 0.75, space.size.y * (ypos += 0.05) )
+    );
 
+    form.fill( false ).stroke( "rgba(255, 255, 255, " + op3 + ")", 2 );
+    form.rect(
+        new Rectangle( space.size.$multiply( 0.25, (ypos += 0.05) ) ).to( space.size.x * 0.75, space.size.y * (ypos += 0.1) )
+    );
+
+    form.stroke( "rgba(46, 67, 235, " + op2 + ")", 2 ).fill( "rgba(255, 255, 255, " + op1 + ")" );
+    form.rect(
+        new Rectangle( space.size.$multiply( 0.25, (ypos += 0.05) ) ).to( space.size.x * 0.75, space.size.y * (ypos += 0.2) )
+    );
   },
 
   onMouseAction: function(type, x, y, evt) {

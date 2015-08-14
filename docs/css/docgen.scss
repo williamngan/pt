@@ -5,7 +5,7 @@ $link-hover: lighten( $link, 10 );
 $grey-medium: #89a;
 $grey-dark: #556070;
 
-$bg: #f3f5f9;
+$bg: #f1f3f7;
 
 $contentW: 550px;
 $menuW: 300px;
@@ -214,7 +214,12 @@ section.inherited ul {
   position: fixed; top: 0;
 }
 
+#pt {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 20vh;
+  z-index: 1;
 
+}
 
 #page {
   position: relative;
