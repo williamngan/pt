@@ -1,4 +1,4 @@
-# ### An html canvas Space
+# ### CanvasSpace is a space that represents a html canvas. It creates a new canvas or get an existing one in DOM by its `id` attribute. It also provide methods specific to html canvas, such as tracking resize and mouse position.
 
 class CanvasSpace extends Space
 

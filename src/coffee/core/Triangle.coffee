@@ -1,4 +1,4 @@
-
+# ### There are so many ways to construct, and to dissect, a triangle. Various center points, circle inner or outer, imaginary lines cutting through its interiors, bisecting angles or sides, and yet it seems perfectly poised with its three sides and 180 degrees internal angles. A triangle encapsulates tension and plasticity.
 class Triangle extends Vector
 
   # ## Create a new triangle

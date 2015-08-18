@@ -1,4 +1,4 @@
-# ### Line element
+# ### There is a shortest path that connects a pair of points. Trace that unique path, with pencil or thread or mind, and you will make a straight line. A line embodies the simplest movement or change. It is a point set in motion, moving to meet another point and leaving a trail behind.
 class Line extends Pair
 
   # ## Create a new Line. A Line is a Pair defined by two vectors. It can be treated as an infinite line, or as a line segment with two end points.

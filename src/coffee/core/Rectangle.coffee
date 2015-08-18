@@ -1,4 +1,4 @@
-# Rectangle class is a pair of points
+# ### Imagine making a viewfinder with your hands: touch one hand's thumb with the other hand's index finger, and stretch them wide open. Your fingers are the two vectors that define a rectangle, and the rectangle partitions a space and redefines what's inside and outside.
 class Rectangle extends Pair
 
   # ## Create a new Rectangle. A Rectangle is a Pair whose rectangular bounding box are defined by two Vectors. Use `toPointSet()` to convert it to a PointSet with 4 points if you need to rotate or shear it.

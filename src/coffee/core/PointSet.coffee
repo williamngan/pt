@@ -1,4 +1,4 @@
-
+# ### Like stargazing, like connecting the dots, like pareidolia, a set of points in space always flickers in our imagination and illuminates potential forms. Perhaps, creativity is the process in which one seeks hidden relationships in these disparate points or ideas, and conjures meanings or polygons.
 class PointSet extends Vector
 
   # ## Create a new PointSet. A PointSet is a set of points which can repsent a polygon or a polyline or a time series.

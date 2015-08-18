@@ -1,6 +1,6 @@
 {
     "cls": "Line", 
-    "description": "<h3>Line element</h3>", 
+    "description": "<h3>There is a shortest path that connects a pair of points. Trace that unique path, with pencil or thread or mind, and you will make a straight line. A line embodies the simplest movement or change. It is a point set in motion, moving to meet another point and leaving a trail behind.</h3>", 
     "extend": "Pair", 
     "file": "Line.coffee", 
     "funcs": [

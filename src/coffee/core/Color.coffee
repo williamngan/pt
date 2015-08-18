@@ -1,4 +1,5 @@
-# ### A color in a color space
+# ### Color is a sensation of electromagnetic radiation, but your mind interprets it with such obstinate attitude that your favorite color may be, god forbids, pink. Or perhaps color is more like music, whose harmony and rhythm evoke emotions, and can be organized in different sequences to create meaningful narratives.
+
 class Color extends Vector
 
   # ## Create a new Color. Color lets you define a color in a specific mode. [This article](https://software.intel.com/en-us/node/503873) from Intel has a good overview of different color models.

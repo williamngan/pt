@@ -1,6 +1,6 @@
 {
     "cls": "Grid", 
-    "description": "<h3>Basic Grid implementation</h3>", 
+    "description": "<h3>A grid divides a space into cells, puts things into groups. Like scattering a handful of peas on the chessboard, we can simplify the description of a state by clarifying its context. A grid thus help us interpret spaces and restate forms.</h3>", 
     "extend": "Rectangle", 
     "file": "Grid.coffee", 
     "funcs": [

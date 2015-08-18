@@ -1,4 +1,4 @@
-# ### Form visualizes the elements
+# ### Form makes visible the invisible. It transforms a point into an inkblot, or an arrow, or a musical note. By separating forms from its concepts, we may create a myriad of expressions on a single concept, or apply a unified style to various concepts. The Form class provides basic method to draw points, lines, and other primitives on CanvasSpace. Extend this class to visualize in different ways in different contexts.
 class Form
 
   # ## Create a new Form which is based on HTML Canvass

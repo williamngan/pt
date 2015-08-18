@@ -1,4 +1,4 @@
-# ### A particle with physics
+# ### If a point represents a static concept in space, then a particle resembles an energized thought. It dashes, brakes, and swirls about. By emulating how forces integrate and energies exchange, we may examine dynamic systems and continuous movements from a new perspective.
 class Particle extends Circle
 
   # derivative of momentum is force (F=dp/dt)

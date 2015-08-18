@@ -1,4 +1,4 @@
-# ### Basic Grid implementation
+# ### A grid divides a space into cells, puts things into groups. Like scattering a handful of peas on the chessboard, we can simplify the description of a state by clarifying its context. A grid thus help us interpret spaces and restate forms.
 class Grid extends Rectangle
 
   # ## Create a new Grid. Like a Rectangle, a Grid's area are defined by two Vectors.

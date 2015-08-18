@@ -1,4 +1,4 @@
-# ### A point is the smallest expressible concept within a space. To see an infinitesimal point in an infinite space, in your mind's eyes, is to gaze upon being and nothingness. A point defines a precise position, and while formless and unchanging, it provides the basis for creation, for endless possibilities in ideas and forms. Imagine a point not only in physical or visual spaces, but also on conceptual planes, in metaphysical dimensions, and ponder how all tangible and intangible forms can be reduced into points in spaces.
+# ### A point is the smallest thing in a space. It defines a static position, an indivisible abstraction, and a creative beginning. Think of a point not as a dot, but as a potentiality, visible only to the mind's squinted eyes.
 class Point
 
   # ## Create a new point using optional parameters which can be a list of numeric values, or an array, or an object with x,y,z properties. If no parameter is specified, this will return a Point at (0,0,0) position.

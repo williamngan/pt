@@ -56,7 +56,7 @@
     onSpaceResize: function () {
       init();
     }
-    
+
   } );
 
 

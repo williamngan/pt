@@ -1,6 +1,4 @@
-
-# ## Timer
-# use this to track a duration
+# ### Use a timer not to measure time, but to introduce rhythm. The conceptual hums of "one two three, one two three", when transfigured into patterns of sounds or words or dances, gives rise to various forms of aesthetic experiences. If time is a river, then timers are the mills we build along its banks.
 class Timer
 
   # ## Create a Timer

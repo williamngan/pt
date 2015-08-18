@@ -1,7 +1,7 @@
 {
   "CanvasSpace": {
     "cls": "CanvasSpace", 
-    "description": "<h3>An html canvas Space</h3>", 
+    "description": "<h3>CanvasSpace is a space that represents a html canvas. It creates a new canvas or get an existing one in DOM by its <code>id</code> attribute. It also provide methods specific to html canvas, such as tracking resize and mouse position.</h3>", 
     "extend": "Space", 
     "file": "CanvasSpace.coffee", 
     "funcs": [
@@ -84,7 +84,7 @@
   }, 
   "Circle": {
     "cls": "Circle", 
-    "description": "<h3>A circle</h3>", 
+    "description": "<h3>Imagine this shape: find a point in space, and draw a curve around it so that the distance between the point you picked and any points on that curve is the same. So by remembering how a circle can be constructed, and by considering PI not as a number but as a ratio, we can start to recognize all the expressive potentials of a circle.</h3>", 
     "extend": "Vector", 
     "file": "Circle.coffee", 
     "funcs": [
@@ -176,7 +176,7 @@
   }, 
   "Color": {
     "cls": "Color", 
-    "description": "<h3>A color in a color space</h3>", 
+    "description": "<h3>Color is a sensation of electromagnetic radiation, but your mind interprets it with such obstinate attitude that your favorite color may be, god forbids, pink. Or perhaps color is more like music, whose harmony and rhythm evoke emotions, and can be organized in different sequences to create meaningful narratives.</h3>", 
     "extend": "Vector", 
     "file": "Color.coffee", 
     "funcs": [
@@ -560,7 +560,7 @@
   }, 
   "Curve": {
     "cls": "Curve", 
-    "description": "<h3>Curves and splines</h3>", 
+    "description": "<h3>A straight line or a moving particle, swayed by external forces or internal constraints, gradually deviates from its ideal path and becomes a curve. A river meanders and a strain of hair curls. A curve expresses the effects of forces and constraints.</h3>", 
     "extend": "PointSet", 
     "file": "Curve.coffee", 
     "funcs": [
@@ -686,7 +686,7 @@
   }, 
   "Form": {
     "cls": "Form", 
-    "description": "<h3>Form visualizes the elements</h3>", 
+    "description": "<h3>Form makes visible the invisible. It transforms a point into an inkblot, or an arrow, or a musical note. By separating forms from its concepts, we may create a myriad of expressions on a single concept, or apply a unified style to various concepts. The Form class provides basic method to draw points, lines, and other primitives on CanvasSpace. Extend this class to visualize in different ways in different contexts.</h3>", 
     "extend": "", 
     "file": "Form.coffee", 
     "funcs": [
@@ -994,7 +994,7 @@
   }, 
   "Grid": {
     "cls": "Grid", 
-    "description": "<h3>Basic Grid implementation</h3>", 
+    "description": "<h3>A grid divides a space into cells, puts things into groups. Like scattering a handful of peas on the chessboard, we can simplify the description of a state by clarifying its context. A grid thus help us interpret spaces and restate forms.</h3>", 
     "extend": "Rectangle", 
     "file": "Grid.coffee", 
     "funcs": [
@@ -1152,7 +1152,7 @@
   }, 
   "Line": {
     "cls": "Line", 
-    "description": "<h3>Line element</h3>", 
+    "description": "<h3>There is a shortest path that connects a pair of points. Trace that unique path, with pencil or thread or mind, and you will make a straight line. A line embodies the simplest movement or change. It is a point set in motion, moving to meet another point and leaving a trail behind.</h3>", 
     "extend": "Pair", 
     "file": "Line.coffee", 
     "funcs": [
@@ -1407,7 +1407,7 @@
   }, 
   "Pair": {
     "cls": "Pair", 
-    "description": "<h3>A Pair of Vector</h3>", 
+    "description": "<h3>A pair of vectors is not merely two vectors, for relationships bring forth meanings. Two vectors can be compared, joined, and interpreted in relation to each other. Together they may connect a line, mark an area, track a change.</h3>", 
     "extend": "Vector", 
     "file": "Pair.coffee", 
     "funcs": [
@@ -1584,7 +1584,7 @@
   }, 
   "Particle": {
     "cls": "Particle", 
-    "description": "<h3>A particle with physics</h3>", 
+    "description": "<h3>If a point represents a static concept in space, then a particle resembles an energized thought. It dashes, brakes, and swirls about. By emulating how forces integrate and energies exchange, we may examine dynamic systems and continuous movements from a new perspective.</h3>", 
     "extend": "Circle", 
     "file": "Particle.coffee", 
     "funcs": [
@@ -1753,7 +1753,7 @@
   }, 
   "ParticleSystem": {
     "cls": "ParticleSystem", 
-    "description": "<h3>Particle System</h3>", 
+    "description": "<h3>A particle system keeps track of particles, and regulate them with rules specific to a system. It can also hold constant values from gravitational to cosmic, and specify whether a god may play dice here.</h3>", 
     "extend": "", 
     "file": "ParticleSystem.coffee", 
     "funcs": [
@@ -1806,7 +1806,7 @@
   }, 
   "Point": {
     "cls": "Point", 
-    "description": "<h3>A point is the smallest expressible concept within a space. To see an infinitesimal point in an infinite space, in your mind's eyes, is to gaze upon being and nothingness. A point defines a precise position, and while formless and unchanging, it provides the basis for creation, for endless possibilities in ideas and forms. Imagine a point not only in physical or visual spaces, but also on conceptual planes, in metaphysical dimensions, and ponder how all tangible and intangible forms can be reduced into points in spaces.</h3>", 
+    "description": "<h3>A point is the smallest thing in a space. It defines a static position, an indivisible abstraction, and a creative beginning. Think of a point not as a dot, but as a potentiality, visible only to the mind's squinted eyes.</h3>", 
     "extend": "", 
     "file": "Point.coffee", 
     "funcs": [
@@ -1985,7 +1985,7 @@
   }, 
   "PointSet": {
     "cls": "PointSet", 
-    "description": "", 
+    "description": "<h3>Like stargazing, like connecting the dots, like pareidolia, a set of points in space always flickers in our imagination and illuminates potential forms. Perhaps, creativity is the process in which one seeks hidden relationships in these disparate points or ideas, and conjures meanings or polygons.</h3>", 
     "extend": "Vector", 
     "file": "PointSet.coffee", 
     "funcs": [
@@ -2126,7 +2126,7 @@
   }, 
   "Rectangle": {
     "cls": "Rectangle", 
-    "description": "<p>Rectangle class is a pair of points</p>", 
+    "description": "<h3>Imagine making a viewfinder with your hands: touch one hand's thumb with the other hand's index finger, and stretch them wide open. Your fingers are the two vectors that define a rectangle, and the rectangle partitions a space and redefines what's inside and outside.</h3>", 
     "extend": "Pair", 
     "file": "Rectangle.coffee", 
     "funcs": [
@@ -2332,7 +2332,7 @@
   }, 
   "Space": {
     "cls": "Space", 
-    "description": "<h3>A space is a context for Pt elements</h3>", 
+    "description": "<h3>Fishes forget their rivers and lakes, said Chuang Tzu. Spaces or contexts give meanings to ideas and lives, but are often overlooked. In Pt, space represents an abstract context in which a point can be made visible in one form or another, and can be specified as an html canvas, a soundscape, or a graffiti robot on a wall. Space is where a concept meets its expression.</h3>", 
     "extend": "", 
     "file": "Space.coffee", 
     "funcs": [
@@ -2460,7 +2460,7 @@
   }, 
   "Timer": {
     "cls": "Timer", 
-    "description": "<h2>Timer</h2><p>use this to track a duration</p>", 
+    "description": "<h3>Use a timer not to measure time, but to introduce rhythm. The conceptual hums of \"one two three, one two three\", when transfigured into patterns of sounds or words or dances, gives rise to various forms of aesthetic experiences. If time is a river, then timers are the mills we build along its banks.</h3>", 
     "extend": "", 
     "file": "Timer.coffee", 
     "funcs": [
@@ -2493,7 +2493,7 @@
   }, 
   "Triangle": {
     "cls": "Triangle", 
-    "description": "", 
+    "description": "<h3>There are so many ways to construct, and to dissect, a triangle. Various center points, circle inner or outer, imaginary lines cutting through its interiors, bisecting angles or sides, and yet it seems perfectly poised with its three sides and 180 degrees internal angles. A triangle encapsulates tension and plasticity.</h3>", 
     "extend": "Vector", 
     "file": "Triangle.coffee", 
     "funcs": [
@@ -2945,7 +2945,7 @@
   }, 
   "Vector": {
     "cls": "Vector", 
-    "description": "<h3>Vector element</h3>", 
+    "description": "<h3>A vector points to a point. If a point represents a position on a conceptual plane, then a vector is the thought toward it. As a thought, it has direction and reach. A vector expresses the same concept in verb as a point does in noun.</h3>", 
     "extend": "Point", 
     "file": "Vector.coffee", 
     "funcs": [

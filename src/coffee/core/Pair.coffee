@@ -1,4 +1,4 @@
-# ### A Pair of Vector
+# ### A pair of vectors is not merely two vectors, for relationships bring forth meanings. Two vectors can be compared, joined, and interpreted in relation to each other. Together they may connect a line, mark an area, track a change.
 class Pair extends Vector
 
   # ## Create a new Pair. A Pair is a Vector which defines its anchor point, and connected to another Vector through the `to()` function.

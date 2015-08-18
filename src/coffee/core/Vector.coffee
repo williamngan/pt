@@ -1,4 +1,4 @@
-# ### Vector element
+# ### A vector points to a point. If a point represents a position on a conceptual plane, then a vector is the thought toward it. As a thought, it has direction and reach. A vector expresses the same concept in verb as a point does in noun.
 class Vector extends Point
 
   # ## Create a new Vector. A Vector extends a Point and includes functions for arithmetics.

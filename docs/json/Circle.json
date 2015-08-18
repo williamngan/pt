@@ -1,6 +1,6 @@
 {
     "cls": "Circle", 
-    "description": "<h3>A circle</h3>", 
+    "description": "<h3>Imagine this shape: find a point in space, and draw a curve around it so that the distance between the point you picked and any points on that curve is the same. So by remembering how a circle can be constructed, and by considering PI not as a number but as a ratio, we can start to recognize all the expressive potentials of a circle.</h3>", 
     "extend": "Vector", 
     "file": "Circle.coffee", 
     "funcs": [

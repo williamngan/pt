@@ -1,6 +1,6 @@
 {
     "cls": "Pair", 
-    "description": "<h3>A Pair of Vector</h3>", 
+    "description": "<h3>A pair of vectors is not merely two vectors, for relationships bring forth meanings. Two vectors can be compared, joined, and interpreted in relation to each other. Together they may connect a line, mark an area, track a change.</h3>", 
     "extend": "Vector", 
     "file": "Pair.coffee", 
     "funcs": [

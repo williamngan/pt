@@ -1,6 +1,6 @@
 {
     "cls": "PointSet", 
-    "description": "", 
+    "description": "<h3>Like stargazing, like connecting the dots, like pareidolia, a set of points in space always flickers in our imagination and illuminates potential forms. Perhaps, creativity is the process in which one seeks hidden relationships in these disparate points or ideas, and conjures meanings or polygons.</h3>", 
     "extend": "Vector", 
     "file": "PointSet.coffee", 
     "funcs": [

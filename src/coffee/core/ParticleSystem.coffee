@@ -1,4 +1,4 @@
-# ### Particle System
+# ### A particle system keeps track of particles, and regulate them with rules specific to a system. It can also hold constant values from gravitational to cosmic, and specify whether a god may play dice here.
 class ParticleSystem
 
   # ## Create a ParticleSystem to track a set of particles

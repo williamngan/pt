@@ -1,6 +1,6 @@
 {
     "cls": "Form", 
-    "description": "<h3>Form visualizes the elements</h3>", 
+    "description": "<h3>Form makes visible the invisible. It transforms a point into an inkblot, or an arrow, or a musical note. By separating forms from its concepts, we may create a myriad of expressions on a single concept, or apply a unified style to various concepts. The Form class provides basic method to draw points, lines, and other primitives on CanvasSpace. Extend this class to visualize in different ways in different contexts.</h3>", 
     "extend": "", 
     "file": "Form.coffee", 
     "funcs": [

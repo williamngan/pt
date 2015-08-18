@@ -1,4 +1,4 @@
-# ### Curves and splines
+# ### A straight line or a moving particle, swayed by external forces or internal constraints, gradually deviates from its ideal path and becomes a curve. A river meanders and a strain of hair curls. A curve expresses the effects of forces and constraints.
 class Curve extends PointSet
 
   # ## Create a new Curve. A Curve uses a set of anchor and/or control points to interpolate a curve.

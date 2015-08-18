@@ -1,6 +1,6 @@
 {
     "cls": "Rectangle", 
-    "description": "<p>Rectangle class is a pair of points</p>", 
+    "description": "<h3>Imagine making a viewfinder with your hands: touch one hand's thumb with the other hand's index finger, and stretch them wide open. Your fingers are the two vectors that define a rectangle, and the rectangle partitions a space and redefines what's inside and outside.</h3>", 
     "extend": "Pair", 
     "file": "Rectangle.coffee", 
     "funcs": [

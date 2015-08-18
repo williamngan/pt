@@ -1,6 +1,6 @@
 {
     "cls": "Curve", 
-    "description": "<h3>Curves and splines</h3>", 
+    "description": "<h3>A straight line or a moving particle, swayed by external forces or internal constraints, gradually deviates from its ideal path and becomes a curve. A river meanders and a strain of hair curls. A curve expresses the effects of forces and constraints.</h3>", 
     "extend": "PointSet", 
     "file": "Curve.coffee", 
     "funcs": [

@@ -1,4 +1,4 @@
-# ### A space is a context for Pt elements
+# ### Fishes forget their rivers and lakes, said Chuang Tzu. Spaces or contexts give meanings to ideas and lives, but are often overlooked. In Pt, space represents an abstract context in which a point can be made visible in one form or another, and can be specified as an html canvas, a soundscape, or a graffiti robot on a wall. Space is where a concept meets its expression.
 
 class Space
 

@@ -1,6 +1,6 @@
 {
     "cls": "Color", 
-    "description": "<h3>A color in a color space</h3>", 
+    "description": "<h3>Color is a sensation of electromagnetic radiation, but your mind interprets it with such obstinate attitude that your favorite color may be, god forbids, pink. Or perhaps color is more like music, whose harmony and rhythm evoke emotions, and can be organized in different sequences to create meaningful narratives.</h3>", 
     "extend": "Vector", 
     "file": "Color.coffee", 
     "funcs": [

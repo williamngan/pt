@@ -1,4 +1,5 @@
-# ### A circle
+# ### Imagine this shape: find a point in space, and draw a curve around it so that the distance between the point you picked and any points on that curve is the same. So by remembering how a circle can be constructed, and by considering PI not as a number but as a ratio, we can start to recognize all the expressive potentials of a circle.
+
 class Circle extends Vector
 
   # ## Create a new Circle. A Circle is a Vector which defines its center position, with a `radius` property to define its radius.

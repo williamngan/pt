@@ -1,6 +1,6 @@
 {
     "cls": "CanvasSpace", 
-    "description": "<h3>An html canvas Space</h3>", 
+    "description": "<h3>CanvasSpace is a space that represents a html canvas. It creates a new canvas or get an existing one in DOM by its <code>id</code> attribute. It also provide methods specific to html canvas, such as tracking resize and mouse position.</h3>", 
     "extend": "Space", 
     "file": "CanvasSpace.coffee", 
     "funcs": [

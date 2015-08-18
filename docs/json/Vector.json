@@ -1,6 +1,6 @@
 {
     "cls": "Vector", 
-    "description": "<h3>Vector element</h3>", 
+    "description": "<h3>A vector points to a point. If a point represents a position on a conceptual plane, then a vector is the thought toward it. As a thought, it has direction and reach. A vector expresses the same concept in verb as a point does in noun.</h3>", 
     "extend": "Point", 
     "file": "Vector.coffee", 
     "funcs": [
