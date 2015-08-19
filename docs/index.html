@@ -16,7 +16,7 @@
 	<script type="text/javascript" src="underscore-min.js"></script>
 
 	<script type="text/template" id="comp">
-		<h1><%= cls %></h1>
+		<h1><a href="<%= file %>" target="_blank"><%= cls %></a></h1>
 		<%= description %>
 
 		<% _.each( funcs, function( f ) { %>
@@ -26,13 +26,11 @@
 				</h1>
 				<%= f.description %>
 				<% if (f.demo) { %>
-					<div class="demo" data-demo="<%= f.demo %>">
-						<em>demo</em>
-						<div class="group"><p><a href="<%= f.demo %>"><%= f.demo %>.js</a></p></div>
-						<div class="demo-arrow"></div>
-					</div>
-					<% } %>
-				<% if (f.param) { %>
+                    <a href="/demo.html?file=<%= f.demo %>.js" target="_blank">
+                        <div class="demo" data-demo="<%= f.demo %>" style="background-image: url(images/pt/<%= f.demo %>.png)"></div>
+                    </a>
+                <% } %>
+				<% if (f.param && f.param.length > 0) { %>
 				<div class="param"><em>parameters</em>
 					<div class="group">
 						<% _.each( f.param, function( pm ) { %>
@@ -54,6 +52,11 @@
 			<section class="statics" id="static-<%= cls %>-<%= f.name %>">
 				<h1><%= cls %>.<%= f.name %> <span class="param">(<%= f.pname %>)</span></h1>
 				<%= f.description %>
+                <% if (f.demo) { %>
+                    <a href="/demo.html?file=<%= f.demo %>.js" target="_blank">
+                        <div class="demo" data-demo="<%= f.demo %>" style="background-image: url(images/pt/<%= f.demo %>.png)"></div>
+                    </a>
+                <% } %>
 				<% if (f.param) { %>
 				<div class="param"><em>parameters</em>
 					<div class="group">
@@ -106,8 +109,6 @@
 		<% }); %>
 		</div>
 
-		<p class="source"><a href="<%= file %>">Source code</a></p>
-
 	</script>
 
 
@@ -120,8 +121,7 @@
 <div id="head">
 	<div id="pt"></div>
 	<div id="overview">
-		<h1>Pt</h1>
-		<h2>An experiment on visual forms</h2>
+		<h1>Pt <small>&middot; Documentation <small>v0.1</small></small></h1>
 	</div>
 </div>
 
@@ -156,6 +156,7 @@
 	} else {
 		document.addEventListener('DOMContentLoaded', docs.resize.bind(docs));
 	}
+
 
 </script>
 

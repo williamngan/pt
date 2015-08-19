@@ -78,6 +78,7 @@ class CanvasSpace extends Space
 
 
   # ## This overrides Space's `resize` function and it's a callback function for window resize event. The resize event is passed to the Space's added items that has defined a `onSpaceResize(w,h,evt)`
+  # @demo canvasspace.resize
   # @return this CanvasSpace
   resize: (w, h, evt) ->
 
@@ -149,6 +150,7 @@ class CanvasSpace extends Space
 
   # ## A convenient method to bind (or unbind) all mouse events in canvas element. All item added to `items` property that implements an `onMouseAction` callback will receive mouse event callbacks.
   # @param `bind` a boolean value to bind mouse events if set to `true`. If `false`, all mouse events will be unbound. Default is true.
+  # @demo canvasspace.bindMouse
   bindMouse: ( _bind=true ) ->
     if _bind
       @canvas.addEventListener( "mousedown", @_mouseDown.bind(@) )
@@ -162,6 +164,8 @@ class CanvasSpace extends Space
       @canvas.removeEventListener( "mouseover", @_mouseOver.bind(@) )
       @canvas.removeEventListener( "mouseout", @_mouseOut.bind(@) )
       @canvas.removeEventListener( "mousemove", @_mouseMove.bind(@) )
+
+    
 
   # go through all item in `items` and call its onMouseAction callback function
   _mouseAction: (type, evt) ->

@@ -82,6 +82,7 @@ class Grid extends Rectangle
 
   # ##  Define a callback function for cell creation. This will loop through each cell in the grid and call the callback function.
   # @param `callback` a callback function with these parameters `( cell_size, cell_position, cell_row, cell_column, cell_type )`
+  # @demo grid.generate
   # @return this grid
   generate : ( callback ) ->
     if (typeof callback == "function")
@@ -152,6 +153,7 @@ class Grid extends Rectangle
   # @param `h` row size
   # @param `occupy` a boolean value to set if this cell should be occupied. Defaults to `true`
   # @eg `grid.occupy(0,0, 5,3)`
+  # @demo grid.occupy
   # @return this grid
   occupy : ( x, y, w, h, occupy=true ) ->
     if (@rows <= 0 or @columns <=0) then return @

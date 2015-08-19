@@ -76,6 +76,7 @@ class Rectangle extends Pair
   # ## resize to a specific size from center point
   # @param `args` comma-separated values, or an array, or an object to specify the new size.
   # @eg `rect.resizeCenterTo(10,10)` `rect.resizeCenterTo( size_vec )`
+  # @demo rectangle.resizeCenterTo
   # @return this Rectangle
   resizeCenterTo: () ->
     size = new Vector( Point.get(arguments)).divide( 2 ) # get half size
@@ -86,6 +87,7 @@ class Rectangle extends Pair
 
   # ## resize this rectangle so that it will enclose another rectangle. Namely, the resulting rectangle is a *union* of the two initial rectangles.
   # @param `rect` another Rectangle or Pair object
+  # @demo rectangle.enclose
   # @return this Rectangle which has the new size
   enclose: ( rect ) ->
     @set( @$min( rect ) )
@@ -129,6 +131,7 @@ class Rectangle extends Pair
   # ## Check intersections between this Rectangle and an infinite Line on xy axis.
   # @param `path` a Pair or Line object to specify an infinite line
   # @get_pts `get_pts` a boolean value to specify whether the results should include the intersection points. If `false`, then only the intersection state (true or false) will be returned.
+  # @demo rectangle.intersectPath
   # @returns an Array of intersection points (zero or two points), or a boolean value. (Based on `get_pts` parameter)
   intersectPath: ( line, get_pts=true ) ->
     sides = @sides()

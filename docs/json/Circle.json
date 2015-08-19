@@ -24,6 +24,7 @@
             "return": "<p>this Circle</p>"
         }, 
         {
+            "demo": "circle.intersectPoint", 
             "description": "<h2>Check if a point is on this Circle on xy axis.</h2>", 
             "eg": "<p><code>circle.intersectPoint(1,2,3)</code> <code>circle.intersectPoint(pt)</code></p>", 
             "name": "intersectPoint", 
@@ -34,6 +35,7 @@
             "return": "<p>a boolean value to indicate if there is an intersection</p>"
         }, 
         {
+            "demo": "circle.intersectPath", 
             "description": "<h2>Check intersections between this Circle and an infinite Line on xy axis. Based on <a href=\"http://stackoverflow.com/questions/13053061/circle-line-intersection-points\">this algorithm</a>.</h2><p>@get_pts <code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>", 
             "name": "intersectPath", 
             "param": [
@@ -62,6 +64,7 @@
             "return": "<p>s an Array of intersection points, or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
         }, 
         {
+            "demo": "circle.intersectCircle", 
             "description": "<h2>Check if this circle intersects with another circle</h2><p>@get_pts <code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>", 
             "name": "intersectCircle", 
             "param": [

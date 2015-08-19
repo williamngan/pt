@@ -61,6 +61,7 @@
             "return": "<p>a new Pair</p>"
         }, 
         {
+            "demo": "pair.withinBounds", 
             "description": "<h2>Check if a point is within the bounds of this pair</h2>", 
             "eg": "<p><code>pair.withinBounds( point )</code>, <code>pair.withinBounds( point, Const.yz )</code></p>", 
             "name": "withinBounds", 
@@ -72,6 +73,7 @@
             "return": "<p>a boolean value where <code>true</code> means the point is within bounds.</p>"
         }, 
         {
+            "demo": "pair.interpolate", 
             "description": "<h2>Interpolate to find a point which lies somewhere on a straight path between the two points of this pair</h2>", 
             "eg": "<p><code>pair.interpolate(0.4)</code> <code>pair.interpolate(0.1, true)</code></p>", 
             "name": "interpolate", 
@@ -119,6 +121,7 @@
             "return": "<p>distance value</p>"
         }, 
         {
+            "demo": "pair.collinear", 
             "description": "<h2>Check if a point lies on the left or right side of this pair's <em>ray</em>, and if the 3 points are collinear</h2>", 
             "name": "collinear", 
             "param": [

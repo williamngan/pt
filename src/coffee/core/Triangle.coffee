@@ -129,6 +129,7 @@ class Triangle extends Vector
   # ## Given a point of the triangle, the opposite side is the side which the point doesn't touch
   # @param specify a point by its id `"p0"` (the anchor point), `"p1"`, or `"p2"`
   # @eg `tri.oppositeSide("p1")`
+  # @demo triangle.oppositeSide
   # @return a Line which represents the opposite side
   oppositeSide: ( id ) ->
     if id=="p1"
@@ -195,6 +196,7 @@ class Triangle extends Vector
 
 
   # ## Get incenter, which is the center point of its inner circle, and also the intersection point of its 3 angle bisector lines (each of which cuts one of the 3 angles in half).
+  # @demo triangle.incenter
   # @return the incenter point as Vector
   incenter: () ->
     a = @bisector("p0", true)

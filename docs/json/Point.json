@@ -96,6 +96,7 @@
             "pname": "args"
         }, 
         {
+            "demo": "point.max", 
             "description": "<h2>Evaluate the minimum x,y,z of this point and another point, and get a maximum Point</h2>", 
             "eg": "<p><code>p.max(1,2)</code> <code>p.max( another_p )</code></p>", 
             "name": "max", 

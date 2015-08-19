@@ -34,6 +34,7 @@
             "return": "<p>this grid</p>"
         }, 
         {
+            "demo": "grid.generate", 
             "description": "<h2>Define a callback function for cell creation. This will loop through each cell in the grid and call the callback function.</h2>", 
             "name": "generate", 
             "param": [
@@ -86,6 +87,7 @@
             "return": "<p>this grid</p>"
         }, 
         {
+            "demo": "grid.occupy", 
             "description": "<h2>Mark a certain area in the grid layout as occupied</h2>", 
             "eg": "<p><code>grid.occupy(0,0, 5,3)</code></p>", 
             "name": "occupy", 

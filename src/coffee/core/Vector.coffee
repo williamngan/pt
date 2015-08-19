@@ -14,6 +14,7 @@ class Vector extends Point
   # ## Add another vector to this vector.
   # @param `args` comma-separated values, or as an array, or a Point object.
   # @eg `vec.add(1,2)` `vec.add([2,4])` `vec.add({x:3, y:6, z:9})`
+  # @demo vector.add
   # @return this Vector
   add: (args) ->
     # add scalar
@@ -233,6 +234,7 @@ class Vector extends Point
   distance: (pt, axis=Const.xy) -> @magnitude( axis, pt )
 
   # ## Normalize this vector to a unit vector, which has magnitude of 1.
+  # @demo vector.normalize
   # @return this vector
   normalize: () ->
     @set( @$normalize() )
@@ -279,6 +281,7 @@ class Vector extends Point
   # @param `vec` a Vector to calculate the projection
   # @param `axis` optional axis id (eg `Const.xy`) to specify a plane
   # @eg `vec.projection( another_vec)`, , `vec.projection( another_vec, Const.xz )`
+  # @demo vector.projection
   # @return the vector projection
   projection: ( vec, axis=Const.xyz ) ->
     m = vec.magnitude()
@@ -359,6 +362,7 @@ class Vector extends Point
   # @param `anchor` a Point object specifying the anchor position
   # @param `axis` optional axis id (eg `Const.xy`) to specify a plane
   # @eg `vec.rotate2D( Math.PI/2, anchor_pt )` `vec.rotate2D( 30*Const.deg_to_rad, another_pt, Const.xz )`
+  # @demo vector.rotate2D
   # @return this vector
   rotate2D: (radian, anchor, axis=Const.xy) ->
     if !anchor then anchor = new Point(0,0,0)
@@ -391,6 +395,7 @@ class Vector extends Point
   # @param `anchor` a Point object specifying the anchor position to scale from
   # @param `axis` optional axis id (eg `Const.xy`) to specify a plane
   # @eg `vec.scale2D( 0.7, 1.2, anchor_pt )` `vec.scale2D( 1, 3, anchor_pt, Const.xz )`
+  # @demo vector.scale2D
   # @return this vector
   scale2D: (sx, sy, anchor, axis=Const.xy) ->
     if !anchor then anchor = new Point(0,0,0)

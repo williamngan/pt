@@ -89,6 +89,7 @@
             "return": "<p>this PointSet</p>"
         }, 
         {
+            "demo": "pointset.sides", 
             "description": "<h2>Get an array of Lines that represents this PointSet's sides</h2>", 
             "name": "sides", 
             "param": [
@@ -121,6 +122,7 @@
             "return": "<p>the centroid point as Vector</p>"
         }, 
         {
+            "demo": "pointset.convexHull", 
             "description": "<h2>Get a convex hull of the point set using Melkman's algorithm</h2>", 
             "name": "convexHull", 
             "param": [

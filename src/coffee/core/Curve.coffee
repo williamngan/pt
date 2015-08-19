@@ -106,6 +106,7 @@ class Curve extends PointSet
   # ## Create a Cardinal spline curve
   # @param `step` the number of line segments. Defaults to 10 steps.
   # @param `tension` optional value between 0 to 1 to specify a "tension". Default to 0.5 which is the tension for Catmull-Rom curve
+  # @demo curve.cardinal
   # @return an array of Points
   cardinal: ( steps=10, tension=0.5 ) ->
 
@@ -164,6 +165,7 @@ class Curve extends PointSet
 
   # ## Create a Bezier curve. In a cubic bezier curve, the first and 4th points are end points, and 2nd and 3rd points are control points.
   # @param `step` the number of line segments. Defaults to 10 steps
+  # @demo curve.bezier
   # @return an array of Points
   bezier: ( steps=10 ) ->
 
@@ -215,6 +217,7 @@ class Curve extends PointSet
   # ## Create a B-Spline cuve
   # @param `step` the number of line segments. Defaults to 10 steps.
   # @param `tension` optional value between 0 to 1 to specify a "tension". Or `false` to have normal tension. Default is false.
+  # @demo curve.bspline
   # @return an array of Points
   bspline: ( steps=10, tension=false ) ->
 

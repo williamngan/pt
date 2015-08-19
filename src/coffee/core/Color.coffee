@@ -169,6 +169,7 @@ class Color extends Vector
   # @param `h, s, l` hue, saturation, and lightness. hue value from 0 to 360, saturation and lightness values from 0 to 1
   # @param `normalizedInput, normalizedOutput` Optional boolean values to indicate if input parameters are normalized (0 to 1), and if return value should be normalized
   # @eg `Color.HSLtoRGB(360,0.7,0.9)` `Color.HSLtoRGB(1,0.3,0, true)`
+  # @demo color.HSLtoRGB
   # @return an array of [r, g, b] where each value is from 0 to 255
   @HSLtoRGB : ( h, s, l, normalizedInput, normalizedOutput) ->
 
@@ -240,6 +241,7 @@ class Color extends Vector
   # @param `h, s, b` hue, saturation, and brightness. hue value from 0 to 360, saturation and brightness values from 0 to 1
   # @param `normalizedInput, normalizedOutput` Optional boolean values to indicate if input parameters are normalized (0 to 1), and if return value should be normalized
   # @eg `Color.HSBtoRGB(360,0.7,0.9)` `Color.HSBtoRGB(1,0.3,0, true)`
+  # @demo color.HSBtoRGB
   # @return an array of [r, g, b] where each value is from 0 to 255
   @HSBtoRGB : (h, s, v, normalizedInput, normalizedOutput) ->
 
@@ -281,6 +283,7 @@ class Color extends Vector
   # ## Static function `Color.LABtoRGB` transforms LAB to RGB
   # @param `L, a, b` lightness (L) is from 0 to 100, a and b component values are from -128 to 127. red/green colors are represented in a, and yellow/blue colors are represented in b.
   # @param `normalizedInput, normalizedOutput` Optional boolean values to indicate if input parameters are normalized (0 to 1), and if return value should be normalized
+  # @demo color.LABtoRGB
   # @return an array of [r, g, b] where each value is from 0 to 255
   @LABtoRGB : (L, a, b, normalizedInput, normalizedOutput) ->
     if normalizedInput

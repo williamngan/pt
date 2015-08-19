@@ -13,16 +13,23 @@
             "pname": "id='space'"
         }, 
         {
+            "demo": "space.refresh", 
             "description": "<h2>set whether the rendering should repaint on each frame</h2>", 
             "name": "refresh", 
-            "param": [], 
-            "pname": "b"
+            "param": [
+                "<p><code>b</code> a boolean value to set whether to repaint each frame</p>"
+            ], 
+            "pname": "b", 
+            "return": "<p>this space</p>"
         }, 
         {
-            "description": "<h2>set custom render function (on resize etc)</h2>", 
+            "description": "<h2>set custom render function (on resize and other events)</h2>", 
             "name": "render", 
-            "param": [], 
-            "pname": "func"
+            "param": [
+                "<p><code>func</code> a custom callback <code>function( ctx )</code> for rendering. The function will pass a context parameter.</p>"
+            ], 
+            "pname": "func", 
+            "return": "<p>this space</p>"
         }, 
         {
             "description": "<h2>resize the space. (not implemented)</h2>", 
@@ -37,12 +44,14 @@
             "pname": ""
         }, 
         {
+            "demo": "space.add", 
             "description": "<h2>Add an item to this space. An item must define a callback function <code>animate( time, fps, context )</code> and will be assigned a property <code>animateID</code> automatically. An item can also optionally define a callback function <code>onSpaceResize( w, h, evt )</code></h2>", 
             "name": "add", 
             "param": [
                 "<p>an object with an <code>animate( time, fps, context )</code> function, and optionall a <code>onSpaceResize( w, h, evt )</code> function</p>"
             ], 
-            "pname": "item"
+            "pname": "item", 
+            "return": "<p>this space</p>"
         }, 
         {
             "description": "<h2>Remove an item from this Space</h2>", 
@@ -50,13 +59,15 @@
             "param": [
                 "<p>an object with an auto-assigned <code>animateID</code> property</p>"
             ], 
-            "pname": "item"
+            "pname": "item", 
+            "return": "<p>this space</p>"
         }, 
         {
             "description": "<h2>Remove all items from this Space</h2>", 
             "name": "removeAll", 
             "param": [], 
-            "pname": ""
+            "pname": "", 
+            "return": "<p>this space</p>"
         }, 
         {
             "description": "<h2>Main play loop. This implements window.requestAnimationFrame and calls it recursively. Override this <code>play()</code> function to implemenet your own animation loop.</h2>", 
@@ -64,7 +75,8 @@
             "param": [
                 "<p><code>time</code> current time</p>"
             ], 
-            "pname": "time=0"
+            "pname": "time=0", 
+            "return": "<p>this space</p>"
         }, 
         {
             "description": "<h2>Pause the animation</h2>", 
@@ -72,13 +84,15 @@
             "param": [
                 "<p><code>toggle</code> a boolean value to set if this function call should be a toggle (between pause and resume)</p>"
             ], 
-            "pname": "toggle=false"
+            "pname": "toggle=false", 
+            "return": "<p>this space</p>"
         }, 
         {
             "description": "<h2>Resume the paused animation</h2>", 
             "name": "resume", 
             "param": [], 
-            "pname": ""
+            "pname": "", 
+            "return": "<p>this space</p>"
         }, 
         {
             "description": "<h2>Specify when the animation should stop: immediately, after a time period, or never stops.</h2>", 
@@ -86,7 +100,8 @@
             "param": [
                 "<p><code>t</code> a value in millisecond to specify a time period to play before stopping, or <code>-1</code> to play forever, or <code>0</code> to end immediately. Default is 0 which will stop the animation immediately.</p>"
             ], 
-            "pname": "t=0"
+            "pname": "t=0", 
+            "return": "<p>this space</p>"
         }, 
         {
             "description": "<h2>Play animation loop, and then stop after <code>duration</code> time has passed.</h2>", 

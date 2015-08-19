@@ -34,14 +34,21 @@ class Space
 
 
   # ## set whether the rendering should repaint on each frame
+  # @param `b` a boolean value to set whether to repaint each frame
+  # @demo space.refresh
+  # @return this space
   refresh: (b) ->
     @_refresh = b
+    return @
 
 
-  # ## set custom render function (on resize etc)
+  # ## set custom render function (on resize and other events)
+  # @param `func` a custom callback `function( ctx )` for rendering. The function will pass a context parameter.
+  # @return this space
   render: ( func ) ->
     @renderer = func
     return @
+
 
   # ## resize the space. (not implemented)
   resize: (w, h) ->
@@ -53,6 +60,8 @@ class Space
 
   # ## Add an item to this space. An item must define a callback function `animate( time, fps, context )` and will be assigned a property `animateID` automatically. An item can also optionally define a callback function `onSpaceResize( w, h, evt )`
   # @param an object with an `animate( time, fps, context )` function, and optionall a `onSpaceResize( w, h, evt )` function
+  # @demo space.add
+  # @return this space
   add : (item) ->
     if item.animate? and typeof item.animate is 'function'
       k = @_animCount++
@@ -69,12 +78,14 @@ class Space
 
   # ## Remove an item from this Space
   # @param an object with an auto-assigned `animateID` property
+  # @return this space
   remove : (item) ->
     delete @items[ item.animateID ]
     return @
 
 
   # ## Remove all items from this Space
+  # @return this space
   removeAll : () ->
     @items = {}
     return @
@@ -82,6 +93,7 @@ class Space
 
   # ## Main play loop. This implements window.requestAnimationFrame and calls it recursively. Override this `play()` function to implemenet your own animation loop.
   # @param `time` current time
+  # @return this space
   play : (time=0) ->
 
     # use fat arrow here, because rAF callback will change @ to window
@@ -109,6 +121,8 @@ class Space
 
 
   # Main animate function. This calls all the items to perform
+  # @param `time` current time
+  # @return this space
   _playItems : (time) ->
 
     # clear before draw if refresh is true
@@ -127,12 +141,14 @@ class Space
 
   # ## Pause the animation
   # @param `toggle` a boolean value to set if this function call should be a toggle (between pause and resume)
+  # @return this space
   pause: ( toggle=false) ->
     @_animPause = if toggle then !@_animPause else true
     return @
 
 
   # ## Resume the paused animation
+  # @return this space
   resume: () ->
     @_animPause = false
     return @
@@ -140,6 +156,7 @@ class Space
 
   # ## Specify when the animation should stop: immediately, after a time period, or never stops.
   # @param `t` a value in millisecond to specify a time period to play before stopping, or `-1` to play forever, or `0` to end immediately. Default is 0 which will stop the animation immediately.
+  # @return this space
   stop : ( t=0 ) ->
     @_timeEnd = t
     return @

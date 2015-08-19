@@ -1,4 +1,4 @@
-# ### Various Matrix transformations
+# ### Functions to calculate various Matrix transformations
 class Matrix
 
   # ## Get a 3x3 matrix for 2D rotation around an anchor point

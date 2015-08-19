@@ -25,6 +25,7 @@
             "return": "<p>this CanvasSpace</p>"
         }, 
         {
+            "demo": "canvasspace.resize", 
             "description": "<h2>This overrides Space's <code>resize</code> function and it's a callback function for window resize event. The resize event is passed to the Space's added items that has defined a <code>onSpaceResize(w,h,evt)</code></h2>", 
             "name": "resize", 
             "param": [], 
@@ -59,6 +60,7 @@
             "pname": "evt, callback"
         }, 
         {
+            "demo": "canvasspace.bindMouse", 
             "description": "<h2>A convenient method to bind (or unbind) all mouse events in canvas element. All item added to <code>items</code> property that implements an <code>onMouseAction</code> callback will receive mouse event callbacks.</h2>", 
             "name": "bindMouse", 
             "param": [

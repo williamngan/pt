@@ -59,6 +59,7 @@ class Pair extends Vector
   # @param `pt` a Point object to check.
   # @param `axis` optional axis id such as Const.xy.
   # @eg `pair.withinBounds( point )`, `pair.withinBounds( point, Const.yz )`
+  # @demo pair.withinBounds
   # @return a boolean value where `true` means the point is within bounds.
   withinBounds: ( pt, axis ) ->
     if axis
@@ -81,6 +82,7 @@ class Pair extends Vector
   # @param `t` a value between 0 to 1.
   # @param `relative` an optional boolean value. If `true`, then `this.p1` will be treated as relative to the achor point. Default is `false`.
   # @eg `pair.interpolate(0.4)` `pair.interpolate(0.1, true)`
+  # @demo pair.interpolate
   # @return the interpolated point as Vector
   interpolate: ( t, relative=false ) ->
     p2 = if relative then @$relative() else @p1
@@ -127,6 +129,7 @@ class Pair extends Vector
 
   # ## Check if a point lies on the left or right side of this pair's *ray*, and if the 3 points are collinear
   # @param `point` a Point object to check against this pair.
+  # @demo pair.collinear
   # @return a value where 0 means collinear, poitive value means the point lies on left, and negative value means it's on right
   collinear: (point) ->
     return (@p1.x - @x) * (point.y - @y) - (point.x - @x) * (@p1.y - @y)

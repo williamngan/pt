@@ -1,6 +1,6 @@
 {
     "cls": "Matrix", 
-    "description": "<h3>Various Matrix transformations</h3>", 
+    "description": "<h3>Functions to calculate various Matrix transformations</h3>", 
     "extend": "", 
     "file": "Matrix.coffee", 
     "funcs": [], 

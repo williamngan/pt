@@ -14,6 +14,7 @@
             "return": "<p>a new Form object</p>"
         }, 
         {
+            "demo": "form.fill", 
             "description": "<h2>Set current fill style</h2>", 
             "eg": "<p><code>form.fill(\"#F90\")</code> <code>form.fill(\"rgba(0,0,0,.5\")</code> <code>form.fill(false)</code></p>", 
             "name": "fill", 
@@ -36,6 +37,7 @@
             "return": "<p>this Form</p>"
         }, 
         {
+            "demo": "form.font", 
             "description": "<h2>Set font size and font face</h2>", 
             "eg": "<p><code>form.font(24)</code> <code>form.font(12, \"Georgia\")</code></p>", 
             "name": "font", 
@@ -74,6 +76,7 @@
             "return": "<p>this Form</p>"
         }, 
         {
+            "demo": "form.points", 
             "description": "<h2>Draw a series of points</h2>", 
             "name": "points", 
             "param": [
@@ -140,6 +143,7 @@
             "return": "<p>this Form</p>"
         }, 
         {
+            "demo": "form.curve", 
             "description": "<h2>Draw a curve</h2>", 
             "name": "curve", 
             "param": [

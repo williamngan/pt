@@ -97,6 +97,7 @@
             "return": "<p>an object with 2 properties, where <code>.value</code> is the area value, and <code>.perimeter</code> is an object returned by <code>perimeter()</code> function</p>"
         }, 
         {
+            "demo": "triangle.oppositeSide", 
             "description": "<h2>Given a point of the triangle, the opposite side is the side which the point doesn't touch</h2>", 
             "eg": "<p><code>tri.oppositeSide(\"p1\")</code></p>", 
             "name": "oppositeSide", 
@@ -151,6 +152,7 @@
             "return": "<p>the orthocenter point as Vector</p>"
         }, 
         {
+            "demo": "triangle.incenter", 
             "description": "<h2>Get incenter, which is the center point of its inner circle, and also the intersection point of its 3 angle bisector lines (each of which cuts one of the 3 angles in half).</h2>", 
             "name": "incenter", 
             "param": [], 

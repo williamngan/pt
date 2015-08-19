@@ -12,6 +12,10 @@ class Docs
     @scrollTimeout = -1
     @uiTimerID = -1
 
+    @coverDemoTimeout = -1;
+    @coverDemoLoaded = false;
+    @isDocReady = false;
+
     @activeDemo = {
       elem: null
       script: null
@@ -51,6 +55,7 @@ class Docs
 
 
   ready: () ->
+    @isDocReady = true
     @getMembers("Space")
 
   # ## Load JSON
@@ -65,7 +70,7 @@ class Docs
         @tree = @getTree()
         @buildMenu( @tree, @dom.menu )
         @buildContent()
-
+        @scrollToHashID( window.location.hash );
         @ready()
 
       else
@@ -298,7 +303,7 @@ class Docs
     rect = elem.getBoundingClientRect()
     return rect.top >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
 
-
+  ###
   loadDemo: () ->
     demos = document.querySelectorAll(".demo")
     for d in demos
@@ -323,6 +328,29 @@ class Docs
       document.querySelector("body").removeChild( @activeDemo.script )
       @dom.demo.removeChild( @dom.demo.querySelector("canvas") )
       @activeDemo.elem = null
+  ###
+
+
+  # Go to hash id location
+  scrollToHashID: (id) ->
+    if (id)
+      elem = document.querySelector(""+id)
+      if (elem)
+        window.scrollTo( 0, elem.offsetTop + window.innerHeight )
+        clearTimeout( @coverDemoTimeout )
+        return
+
+
+    if (window.scrollY < window.innerHeight/2)
+      clearTimeout( this.coverDemoTimeout );
+      if (window.coverDemo)
+        this.coverDemoTimeout = setTimeout(
+          (() =>
+            window.coverDemo()
+            @coverDemoLoaded = true
+          ), 1000
+        )
+
 
   # Sticky header
   onScroll: (evt) ->
@@ -353,16 +381,28 @@ class Docs
 
     @syncScroll()
 
+    ###
     # load or unload demo
     @unloadDemo()
     clearTimeout( @scrollTimeout )
     @scrollTimeout = setTimeout( (
       () => @loadDemo()
     ), 500 )
-
+    ###
 
   # ## Synchronize element position when scrolling or resizing
   syncScroll: () ->
+    if (@isDocReady && window.coverDemo && !@coverDemoLoaded && window.scrollY < window.innerHeight/2)
+      clearTimeout( @coverDemoTimeout );
+      window.coverDemo()
+      @coverDemoLoaded = true
+
+    else
+      if (this.coverDemoLoaded)
+        if (window.scrollY < window.innerHeight/2) then window.restartCoverDemo() else window.stopCoverDemo()
+
+    return
+
 #    if window.scrollY >= @layout.sticky[0].y
 #      offy = @layout.sticky[2].y - window.scrollY - window.innerHeight - @layout.coverOffset
 #      @dom.overview.style.top = Math.min( 0, offy ) + "px"

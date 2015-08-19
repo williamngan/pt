@@ -48,63 +48,73 @@ code {
   padding: 0 3px; }
 
 section {
-  padding-top: 40px; }
-
-section h1 {
-  position: relative;
-  font-size: 2em;
-  font-weight: 700; }
-  section h1 .param {
-    font-weight: 400;
-    font-size: 12px;
-    font-family: "Inconsolata", monospace;
-    color: #556070; }
-section h2 {
-  font-size: 1.4em;
-  font-weight: 400;
-  font-family: "Helvetica Neue", Helvetica, sans-serif; }
-section.element > h1 {
-  font-weight: 300;
-  font-size: 4.5em;
-  color: #334fff; }
-section.element > h3 {
-  font-size: 2em;
-  color: #8899aa;
-  letter-spacing: 0.01em; }
-section .param > em, section .return > em, section .eg > em, section .demo > em {
-  font-family: "Inconsolata", monospace;
-  display: inline-block;
-  vertical-align: top;
-  color: #8899aa;
-  width: 80px;
-  font-size: 1.1em;
-  font-style: normal;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  margin-top: 0.4em; }
-section .param > .p, section .return > .p, section .eg > .p, section .demo > .p {
-  display: inline-block;
-  vertical-align: top;
-  color: #222;
-  width: 400px;
-  margin-top: 0; }
-section .param > .group, section .return > .group, section .eg > .group, section .demo > .group {
-  display: inline-block;
-  vertical-align: top;
-  color: #222;
-  width: 320px;
-  margin-top: 0; }
-  section .param > .group > p, section .return > .group > p, section .eg > .group > p, section .demo > .group > p {
-    margin-top: 0; }
-section .demo {
+  padding-top: 40px;
   position: relative; }
-  section .demo .demo-arrow {
+  section h1 {
+    position: relative;
+    font-size: 2em;
+    font-weight: 700; }
+    section h1 .param {
+      font-weight: 400;
+      font-size: 12px;
+      font-family: "Inconsolata", monospace;
+      color: #556070; }
+  section h2 {
+    font-size: 1.4em;
+    font-weight: 400;
+    font-family: "Helvetica Neue", Helvetica, sans-serif; }
+  section.element > h1 {
+    font-weight: 300;
+    font-size: 4.5em;
+    color: #334fff; }
+  section.element > h3 {
+    font-size: 2em;
+    color: #8899aa;
+    letter-spacing: 0.01em; }
+  section .param > em, section .return > em, section .eg > em, section .demo > em {
+    font-family: "Inconsolata", monospace;
+    display: inline-block;
+    vertical-align: top;
+    color: #8899aa;
+    width: 80px;
+    font-size: 1.1em;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-top: 0.4em; }
+  section .param > .p, section .return > .p, section .eg > .p, section .demo > .p {
+    display: inline-block;
+    vertical-align: top;
+    color: #222;
+    width: 400px;
+    margin-top: 0; }
+  section .param > .group, section .return > .group, section .eg > .group, section .demo > .group {
+    display: inline-block;
+    vertical-align: top;
+    color: #222;
+    width: 320px;
+    margin-top: 0; }
+    section .param > .group > p, section .return > .group > p, section .eg > .group > p, section .demo > .group > p {
+      margin-top: 0; }
+  section .demo {
     position: absolute;
-    top: 0;
+    width: 250px;
+    height: 250px;
+    margin-right: -320px;
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    top: 60px;
     right: 0;
-    width: 20px;
-    height: 20px;
-    background-color: #f00; }
+    border: 20px solid #f3f5f9;
+    transition: border-color 0.3s, width 0.3s, height 0.3s, margin-right 0.3s;
+    cursor: pointer; }
+    section .demo:hover {
+      border-color: #e1e9f3;
+      width: 350px;
+      height: 350px;
+      margin-right: -420px;
+      z-index: 10; }
 
 section.inherited ul {
   margin: 0 0 1em;
@@ -145,6 +155,20 @@ section.inherited ul {
   left: 0;
   right: 0;
   z-index: 1; }
+
+#overview {
+  position: absolute;
+  bottom: 0;
+  left: 40px; }
+  #overview h1 {
+    font-size: 6.5vh;
+    font-weight: 300;
+    margin-bottom: 5vh; }
+    #overview h1 small {
+      color: #556070;
+      font-size: 0.5em;
+      display: inline-block;
+      opacity: .7; }
 
 #header {
   position: absolute;
@@ -254,13 +278,6 @@ section.inherited ul {
   overflow-x: hidden;
   overflow-y: auto;
   margin-top: 0; }
-
-#pt {
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: block;
-  background-color: #334fff; }
 
 .sticky-step1 #pt {
   position: fixed;

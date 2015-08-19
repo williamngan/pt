@@ -98,6 +98,7 @@ class PointSet extends Vector
 
   # ## Get an array of Lines that represents this PointSet's sides
   # @param `close_path` a boolean value to include the side from last point to first point when set to `true`
+  # @demo pointset.sides
   # @return an array of Lines
   sides: ( close_path=true ) ->
     lastP = null
@@ -138,6 +139,7 @@ class PointSet extends Vector
 
   # ## Get a convex hull of the point set using Melkman's algorithm
   # @param `sort` a boolean value to sort the `points` by x position first if set to true
+  # @demo pointset.convexHull
   # @return an array of Vectors to define the convex hull
   convexHull: ( sort=true ) ->
 
@@ -194,72 +196,6 @@ class PointSet extends Vector
   # overrides clone
   clone: () ->
     new PointSet(@).to( Util.clonePoints( @points ) )
-
-
-
-  # Obsolete as replaced by $op( "add" ... )
-  # ## Add a vector to all the points in the `points` array.
-  # @param `args` comma-separated values, or as an array, or a Point object.
-  # @return this PointSet
-  #  pointsAdd: (args) ->
-  #    a = @_getArgs( arguments )
-  #    for p in @points
-  #      p.add( a )
-  #    return @
-
-
-  # ## Same as `pointsAdd()` but returns a new array of the resulting points.
-  #  $pointsAdd: (args) ->
-  #    a = @_getArgs( arguments )
-  #    return (p.$add( a ) for p in @points)
-
-
-  # ## Subtract a vector from all the points in the `points` array.
-  # @param `args` comma-separated values, or as an array, or a Point object.
-  # @return this PointSet
-  #  pointsSubtract: (args) ->
-  #    a = @_getArgs( arguments )
-  #    for p in @points
-  #      p.subtract( a )
-  #    return @
-
-
-  # ## Same as `pointsSubtract()` but returns a new array of the resulting points.
-  #  $pointsSubtract: (args) ->
-  #    a = @_getArgs( arguments )
-  #    return (p.$subtract( a ) for p in @points)
-
-
-  # ## Multiply a vector with all the points in the `points` array.
-  # @param `args` comma-separated values, or as an array, or a Point object.
-  # @return this PointSet
-  #  pointsMultiply: (args) ->
-  #    a = @_getArgs( arguments )
-  #    for p in @points
-  #      p.multiply( a )
-  #    return @
-
-
-  # ## Same as `pointsMultiply()` but returns a new array of the resulting points.
-  #  $pointsMultiply: (args) ->
-  #    a = @_getArgs( arguments )
-  #    return (p.$multiply( a ) for p in @points)
-
-
-  # ## Divide all the points in the `points` array with a vector.
-  # @param `args` comma-separated values, or as an array, or a Point object.
-  # @return this PointSet
-  #  pointsDivide: (args) ->
-  #    a = @_getArgs( arguments )
-  #    for p in @points
-  #      p.divide( a )
-  #    return @
-
-
-  # ## Same as `pointsDivide()` but returns a new array of the resulting points.
-  #  $pointsDivide: (args) ->
-  #    a = @_getArgs( arguments )
-  #    return (p.$divide( a ) for p in @points)
 
 
 # namespace

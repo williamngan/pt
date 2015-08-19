@@ -82,6 +82,7 @@
             "return": "<p>an array of [h, s, l] where h is from 0 to 360, s is from 0 to 1, and l is from 0 to 1.</p>"
         }, 
         {
+            "demo": "color.HSLtoRGB", 
             "description": "<h2>A static function <code>Color.HSLtoRGB</code> to convert HSL to RGB</h2>", 
             "eg": "<p><code>Color.HSLtoRGB(360,0.7,0.9)</code> <code>Color.HSLtoRGB(1,0.3,0, true)</code></p>", 
             "name": "HSLtoRGB", 
@@ -104,6 +105,7 @@
             "return": "<p>an array of [h, s, b] where h is from 0 to 360, s is from 0 to 1, and b is from 0 to 1.</p>"
         }, 
         {
+            "demo": "color.HSBtoRGB", 
             "description": "<h2>A static function <code>Color.HSBtoRGB</code> to convert HSB to RGB</h2>", 
             "eg": "<p><code>Color.HSBtoRGB(360,0.7,0.9)</code> <code>Color.HSBtoRGB(1,0.3,0, true)</code></p>", 
             "name": "HSBtoRGB", 
@@ -125,6 +127,7 @@
             "return": "<p>an array of [L, a, b] where lightness (L) is from 0 to 100, a and b component values are from -128 to 127. red/green colors are represented in a, and yellow/blue colors are represented in b.</p>"
         }, 
         {
+            "demo": "color.LABtoRGB", 
             "description": "<h2>Static function <code>Color.LABtoRGB</code> transforms LAB to RGB</h2>", 
             "name": "LABtoRGB", 
             "param": [

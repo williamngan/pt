@@ -26,6 +26,7 @@
         "return": "<p>this CanvasSpace</p>"
       }, 
       {
+        "demo": "canvasspace.resize", 
         "description": "<h2>This overrides Space's <code>resize</code> function and it's a callback function for window resize event. The resize event is passed to the Space's added items that has defined a <code>onSpaceResize(w,h,evt)</code></h2>", 
         "name": "resize", 
         "param": [], 
@@ -60,6 +61,7 @@
         "pname": "evt, callback"
       }, 
       {
+        "demo": "canvasspace.bindMouse", 
         "description": "<h2>A convenient method to bind (or unbind) all mouse events in canvas element. All item added to <code>items</code> property that implements an <code>onMouseAction</code> callback will receive mouse event callbacks.</h2>", 
         "name": "bindMouse", 
         "param": [
@@ -108,6 +110,7 @@
         "return": "<p>this Circle</p>"
       }, 
       {
+        "demo": "circle.intersectPoint", 
         "description": "<h2>Check if a point is on this Circle on xy axis.</h2>", 
         "eg": "<p><code>circle.intersectPoint(1,2,3)</code> <code>circle.intersectPoint(pt)</code></p>", 
         "name": "intersectPoint", 
@@ -118,6 +121,7 @@
         "return": "<p>a boolean value to indicate if there is an intersection</p>"
       }, 
       {
+        "demo": "circle.intersectPath", 
         "description": "<h2>Check intersections between this Circle and an infinite Line on xy axis. Based on <a href=\"http://stackoverflow.com/questions/13053061/circle-line-intersection-points\">this algorithm</a>.</h2><p>@get_pts <code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>", 
         "name": "intersectPath", 
         "param": [
@@ -146,6 +150,7 @@
         "return": "<p>s an Array of intersection points, or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
       }, 
       {
+        "demo": "circle.intersectCircle", 
         "description": "<h2>Check if this circle intersects with another circle</h2><p>@get_pts <code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>", 
         "name": "intersectCircle", 
         "param": [
@@ -258,6 +263,7 @@
         "return": "<p>an array of [h, s, l] where h is from 0 to 360, s is from 0 to 1, and l is from 0 to 1.</p>"
       }, 
       {
+        "demo": "color.HSLtoRGB", 
         "description": "<h2>A static function <code>Color.HSLtoRGB</code> to convert HSL to RGB</h2>", 
         "eg": "<p><code>Color.HSLtoRGB(360,0.7,0.9)</code> <code>Color.HSLtoRGB(1,0.3,0, true)</code></p>", 
         "name": "HSLtoRGB", 
@@ -280,6 +286,7 @@
         "return": "<p>an array of [h, s, b] where h is from 0 to 360, s is from 0 to 1, and b is from 0 to 1.</p>"
       }, 
       {
+        "demo": "color.HSBtoRGB", 
         "description": "<h2>A static function <code>Color.HSBtoRGB</code> to convert HSB to RGB</h2>", 
         "eg": "<p><code>Color.HSBtoRGB(360,0.7,0.9)</code> <code>Color.HSBtoRGB(1,0.3,0, true)</code></p>", 
         "name": "HSBtoRGB", 
@@ -301,6 +308,7 @@
         "return": "<p>an array of [L, a, b] where lightness (L) is from 0 to 100, a and b component values are from -128 to 127. red/green colors are represented in a, and yellow/blue colors are represented in b.</p>"
       }, 
       {
+        "demo": "color.LABtoRGB", 
         "description": "<h2>Static function <code>Color.LABtoRGB</code> transforms LAB to RGB</h2>", 
         "name": "LABtoRGB", 
         "param": [
@@ -425,7 +433,7 @@
   }, 
   "Const": {
     "cls": "Const", 
-    "description": "<h3>Various constants</h3>", 
+    "description": "<h3>A list of useful constant values for calculations and labeling.</h3>", 
     "extend": "", 
     "file": "Const.coffee", 
     "funcs": [], 
@@ -604,6 +612,7 @@
         "return": "<p>a Point on the curve</p>"
       }, 
       {
+        "demo": "curve.cardinal", 
         "description": "<h2>Create a Cardinal spline curve</h2>", 
         "name": "cardinal", 
         "param": [
@@ -625,6 +634,7 @@
         "return": "<p>a Point on the curve</p>"
       }, 
       {
+        "demo": "curve.bezier", 
         "description": "<h2>Create a Bezier curve. In a cubic bezier curve, the first and 4th points are end points, and 2nd and 3rd points are control points.</h2>", 
         "name": "bezier", 
         "param": [
@@ -644,6 +654,7 @@
         "return": "<p>a Point on the curve</p>"
       }, 
       {
+        "demo": "curve.bspline", 
         "description": "<h2>Create a B-Spline cuve</h2>", 
         "name": "bspline", 
         "param": [
@@ -700,6 +711,7 @@
         "return": "<p>a new Form object</p>"
       }, 
       {
+        "demo": "form.fill", 
         "description": "<h2>Set current fill style</h2>", 
         "eg": "<p><code>form.fill(\"#F90\")</code> <code>form.fill(\"rgba(0,0,0,.5\")</code> <code>form.fill(false)</code></p>", 
         "name": "fill", 
@@ -722,6 +734,7 @@
         "return": "<p>this Form</p>"
       }, 
       {
+        "demo": "form.font", 
         "description": "<h2>Set font size and font face</h2>", 
         "eg": "<p><code>form.font(24)</code> <code>form.font(12, \"Georgia\")</code></p>", 
         "name": "font", 
@@ -760,6 +773,7 @@
         "return": "<p>this Form</p>"
       }, 
       {
+        "demo": "form.points", 
         "description": "<h2>Draw a series of points</h2>", 
         "name": "points", 
         "param": [
@@ -826,6 +840,7 @@
         "return": "<p>this Form</p>"
       }, 
       {
+        "demo": "form.curve", 
         "description": "<h2>Draw a curve</h2>", 
         "name": "curve", 
         "param": [
@@ -1028,6 +1043,7 @@
         "return": "<p>this grid</p>"
       }, 
       {
+        "demo": "grid.generate", 
         "description": "<h2>Define a callback function for cell creation. This will loop through each cell in the grid and call the callback function.</h2>", 
         "name": "generate", 
         "param": [
@@ -1080,6 +1096,7 @@
         "return": "<p>this grid</p>"
       }, 
       {
+        "demo": "grid.occupy", 
         "description": "<h2>Mark a certain area in the grid layout as occupied</h2>", 
         "eg": "<p><code>grid.occupy(0,0, 5,3)</code></p>", 
         "name": "occupy", 
@@ -1184,6 +1201,7 @@
         "pname": "axis=Const.xy"
       }, 
       {
+        "demo": "line.getPerpendicular", 
         "description": "<h2>Given an interpolated point on this line, return another line of specific length that is perpendicular to this line.</h2>", 
         "eg": "<p><code>ln.getPerpendicular(0.5)</code>, <code>ln.getPerpendicular(0.2, 100, true, Const.yz)</code></p>", 
         "name": "getPerpendicular", 
@@ -1205,6 +1223,7 @@
         "pname": "pt"
       }, 
       {
+        "demo": "line.getPerpendicularFromPoint", 
         "description": "<h2>Find the perpendicular vector from this line to the point. You can connect the resulting vector with the point's position to draw a perpendicular line</h2>", 
         "name": "getPerpendicularFromPoint", 
         "param": [
@@ -1225,6 +1244,7 @@
         "return": "<p>an intersection point as Vector, or <code>false</code> if no intersection, or <code>null</code> if two lines are identical</p>"
       }, 
       {
+        "demo": "line.intersectLine", 
         "description": "<h2>Get intersection point of this line segement and another line segement (not infintie lines)</h2>", 
         "name": "intersectLine", 
         "param": [
@@ -1311,7 +1331,7 @@
   }, 
   "Matrix": {
     "cls": "Matrix", 
-    "description": "<h3>Various Matrix transformations</h3>", 
+    "description": "<h3>Functions to calculate various Matrix transformations</h3>", 
     "extend": "", 
     "file": "Matrix.coffee", 
     "funcs": [], 
@@ -1468,6 +1488,7 @@
         "return": "<p>a new Pair</p>"
       }, 
       {
+        "demo": "pair.withinBounds", 
         "description": "<h2>Check if a point is within the bounds of this pair</h2>", 
         "eg": "<p><code>pair.withinBounds( point )</code>, <code>pair.withinBounds( point, Const.yz )</code></p>", 
         "name": "withinBounds", 
@@ -1479,6 +1500,7 @@
         "return": "<p>a boolean value where <code>true</code> means the point is within bounds.</p>"
       }, 
       {
+        "demo": "pair.interpolate", 
         "description": "<h2>Interpolate to find a point which lies somewhere on a straight path between the two points of this pair</h2>", 
         "eg": "<p><code>pair.interpolate(0.4)</code> <code>pair.interpolate(0.1, true)</code></p>", 
         "name": "interpolate", 
@@ -1526,6 +1548,7 @@
         "return": "<p>distance value</p>"
       }, 
       {
+        "demo": "pair.collinear", 
         "description": "<h2>Check if a point lies on the left or right side of this pair's <em>ray</em>, and if the 3 points are collinear</h2>", 
         "name": "collinear", 
         "param": [
@@ -1599,6 +1622,7 @@
         "return": "<p>a new Circle object</p>"
       }, 
       {
+        "demo": "particle.play", 
         "description": "<h2>Play the particle for one time-step.</h2>", 
         "name": "play", 
         "param": [
@@ -1654,6 +1678,7 @@
         "pname": "t, dt"
       }, 
       {
+        "demo": "particle.collideLine2d", 
         "description": "<h2>check Collision with a line segment (wall), and calculate the resulting velocity and momentum</h2>", 
         "name": "collideLine2d", 
         "param": [
@@ -1902,6 +1927,7 @@
         "pname": "args"
       }, 
       {
+        "demo": "point.max", 
         "description": "<h2>Evaluate the minimum x,y,z of this point and another point, and get a maximum Point</h2>", 
         "eg": "<p><code>p.max(1,2)</code> <code>p.max( another_p )</code></p>", 
         "name": "max", 
@@ -2074,6 +2100,7 @@
         "return": "<p>this PointSet</p>"
       }, 
       {
+        "demo": "pointset.sides", 
         "description": "<h2>Get an array of Lines that represents this PointSet's sides</h2>", 
         "name": "sides", 
         "param": [
@@ -2106,6 +2133,7 @@
         "return": "<p>the centroid point as Vector</p>"
       }, 
       {
+        "demo": "pointset.convexHull", 
         "description": "<h2>Get a convex hull of the point set using Melkman's algorithm</h2>", 
         "name": "convexHull", 
         "param": [
@@ -2185,6 +2213,7 @@
         "return": "<p>this Rectangle</p>"
       }, 
       {
+        "demo": "rectangle.resizeCenterTo", 
         "description": "<h2>resize to a specific size from center point</h2>", 
         "eg": "<p><code>rect.resizeCenterTo(10,10)</code> <code>rect.resizeCenterTo( size_vec )</code></p>", 
         "name": "resizeCenterTo", 
@@ -2195,6 +2224,7 @@
         "return": "<p>this Rectangle</p>"
       }, 
       {
+        "demo": "rectangle.enclose", 
         "description": "<h2>resize this rectangle so that it will enclose another rectangle. Namely, the resulting rectangle is a <em>union</em> of the two initial rectangles.</h2>", 
         "name": "enclose", 
         "param": [
@@ -2241,6 +2271,7 @@
         "return": "<p>a boolean value to indicate if there is an intersection</p>"
       }, 
       {
+        "demo": "rectangle.intersectPath", 
         "description": "<h2>Check intersections between this Rectangle and an infinite Line on xy axis.</h2><p>@get_pts <code>get_pts</code> a boolean value to specify whether the results should include the intersection points. If <code>false</code>, then only the intersection state (true or false) will be returned.</p>", 
         "name": "intersectPath", 
         "param": [
@@ -2345,16 +2376,23 @@
         "pname": "id='space'"
       }, 
       {
+        "demo": "space.refresh", 
         "description": "<h2>set whether the rendering should repaint on each frame</h2>", 
         "name": "refresh", 
-        "param": [], 
-        "pname": "b"
+        "param": [
+          "<p><code>b</code> a boolean value to set whether to repaint each frame</p>"
+        ], 
+        "pname": "b", 
+        "return": "<p>this space</p>"
       }, 
       {
-        "description": "<h2>set custom render function (on resize etc)</h2>", 
+        "description": "<h2>set custom render function (on resize and other events)</h2>", 
         "name": "render", 
-        "param": [], 
-        "pname": "func"
+        "param": [
+          "<p><code>func</code> a custom callback <code>function( ctx )</code> for rendering. The function will pass a context parameter.</p>"
+        ], 
+        "pname": "func", 
+        "return": "<p>this space</p>"
       }, 
       {
         "description": "<h2>resize the space. (not implemented)</h2>", 
@@ -2369,12 +2407,14 @@
         "pname": ""
       }, 
       {
+        "demo": "space.add", 
         "description": "<h2>Add an item to this space. An item must define a callback function <code>animate( time, fps, context )</code> and will be assigned a property <code>animateID</code> automatically. An item can also optionally define a callback function <code>onSpaceResize( w, h, evt )</code></h2>", 
         "name": "add", 
         "param": [
           "<p>an object with an <code>animate( time, fps, context )</code> function, and optionall a <code>onSpaceResize( w, h, evt )</code> function</p>"
         ], 
-        "pname": "item"
+        "pname": "item", 
+        "return": "<p>this space</p>"
       }, 
       {
         "description": "<h2>Remove an item from this Space</h2>", 
@@ -2382,13 +2422,15 @@
         "param": [
           "<p>an object with an auto-assigned <code>animateID</code> property</p>"
         ], 
-        "pname": "item"
+        "pname": "item", 
+        "return": "<p>this space</p>"
       }, 
       {
         "description": "<h2>Remove all items from this Space</h2>", 
         "name": "removeAll", 
         "param": [], 
-        "pname": ""
+        "pname": "", 
+        "return": "<p>this space</p>"
       }, 
       {
         "description": "<h2>Main play loop. This implements window.requestAnimationFrame and calls it recursively. Override this <code>play()</code> function to implemenet your own animation loop.</h2>", 
@@ -2396,7 +2438,8 @@
         "param": [
           "<p><code>time</code> current time</p>"
         ], 
-        "pname": "time=0"
+        "pname": "time=0", 
+        "return": "<p>this space</p>"
       }, 
       {
         "description": "<h2>Pause the animation</h2>", 
@@ -2404,13 +2447,15 @@
         "param": [
           "<p><code>toggle</code> a boolean value to set if this function call should be a toggle (between pause and resume)</p>"
         ], 
-        "pname": "toggle=false"
+        "pname": "toggle=false", 
+        "return": "<p>this space</p>"
       }, 
       {
         "description": "<h2>Resume the paused animation</h2>", 
         "name": "resume", 
         "param": [], 
-        "pname": ""
+        "pname": "", 
+        "return": "<p>this space</p>"
       }, 
       {
         "description": "<h2>Specify when the animation should stop: immediately, after a time period, or never stops.</h2>", 
@@ -2418,7 +2463,8 @@
         "param": [
           "<p><code>t</code> a value in millisecond to specify a time period to play before stopping, or <code>-1</code> to play forever, or <code>0</code> to end immediately. Default is 0 which will stop the animation immediately.</p>"
         ], 
-        "pname": "t=0"
+        "pname": "t=0", 
+        "return": "<p>this space</p>"
       }, 
       {
         "description": "<h2>Play animation loop, and then stop after <code>duration</code> time has passed.</h2>", 
@@ -2590,6 +2636,7 @@
         "return": "<p>an object with 2 properties, where <code>.value</code> is the area value, and <code>.perimeter</code> is an object returned by <code>perimeter()</code> function</p>"
       }, 
       {
+        "demo": "triangle.oppositeSide", 
         "description": "<h2>Given a point of the triangle, the opposite side is the side which the point doesn't touch</h2>", 
         "eg": "<p><code>tri.oppositeSide(\"p1\")</code></p>", 
         "name": "oppositeSide", 
@@ -2644,6 +2691,7 @@
         "return": "<p>the orthocenter point as Vector</p>"
       }, 
       {
+        "demo": "triangle.incenter", 
         "description": "<h2>Get incenter, which is the center point of its inner circle, and also the intersection point of its 3 angle bisector lines (each of which cuts one of the 3 angles in half).</h2>", 
         "name": "incenter", 
         "param": [], 
@@ -2754,7 +2802,7 @@
   }, 
   "Util": {
     "cls": "Util", 
-    "description": "<h1>Various static methods and helper classes</h1>", 
+    "description": "<h3>A collection of static methods and helper classes to get things done.</h3>", 
     "extend": "", 
     "file": "Util.coffee", 
     "funcs": [], 
@@ -2960,6 +3008,7 @@
         "return": "<p>a new Vector object</p>"
       }, 
       {
+        "demo": "vector.add", 
         "description": "<h2>Add another vector to this vector.</h2>", 
         "eg": "<p><code>vec.add(1,2)</code> <code>vec.add([2,4])</code> <code>vec.add({x:3, y:6, z:9})</code></p>", 
         "name": "add", 
@@ -3083,6 +3132,7 @@
         "return": "<p>distance</p>"
       }, 
       {
+        "demo": "vector.normalize", 
         "description": "<h2>Normalize this vector to a unit vector, which has magnitude of 1.</h2>", 
         "name": "normalize", 
         "param": [], 
@@ -3115,6 +3165,7 @@
         "return": "<p>the dot product which is a scalar (numeric) value</p>"
       }, 
       {
+        "demo": "vector.projection", 
         "description": "<h2>Calculate <a href=\"http://en.wikipedia.org/wiki/Vector_projection\">vector projection</a>. A vector projection that has the same direction as this vector but a different length. So if you draw a line from the projection vector to the vector specified in the parameter, it will be perpendicular to this vector.</h2>", 
         "eg": "<p><code>vec.projection( another_vec)</code>, , <code>vec.projection( another_vec, Const.xz )</code></p>", 
         "name": "projection", 
@@ -3193,6 +3244,7 @@
         "pname": "args"
       }, 
       {
+        "demo": "vector.rotate2D", 
         "description": "<h2>Rotate this vector around an anchor point on a 2D plane. In subclasses of <code>Vector</code>, such as <code>Pair</code> or <code>PointSet</code>, this will rotate all the points.</h2>", 
         "eg": "<p><code>vec.rotate2D( Math.PI/2, anchor_pt )</code> <code>vec.rotate2D( 30*Const.deg_to_rad, another_pt, Const.xz )</code></p>", 
         "name": "rotate2D", 
@@ -3216,6 +3268,7 @@
         "return": "<p>this vector</p>"
       }, 
       {
+        "demo": "vector.scale2D", 
         "description": "<h2>Rescale this vector from an anchor point. In subclasses of <code>Vector</code>, such as <code>Pair</code> or <code>PointSet</code>, this will scale all the points together.</h2>", 
         "eg": "<p><code>vec.scale2D( 0.7, 1.2, anchor_pt )</code> <code>vec.scale2D( 1, 3, anchor_pt, Const.xz )</code></p>", 
         "name": "scale2D", 

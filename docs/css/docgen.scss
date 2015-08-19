@@ -76,12 +76,11 @@ code {
 }
 
 
-
 section {
+
   padding-top: 40px;
-}
+  position: relative;
 
-section {
   h1 {
     position: relative;
     font-size: 2em;
@@ -151,13 +150,23 @@ section {
   }
 
   .demo {
-    position: relative;
+    $demoSize: 250px;
+    position: absolute;
+    width: $demoSize; height: $demoSize; margin-right: -$demoSize - 70;
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    top: 60px;
+    right: 0;
+    border: 20px solid #f3f5f9;
+    transition: border-color .3s, width .3s, height .3s, margin-right .3s;
+    cursor: pointer;
 
-    .demo-arrow {
-      position: absolute;
-      top: 0; right: 0;
-      width: 20px; height: 20px;
-      background-color: #f00;
+    &:hover {
+      $demoSize: 350px;
+      border-color: #e1e9f3;
+      width: $demoSize; height: $demoSize; margin-right: -$demoSize - 70;
+      z-index: 10;
     }
   }
 }
@@ -199,6 +208,25 @@ section.inherited ul {
   position: fixed;
   top: 0; bottom: 0; left: 0; right: 0;
   z-index: 1
+}
+
+#overview {
+  position: absolute;
+  bottom: 0; left: 40px;
+
+  h1 {
+    font-size: 6.5vh;
+    font-weight: 300;
+    margin-bottom: 5vh;
+
+
+    small {
+      color: $grey-dark;
+      font-size: 0.5em;
+      display: inline-block;
+      opacity: .7;
+    }
+  }
 }
 
 #header {
@@ -331,12 +359,6 @@ section.inherited ul {
 }
 
 
-#pt {
-  position: absolute;
-  top: 0; right: 0;
-  display: block;
-  background-color: $link;
-}
 
 
 .sticky-step1 #pt {

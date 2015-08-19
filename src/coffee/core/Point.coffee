@@ -163,6 +163,7 @@ class Point
   # ## Evaluate the minimum x,y,z of this point and another point, and get a maximum Point
   # @param `args` comma-separated values, as an array, or as a Point object.
   # @eg `p.max(1,2)` `p.max( another_p )`
+  # @demo point.max
   # @return this Point
   max: (args) ->
     _p = Point.get(arguments)

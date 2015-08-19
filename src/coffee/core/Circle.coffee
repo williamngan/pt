@@ -23,6 +23,7 @@ class Circle extends Vector
   # ## Check if a point is on this Circle on xy axis.
   # @param `args` comma-separated values, or an array, or a Point object
   # @eg `circle.intersectPoint(1,2,3)` `circle.intersectPoint(pt)`
+  # @demo circle.intersectPoint
   # @return a boolean value to indicate if there is an intersection
   intersectPoint: (args) ->
     item = new Vector( Point.get(arguments) )
@@ -33,6 +34,7 @@ class Circle extends Vector
   # ## Check intersections between this Circle and an infinite Line on xy axis. Based on [this algorithm](http://stackoverflow.com/questions/13053061/circle-line-intersection-points).
   # @param `path` a Pair or Line object to specify an infinite line
   # @get_pts `get_pts` a boolean value to specify whether the results should include the intersection points. If `false`, then only the intersection state (true or false) will be returned.
+  # @demo circle.intersectPath
   # @returns an Array of intersection points (zero, one, or two points), or a boolean value. (Based on `get_pts` parameter)
   intersectPath: ( path, get_pts=true ) ->
     if not path instanceof Pair then return false
@@ -117,6 +119,7 @@ class Circle extends Vector
   # ## Check if this circle intersects with another circle
   # @param `circle` another Circle
   # @get_pts `get_pts` a boolean value to specify whether the results should include the intersection points. If `false`, then only the intersection state (true or false) will be returned.
+  # @demo circle.intersectCircle
   # @returns an Array of intersection points (zero or two points) or a boolean value, based on `get_pts` parameter.
   intersectCircle: (circle, get_pts=true) ->
     dv = circle.$subtract( @ )

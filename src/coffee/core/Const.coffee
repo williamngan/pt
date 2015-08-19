@@ -1,4 +1,4 @@
-# ### Various constants
+# ### A list of useful constant values for calculations and labeling.
 class Const
 
   # ## represents the xy plane

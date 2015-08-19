@@ -39,6 +39,7 @@ class Particle extends Circle
   # ## Play the particle for one time-step.
   # @param `time` current time in milliseconds
   # @param `timeDiff` time difference between last and current step, ie, the time of a frame.
+  # @demo particle.play
   play: ( time, timeDiff ) ->
     t = 0
     while timeDiff > 0
@@ -133,6 +134,7 @@ class Particle extends Circle
   # ## check Collision with a line segment (wall), and calculate the resulting velocity and momentum
   # @param `wall` a Line object to check collision against
   # @param `precise` a boolean value to specify a precise collision calculation. If `true`, then the particle position will be recalculated to match the exact collision position with the line. Default is true.
+  # @demo particle.collideLine2d
   # @return a boolean value to indicate if collision occurs
   collideLine2d: ( wall, precise=true ) ->
 

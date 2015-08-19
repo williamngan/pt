@@ -1,4 +1,4 @@
-# # Various static methods and helper classes
+# ### A collection of static methods and helper classes to get things done.
 class Util
 
   # ## A static function to convert degrees to radian
@@ -354,9 +354,3 @@ this.Util = Util;
 #    d += a/dt
 #
 #    return { c: c, d: d }
-
-
-
-
-# namespace
-this.Util = Util

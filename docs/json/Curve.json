@@ -44,6 +44,7 @@
             "return": "<p>a Point on the curve</p>"
         }, 
         {
+            "demo": "curve.cardinal", 
             "description": "<h2>Create a Cardinal spline curve</h2>", 
             "name": "cardinal", 
             "param": [
@@ -65,6 +66,7 @@
             "return": "<p>a Point on the curve</p>"
         }, 
         {
+            "demo": "curve.bezier", 
             "description": "<h2>Create a Bezier curve. In a cubic bezier curve, the first and 4th points are end points, and 2nd and 3rd points are control points.</h2>", 
             "name": "bezier", 
             "param": [
@@ -84,6 +86,7 @@
             "return": "<p>a Point on the curve</p>"
         }, 
         {
+            "demo": "curve.bspline", 
             "description": "<h2>Create a B-Spline cuve</h2>", 
             "name": "bspline", 
             "param": [

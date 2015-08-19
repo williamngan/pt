@@ -1,6 +1,6 @@
 {
     "cls": "Util", 
-    "description": "<h1>Various static methods and helper classes</h1>", 
+    "description": "<h3>A collection of static methods and helper classes to get things done.</h3>", 
     "extend": "", 
     "file": "Util.coffee", 
     "funcs": [], 

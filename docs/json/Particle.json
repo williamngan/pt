@@ -15,6 +15,7 @@
             "return": "<p>a new Circle object</p>"
         }, 
         {
+            "demo": "particle.play", 
             "description": "<h2>Play the particle for one time-step.</h2>", 
             "name": "play", 
             "param": [
@@ -70,6 +71,7 @@
             "pname": "t, dt"
         }, 
         {
+            "demo": "particle.collideLine2d", 
             "description": "<h2>check Collision with a line segment (wall), and calculate the resulting velocity and momentum</h2>", 
             "name": "collideLine2d", 
             "param": [

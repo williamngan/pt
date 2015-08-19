@@ -184,6 +184,7 @@ class Form
   # ## Set current fill style
   # @param `c` fill color which can be as color, gradient, or pattern. (See [canvas documentation](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillStyle)) Default is false (transparent)
   # @eg `form.fill("#F90")` `form.fill("rgba(0,0,0,.5")` `form.fill(false)`
+  # @demo form.fill
   # @return this Form
   fill: (c) ->
     @cc.fillStyle = if c then c else "transparent"
@@ -209,6 +210,7 @@ class Form
   # @param `size` an integer value to specify font size in pixels
   # @param `face` optional name to change the font face, such as "sans-serif" or "Helvetica"
   # @eg `form.font(24)` `form.font(12, "Georgia")`
+  # @demo form.font
   # @return this Form
   font: (size, face=@fontFace) ->
     @fontSize = size
@@ -263,6 +265,7 @@ class Form
   # @param `ps` an array of Points
   # @param `halfsize` radius or half size of the point. Default is 2.
   # @param `isCircle` a boolean value to specify if the point should be drawn as a circle. Default is false.
+  # @demo form.points
   # @return this Form
   points: (ps, halfsize=2, isCircle=false) ->
     Form.points(@cc, ps, halfsize, @filled, @stroked, isCircle )
@@ -319,6 +322,7 @@ class Form
 
   # ## Draw a curve
   # @param `ps` an array of Points
+  # @demo form.curve
   # @return this Form
   curve: (ps) ->
     Form.curve( @cc, ps )

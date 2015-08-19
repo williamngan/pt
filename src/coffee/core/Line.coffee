@@ -74,6 +74,7 @@ class Line extends Pair
   # @param `reverse` a boolean value to reverse the direction of the new line if set to `true`
   # @param `axis` optional axis id (eg, `Const.yz`) to specify a plane
   # @eg `ln.getPerpendicular(0.5)`, `ln.getPerpendicular(0.2, 100, true, Const.yz)`
+  # @demo line.getPerpendicular
   # @return a new Line that's perpendicular to this line
   getPerpendicular: ( t, len=10, reverse=false, axis=Const.xy ) ->
     pn = @direction().normalize().perpendicular( axis ) # get normal vector
@@ -94,6 +95,7 @@ class Line extends Pair
   # ## Find the perpendicular vector from this line to the point. You can connect the resulting vector with the point's position to draw a perpendicular line
   # @param `pt` a Point
   # @param `fromProjection` a boolean value defaults to true. If true, the resulting vector is based on this line's position. Otherwise the vector starts from origin (0,0).
+  # @demo line.getPerpendicularFromPoint
   # @return a perpendicular Vector
   getPerpendicularFromPoint: ( pt, fromProjection=true ) ->
     proj = @p1.$subtract(@).projection( pt.$subtract(@) )
@@ -142,6 +144,7 @@ class Line extends Pair
   # ## Get intersection point of this line segement and another line segement (not infintie lines)
   # @param `line` another Line
   # @param `axis` optional axis id (eg, `Const.yz`) to specify a plane
+  # @demo line.intersectLine
   # @return an intersection point as Vector, or `false` if no intersection, or `null` if two lines are identical
   intersectLine: (line, axis=Const.xy) ->
     # get point from intersectPath()

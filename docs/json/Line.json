@@ -32,6 +32,7 @@
             "pname": "axis=Const.xy"
         }, 
         {
+            "demo": "line.getPerpendicular", 
             "description": "<h2>Given an interpolated point on this line, return another line of specific length that is perpendicular to this line.</h2>", 
             "eg": "<p><code>ln.getPerpendicular(0.5)</code>, <code>ln.getPerpendicular(0.2, 100, true, Const.yz)</code></p>", 
             "name": "getPerpendicular", 
@@ -53,6 +54,7 @@
             "pname": "pt"
         }, 
         {
+            "demo": "line.getPerpendicularFromPoint", 
             "description": "<h2>Find the perpendicular vector from this line to the point. You can connect the resulting vector with the point's position to draw a perpendicular line</h2>", 
             "name": "getPerpendicularFromPoint", 
             "param": [
@@ -73,6 +75,7 @@
             "return": "<p>an intersection point as Vector, or <code>false</code> if no intersection, or <code>null</code> if two lines are identical</p>"
         }, 
         {
+            "demo": "line.intersectLine", 
             "description": "<h2>Get intersection point of this line segement and another line segement (not infintie lines)</h2>", 
             "name": "intersectLine", 
             "param": [

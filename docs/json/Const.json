@@ -1,6 +1,6 @@
 {
     "cls": "Const", 
-    "description": "<h3>Various constants</h3>", 
+    "description": "<h3>A list of useful constant values for calculations and labeling.</h3>", 
     "extend": "", 
     "file": "Const.coffee", 
     "funcs": [], 
