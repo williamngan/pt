@@ -1,4 +1,4 @@
-# # An area that influence force, velocity, etc of particles inside it
+# ### (In progress) An area that influence force, velocity, etc of particles inside it
 class ParticleField extends Rectangle
 
   constructor: ()->

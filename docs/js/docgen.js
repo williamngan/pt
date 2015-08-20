@@ -112,12 +112,14 @@
         ref1 = this.elems[v.cls].extend;
         for (l = 0, len1 = ref1.length; l < len1; l++) {
           n = ref1[l];
-          pa = {
-            cls: n,
-            funcs: this.elems[n].funcs,
-            props: this.elems[n].props
-          };
-          parents.push(pa);
+          if (this.elems[n]) {
+            pa = {
+              cls: n,
+              funcs: this.elems[n].funcs,
+              props: this.elems[n].props
+            };
+            parents.push(pa);
+          }
         }
         v.parents = parents;
         results.push(sec.innerHTML = this.dom.template(v));
@@ -168,7 +170,6 @@
 
     Docs.prototype.getMembers = function(k) {
       var _createSub;
-      console.log(this.elems[k]);
       if (this.elems[k]) {
         this.dom.submenu.innerHTML = "";
         _createSub = (function(_this) {

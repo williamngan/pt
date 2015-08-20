@@ -1,5 +1,7 @@
+# ### A basic quad tree implementation
 class QuadTree extends Rectangle
 
+  # ## Create a new QuadTree, which is a kind of Rectangle
   constructor: () ->
     super
 
@@ -14,7 +16,8 @@ class QuadTree extends Rectangle
 
 
   # ## Get a list of quads in which this point is contained
-  # param: p is a Point
+  # @param `p` is a Point
+  # @param `list` Optional existing list to append to
   getQuads: ( p, list=[] ) ->
 
     if @intersectPoint( p )
@@ -29,7 +32,7 @@ class QuadTree extends Rectangle
     return list
 
   # ## Get a list of items in this point's deepest quad
-  # p is a Point
+  # @param `p`  a Point
   getItems: ( p ) ->
 
     if @intersectPoint( p )
@@ -77,7 +80,7 @@ class QuadTree extends Rectangle
     return -1
 
 
-  # Split this into 4 quads using Rectangle's quadrant()
+  # ## Split this into 4 quads using Rectangle's `quadrant()`
   splitQuad: () ->
 
     # split to sub quads and increment depth

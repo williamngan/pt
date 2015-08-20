@@ -1,0 +1,44 @@
+{
+    "cls": "GridCascade", 
+    "description": "<h3>(In progress) Like Grid, but expand the rows as needed to fit more items.</h3>", 
+    "extend": "Grid", 
+    "file": "GridCascade.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Clear the layout and re-make the initial grid</h2><p>simplified because rows are auto-expanded in fit()</p>", 
+            "name": "resetLayout", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>Mark a certain area in the grid as occupied. This also checks for new rows, which is not checked in Grid</h2>", 
+            "name": "occupy", 
+            "param": [
+                "<p><code>x</code> column index</p>", 
+                "<p><code>y</code> row index</p>", 
+                "<p><code>W</code> column width</p>", 
+                "<p><code>h</code> row size</p>"
+            ], 
+            "pname": "x, y, w, h", 
+            "return": "<p>this grid</p>"
+        }, 
+        {
+            "description": "<h2>optimize the iteration by starting at a row that has free cells</h2>", 
+            "name": "findStartRow", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>fit this area within the grid. This expands new rows to fit more items as needed.</h2>", 
+            "name": "fit", 
+            "param": [
+                "<p><code>width</code> number of columns</p>", 
+                "<p><code>height</code> number of rows</p>"
+            ], 
+            "pname": "cols, rows", 
+            "return": "<p>an object with properties <code>row</code> and <code>column</code> to specify the top left position, <code>columnSize</code> and <code>rowSize</code> to specify the resulting size in grid units, and <code>bound</code> which is the actual area as a Rectangle object.</p>"
+        }
+    ], 
+    "props": [], 
+    "statics": []
+}

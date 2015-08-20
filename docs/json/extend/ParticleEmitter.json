@@ -1,0 +1,42 @@
+{
+    "cls": "ParticleEmitter", 
+    "description": "<h3>(In progress)  A very basic particle emitter</h3>", 
+    "extend": "Vector", 
+    "file": "ParticleEmitter.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Constructor</h2>", 
+            "name": "ParticleEmitter", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>Initiate with an instance of a <code>ParticleSystem</code></h2>", 
+            "name": "init", 
+            "param": [], 
+            "pname": "system"
+        }, 
+        {
+            "description": "<h2>Set frequency of emisson.</h2>", 
+            "name": "frequency", 
+            "param": [
+                "<p><code>f</code> how many per second.</p>"
+            ], 
+            "pname": "f"
+        }, 
+        {
+            "description": "<h2>emit a particle (abstract method)</h2>", 
+            "name": "emit", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>animate function to be called by Space</h2>", 
+            "name": "animate", 
+            "param": [], 
+            "pname": "time, frame, ctx"
+        }
+    ], 
+    "props": [], 
+    "statics": []
+}

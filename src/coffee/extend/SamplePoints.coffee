@@ -1,7 +1,7 @@
-
+# ### Point sampling using Best Candidate and Poisson methods.
 class SamplePoints extends PointSet
 
-  # ## Constructor
+  # ## Construct a point sampler
   constructor: () ->
     super
 
@@ -11,13 +11,17 @@ class SamplePoints extends PointSet
     @boundsize = null
 
   # ## Add a bound.
-  # if anchor is true, then current position is set to bound's position
+  # @param `b` the bounding box
+  # @param `anchor` a boolean value. If set to `true`, then current position is set to bound's position
+  # @return this sampler
   setBounds: ( b, anchor=false ) ->
     if anchor then @set( b )
     @bound = new Rectangle(@).size( b.size() )
+    return @
 
 
   # ## Initiate a best candidate sampler
+  # @return this sampler
   bestCandidateSampler: () ->
 
     @points = []
@@ -37,6 +41,7 @@ class SamplePoints extends PointSet
 
   # ## Initiate a poisson sampler using Bridson's algorithm
   # Based on http://bl.ocks.org/mbostock/19168c663618b7f07158
+  # @return this sampler
   poissonSampler: (radius) ->
 
     @points = []
@@ -64,7 +69,9 @@ class SamplePoints extends PointSet
     return @
 
   # ## Get a sample from poisson sampler or best-candidate sampler.
-  # return false if no more sample can be found
+  # @param `numSamples` number of times to sample. Defaults to 10 times
+  # @param `type` sampling type, either "poisson" or "bestcandidate". Defaults to "bestcandidate".
+  # @return a point, or false if no more sample can be found
   sample: ( numSamples=10, type=false ) ->
 
     # Poisson

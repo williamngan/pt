@@ -1,20 +1,24 @@
-
-# # Particle Emitter
+# ### (In progress)  A very basic particle emitter
 class ParticleEmitter extends Vector
 
   # ## Constructor
-  # @param {system} Particle System
-  # @param {position} position of the emitter
-  # @param {frequency} number of particles to emit per second
   constructor: ( ) ->
     super
 
     @system = null
     @lastTime = 0
+    @period = 0
     @animateID = -1 # for Space loop
 
-  # ## Set frequency of emisson. f = how many per second.
-  frequency: (f) -> @period = 1000 / f
+  # ## Initiate with an instance of a `ParticleSystem`
+  init: ( system ) ->
+    @system = system
+
+  # ## Set frequency of emisson.
+  # @param `f` how many per second.
+  frequency: (f) ->
+    @period = 1000 / f
+    return @
 
   # ## emit a particle (abstract method)
   emit: ->
@@ -26,7 +30,6 @@ class ParticleEmitter extends Vector
     if time - @lastTime > @period
       @emit()
       @lastTime = time
-
 
 
 # namespace

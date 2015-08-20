@@ -1,0 +1,27 @@
+{
+    "cls": "ParticleField", 
+    "description": "<h3>(In progress) An area that influence force, velocity, etc of particles inside it</h3>", 
+    "extend": "Rectangle", 
+    "file": "ParticleField.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>check particles to work on</h2>", 
+            "name": "check", 
+            "param": [
+                "<p>{particles} array of particles</p>", 
+                "<p>{removal} if true and if particle within bound, then remove it from array</p>"
+            ], 
+            "pname": "particles, removal=false"
+        }, 
+        {
+            "description": "<h2>apply the changes to a particle (abstract method), used in check()</h2>", 
+            "name": "work", 
+            "param": [
+                "<p>{p} a particle</p>"
+            ], 
+            "pname": "p"
+        }
+    ], 
+    "props": [], 
+    "statics": []
+}

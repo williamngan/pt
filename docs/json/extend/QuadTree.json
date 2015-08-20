@@ -1,0 +1,51 @@
+{
+    "cls": "QuadTree", 
+    "description": "<h3>A basic quad tree implementation</h3>", 
+    "extend": "Rectangle", 
+    "file": "QuadTree.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a new QuadTree, which is a kind of Rectangle</h2>", 
+            "name": "QuadTree", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>Get a list of quads in which this point is contained</h2>", 
+            "name": "getQuads", 
+            "param": [
+                "<p><code>p</code> is a Point</p>", 
+                "<p><code>list</code> Optional existing list to append to</p>"
+            ], 
+            "pname": "p, list=[]"
+        }, 
+        {
+            "description": "<h2>Get a list of items in this point's deepest quad</h2>", 
+            "name": "getItems", 
+            "param": [
+                "<p><code>p</code>  a Point</p>"
+            ], 
+            "pname": "p"
+        }, 
+        {
+            "description": "<h2>Add an item into this QuadTree. Split to sub quads if needed.</h2>", 
+            "name": "addToQuad", 
+            "param": [], 
+            "pname": "item"
+        }, 
+        {
+            "description": "<h2>Split this into 4 quads using Rectangle's <code>quadrant()</code></h2>", 
+            "name": "splitQuad", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>reset this quad, removing items and sub-quads</h2>", 
+            "name": "resetQuad", 
+            "param": [], 
+            "pname": ""
+        }
+    ], 
+    "props": [], 
+    "statics": []
+}

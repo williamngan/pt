@@ -1,4 +1,4 @@
-# # A simple handle that can be dragged by mouse
+# ### (In progress) A simple handle that can be dragged by mouse
 class UI extends Rectangle
 
   # class variable tracks if a handle has been dragged (to avoid dragging multiple handles at once)

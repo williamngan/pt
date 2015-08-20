@@ -1,25 +1,23 @@
-
-
-# # Like Grid, but expand the rows as needed to fit more items
+# ### (In progress) Like Grid, but expand the rows as needed to fit more items.
 class GridCascade extends Grid
   constructor : () ->
     super
 
     @startRow = 0
 
-  # ## clear the layout and re-make the initial grid
+  # ## Clear the layout and re-make the initial grid
   # simplified because rows are auto-expanded in fit()
   resetLayout : () ->
     @layout = []
     @startRow = 0
 
 
-  # ## mark a certain area in the grid as occupied
-  # This also checks for new rows, which is not checked in Grid
+  # ## Mark a certain area in the grid as occupied. This also checks for new rows, which is not checked in Grid
   # @param `x` column index
   # @param `y` row index
   # @param `W` column width
   # @param `h` row size
+  # @return this grid
   occupy : ( x, y, w, h ) ->
     for c in [x...(w+x)]
       for r in [y...(h+y)]

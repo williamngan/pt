@@ -1,0 +1,62 @@
+{
+    "cls": "SamplePoints", 
+    "description": "<h3>Point sampling using Best Candidate and Poisson methods.</h3>", 
+    "extend": "PointSet", 
+    "file": "SamplePoints.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Construct a point sampler</h2>", 
+            "name": "SamplePoints", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>Add a bound.</h2>", 
+            "name": "setBounds", 
+            "param": [
+                "<p><code>b</code> the bounding box</p>", 
+                "<p><code>anchor</code> a boolean value. If set to <code>true</code>, then current position is set to bound's position</p>"
+            ], 
+            "pname": "b, anchor=false", 
+            "return": "<p>this sampler</p>"
+        }, 
+        {
+            "description": "<h2>Initiate a best candidate sampler</h2>", 
+            "name": "bestCandidateSampler", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>this sampler</p>"
+        }, 
+        {
+            "description": "<h2>Initiate a poisson sampler using Bridson's algorithm</h2><p>Based on http://bl.ocks.org/mbostock/19168c663618b7f07158</p>", 
+            "name": "poissonSampler", 
+            "param": [], 
+            "pname": "radius", 
+            "return": "<p>this sampler</p>"
+        }, 
+        {
+            "description": "<h2>Get a sample from poisson sampler or best-candidate sampler.</h2>", 
+            "name": "sample", 
+            "param": [
+                "<p><code>numSamples</code> number of times to sample. Defaults to 10 times</p>", 
+                "<p><code>type</code> sampling type, either \"poisson\" or \"bestcandidate\". Defaults to \"bestcandidate\".</p>"
+            ], 
+            "pname": "numSamples=10, type=false", 
+            "return": "<p>a point, or false if no more sample can be found</p>"
+        }
+    ], 
+    "props": [], 
+    "statics": [
+        {
+            "description": "<h2>A static implementation of Mitchell's Best Neighor Algorithm to generate one sample. (Consider using <code>SamplePoints</code> object instead)</h2>", 
+            "name": "bestCandidate", 
+            "param": [
+                "<p><code>bound</code> a Rectangle object to specify the bounding box</p>", 
+                "<p><code>items</code> an array of existing items</p>", 
+                "<p><code>samples</code> number of sampling. Default to 10.</p>"
+            ], 
+            "pname": "bound, items, samples=10", 
+            "return": "<p>o Vector object which is best candidate</p>"
+        }
+    ]
+}

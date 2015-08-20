@@ -1,0 +1,39 @@
+{
+    "cls": "Noise", 
+    "description": "<h3>Generate Perlin and Simplex2D noise.</h3>", 
+    "extend": "Vector", 
+    "file": "Noise.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Generate a different noise by seeding</h2>", 
+            "eg": "<p><code>noise.seed(0.1)</code>, <code>noise.seed(Math.random())</code></p>", 
+            "name": "seed", 
+            "param": [
+                "<p><code>seed</code> a value between 0 to 1</p>"
+            ], 
+            "pname": "seed"
+        }, 
+        {
+            "description": "<h2>Get a 2d perlin noise value. Increase the x and y parameters by a small amount (eg, 0.01) at each step to get a smooth noise.</h2>", 
+            "eg": "<p><code>noise.perlin2d()</code>, <code>noise.perlin2d(10.001, 0.1)</code></p>", 
+            "name": "perlin2d", 
+            "param": [
+                "<p><code>x, y</code> optional x and y dimension, or leave empty to use this vector's x and y position</p>"
+            ], 
+            "pname": "xin=@x, yin=@y", 
+            "return": "<p>a value between 0 to 1</p>"
+        }, 
+        {
+            "description": "<h2>Get a 2d simplex noise value. Increase the x and y parameters by a small amount (eg, 0.01) at each step to get a smooth noise.</h2>", 
+            "eg": "<p><code>noise.simplex2d()</code>, <code>noise.simplex2d(10.001, 0.1)</code></p>", 
+            "name": "simplex2d", 
+            "param": [
+                "<p><code>x, y</code> optional x and y dimension, or leave empty to use this vector's x and y position</p>"
+            ], 
+            "pname": "xin=@x, yin=@y", 
+            "return": "<p>a value between -1 to 1</p>"
+        }
+    ], 
+    "props": [], 
+    "statics": []
+}

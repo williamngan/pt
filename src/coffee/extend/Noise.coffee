@@ -1,3 +1,4 @@
+# ### Generate Perlin and Simplex2D noise.
 class Noise extends Vector
 
   # Perlin noise implementation based on Stefan Gustavson's java implementation

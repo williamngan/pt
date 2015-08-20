@@ -383,8 +383,6 @@ Util = (function() {
 
 this.Util = Util;
 
-this.Util = Util;
-
 Timer = (function() {
   function Timer(d) {
     if (d == null) {
@@ -460,7 +458,8 @@ Space = (function() {
   }
 
   Space.prototype.refresh = function(b) {
-    return this._refresh = b;
+    this._refresh = b;
+    return this;
   };
 
   Space.prototype.render = function(func) {
@@ -4498,11 +4497,17 @@ ParticleEmitter = (function(superClass) {
     ParticleEmitter.__super__.constructor.apply(this, arguments);
     this.system = null;
     this.lastTime = 0;
+    this.period = 0;
     this.animateID = -1;
   }
 
+  ParticleEmitter.prototype.init = function(system) {
+    return this.system = system;
+  };
+
   ParticleEmitter.prototype.frequency = function(f) {
-    return this.period = 1000 / f;
+    this.period = 1000 / f;
+    return this;
   };
 
   ParticleEmitter.prototype.emit = function() {};
@@ -4702,7 +4707,8 @@ SamplePoints = (function(superClass) {
     if (anchor) {
       this.set(b);
     }
-    return this.bound = new Rectangle(this).size(b.size());
+    this.bound = new Rectangle(this).size(b.size());
+    return this;
   };
 
   SamplePoints.prototype.bestCandidateSampler = function() {

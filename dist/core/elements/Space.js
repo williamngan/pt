@@ -22,7 +22,8 @@ Space = (function() {
   }
 
   Space.prototype.refresh = function(b) {
-    return this._refresh = b;
+    this._refresh = b;
+    return this;
   };
 
   Space.prototype.render = function(func) {

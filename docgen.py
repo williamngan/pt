@@ -5,7 +5,8 @@
 # Based on Docco and Pycco (https://fitzgen.github.io/pycco/).
 
 # Command Line Example:
-# python docgen.py -i ./src/coffee/core -o ./docs/json
+# python docgen.py -i ./src/coffee/core -o ./docs/json/core
+# python docgen.py -i ./src/coffee/extend -o ./docs/json/extend
 
 import sys
 import getopt

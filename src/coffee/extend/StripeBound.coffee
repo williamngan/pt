@@ -1,4 +1,4 @@
-# # A Bound subdivided in horizontal and vertical stripes
+# ### A Bound subdivided in horizontal and vertical stripes
 class StripeBound extends Rectangle
 
   constructor: () ->
@@ -15,12 +15,15 @@ class StripeBound extends Rectangle
     @frequency = new Vector(x, y)
     @method = 'frequency'
 
+
   # ## Set number of strips by number, and change method to stripes
   setStripes: (x, y) ->
     @stripes = new Point(x,y)
     @method = 'stripes'
 
-  # ## get stripes as boxes of {columns:[Pairs], rows:[Pairs]}
+
+  # ## get stripes as boxes
+  # @return boxes of `{columns:[Pairs], rows:[Pairs]}`
   getStripes: () ->
     size = @size()
     result = {columns: [], rows: []}
@@ -45,7 +48,8 @@ class StripeBound extends Rectangle
 
     return result
 
-  # ## get stripes as lines {columns:[Pairs], rows:[Pairs]}
+  # ## get stripes as lines
+  # @return lines of `{columns:[Pairs], rows:[Pairs]}`
   getStripeLines: () ->
     size = @size()
     result = {columns: [], rows: []}
@@ -71,8 +75,9 @@ class StripeBound extends Rectangle
     return result
 
 
-  # ## create a masking area for canvas clipping
-  # defaults to position in the center of the bound, unless anchor paramater is set
+  # ## create a masking area for canvas clipping. Defaults to position in the center of the bound, unless anchor paramater is set
+  # @param `w, h` mask width and height
+  # @param `anchor` optional anchor point, or leave unset to default anchor position which is center of the bound.
   setMask: (w, h, anchor=false) ->
     @mask = new Rectangle(@x, @y)
     sz = @size()

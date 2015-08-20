@@ -1,5 +1,5 @@
 
-# ## Easing functions based on Robert Penner's
+# ### Simple easing functions based on Robert Penner's functions.
 class Easing
 
   # ## Linear interpolation
@@ -7,6 +7,7 @@ class Easing
   # @param `b` start value
   # @param `c` change in value
   # @param `d` duration time or total iteration
+  # @return interpolated value
   @linear: (t, b, c, d) ->
     return c * (t /= d) + b
 

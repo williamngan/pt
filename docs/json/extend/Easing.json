@@ -1,0 +1,22 @@
+{
+    "cls": "Easing", 
+    "description": "<h3>Simple easing functions based on Robert Penner's functions.</h3>", 
+    "extend": "", 
+    "file": "Easing.coffee", 
+    "funcs": [], 
+    "props": [], 
+    "statics": [
+        {
+            "description": "<h2>Linear interpolation</h2>", 
+            "name": "linear", 
+            "param": [
+                "<p><code>t</code> current time or iteration</p>", 
+                "<p><code>b</code> start value</p>", 
+                "<p><code>c</code> change in value</p>", 
+                "<p><code>d</code> duration time or total iteration</p>"
+            ], 
+            "pname": "t, b, c, d", 
+            "return": "<p>interpolated value</p>"
+        }
+    ]
+}

@@ -1,0 +1,51 @@
+{
+    "cls": "StripeBound", 
+    "description": "<h3>A Bound subdivided in horizontal and vertical stripes</h3>", 
+    "extend": "Rectangle", 
+    "file": "StripeBound.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Determines the number of stripes by frequency, and change method to frequency</h2>", 
+            "name": "setFrequency", 
+            "param": [], 
+            "pname": "x, y"
+        }, 
+        {
+            "description": "<h2>Set number of strips by number, and change method to stripes</h2>", 
+            "name": "setStripes", 
+            "param": [], 
+            "pname": "x, y"
+        }, 
+        {
+            "description": "<h2>get stripes as boxes</h2>", 
+            "name": "getStripes", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>boxes of <code>{columns:[Pairs], rows:[Pairs]}</code></p>"
+        }, 
+        {
+            "description": "<h2>get stripes as lines</h2>", 
+            "name": "getStripeLines", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>lines of <code>{columns:[Pairs], rows:[Pairs]}</code></p>"
+        }, 
+        {
+            "description": "<h2>create a masking area for canvas clipping. Defaults to position in the center of the bound, unless anchor paramater is set</h2>", 
+            "name": "setMask", 
+            "param": [
+                "<p><code>w, h</code> mask width and height</p>", 
+                "<p><code>anchor</code> optional anchor point, or leave unset to default anchor position which is center of the bound.</p>"
+            ], 
+            "pname": "w, h, anchor=false"
+        }, 
+        {
+            "description": "<h2>anchor mask to bound's origin position</h2>", 
+            "name": "anchorMask", 
+            "param": [], 
+            "pname": ""
+        }
+    ], 
+    "props": [], 
+    "statics": []
+}

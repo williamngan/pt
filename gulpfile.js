@@ -27,6 +27,15 @@ var path = {
 };
 
 
+
+// To rebuild all in sequence:
+// 1) "build",
+// 2) "namespace" to add namespace versions,
+// 3) "module" to add npm module.exports versions,
+// 4) "min" to create minified version
+
+
+
 // Define class sequence manually. To be modularize later.
 // Parent classes needs to be defined before its extended children
 var coreElems = [
@@ -58,12 +67,6 @@ gulp.task('watch', function() {
   gulp.watch( path.demoEs6.src+"*.js", ['es6-demo']);
 });
 
-
-// Rebuild all in sequence
-// 1) "build",
-// 2) "namespace" to add namespace versions,
-// 3) "module" to add npm module.exports versions,
-// 4) "min" to create minified version
 
 gulp.task('build', ["pt", "core", "core-files"]);
 

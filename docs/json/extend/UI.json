@@ -1,0 +1,9 @@
+{
+    "cls": "UI", 
+    "description": "<h3>(In progress) A simple handle that can be dragged by mouse</h3>", 
+    "extend": "Rectangle", 
+    "file": "UI.coffee", 
+    "funcs": [], 
+    "props": [], 
+    "statics": []
+}

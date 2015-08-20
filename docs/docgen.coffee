@@ -105,13 +105,14 @@ class Docs
       # get inherited
       parents = []
       for n in @elems[v.cls].extend
-        pa = {
-          cls: n
-          funcs: @elems[n].funcs
-          props: @elems[n].props
-        }
-        # pa.funcs.shift() # remove constructor function
-        parents.push( pa )
+        if (@elems[n])
+          pa = {
+            cls: n
+            funcs: @elems[n].funcs
+            props: @elems[n].props
+          }
+          # pa.funcs.shift() # remove constructor function
+          parents.push( pa )
 
       v.parents = parents
 
@@ -158,8 +159,6 @@ class Docs
     )
 
   getMembers: (k) ->
-
-    console.log( @elems[k] )
 
     if @elems[k]
 

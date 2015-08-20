@@ -232,6 +232,4 @@ Util = (function() {
 
 this.Util = Util;
 
-this.Util = Util;
-
 //# sourceMappingURL=.map/Util.js.map
