@@ -18,6 +18,7 @@
 			font-family: "Helvetica", sans-serif;
             font-size: 10px;
             line-height: 1.35;
+            margin: 0;
 		}
         html {
           overflow-x: hidden;
@@ -75,7 +76,7 @@
         }
 
         #info {
-            font-size: 10px;
+            font-size: 1em;
             color: #fff;
             opacity: .2;
             position: absolute;
@@ -115,7 +116,7 @@
         }
 
         a {
-            color: #334fff;
+            color: #4060ff;
 
             font-weight: 500;
             text-decoration: none;
@@ -127,6 +128,68 @@
             color: #fff;
             border-bottom-color: #fe0;
         }
+
+        #mobile {
+            position: absolute;
+            bottom: 15px;
+            opacity: .4;
+            display: none;
+            font-size: 1em;
+        }
+
+        #demoMobile { display: none; }
+
+        @media only screen and (max-width : 768px) {
+            #pt {
+                display: none;
+            }
+
+            #board {
+                position: relative; top: auto; left: auto; right: auto; bottom: auto;
+                width: 100vw; height: 80vh;
+                background: url("/docs/images/pt/pair.collinear.png") no-repeat center center;
+                background-size: cover;
+                opacity: .5;
+            }
+
+            #page {
+                left: 50%;
+            }
+
+            #cover {
+                vertical-align: bottom;
+                margin-bottom: 20vh;
+            }
+
+            #cover p {
+                font-size: 1.6em;
+                line-height: 2;
+            }
+
+            #cover h3 {
+                font-size: 1.6em;
+            }
+
+            #cover h1 {
+                font-size: 10em;
+            }
+
+            #info {
+                position: fixed;
+                left: 20px; width: 40%;
+                bottom: 20px;
+
+            }
+
+            #demoDesktop { display: none; }
+            #demoMobile { display: block; }
+
+            p#mobile {
+                display: block;
+                font-size: 1em;
+            }
+        }
+
 	</style>
 
     <script>
@@ -146,11 +209,15 @@
     <div id="cover">
         <h1>Pt</h1>
         <h3>An experiment on visual&nbsp;forms in&nbsp;code.</h3>
-        <p><a href="./demo.html?file=canvasspace.bindMouse.js">Demos</a></p>
-        <p><a href="#">Motivations</a></p>
-        <p><a href="#">Source code</a></p>
+        <p id="demoDesktop"><a href="./demo.html?file=color.LABtoRGB.js">Demos</a></p>
+        <p id="demoMobile"><a href="./demoMobile.html">Demos</a></p>
+        <p><a href="#">Description</a></p>
+        <p><a href="#">Guide</a></p>
+        <p id="mobile">Try interactive demos in Desktop too</p>
     </div>
-    <div id="info">An open source project started by <a href="https://twitter.com/williamngan">@williamngan</a></div>
+    <div id="info">
+        <a href="https://github.com/williamngan/pt">github</a> &nbsp; <a href="https://twitter.com/williamngan">@williamngan</a>
+    </div>
 </div>
 
 

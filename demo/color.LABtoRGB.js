@@ -1,5 +1,5 @@
 //// 0. Describe this demo
-window.demoDescription = "";
+window.demoDescription = "Create a gradient grid using L,a,b color space. The mouse position changes the a and b values.";
 
 
 //// 1. Define Space and Form
