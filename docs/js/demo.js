@@ -15,9 +15,18 @@ function coverDemo() {
   var gap = space.size.$subtract( 100, 100 ).divide( steps*2, steps );
 
 // create grid of rectangles
-  function init() {
+  function init( shouldResize ) {
+    if (stopped) return;
+
     rects = [];
     gap = space.size.$subtract( 100, 100 ).divide( steps*2, steps );
+
+    if (shouldResize) {
+      var size = space.canvas.parentNode.getBoundingClientRect();
+      if (size.width && size.height) {
+        space.resize( size.width, size.height );
+      }
+    }
 
     for (var i = 0; i <= (steps * 2); i++) {
       for (var j = 0; j <= (steps); j++) {
@@ -79,6 +88,7 @@ function coverDemo() {
       stopped = false;
       space.play();
       space.stop( 1000000 );
+      init(true);
     }
   };
 

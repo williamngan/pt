@@ -30,6 +30,7 @@
         submenu: document.querySelector("#submenu"),
         content: document.querySelector("#content"),
         demo: document.querySelector("#pt"),
+        mobileMenu: document.querySelector("#mobile"),
         template: _.template(document.querySelector(template_id).innerHTML)
       };
       this.layout = {
@@ -56,7 +57,12 @@
 
     Docs.prototype.ready = function() {
       this.isDocReady = true;
-      return this.getMembers("Space");
+      this.getMembers("Space");
+      this.dom.mobileMenu.addEventListener("click", ((function(_this) {
+        return function() {
+          return _this.dom.menu.classList.toggle("show");
+        };
+      })(this)));
     };
 
     Docs.prototype.getJSON = function(url) {

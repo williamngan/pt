@@ -33,6 +33,7 @@ class Docs
       submenu: document.querySelector("#submenu")
       content: document.querySelector("#content")
       demo: document.querySelector("#pt")
+      mobileMenu: document.querySelector("#mobile")
 
       template: _.template( document.querySelector(template_id).innerHTML )
     }
@@ -53,10 +54,16 @@ class Docs
       ).bind(@)
     )
 
-
   ready: () ->
     @isDocReady = true
     @getMembers("Space")
+    @dom.mobileMenu.addEventListener( "click", (() =>
+      @dom.menu.classList.toggle("show");
+    ));
+
+
+    return;
+
 
   # ## Load JSON
   getJSON: (url) ->

@@ -232,10 +232,45 @@ section.inherited ul {
 #header {
   position: absolute;
   z-index: 3;
-  height: 30px; left: 0; right: 0; top: -50px;
+  height: 50px; left: 0; right: 0; top: -50px;
   background-color: #fff;
   border-bottom: 1px solid $link;
   transition: top .4s;
+  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+
+  font-family: "Roboto Slab", sans-serif;
+
+  .header-left {
+    position: absolute;
+    top: 0; left: 20px;
+  }
+
+  .header-right {
+    display: none;
+    position: absolute;
+    top: 0; right: 20px;
+    cursor: pointer;
+    color: $link;
+    .menu-item { font-size: 18px; }
+  }
+  .menu-item {
+    display: inline-block;
+    font-size: 12px;
+    line-height: 50px;
+    padding: 0 10px;
+
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &.homepage {
+      font-size: 18px;
+    }
+  }
 }
 
 .sticky-step1 #header {
@@ -351,7 +386,7 @@ section.inherited ul {
 
 .sticky-step1 #menu {
   position: fixed;
-  top: 30px; left: 0px; bottom: 0px; height: auto;
+  top: 50px; left: 0px; bottom: 0px; height: auto;
 
   overflow-x: hidden;
   overflow-y: auto;
@@ -363,10 +398,8 @@ section.inherited ul {
 
 .sticky-step1 #pt {
   position: fixed;
-  display: block;
-  left: $contentW + $menuW;
-  bottom: 0;
-
+  display: none;
+  //left: $contentW + $menuW;
 }
 
 #mask {
@@ -385,4 +418,56 @@ section.inherited ul {
 
 .sticky-step1 .active #mask {
   right: 100%;
+}
+
+
+
+@media only screen and (max-width : 768px) {
+
+  #pt {
+    background: url("../images/pt/rectangle.resizeCenterTo.png") no-repeat center center;
+    background-size: cover;
+  }
+
+  #demo {
+    display: none;
+  }
+
+  #header .header-right {
+    display: block;
+  }
+
+  #menu, .sticky-step1 #menu {
+    position: fixed;
+    right: -1000px; left: auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,.1);
+
+    &.show {
+      display: block;
+      right: 0; top: 50px;
+      z-index: 100;
+
+    }
+  }
+
+  #content {
+    margin: 0px;
+    padding: 30px 10vw;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  section .demo {
+    position: relative; top: auto; left: auto; right: auto;
+    margin: 30px 0;
+  }
+}
+
+
+@media only screen and (min-width : 768px) and (max-width : 1140px){
+  section .demo {
+    position: relative; top: auto; left: auto; right: auto;
+    margin: 30px 0;
+  }
 }
