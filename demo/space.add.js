@@ -11,7 +11,7 @@ var colors = {
 
 var space = new CanvasSpace("demo", colors.b2 ).display();
 
-var form = new Form( space.ctx );
+var form = new Form( space );
 form.stroke( false );
 
 

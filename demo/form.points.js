@@ -9,7 +9,7 @@ var colors = {
 };
 
 var space = new CanvasSpace("demo", "#111" ).display();
-var form = new Form( space.ctx );
+var form = new Form( space );
 
 
 //// 2. Create Elements

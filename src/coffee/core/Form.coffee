@@ -2,12 +2,12 @@
 class Form
 
   # ## Create a new Form which is based on HTML Canvass
-  # @param `cc` canvas rendering context object. Eg, `canvas.getContext('2d')`
+  # @param `space` A space that has a valid context for this form. In this case, the space should represent an html canvas.
   # @return a new Form object
-  constructor: ( cc ) ->
+  constructor: ( space ) ->
 
     # ## a property to reference the canvas rendering context
-    @cc = cc
+    @cc = space.ctx
 
     # default style
     @cc.fillStyle = '#999'

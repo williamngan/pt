@@ -8,7 +8,7 @@ var colors = {
   b1: "#96bfed", b2: "#f5ead6", b3: "#f1f3f7", b4: "#e2e6ef"
 };
 var space = new CanvasSpace("demo", "#c3cbd5" ).display();
-var form = new Form( space.ctx );
+var form = new Form( space );
 
 
 //// 2. Create Elements

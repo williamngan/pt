@@ -9,7 +9,7 @@ var colors = {
   c1: "#111", c2: "#567", c3: "#abc", c4: "rgba(255,255,255,.9)"
 }
 var space = new CanvasSpace("point-quadrant-demo", colors.c1 ).display();
-var form = new Form( space.ctx );
+var form = new Form( space );
 
 
 //// 2. Create Elements

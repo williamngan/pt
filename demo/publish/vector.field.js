@@ -11,7 +11,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 window.demoDescription = "Visualize Hairy Ball Theorem: you can't comb a hairy ball flat without creating a cowlick";
 
 var space = new CanvasSpace("demo", "#222").display();
-var form = new Form(space.ctx);
+var form = new Form(space);
 
 var center = space.size.$divide(2);
 

@@ -11,7 +11,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 window.demoDescription = "Visualize Hairy Ball Theorem: you can't comb a hairy ball flat without creating a cowlick. This demo was done in javascript ES6 and compiled with babel.";
 
 var space = new CanvasSpace("demo", "#f5ead6").display();
-var form = new Form(space.ctx);
+var form = new Form(space);
 
 var center = space.size.$divide(2);
 

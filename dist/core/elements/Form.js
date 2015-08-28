@@ -1,8 +1,8 @@
 var Form;
 
 Form = (function() {
-  function Form(cc) {
-    this.cc = cc;
+  function Form(space) {
+    this.cc = space.ctx;
     this.cc.fillStyle = '#999';
     this.cc.strokeStyle = '#666';
     this.cc.lineWidth = 1;
