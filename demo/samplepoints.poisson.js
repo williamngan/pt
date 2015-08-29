@@ -37,7 +37,8 @@ space.add({
     while (time - lastTime < 25 && count++ < 50) {
       var s = samples.sample(10, 'poisson');
       if (s) {
-        form.fill( colors["a"+(Math.ceil(s.y/space.size.y * 3 + shift) % 4 + 1)] ).point(s, Math.random()*1.5+0.5, (Math.random() > 0.5) );
+        form.fill( colors["a"+(Math.ceil(s.y/space.size.y * 3 + shift) % 4 + 1)] )
+        form.point(s, Math.random()*0.5+0.5 );
         samples.to(s);
       }
     }

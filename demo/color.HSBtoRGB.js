@@ -40,7 +40,7 @@ space.add({
     for (var i=0; i<steps; i++) {
 
       // base color for this step
-      var color = new Color( Math.floor(90/(i+1)), 0.2, (i+1)/steps * 0.5, 1, 'hsb');
+      var color = new Color( 20*(i+1), 0.2, (i+1)/steps * 0.5, 1, 'hsb');
 
       color.add( mouse ); // shift color for top-left
       form.fill( color.rgb() );

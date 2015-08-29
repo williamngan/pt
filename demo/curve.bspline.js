@@ -14,7 +14,7 @@ var form = new Form( space );
 //// 2. Create Elements
 var unit = space.size.$divide(20);
 unit = Math.min(unit.x, unit.y);
-var count = 8;
+var count = 40;
 var curve = new Curve();
 var mouse = new Vector();
 var threshold = unit*6; // invisible mouse circle
@@ -22,8 +22,8 @@ var threshold = unit*6; // invisible mouse circle
 
 // draw the radial skeletons of random lengths
 for (var i=0; i<count; i++) {
-  var r = Util.randomRange( unit * 5, unit * 8 );
-  var p = new Vector( r, 0 ).rotate2D( i * Const.two_pi / count ).add( space.size.$divide(2) );
+  var r = Util.randomRange( unit * 6, unit * 7 );
+  var p = new Vector( r, 0 ).rotate2D( Const.half_pi + i * Const.two_pi / count ).add( space.size.$divide(2) );
   curve.to( p );
 }
 

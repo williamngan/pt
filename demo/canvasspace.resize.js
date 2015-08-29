@@ -25,7 +25,7 @@ space.add({
 
     // draw inner rectange
     form.stroke(false);
-    form.fill(colors.a2);
+    form.fill(colors.a3);
     form.rect( rect );
 
     // draw lines
@@ -37,7 +37,9 @@ space.add({
     // draw measurements
     form.fill("#fff");
     var size = center.$multiply(2);
-    form.text( new Point( 10, center.y), Math.floor( size.y ) );
+    form.font(space.size.y/5);
+    form.text( new Point( 10, center.y+space.size.y/20), Math.floor( size.y ) );
+    form.font(20);
     form.text( new Point( center.x, 20), Math.floor( size.x ) );
 
   },

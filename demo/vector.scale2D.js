@@ -20,7 +20,7 @@ var spaceSize = space.size.magnitude();
 space.add({
   animate: function(time, fps, context) {
 
-    form.stroke("rgba(255,255,255,.7)", 3);
+    form.stroke("rgba(255,255,255,.7)", 10);
     form.lines( [path, path2] );
 
     var normal = path.getPerpendicularFromPoint( mouse );
@@ -42,19 +42,18 @@ space.add({
 
       // draw each point and connect a line to its reflection
       form.stroke(false).fill(colors.a1);
-      form.point(p, 20*normalSize, true);
+      form.point(p, 3*normalSize, true);
 
       form.stroke(colors.a1, 2).fill(false);
-      form.point(_p, 10*normalSize/2, true );
 
-      form.stroke("rgba(0,0,0,.1)", 1);
+      form.stroke("rgba(255,45,93,.2)", 1);
       form.line( new Line(p).to(_p) );
 
       form.stroke(colors.a2);
       form.line( new Line(p2).to(_p2) );
 
       form.stroke(false).fill(colors.a2);
-      form.point(p2, 15*normalSize2, true );
+      form.point(p2, 2*normalSize2, true );
 
     }
 

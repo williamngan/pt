@@ -36,8 +36,8 @@ space.add( {
   animate: function ( time, fps, context ) {
 
     // outer circle and first triangle
-    form.stroke( colors.a3, 10 ).fill( false ).circle( triangle.circumcircle() );
-    form.stroke( false ).fill( colors.a3 ).triangle( triangle );
+    form.stroke( false ).fill( "#fff" ).circle( triangle.circumcircle() );
+    form.fill( colors.a4 ).triangle( triangle );
 
     // inner triangle
     var inner = triangle.medial();
@@ -54,8 +54,8 @@ space.add( {
     }
 
     // draw inner triangle's inner and outer circles
-    form.stroke( "rgba(255,255,255,1)", 5 ).fill( false ).circle( inner.circumcircle() );
-    form.fill( colors.a1 ).circle( inner.incircle() );
+    form.stroke( "rgba(255,45,93,.5)", 20 ).fill( false ).circle( inner.circumcircle() );
+    form.fill( colors.a3 ).stroke( false ).circle( inner.incircle() );
 
   },
 

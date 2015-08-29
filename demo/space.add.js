@@ -22,7 +22,7 @@ function Dust() {
   Vector.apply( this, arguments ); // call Vector's constructor
   this.age = 0;
   this.maxAge = Math.random() * 500 + 50;
-  this.weight =  0.25 + Math.random()*0.5;
+  this.weight =  0.25 + Math.random()*3;
   this.color = (this.weight > 0.7) ? colors["a"+Math.ceil(Math.random()*4)] : "#000";
 }
 Util.extend( Dust, Vector ); // extends Vector class
@@ -43,7 +43,7 @@ Dust.prototype.animate = function(time, fps, context) {
 
   // draw dust
   form.fill( Util.toRGBColor( this.color, true, gray ) );
-  form.point( this, this.weight );
+  form.point( this, this.weight, true );
 
 };
 
