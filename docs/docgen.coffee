@@ -354,7 +354,7 @@ class Docs
           (() =>
             window.coverDemo()
             @coverDemoLoaded = true
-          ), 1000
+          ), 500
         )
 
 

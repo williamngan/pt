@@ -19,6 +19,7 @@
 
 
 	<script type="text/javascript" src="underscore-min.js"></script>
+	<script type="text/javascript" src="../dist/pt-ns.js"></script>
 
 	<script type="text/template" id="comp">
 		<h1><a href="<%= file %>" target="_blank"><%= cls %></a></h1>
@@ -31,7 +32,7 @@
 				</h1>
 				<%= f.description %>
 				<% if (f.demo) { %>
-                    <a href="/demo.html?file=<%= f.demo %>.js" target="_blank">
+                    <a href="/demo/demo.html?file=<%= f.demo %>.js" target="_blank">
                         <div class="demo" data-demo="<%= f.demo %>" style="background-image: url(images/pt/<%= f.demo %>.png)"></div>
                     </a>
                 <% } %>
@@ -58,7 +59,7 @@
 				<h1><%= cls %>.<%= f.name %> <span class="param">(<%= f.pname %>)</span></h1>
 				<%= f.description %>
                 <% if (f.demo) { %>
-                    <a href="/demo.html?file=<%= f.demo %>.js" target="_blank">
+                    <a href="/demo/demo.html?file=<%= f.demo %>.js" target="_blank">
                         <div class="demo" data-demo="<%= f.demo %>" style="background-image: url(images/pt/<%= f.demo %>.png)"></div>
                     </a>
                 <% } %>
@@ -136,7 +137,23 @@
 		<div id="submenu"></div>
 	</div>
 
-	<div id="content"></div>
+
+
+	<div id="content">
+		<section class="intro">
+			<h1>What is Pt?</h1>
+			<h3>Pt is a study of Point, Form, and Space. These 3 concepts and their extensions address a common theme:
+			the expressions of a point in&nbsp;a&nbsp;space. </h3>
+
+			<p>Space defines the context, Point represents a concept,
+			and Form provides an expression of a concept in a context. </p>
+
+			<p>Point, Form, and Space here are implemented as base classes in javascript, and are extended to expand its meanings and features. For example,
+			<em>CanvasSpace</em> is a kind of Space that works with html5 canvas, and <em>Line</em> is a <em>Pair</em> of points whose base class is a Point.</p>
+
+			<p>Pt is currently in an experimental state. Please <a href="http://twitter.com/williamngan">send your feedbacks</a> and <a href="https://github.com/williamngan/pt/issues">report issues</a>.</p>
+		</section>
+	</div>
 
 	<!--
 	<div id="pt">
@@ -147,9 +164,10 @@
 
 <div id="header">
     <div class="header-left">
-        <div class="homepage menu-item"><a href="/">Pt</a></div>
-        <div class="menu-item"><a href="/">Description</a></div>
-        <div class="menu-item"><a href="/">Demo</a></div>
+        <div class="homepage menu-item"><a href="http://williamngan.github.io/pt/">Pt</a></div>
+        <div class="menu-item"><a href="http://medium.com/@williamngan/93382bf5943e/">Description</a></div>
+        <div class="menu-item"><a href="http://williamngan.github.io/pt/demo/index.html">Demo</a></div>
+        <div class="menu-item"><a href="https://github.com/williamngan/pt/">Source code</a></div>
     </div>
     <div class="header-right">
         <div class="menu-item" id="mobile">&#9776</div>
@@ -158,7 +176,6 @@
 
 <!--<script type="text/javascript" src="index.js"></script>-->
 <script type="text/javascript" src="./js/docgen.js"></script>
-<script type="text/javascript" src="../dist/pt-ns.min.js"></script>
 <script type="text/javascript" src="./js/demo.js"></script>
 
 <script type="text/javascript">

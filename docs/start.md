@@ -1,9 +1,6 @@
+### (Note: The finalized start guide is [now posted here](https://medium.com/p/758f2e082da5/edit))
+
 # Pt - a quick start guide
-
-> ?????????? (A journey of a thousand miles begins with a single step.)
->
-> -- Laozi
-
 
 This is a quick start guide of Pt. Pt is experimental and fun. You can read more about [the motivations here](https://medium.com/@williamngan).
 

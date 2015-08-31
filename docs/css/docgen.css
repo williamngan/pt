@@ -63,11 +63,11 @@ section {
     font-size: 1.4em;
     font-weight: 400;
     font-family: "Helvetica Neue", Helvetica, sans-serif; }
-  section.element > h1 {
+  section.element > h1, section.intro > h1 {
     font-weight: 300;
     font-size: 4.5em;
     color: #334fff; }
-  section.element > h3 {
+  section.element > h3, section.intro > h3 {
     font-size: 2em;
     color: #8899aa;
     letter-spacing: 0.01em; }
@@ -327,7 +327,7 @@ section.inherited ul {
 .sticky-step1 .active #mask {
   right: 100%; }
 
-@media only screen and (max-width : 768px) {
+@media only screen and (max-device-width : 768px) {
   #pt {
     background: url("../images/pt/rectangle.resizeCenterTo.png") no-repeat center center;
     background-size: cover; }

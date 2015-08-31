@@ -376,7 +376,7 @@
               window.coverDemo();
               return _this.coverDemoLoaded = true;
             };
-          })(this)), 1000);
+          })(this)), 500);
         }
       }
     };

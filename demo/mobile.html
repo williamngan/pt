@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300' rel='stylesheet' type='text/css'>
+
+    <meta charset="UTF-8">
+	<script type="text/javascript" src="dist/pt.min.png)"></script>
+
+	<style>
+
+
+
+        body {
+            background: #fff;
+            font-family: "Helvetica", sans-serif;
+            font-size: 10px;
+            line-height: 1.35;
+            margin: 0;
+        }
+        html {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        html * {
+            box-sizing: border-box;
+        }
+
+
+        #menu {
+            position: relative;
+            width: 100vw;
+            padding: 0 5vw;
+            background-color: #fff;
+            z-index: 1;
+        }
+
+        #menu > span {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 2em;
+            padding-right: 30px;
+            margin-top: 20px;
+            font-family: "Roboto Slab", sans-serif;
+        }
+
+
+        #menu > span.title {
+            font-size: 6em;
+
+        }
+
+
+        #hint {
+            font-size: 2em;
+            color: #9ab;
+            font-family: "Roboto Slab", sans-serif;
+            padding: 4vh 5vw 10vw;
+            line-height: 1.5;
+        }
+
+
+        h1 {
+            font-family: "Roboto Slab", sans-serif;
+            font-size: 8em;
+            color: #fff;
+            font-weight: 300;
+            margin: 0;
+        }
+
+        p {
+            font-size: 1.4em;
+            color: rgba(255,255,255,.8);
+        }
+
+        h3 {
+            font-weight: 400;
+            font-size: 1.4em;
+            color: #fff;
+            margin: 1em 0 2em 0.15em;
+        }
+
+        a {
+            color: #334fff;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a:hover {
+            border-bottom: 1px solid #334fff;
+        }
+
+        .demo {
+            width: 100vw;
+            height: 100vh;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            background-size: cover;
+        }
+
+
+        @media (max-height: 500px) {
+            .demo, #hint {
+                font-size: 10px;
+                line-height: 1.2;
+            }
+        }
+
+	</style>
+
+
+</head>
+<body>
+
+<div id="page">
+
+    <div id="menu">
+        <span class="title"><a href="../index.html">Pt</a></span>
+        <span><a href="#" target="_blank">Description</a></span>
+        <span><a href="https://github.com/williamngan/pt/" target="_blank">Guide</a></span>
+    </div>
+
+
+    <div id="hint">
+        The following are screenshots of interactive demos of Pt. <br /> Try them with a Desktop browser.
+    </div>
+</div>
+
+<div id="cover">
+
+        <div class="demo" style="background-image:url(../docs/images/pt/circle.intersectCircle.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/vector.field.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/circle.intersectPoint.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/canvasspace.resize.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/circle.intersectPath.png)"></div>
+
+        <!--<div class="demo" style="background-image:url(docs/images/pt/color.HSBtoRGB.png)"></div>-->
+        <div class="demo" style="background-image:url(../docs/images/pt/color.HSLtoRGB.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/color.LABtoRGB.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/curve.bezier.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/curve.cardinal.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/curve.bspline.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/form.curve.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/form.fill.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/form.font.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/form.points.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/grid.generate.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/grid.occupy.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/pair.interpolate.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/pair.collinear.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/pair.withinBounds.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/line.getPerpendicular.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/line.getPerpendicularFromPoint.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/line.intersectLine.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/particle.collideLine2d.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/particle.play.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/point.max.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/point.quadrant.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/pointset.convexHull.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/pointset.sides.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/rectangle.resizeCenterTo.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/rectangle.enclose.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/rectangle.intersectPath.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/triangle.oppositeSide.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/triangle.incenter.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/space.add.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/space.refresh.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/vector.add.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/vector.normalize.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/vector.projection.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/vector.rotate2D.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/vector.scale2D.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/samplepoints.poisson.png)"></div>
+        <div class="demo" style="background-image:url(../docs/images/pt/canvasspace.bindMouse.png)"></div>
+    </div>
+
+
+<script type="text/javascript">
+
+    if (src) document.querySelector("body").appendChild( src );
+
+    var demos = document.querySelectorAll(".demo");
+
+	for (var i=0; i<demos.length; i++) {
+        var file = demos[i].getAttribute("data-src");
+		demos[i].addEventListener("click", function() {
+            var filepath = this.getAttribute("data-src");
+            window.location.href = window.location.origin+window.location.pathname+"?file="+filepath+"&cacheBust="+(Math.random());
+        }.bind( demos[i] ) );
+	}
+
+</script>
+
+
+</body>
+</html>

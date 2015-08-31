@@ -99,7 +99,7 @@ section {
     font-family: $sans;
   }
 
-  &.element {
+  &.element, &.intro {
     > h1 {
       font-weight: 300;
       font-size: 4.5em;
@@ -422,7 +422,7 @@ section.inherited ul {
 
 
 
-@media only screen and (max-width : 768px) {
+@media only screen and (max-device-width : 768px) {
 
   #pt {
     background: url("../images/pt/rectangle.resizeCenterTo.png") no-repeat center center;

@@ -5,7 +5,7 @@ function coverDemo() {
     b1: "#96bfed", b2: "#f5ead6", b3: "#f1f3f7", b4: "#e2e6ef"
   };
   var space = new Pt.CanvasSpace( "demo", colors.b3 ).display();
-  var form = new Pt.Form( space.ctx );
+  var form = new Pt.Form( space );
   form.stroke( false );
 
 //// 2. Create Elements
