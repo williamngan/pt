@@ -66,6 +66,8 @@ The animate function has 3 parameters: `time` which keeps track of time elapsed 
 
 Finally, we add the `bot` into space, and seeing that everything is ready, we call `space.play()` to start. If you see a gray point appears in your canvas, you're doing it right!
 
+![A point](./docs/images/quick-start-guide/progress1.png)
+
 ### 2. Drawing a circle and making it move
 
 Too boring? Let's change the dot to a `Circle`. 
@@ -105,6 +107,8 @@ var bot = {
 
 Here we calculate the frame-rate and draw it as gray text on top-left corner. 
 Then we change the dot's radius based on elapsing time so that it will pulsate between 20px to 45px.
+
+![circle](./docs/images/quick-start-guide/progress2.png)
 
 Now let's add some interactivity. CanvasSpace allows you to keep track of mouse events, and it will pass those events to the added objects. The easiest way is to call `space.bindMouse()`, which will listen to common mouse events, and then pass the information into your object's callback function `onMouseAction`. Like this:
 
@@ -152,6 +156,8 @@ space.play();
 
 So in `onMouseAction`, we set the circle's position when mouse moves, and in `animate`, we draw the circle with an orange stroke color. Give it a try, and you should see the orange circle is now moving with your cursor.
 
+![with interaction](./docs/images/quick-start-guide/progress3.png)
+
 ### 3. Experimentation
 
 We got the basics working, but what can we do with it? Dear reader, this is the place where the start guide ends and your imagination starts. What can you do with 2 circles, one pulsating and one moving?
@@ -188,3 +194,5 @@ Util.extend( SuperCircle, Circle)
 
 I hope you'll enjoy Pt. Take a look at [demos](http://williamngan.github.io/pt/demo/?name=color.LABtoRGB) and [docs](http://williamngan.github.io/pt/docs/), and be fearless in experimentation!
 
+![final](./docs/images/quick-start-guide/progress5.png)
+[view](http://williamngan.github.io/pt/docs/start.html)

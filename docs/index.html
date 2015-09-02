@@ -9,15 +9,6 @@
     <meta charset="UTF-8">
 	<link href="css/docgen.css" rel="stylesheet" />
 
-	<!--<link href='http://fonts.googleapis.com/css?family=Raleway:600,400' rel='stylesheet' type='text/css'>-->
-	<!--<link href='http://fonts.googleapis.com/css?family=Merriweather:400,700,900' rel='stylesheet' type='text/css'>-->
-
-	<!--<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>-->
-	<!--<link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>-->
-
-	<!--<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>-->
-
-
 	<script type="text/javascript" src="underscore-min.js"></script>
 	<script type="text/javascript" src="../dist/pt-ns.js"></script>
 
@@ -32,7 +23,7 @@
 				</h1>
 				<%= f.description %>
 				<% if (f.demo) { %>
-                    <a href="/demo/demo.html?file=<%= f.demo %>.js" target="_blank">
+                    <a href="../demo/index.html?name=<%= f.demo %>" target="_blank">
                         <div class="demo" data-demo="<%= f.demo %>" style="background-image: url(images/pt/<%= f.demo %>.png)"></div>
                     </a>
                 <% } %>
@@ -146,10 +137,9 @@
 			the expressions of a point in&nbsp;a&nbsp;space. </h3>
 
 			<p>Space defines the context, Point represents a concept,
-			and Form provides an expression of a concept in a context. </p>
+			and Form provides an expression of a concept in a context. <a href="https://github.com/williamngan/pt/blob/master/QUICKSTART.md" target="_blank">Learn more</a>.</p>
 
-			<p>Point, Form, and Space here are implemented as base classes in javascript, and are extended to expand its meanings and features. For example,
-			<em>CanvasSpace</em> is a kind of Space that works with html5 canvas, and <em>Line</em> is a <em>Pair</em> of points whose base class is a Point.</p>
+			<p>Point, Form, and Space here are implemented as base classes in javascript, and are extended to expand its meanings and features.</p>
 
 			<p>Pt is currently in an experimental state. Please <a href="http://twitter.com/williamngan">send your feedbacks</a> and <a href="https://github.com/williamngan/pt/issues">report issues</a>.</p>
 		</section>

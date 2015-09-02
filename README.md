@@ -1,5 +1,7 @@
 # Pt 
 
+![cover image](./docs/images/pt/vector.field.png)
+
 Hello there. Allow me to introduce Pt, which is a study of Point, Form, and Space. It is experimental and fun, and I hope you will use it to make crazy, strange, awesome things.
 
 ### Get started

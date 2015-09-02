@@ -83,13 +83,13 @@ function coverDemo() {
 // 4. Start playing
   space.bindMouse();
   space.play();
-  space.stop(1000000);
+  space.stop(10000000);
 
   var stopped = false;
 
   window.stopCoverDemo = function() {
     if (!stopped) {
-      space.stop();
+      space.pause();
       stopped = true;
     }
   };
@@ -97,9 +97,9 @@ function coverDemo() {
   window.restartCoverDemo = function() {
     if (stopped) {
       stopped = false;
-      space.play();
-      space.stop( 1000000 );
-      init(true);
+      space.resume();
+      //space.stop( 1000000 );
+      //init(true);
     }
   };
 
