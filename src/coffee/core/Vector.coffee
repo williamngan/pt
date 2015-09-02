@@ -88,8 +88,8 @@ class Vector extends Point
     return new Vector( @ ).multiply( a )
 
 
-  # ## Similar as `multiply()` but easier to read semantically.
-  # @eg `vec.divide(2,4,5)` is the same as `vec.multiply(0.5, 0.25, 0.2)`
+  # ## Similar as `multiply()` but easier to read semantically. `vec.divide(2,4,5)` is the same as `vec.multiply(0.5, 0.25, 0.2)`
+  # @eg `vec.divide(10)` `vec.divide(2,4,5)`
   # @return this Vector
   divide: (args) ->
     # divide scalar
@@ -112,10 +112,10 @@ class Vector extends Point
     return new Vector( @ ).divide( a )
 
 
-  # ## Apply a function to all points in the `toArray()` list. This is usually applied to `Pair`, `PointSet` and other objects to apply a function to all its points.
+  # ## Apply a function to all points in the `toArray()` list. This is usually applied to `Pair`, `PointSet` and other objects to call a function to all its points.
   # @param `name` a function of this class
   # @param `args...` optional, comma-separated arguments to pass to the function
-  # @eg `pair.op("add", 1,2,3)`, `pointset.op("multiply", 2)`
+  # @eg `pair.op("add", 1,2,3)` `pointset.op("multiply", 2)`
   op: ( name, args... ) ->
     pts = @toArray()
     for p in pts
@@ -133,11 +133,11 @@ class Vector extends Point
 
 
 
-  # ## Get the angle of this vector on a plane. Or get the angle from this vector to another point. If no parameter specified, this will return the angle on xy plane.
-  # @param `axis` single argument as optional axis id (eg, `Const.yz`) to specify a plane
-  # @param `pt` single argument as optional Point object to calculate the angle from this Point to another Point instead
-  # @param `axis, pt` 2 arguments in this sequence, as optional axis id and Point object to get the angle to a Point on a specific plane
-  # @eg `vec.angle()` `vec.angle(Const.yz)` `vec.angle(another_pt)` `vec.angle(Const.xz, another_pt)` `new Vector(1,1).angle( new Vector(1,2) ) * Const.rad_to_deg = 90`
+  # ## Get the angle of this vector on a plane, or get the angle from this vector to another point. If no parameter specified, this will return the angle on xy plane.
+  # @param `axis` single optional argument to specify axis id (eg, `Const.yz`) to specify a plane
+  # @param `pt` single optional argument to specify a Point object, to calculate the angle from this Point to another Point instead
+  # @param `axis, pt` 2 arguments in this sequence, as optional axis id and Point object, to get the angle to a Point on a specific plane
+  # @eg `vec.angle()` `vec.angle(Const.yz)` `vec.angle(another_pt)` `vec.angle(Const.xz, another_pt)`
   # @return a radian value
   angle: (args) ->
 
@@ -170,7 +170,7 @@ class Vector extends Point
       return if p then Math.atan2( p.z, p.x ) else (Math.atan2( @z, @x ))
 
 
-  # ## Get the change in radian between this and another vector (at origin position)
+  # ## Get the change in radian between this and another vector (from origin position)
   # @param `vec` another Vector to compare against
   # @param axis optional axis id (eg `Const.xy`) to specify a plane
   # @eg `vec.angleBetween( another_pt )` `vec.angleBetween( another_pt, Const.yz )`
@@ -178,7 +178,7 @@ class Vector extends Point
     Util.boundRadian( @angle( axis ), true ) - Util.boundRadian( vec.angle( axis ), true )
 
 
-  # ## Get the mangnitude (ie, distance from origin) of this vector. Or get the distance from this vector to another point. Default is to get the magnitude on xyz plane.
+  # ## Get the mangnitude (ie, distance from origin) of this vector, or get the distance from this vector to another point. Default is to get the magnitude on xyz plane.
   # @param `axis` single argument as optional axis id (eg, `Const.yz`) to specify a plane
   # @param `pt` single argument as optional Point object to calculate the distance from this Point to another Point instead
   # @param `sqrt` single argument as optional boolean value to get distance-squared value if set to `false`. Default is true.
@@ -263,7 +263,7 @@ class Vector extends Point
   # ## Calculate the [dot product](http://en.wikipedia.org/wiki/Dot_product) of this and another vector.
   # @param `p` a Point to calculate the dot product
   # @param `axis` optional axis id (eg `Const.xy`) to specify a plane
-  # @eg `vec.dot( another_vec )`, `vec.dot( another_vec, Const.xz )`
+  # @eg `vec.dot( another_vec )` `vec.dot( another_vec, Const.xz )`
   # @return the dot product which is a scalar (numeric) value
   dot: ( p, axis=Const.xyz ) ->
     if axis == Const.xyz
@@ -277,10 +277,10 @@ class Vector extends Point
     else
       return @x*p.x + @y*p.y + @z*p.z
 
-  # ## Calculate [vector projection](http://en.wikipedia.org/wiki/Vector_projection). A vector projection that has the same direction as this vector but a different length. So if you draw a line from the projection vector to the vector specified in the parameter, it will be perpendicular to this vector.
+  # ## Calculate [vector projection](http://en.wikipedia.org/wiki/Vector_projection). A vector projection has the same direction as this vector but a different length. So if you draw a line from the projection vector to the vector specified in the parameter, it will be perpendicular to this vector.
   # @param `vec` a Vector to calculate the projection
   # @param `axis` optional axis id (eg `Const.xy`) to specify a plane
-  # @eg `vec.projection( another_vec)`, , `vec.projection( another_vec, Const.xz )`
+  # @eg `vec.projection( another_vec)` `vec.projection( another_vec, Const.xz )`
   # @demo vector.projection
   # @return the vector projection
   projection: ( vec, axis=Const.xyz ) ->
@@ -320,12 +320,14 @@ class Vector extends Point
         when Const.xz then return [new Vector( -@z, @y, @x ), new Vector( @z, -@y, @x )]
         else return [new Vector( -@y, @x, @z ), new Vector( @y, -@x, @z )]
 
-  # ## Check if another vector is perpendicular to this
+
+  # ## Check if another vector is perpendicular to this vector
   # @param `p` a Point to check against
   # @param `axis` optional axis id (eg `Const.xy`) to specify a plane
   # @eg `vec.isPerpendicular( another_vec )` `vec.isPerpendicular( another_vec, Const.yz )`
   # @return a boolean (true or false)
   isPerpendicular: ( p, axis=Const.xyz ) -> @dot(p, axis) == 0
+
 
   # ## Get surface normal vector. A [normal](http://en.wikipedia.org/wiki/Normal_%28geometry%29) is a vector perpendicular to a plane or object.
   # @param `p` a Point to calculate the surface normal
@@ -336,7 +338,7 @@ class Vector extends Point
 
 
   # ## move origin to a new position. In subclasses of `Vector`, such as `Pair` or `PointSet`, this will move all the points.
-  # @param `args` new position as 0-3 comma-separated values, or as an array, or a Point object.
+  # @param `args` new position as 1-3 comma-separated values, or as an array, or a Point object.
   moveTo: ( args ) ->
     target = Point.get(arguments)
     d = @$subtract( target )
@@ -347,7 +349,7 @@ class Vector extends Point
     return @
 
   # ## move origin by a certain amount. In subclasses of `Vector`, such as `Pair` or `PointSet`, this will move all the points.
-  # @param `args` move amount as 0-3 comma-separated values, or as an array, or a Point object.
+  # @param `args` move amount as 1-3 comma-separated values, or as an array, or a Point object.
   moveBy: ( args ) ->
     inc = Point.get(arguments)
     pts = @toArray()

@@ -18,7 +18,7 @@
         }, 
         {
             "demo": "point.quadrant", 
-            "description": "<h2>Given another point in relation to this point, this returns which side or quadrant the other point is at. Possible</h2>", 
+            "description": "<h2>Given another point in relation to this point, this returns which side or quadrant the other point is at.</h2>", 
             "eg": "<p><code>p.quadrant( another_p )</code> <code>p.quadrant( another_p, 2 )</code></p>", 
             "name": "quadrant", 
             "param": [

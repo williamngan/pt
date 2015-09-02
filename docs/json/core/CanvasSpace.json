@@ -9,13 +9,13 @@
             "name": "CanvasSpace", 
             "param": [
                 "<p><code>id</code> an id property which refers to the \"id\" attribute of the canvas element in DOM. If no canvas element with this id is found, a new canvas element will be created.</p>", 
-                "<p><code>context</code> a string of canvas context type, such as \"2d\" or \"webgl\". Default is \"2d\"</p>", 
-                "<p><code>bgcolor</code> a background color string to specify the canvas background. Default is <code>false</code> which shows a transparent background.</p>"
+                "<p><code>bgcolor</code> a background color string to specify the canvas background. Default is <code>false</code> which shows a transparent background.</p>", 
+                "<p><code>context</code> a string of canvas context type, such as \"2d\" or \"webgl\". Default is \"2d\"</p>"
             ], 
             "pname": "id='pt_space', bgcolor=false, context='2d'"
         }, 
         {
-            "description": "<h2>Place a new canvas element to a page dom element. When canvas is ready, a \"ready\" event will be fired. Track this event with <code>space.canvas.addEventListener(\"ready\")</code></h2>", 
+            "description": "<h2>Place a new canvas element into a container dom element. When canvas is ready, a \"ready\" event will be fired. Track this event with <code>space.canvas.addEventListener(\"ready\")</code></h2>", 
             "name": "display", 
             "param": [
                 "<p><code>parent_id</code> the DOM element into which the canvas element should be appended</p>", 
@@ -26,7 +26,7 @@
         }, 
         {
             "demo": "canvasspace.resize", 
-            "description": "<h2>This overrides Space's <code>resize</code> function and it's a callback function for window resize event. The resize event is passed to the Space's added items that has defined a <code>onSpaceResize(w,h,evt)</code></h2>", 
+            "description": "<h2>This overrides Space's <code>resize</code> function. It's a callback function for window's resize event. Keep track of this with <code>onSpaceResize(w,h,evt)</code> callback in your added objects.</h2>", 
             "name": "resize", 
             "param": [], 
             "pname": "w, h, evt", 
@@ -61,7 +61,7 @@
         }, 
         {
             "demo": "canvasspace.bindMouse", 
-            "description": "<h2>A convenient method to bind (or unbind) all mouse events in canvas element. All item added to <code>items</code> property that implements an <code>onMouseAction</code> callback will receive mouse event callbacks.</h2>", 
+            "description": "<h2>A convenient method to bind (or unbind) all mouse events in canvas element. All item added to <code>items</code> property that implements an <code>onMouseAction</code> callback will receive mouse event callbacks. The types of mouse actions are: \"up\", \"down\", \"move\", \"drag\", \"drop\", \"over\", and \"out\".</h2>", 
             "name": "bindMouse", 
             "param": [
                 "<p><code>bind</code> a boolean value to bind mouse events if set to <code>true</code>. If <code>false</code>, all mouse events will be unbound. Default is true.</p>"

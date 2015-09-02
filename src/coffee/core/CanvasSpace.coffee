@@ -4,8 +4,8 @@ class CanvasSpace extends Space
 
   # ## Create a CanvasSpace which represents a HTML Canvas Space
   # @param `id` an id property which refers to the "id" attribute of the canvas element in DOM. If no canvas element with this id is found, a new canvas element will be created.
-  # @param `context` a string of canvas context type, such as "2d" or "webgl". Default is "2d"
   # @param `bgcolor` a background color string to specify the canvas background. Default is `false` which shows a transparent background.
+  # @param `context` a string of canvas context type, such as "2d" or "webgl". Default is "2d"
   constructor : ( id='pt_space', bgcolor=false, context='2d' ) ->
     super
 
@@ -32,7 +32,7 @@ class CanvasSpace extends Space
     @ctx = @canvas.getContext( context )
 
 
-  # ## Place a new canvas element to a page dom element. When canvas is ready, a "ready" event will be fired. Track this event with `space.canvas.addEventListener("ready")`
+  # ## Place a new canvas element into a container dom element. When canvas is ready, a "ready" event will be fired. Track this event with `space.canvas.addEventListener("ready")`
   # @param `parent_id` the DOM element into which the canvas element should be appended
   # @param `readyCallback` a callback function with parameters `width`, `height`, and `canvas_element`, which will get called when canvas is appended and ready.
   # @return this CanvasSpace
@@ -77,7 +77,7 @@ class CanvasSpace extends Space
     return this
 
 
-  # ## This overrides Space's `resize` function and it's a callback function for window resize event. The resize event is passed to the Space's added items that has defined a `onSpaceResize(w,h,evt)`
+  # ## This overrides Space's `resize` function. It's a callback function for window's resize event. Keep track of this with `onSpaceResize(w,h,evt)` callback in your added objects.
   # @demo canvasspace.resize
   # @return this CanvasSpace
   resize: (w, h, evt) ->

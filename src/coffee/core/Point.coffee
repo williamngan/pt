@@ -54,7 +54,7 @@ class Point
       return { x: 0, y: 0, z: 0 }
 
 
-  # ## Given another point in relation to this point, this returns which side or quadrant the other point is at. Possible
+  # ## Given another point in relation to this point, this returns which side or quadrant the other point is at.
   # @param `pt` a Point object
   # @param `epsilon` an optional value to specify the minimum distance threshold. Default is Const.epsilon.
   # @eg `p.quadrant( another_p )` `p.quadrant( another_p, 2 )`

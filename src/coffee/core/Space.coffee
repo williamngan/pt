@@ -3,7 +3,7 @@
 class Space
 
   # ## Create a Space which is the context for displaying and animating elements. Extend this to create specific Spaces, for example, a space for HTML Canvas or SVG.
-  # @param `id` an id property to identify this space by name
+  # @param `id` an id property to identify this space
   constructor : ( id='space' ) ->
 
     # ## A property to identify this space by name
@@ -12,10 +12,10 @@ class Space
     # ## A render callback function, which needs to be implemented
     @renderer = (ctx) =>
 
-    # ## A property to specify the size of this space as a Vector
+    # ## A property to indicate the size of this space as a Vector
     @size = new Vector()
 
-    # ## A property to specify the center of this space as a Vector
+    # ## A property to indicate the center of this space as a Vector
     @center = new Vector()
 
     # animation properties
@@ -33,7 +33,7 @@ class Space
     @_refresh = true # refresh on each frame
 
 
-  # ## set whether the rendering should repaint on each frame
+  # ## set whether the rendering should be repainted on each frame
   # @param `b` a boolean value to set whether to repaint each frame
   # @demo space.refresh
   # @return this space
@@ -58,7 +58,7 @@ class Space
   clear: () ->
 
 
-  # ## Add an item to this space. An item must define a callback function `animate( time, fps, context )` and will be assigned a property `animateID` automatically. An item can also optionally define a callback function `onSpaceResize( w, h, evt )`
+  # ## Add an item to this space. An item must define a callback function `animate( time, fps, context )` and will be assigned a property `animateID` automatically. An item can also optionally define a callback function `onSpaceResize( w, h, evt )`. Subclasses of Space may define other callback functions.
   # @param an object with an `animate( time, fps, context )` function, and optionall a `onSpaceResize( w, h, evt )` function
   # @demo space.add
   # @return this space

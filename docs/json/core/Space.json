@@ -8,13 +8,13 @@
             "description": "<h2>Create a Space which is the context for displaying and animating elements. Extend this to create specific Spaces, for example, a space for HTML Canvas or SVG.</h2>", 
             "name": "Space", 
             "param": [
-                "<p><code>id</code> an id property to identify this space by name</p>"
+                "<p><code>id</code> an id property to identify this space</p>"
             ], 
             "pname": "id='space'"
         }, 
         {
             "demo": "space.refresh", 
-            "description": "<h2>set whether the rendering should repaint on each frame</h2>", 
+            "description": "<h2>set whether the rendering should be repainted on each frame</h2>", 
             "name": "refresh", 
             "param": [
                 "<p><code>b</code> a boolean value to set whether to repaint each frame</p>"
@@ -45,7 +45,7 @@
         }, 
         {
             "demo": "space.add", 
-            "description": "<h2>Add an item to this space. An item must define a callback function <code>animate( time, fps, context )</code> and will be assigned a property <code>animateID</code> automatically. An item can also optionally define a callback function <code>onSpaceResize( w, h, evt )</code></h2>", 
+            "description": "<h2>Add an item to this space. An item must define a callback function <code>animate( time, fps, context )</code> and will be assigned a property <code>animateID</code> automatically. An item can also optionally define a callback function <code>onSpaceResize( w, h, evt )</code>. Subclasses of Space may define other callback functions.</h2>", 
             "name": "add", 
             "param": [
                 "<p>an object with an <code>animate( time, fps, context )</code> function, and optionall a <code>onSpaceResize( w, h, evt )</code> function</p>"
@@ -124,12 +124,12 @@
             "param": []
         }, 
         {
-            "description": "<h2>A property to specify the size of this space as a Vector</h2>", 
+            "description": "<h2>A property to indicate the size of this space as a Vector</h2>", 
             "name": "size", 
             "param": []
         }, 
         {
-            "description": "<h2>A property to specify the center of this space as a Vector</h2>", 
+            "description": "<h2>A property to indicate the center of this space as a Vector</h2>", 
             "name": "center", 
             "param": []
         }, 

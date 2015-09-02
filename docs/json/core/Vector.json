@@ -64,8 +64,8 @@
             "pname": "args"
         }, 
         {
-            "description": "<h2>Similar as <code>multiply()</code> but easier to read semantically.</h2>", 
-            "eg": "<p><code>vec.divide(2,4,5)</code> is the same as <code>vec.multiply(0.5, 0.25, 0.2)</code></p>", 
+            "description": "<h2>Similar as <code>multiply()</code> but easier to read semantically. <code>vec.divide(2,4,5)</code> is the same as <code>vec.multiply(0.5, 0.25, 0.2)</code></h2>", 
+            "eg": "<p><code>vec.divide(10)</code> <code>vec.divide(2,4,5)</code></p>", 
             "name": "divide", 
             "param": [], 
             "pname": "args", 
@@ -78,8 +78,8 @@
             "pname": "args"
         }, 
         {
-            "description": "<h2>Apply a function to all points in the <code>toArray()</code> list. This is usually applied to <code>Pair</code>, <code>PointSet</code> and other objects to apply a function to all its points.</h2>", 
-            "eg": "<p><code>pair.op(\"add\", 1,2,3)</code>, <code>pointset.op(\"multiply\", 2)</code></p>", 
+            "description": "<h2>Apply a function to all points in the <code>toArray()</code> list. This is usually applied to <code>Pair</code>, <code>PointSet</code> and other objects to call a function to all its points.</h2>", 
+            "eg": "<p><code>pair.op(\"add\", 1,2,3)</code> <code>pointset.op(\"multiply\", 2)</code></p>", 
             "name": "op", 
             "param": [
                 "<p><code>name</code> a function of this class</p>", 
@@ -94,19 +94,19 @@
             "pname": "name, args..."
         }, 
         {
-            "description": "<h2>Get the angle of this vector on a plane. Or get the angle from this vector to another point. If no parameter specified, this will return the angle on xy plane.</h2>", 
-            "eg": "<p><code>vec.angle()</code> <code>vec.angle(Const.yz)</code> <code>vec.angle(another_pt)</code> <code>vec.angle(Const.xz, another_pt)</code> <code>new Vector(1,1).angle( new Vector(1,2) ) * Const.rad_to_deg = 90</code></p>", 
+            "description": "<h2>Get the angle of this vector on a plane, or get the angle from this vector to another point. If no parameter specified, this will return the angle on xy plane.</h2>", 
+            "eg": "<p><code>vec.angle()</code> <code>vec.angle(Const.yz)</code> <code>vec.angle(another_pt)</code> <code>vec.angle(Const.xz, another_pt)</code></p>", 
             "name": "angle", 
             "param": [
-                "<p><code>axis</code> single argument as optional axis id (eg, <code>Const.yz</code>) to specify a plane</p>", 
-                "<p><code>pt</code> single argument as optional Point object to calculate the angle from this Point to another Point instead</p>", 
-                "<p><code>axis, pt</code> 2 arguments in this sequence, as optional axis id and Point object to get the angle to a Point on a specific plane</p>"
+                "<p><code>axis</code> single optional argument to specify axis id (eg, <code>Const.yz</code>) to specify a plane</p>", 
+                "<p><code>pt</code> single optional argument to specify a Point object, to calculate the angle from this Point to another Point instead</p>", 
+                "<p><code>axis, pt</code> 2 arguments in this sequence, as optional axis id and Point object, to get the angle to a Point on a specific plane</p>"
             ], 
             "pname": "args", 
             "return": "<p>a radian value</p>"
         }, 
         {
-            "description": "<h2>Get the change in radian between this and another vector (at origin position)</h2>", 
+            "description": "<h2>Get the change in radian between this and another vector (from origin position)</h2>", 
             "eg": "<p><code>vec.angleBetween( another_pt )</code> <code>vec.angleBetween( another_pt, Const.yz )</code></p>", 
             "name": "angleBetween", 
             "param": [
@@ -116,7 +116,7 @@
             "pname": "vec, axis=Const.xy"
         }, 
         {
-            "description": "<h2>Get the mangnitude (ie, distance from origin) of this vector. Or get the distance from this vector to another point. Default is to get the magnitude on xyz plane.</h2>", 
+            "description": "<h2>Get the mangnitude (ie, distance from origin) of this vector, or get the distance from this vector to another point. Default is to get the magnitude on xyz plane.</h2>", 
             "eg": "<p><code>vec.magnitude()</code> <code>vec.magnitude(false)</code> <code>vec.magnitude(Const.yz)</code> <code>vec.magnitude(another_pt)</code> <code>vec.magnitude(Const.xz, another_pt, false)</code>.</p>", 
             "name": "magnitude", 
             "param": [
@@ -162,7 +162,7 @@
         }, 
         {
             "description": "<h2>Calculate the <a href=\"http://en.wikipedia.org/wiki/Dot_product\">dot product</a> of this and another vector.</h2>", 
-            "eg": "<p><code>vec.dot( another_vec )</code>, <code>vec.dot( another_vec, Const.xz )</code></p>", 
+            "eg": "<p><code>vec.dot( another_vec )</code> <code>vec.dot( another_vec, Const.xz )</code></p>", 
             "name": "dot", 
             "param": [
                 "<p><code>p</code> a Point to calculate the dot product</p>", 
@@ -173,8 +173,8 @@
         }, 
         {
             "demo": "vector.projection", 
-            "description": "<h2>Calculate <a href=\"http://en.wikipedia.org/wiki/Vector_projection\">vector projection</a>. A vector projection that has the same direction as this vector but a different length. So if you draw a line from the projection vector to the vector specified in the parameter, it will be perpendicular to this vector.</h2>", 
-            "eg": "<p><code>vec.projection( another_vec)</code>, , <code>vec.projection( another_vec, Const.xz )</code></p>", 
+            "description": "<h2>Calculate <a href=\"http://en.wikipedia.org/wiki/Vector_projection\">vector projection</a>. A vector projection has the same direction as this vector but a different length. So if you draw a line from the projection vector to the vector specified in the parameter, it will be perpendicular to this vector.</h2>", 
+            "eg": "<p><code>vec.projection( another_vec)</code> <code>vec.projection( another_vec, Const.xz )</code></p>", 
             "name": "projection", 
             "param": [
                 "<p><code>vec</code> a Vector to calculate the projection</p>", 
@@ -214,7 +214,7 @@
             "return": "<p>an array of two vectors</p>"
         }, 
         {
-            "description": "<h2>Check if another vector is perpendicular to this</h2>", 
+            "description": "<h2>Check if another vector is perpendicular to this vector</h2>", 
             "eg": "<p><code>vec.isPerpendicular( another_vec )</code> <code>vec.isPerpendicular( another_vec, Const.yz )</code></p>", 
             "name": "isPerpendicular", 
             "param": [
@@ -238,7 +238,7 @@
             "description": "<h2>move origin to a new position. In subclasses of <code>Vector</code>, such as <code>Pair</code> or <code>PointSet</code>, this will move all the points.</h2>", 
             "name": "moveTo", 
             "param": [
-                "<p><code>args</code> new position as 0-3 comma-separated values, or as an array, or a Point object.</p>"
+                "<p><code>args</code> new position as 1-3 comma-separated values, or as an array, or a Point object.</p>"
             ], 
             "pname": "args"
         }, 
@@ -246,7 +246,7 @@
             "description": "<h2>move origin by a certain amount. In subclasses of <code>Vector</code>, such as <code>Pair</code> or <code>PointSet</code>, this will move all the points.</h2>", 
             "name": "moveBy", 
             "param": [
-                "<p><code>args</code> move amount as 0-3 comma-separated values, or as an array, or a Point object.</p>"
+                "<p><code>args</code> move amount as 1-3 comma-separated values, or as an array, or a Point object.</p>"
             ], 
             "pname": "args"
         }, 

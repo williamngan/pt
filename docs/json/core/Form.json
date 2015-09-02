@@ -8,9 +8,9 @@
             "description": "<h2>Create a new Form which is based on HTML Canvass</h2>", 
             "name": "Form", 
             "param": [
-                "<p><code>cc</code> canvas rendering context object. Eg, <code>canvas.getContext('2d')</code></p>"
+                "<p><code>space</code> A space that has a valid context for this form. In this case, the space should represent an html canvas.</p>"
             ], 
-            "pname": "cc", 
+            "pname": "space", 
             "return": "<p>a new Form object</p>"
         }, 
         {
@@ -19,7 +19,7 @@
             "eg": "<p><code>form.fill(\"#F90\")</code> <code>form.fill(\"rgba(0,0,0,.5\")</code> <code>form.fill(false)</code></p>", 
             "name": "fill", 
             "param": [
-                "<p><code>c</code> fill color which can be as color, gradient, or pattern. (See <a href=\"https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillStyle\">canvas documentation</a>) Default is false (transparent)</p>"
+                "<p><code>c</code> fill color which can be as color, gradient, or pattern. (See <a href=\"https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillStyle\">canvas documentation</a>) Default is <code>false</code> (transparent)</p>"
             ], 
             "pname": "c", 
             "return": "<p>this Form</p>"
