@@ -7,12 +7,12 @@ there's also [a friendlier, non-technical guide](https://medium.com/@williamngan
 
 As you know, Pt is based on the ideas of *Point*, *Form*, and *Space*. So we'll be creating a space, a form, and a point (and their extensions). 
 
-#### 0. Spoiler!
+### 0. Spoiler!
 Here's [the thing](http://williamngan.github.io/pt/docs/start.html) we'll be building, and here's the [final source code](https://github.com/williamngan/pt/blob/master/docs/start.html). 
 Pretty fun with less than 40 lines of code, right?
 
 
-#### 1. Setting up and drawing a point
+### 1. Setting up and drawing a point
 
 The simplest way to create a space is to use CanvasSpace, which is included in the core library.
 
@@ -66,7 +66,7 @@ The animate function has 3 parameters: `time` which keeps track of time elapsed 
 
 Finally, we add the `bot` into space, and seeing that everything is ready, we call `space.play()` to start. If you see a gray point appears in your canvas, you're doing it right!
 
-#### 2. Drawing a circle and making it move
+### 2. Drawing a circle and making it move
 
 Too boring? Let's change the dot to a `Circle`. 
 
@@ -106,7 +106,7 @@ var bot = {
 Here we calculate the frame-rate and draw it as gray text on top-left corner. 
 Then we change the dot's radius based on elapsing time so that it will pulsate between 20px to 45px.
 
-Now let's add some interactivity. CanvasSpace allows you to keep track of mouse events, and it will pass those events to the added objects. The easiest way is to call `space.bindMouse()`, which will listen to common mouse events, and then implement in your object a callback function `onMouseAction`. Like this:
+Now let's add some interactivity. CanvasSpace allows you to keep track of mouse events, and it will pass those events to the added objects. The easiest way is to call `space.bindMouse()`, which will listen to common mouse events, and then pass the information into your object's callback function `onMouseAction`. Like this:
 
 ```javascript
 var bot = {
@@ -152,9 +152,9 @@ space.play();
 
 So in `onMouseAction`, we set the circle's position when mouse moves, and in `animate`, we draw the circle with an orange stroke color. Give it a try, and you should see the orange circle is now moving with your cursor.
 
-#### 3. Experimentation
+### 3. Experimentation
 
-We got the basics working, but what can we do with it? Dear reader, here's the place where the start guide ends and your imagination starts. What can you do with 2 circles, one pulsating and one moving?
+We got the basics working, but what can we do with it? Dear reader, this is the place where the start guide ends and your imagination starts. What can you do with 2 circles, one pulsating and one moving?
 
 Perhaps, you can check if the two circles intersect, and if so, draw 2 extra points or a line connecting the intersection points. It might look like this:
 
@@ -173,6 +173,7 @@ animate: function ( time, fs, context ) {
 
 *Inspiration: Casey Reas applied these simple intersections of circles to great effects, in his 2004 Whitney Museum commission "[Software Structures](http://artport.whitney.org/commissions/softwarestructures/)".*
 
-Take a look at the [demos](http://williamngan.github.io/pt/demo/?name=color.LABtoRGB) and [docs](http://williamngan.github.io/pt/docs/), and be fearless in experimentation!
+Or what if you extend either *Form* or *Circle* to make them do special things? In es6 or coffeescript, you can simply do `class SuperCircle extends Circle`. In plain old javascript, there's a convenient function in Pt (`Util.extend( SuperCircle, Circle)` to help you do that. [This simple demo](http://williamngan.github.io/pt/demo/index.html?name=space.add) shows a simple example (see [source code](https://github.com/williamngan/pt/blob/master/demo/space.add.js) for details).
 
+I hope you'll enjoy Pt. Take a look at [demos](http://williamngan.github.io/pt/demo/?name=color.LABtoRGB) and [docs](http://williamngan.github.io/pt/docs/), and be fearless in experimentation!
 
