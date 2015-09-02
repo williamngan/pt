@@ -706,13 +706,15 @@ CanvasSpace = (function(superClass) {
   };
 
   CanvasSpace.prototype._mouseAction = function(type, evt) {
-    var k, ref, results, v;
+    var k, px, py, ref, results, v;
     ref = this.items;
     results = [];
     for (k in ref) {
       v = ref[k];
+      px = evt.offsetX || evt.layerX;
+      py = evt.offsetY || evt.layerY;
       if (v.onMouseAction != null) {
-        results.push(v.onMouseAction(type, evt.offsetX, evt.offsetY, evt));
+        results.push(v.onMouseAction(type, px, py, evt));
       } else {
         results.push(void 0);
       }

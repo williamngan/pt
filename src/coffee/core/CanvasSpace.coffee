@@ -170,7 +170,9 @@ class CanvasSpace extends Space
   # go through all item in `items` and call its onMouseAction callback function
   _mouseAction: (type, evt) ->
     for k, v of @items
-      if v.onMouseAction? then v.onMouseAction( type, evt.offsetX, evt.offsetY, evt )
+      px = evt.offsetX || evt.layerX;
+      py = evt.offsetY || evt.layerY;
+      if v.onMouseAction? then v.onMouseAction( type, px, py, evt )
 
 
   # mouse down action

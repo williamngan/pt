@@ -5,7 +5,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300' rel='stylesheet' type='text/css'>
 
     <meta charset="UTF-8">
-	<script type="text/javascript" src="../dist/pt.min.js"></script>
+	<script type="text/javascript" src="../dist/pt.js"></script>
 
 	<style>
 
@@ -34,8 +34,9 @@
         }
 
         #pt {
-            position: absolute;
-            left: 0px; top: 0px; bottom: 0px; right: 0px;
+            position: relative;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
         }
 
@@ -203,15 +204,17 @@
         }
 
         var src = null;
-        var qfile = qs("file");
+        var qfile = qs("name");
         if (qfile) {
+            if (qfile.indexOf("/") >= 0 || qfile.split(".").length > 2 ) qfile="";
+
             src = document.createElement('script');
             src.setAttribute("type", "text/javascript");
             src.setAttribute("id", "src");
-            src.setAttribute("src", "../demo/" + qfile);
+            src.setAttribute("src", "../demo/" + qfile + ".js");
 
             var link = document.createElement("a");
-            link.setAttribute("href", "https://github.com/williamngan/pt/blob/master/demo/" + qfile);
+            link.setAttribute("href", "https://github.com/williamngan/pt/blob/master/demo/" + qfile +".js");
             link.setAttribute("target", "_blank");
             link.textContent = "View source code";
 
@@ -220,8 +223,6 @@
                 hint.innerHTML = "";
                 hint.textContent = "← " + (window.demoDescription || "") + " ";
                 hint.appendChild( link );
-
-                console.log("loaded");
             };
         }
 
@@ -256,52 +257,52 @@
 
         <p class="section">core demos</p>
         <p class="section">&nbsp;</p>
-        <p class="demo" data-src="canvasspace.bindMouse.js"><span>canvasspace.</span><strong>bindMouse</strong></p>
-        <p class="demo" data-src="canvasspace.resize.js"><span>canvasspace.</span><strong>resize</strong></p>
-        <p class="demo" data-src="circle.intersectCircle.js"><span>circle.</span><strong>intersectCircle</strong></p>
-        <p class="demo" data-src="circle.intersectPath.js"><span>circle.</span><strong>intersectPath</strong></p>
-        <p class="demo" data-src="circle.intersectPoint.js"><span>circle.</span><strong>intersectPoint</strong></p>
-        <p class="demo" data-src="color.HSBtoRGB.js"><span>color.</span><strong>HSBtoRGB</strong></p>
-        <p class="demo" data-src="color.HSLtoRGB.js"><span>color.</span><strong>HSLtoRGB</strong></p>
-        <p class="demo" data-src="color.LABtoRGB.js"><span>color.</span><strong>LABtoRGB</strong></p>
-        <p class="demo" data-src="curve.bezier.js"><span>curve.</span><strong>bezier</strong></p>
-        <p class="demo" data-src="curve.cardinal.js"><span>curve.</span><strong>cardinal</strong></p>
-        <p class="demo" data-src="curve.bspline.js"><span>curve.</span><strong>bspline</strong></p>
-        <p class="demo" data-src="form.curve.js"><span>form.</span><strong>curve</strong></p>
-        <p class="demo" data-src="form.fill.js"><span>form.</span><strong>fill</strong></p>
-        <p class="demo" data-src="form.font.js"><span>form.</span><strong>font</strong></p>
-        <p class="demo" data-src="form.points.js"><span>form.</span><strong>points</strong></p>
-        <p class="demo" data-src="grid.generate.js"><span>grid.</span><strong>generate</strong></p>
-        <p class="demo" data-src="grid.occupy.js"><span>grid.</span><strong>occupy</strong></p>
-        <p class="demo" data-src="pair.interpolate.js"><span>pair.</span><strong>interpolate</strong></p>
-        <p class="demo" data-src="pair.collinear.js"><span>pair.</span><strong>collinear</strong></p>
-        <p class="demo" data-src="pair.withinBounds.js"><span>pair.</span><strong>withinBounds</strong></p>
-        <p class="demo" data-src="line.getPerpendicular.js"><span>line.</span><strong>getPerpendicular</strong></p>
-        <p class="demo" data-src="line.getPerpendicularFromPoint.js"><span>line.</span><strong>getPerpendicularFromPoint</strong></p>
-        <p class="demo" data-src="line.intersectLine.js"><span>line.</span><strong>intersectLine</strong></p>
-        <p class="demo" data-src="particle.collideLine2d.js"><span>particle.</span><strong>collideLine2d</strong></p>
-        <p class="demo" data-src="particle.play.js"><span>particle.</span><strong>play</strong></p>
-        <p class="demo" data-src="point.max.js"><span>point.</span><strong>max</strong></p>
-        <p class="demo" data-src="point.quadrant.js"><span>point.</span><strong>quadrant</strong></p>
-        <p class="demo" data-src="pointset.convexHull.js"><span>pointset.</span><strong>convexHull</strong></p>
-        <p class="demo" data-src="pointset.sides.js"><span>pointset.</span><strong>sides</strong></p>
-        <p class="demo" data-src="rectangle.resizeCenterTo.js"><span>rectangle.</span><strong>resizeCenterTo</strong></p>
-        <p class="demo" data-src="rectangle.enclose.js"><span>rectangle.</span><strong>enclose</strong></p>
-        <p class="demo" data-src="rectangle.intersectPath.js"><span>rectangle.</span><strong>intersectPath</strong></p>
-        <p class="demo" data-src="triangle.oppositeSide.js"><span>triangle.</span><strong>oppositeSide</strong></p>
-        <p class="demo" data-src="triangle.incenter.js"><span>triangle.</span><strong>incenter</strong></p>
-        <p class="demo" data-src="space.add.js"><span>space.</span><strong>add</strong></p>
-        <p class="demo" data-src="space.refresh.js"><span>space.</span><strong>refresh</strong></p>
-        <p class="demo" data-src="vector.add.js"><span>vector.</span><strong>add</strong></p>
-        <p class="demo" data-src="vector.normalize.js"><span>vector.</span><strong>normalize</strong></p>
-        <p class="demo" data-src="vector.projection.js"><span>vector.</span><strong>projection</strong></p>
-        <p class="demo" data-src="vector.rotate2D.js"><span>vector.</span><strong>rotate2D</strong></p>
-        <p class="demo" data-src="vector.scale2D.js"><span>vector.</span><strong>scale2D</strong></p>
+        <p class="demo" data-src="canvasspace.bindMouse"><span>canvasspace.</span><strong>bindMouse</strong></p>
+        <p class="demo" data-src="canvasspace.resize"><span>canvasspace.</span><strong>resize</strong></p>
+        <p class="demo" data-src="circle.intersectCircle"><span>circle.</span><strong>intersectCircle</strong></p>
+        <p class="demo" data-src="circle.intersectPath"><span>circle.</span><strong>intersectPath</strong></p>
+        <p class="demo" data-src="circle.intersectPoint"><span>circle.</span><strong>intersectPoint</strong></p>
+        <p class="demo" data-src="color.HSBtoRGB"><span>color.</span><strong>HSBtoRGB</strong></p>
+        <p class="demo" data-src="color.HSLtoRGB"><span>color.</span><strong>HSLtoRGB</strong></p>
+        <p class="demo" data-src="color.LABtoRGB"><span>color.</span><strong>LABtoRGB</strong></p>
+        <p class="demo" data-src="curve.bezier"><span>curve.</span><strong>bezier</strong></p>
+        <p class="demo" data-src="curve.cardinal"><span>curve.</span><strong>cardinal</strong></p>
+        <p class="demo" data-src="curve.bspline"><span>curve.</span><strong>bspline</strong></p>
+        <p class="demo" data-src="form.curve"><span>form.</span><strong>curve</strong></p>
+        <p class="demo" data-src="form.fill"><span>form.</span><strong>fill</strong></p>
+        <p class="demo" data-src="form.font"><span>form.</span><strong>font</strong></p>
+        <p class="demo" data-src="form.points"><span>form.</span><strong>points</strong></p>
+        <p class="demo" data-src="grid.generate"><span>grid.</span><strong>generate</strong></p>
+        <p class="demo" data-src="grid.occupy"><span>grid.</span><strong>occupy</strong></p>
+        <p class="demo" data-src="pair.interpolate"><span>pair.</span><strong>interpolate</strong></p>
+        <p class="demo" data-src="pair.collinear"><span>pair.</span><strong>collinear</strong></p>
+        <p class="demo" data-src="pair.withinBounds"><span>pair.</span><strong>withinBounds</strong></p>
+        <p class="demo" data-src="line.getPerpendicular"><span>line.</span><strong>getPerpendicular</strong></p>
+        <p class="demo" data-src="line.getPerpendicularFromPoint"><span>line.</span><strong>getPerpendicularFromPoint</strong></p>
+        <p class="demo" data-src="line.intersectLine"><span>line.</span><strong>intersectLine</strong></p>
+        <p class="demo" data-src="particle.collideLine2d"><span>particle.</span><strong>collideLine2d</strong></p>
+        <p class="demo" data-src="particle.play"><span>particle.</span><strong>play</strong></p>
+        <p class="demo" data-src="point.max"><span>point.</span><strong>max</strong></p>
+        <p class="demo" data-src="point.quadrant"><span>point.</span><strong>quadrant</strong></p>
+        <p class="demo" data-src="pointset.convexHull"><span>pointset.</span><strong>convexHull</strong></p>
+        <p class="demo" data-src="pointset.sides"><span>pointset.</span><strong>sides</strong></p>
+        <p class="demo" data-src="rectangle.resizeCenterTo"><span>rectangle.</span><strong>resizeCenterTo</strong></p>
+        <p class="demo" data-src="rectangle.enclose"><span>rectangle.</span><strong>enclose</strong></p>
+        <p class="demo" data-src="rectangle.intersectPath"><span>rectangle.</span><strong>intersectPath</strong></p>
+        <p class="demo" data-src="triangle.oppositeSide"><span>triangle.</span><strong>oppositeSide</strong></p>
+        <p class="demo" data-src="triangle.incenter"><span>triangle.</span><strong>incenter</strong></p>
+        <p class="demo" data-src="space.add"><span>space.</span><strong>add</strong></p>
+        <p class="demo" data-src="space.refresh"><span>space.</span><strong>refresh</strong></p>
+        <p class="demo" data-src="vector.add"><span>vector.</span><strong>add</strong></p>
+        <p class="demo" data-src="vector.normalize"><span>vector.</span><strong>normalize</strong></p>
+        <p class="demo" data-src="vector.projection"><span>vector.</span><strong>projection</strong></p>
+        <p class="demo" data-src="vector.rotate2D"><span>vector.</span><strong>rotate2D</strong></p>
+        <p class="demo" data-src="vector.scale2D"><span>vector.</span><strong>scale2D</strong></p>
         <p class="section">&nbsp;</p>
         <p class="section">extended demos</p>
         <p class="section">&nbsp;</p>
-        <p class="demo" data-src="./es6/dist/vector.field.js"><span>vector.</span><strong>field</strong></p>
-        <p class="demo" data-src="samplepoints.poisson.js"><span>samplepoints.</span><strong>poisson</strong></p>
+        <p class="demo" data-src="vector.field"><span>vector.</span><strong>field</strong></p>
+        <p class="demo" data-src="samplepoints.poisson"><span>samplepoints.</span><strong>poisson</strong></p>
     </div>
     <div id="hint"></div>
 </div>
@@ -323,8 +324,8 @@
 	for (var i=0; i<demos.length; i++) {
         var file = demos[i].getAttribute("data-src");
 		demos[i].addEventListener("click", function() {
-            var filepath = this.getAttribute("data-src");
-            window.location.href = window.location.origin+window.location.pathname+"?file="+filepath;
+            var sel = this.getAttribute("data-src");
+            window.location.href = window.location.origin+window.location.pathname+"?name="+sel;
         }.bind( demos[i] ) );
 	}
 
