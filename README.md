@@ -4,16 +4,16 @@ Hello there. Allow me to introduce Pt, which is a study of Point, Form, and Spac
 
 ### Get started
 The best places to get started are:
-- [Demos page](http://williamngan.github.io/pt/demo/index.html) shows various interactive sketches, usually done in short form (50-70 lines of code).
-- [Quick start guide] helps you understand how Pt works, intended for both technical and non-technical audiences.
+- **[Demos page](http://williamngan.github.io/pt/demo/index.html)** shows various interactive sketches, usually done in short form (50-70 lines of code).
+- **[Description](http://medium.com/@williamngan/93382bf5943e/)** is a little essay about the motivations behind Pt. 7 mins read.
+- **[Quick start guide](https://github.com/williamngan/pt/blob/master/QUICKSTART.md)** helps you understand how Pt works, intended for both technical and non-technical audiences.
 - [Documentation](http://williamngan.github.io/pt/docs/) describes Pt's classes and functions.
-- [Description](http://medium.com/@williamngan/93382bf5943e/) is a little essay about the motivations behind Pt. 7 mins read.
-- [Release notes] talks about what's past, or passing, or to come.
+- [Release notes](https://github.com/williamngan/pt/blob/master/RELEASE.md) talks about what's past, or passing, or to come.
 
 
 ### Files
 Looking for the actual javascript library files? Here you go:
-- [pt.js](https://github.com/williamngan/pt/blob/master/dist/pt.js) is the full version, **without namespace**. If you just want to sketch out a simple idea with Pt, this is probably what you need.
+- **[pt.js](https://github.com/williamngan/pt/blob/master/dist/pt.js)** is the full version, **without namespace**. If you just want to sketch out a simple idea with Pt, this is probably what you need.
 - [pt.min.js](https://github.com/williamngan/pt/blob/master/dist/pt.min.js) is the minified version of the above.
 
 - [pt-ns.js](https://github.com/williamngan/pt/blob/master/dist/pt-ns.js) is the full version **with namespace**. That means, instead of `new Point()`, you'll write `new Pt.Point()`. It's unaesthetic but perhaps necessary (sometimes).
