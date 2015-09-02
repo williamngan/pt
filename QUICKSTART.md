@@ -7,6 +7,10 @@ there's also [a friendlier, non-technical guide](https://medium.com/@williamngan
 
 As you know, Pt is based on the ideas of *Point*, *Form*, and *Space*. So we'll be creating a space, a form, and a point (and their extensions). 
 
+#### 0. Spoiler!
+Here's [the thing](http://williamngan.github.io/pt/docs/start.html) we'll be building, and here's the [final source code](https://github.com/williamngan/pt/blob/master/docs/start.html). 
+Pretty fun with less than 40 lines of code, right?
+
 
 #### 1. Setting up and drawing a point
 
@@ -148,6 +152,27 @@ space.play();
 
 So in `onMouseAction`, we set the circle's position when mouse moves, and in `animate`, we draw the circle with an orange stroke color. Give it a try, and you should see the orange circle is now moving with your cursor.
 
+#### 3. Experimentation
 
+We got the basics working, but what can we do with it? Dear reader, here's the place where the start guide ends and your imagination starts. What can you do with 2 circles, one pulsating and one moving?
+
+Perhaps, you can check if the two circles intersect, and if so, draw 2 extra points or a line connecting the intersection points. It might look like this:
+
+```javascript
+animate: function ( time, fs, context ) {
+    // previous code omitted...
+    
+    var hits = another.intersectCircle( dot );
+    if (hits.length > 0) {
+        form.stroke( "#fff" ).fill( "#0C9" );
+        form.line( new Line( hits[0] ).to( hits[1] ) );
+        form.points( hits, 5, true );
+    }
+}
+```
+
+*Inspiration: Casey Reas applied these simple intersections of circles to great effects, in his 2004 Whitney Museum commission "[Software Structures](http://artport.whitney.org/commissions/softwarestructures/)".*
+
+Take a look at the [demos](http://williamngan.github.io/pt/demo/?name=color.LABtoRGB) and [docs](http://williamngan.github.io/pt/docs/), and be fearless in experimentation!
 
 
