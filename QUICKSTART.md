@@ -173,7 +173,18 @@ animate: function ( time, fs, context ) {
 
 *Inspiration: Casey Reas applied these simple intersections of circles to great effects, in his 2004 Whitney Museum commission "[Software Structures](http://artport.whitney.org/commissions/softwarestructures/)".*
 
-Or what if you extend either *Form* or *Circle* to make them do special things? In es6 or coffeescript, you can simply do `class SuperCircle extends Circle`. In plain old javascript, there's a convenient function in Pt (`Util.extend( SuperCircle, Circle)` to help you do that. [This simple demo](http://williamngan.github.io/pt/demo/index.html?name=space.add) shows a simple example (see [source code](https://github.com/williamngan/pt/blob/master/demo/space.add.js) for details).
+Or what if you extend either *Form* or *Circle* to make them do special things? In es6 or coffeescript, you can simply do:
+
+```javascript
+class SuperCircle extends Circle
+```
+In plain old javascript, there's a convenient function in Pt to help with that:
+
+```javascript
+Util.extend( SuperCircle, Circle)
+```
+
+[This simple demo](http://williamngan.github.io/pt/demo/index.html?name=space.add) shows a simple example of an extended class. See [source code](https://github.com/williamngan/pt/blob/master/demo/space.add.js) for details.
 
 I hope you'll enjoy Pt. Take a look at [demos](http://williamngan.github.io/pt/demo/?name=color.LABtoRGB) and [docs](http://williamngan.github.io/pt/docs/), and be fearless in experimentation!
 
