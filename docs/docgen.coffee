@@ -405,7 +405,7 @@ class Docs
 
     else
       if (this.coverDemoLoaded)
-        if (window.scrollY < window.innerHeight/2) then window.restartCoverDemo() else window.stopCoverDemo()
+        if (window.scrollY < 5) then window.restartCoverDemo() else window.stopCoverDemo()
 
     return
 

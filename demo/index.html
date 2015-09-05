@@ -108,7 +108,7 @@
             left: 5vw;
             right: 5vw;
 
-            font-size: 11px; color: #aab;
+            font-size: 12px; color: #666;
             line-height: 1.35;
             word-wrap: normal;
             max-width: 350px;
@@ -116,12 +116,12 @@
 
         #hint a {
             border: none;
-            text-decoration: underline;
-            color: #aab;
+            text-decoration: none;
+            color: #334fff;
         }
 
         #hint a:hover {
-            color: #334fff;
+            color: #4a11df;
         }
 
         h1 {
@@ -216,7 +216,7 @@
             var link = document.createElement("a");
             link.setAttribute("href", "https://github.com/williamngan/pt/blob/master/demo/" + qfile +".js");
             link.setAttribute("target", "_blank");
-            link.textContent = "View source code";
+            link.textContent = "View source code.";
 
             src.onload = function () {
                 var hint = document.querySelector("#hint");
@@ -249,7 +249,7 @@
     <div id="menu">
         <span class="title"><a href="../index.html">Pt</a></span>
         <span><a href="http://medium.com/@williamngan/93382bf5943e/" target="_blank">Description</a></span>
-        <span><a href="http://williamngan.github.io/pt/docs/" target="_blank">Documentation</a></span>
+        <span><a href="../docs/" target="_blank">Documentation</a></span>
         <span><a href="https://github.com/williamngan/pt/" target="_blank">Source code</a></span>
     </div>
 

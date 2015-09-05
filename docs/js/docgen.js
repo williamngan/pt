@@ -432,7 +432,7 @@
         this.coverDemoLoaded = true;
       } else {
         if (this.coverDemoLoaded) {
-          if (window.scrollY < window.innerHeight / 2) {
+          if (window.scrollY < 5) {
             window.restartCoverDemo();
           } else {
             window.stopCoverDemo();
