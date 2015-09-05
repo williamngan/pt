@@ -10,7 +10,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 window.demoDescription = "Visualize Hairy Ball Theorem: you can't comb a hairy ball flat without creating a cowlick";
 
-var space = new CanvasSpace("demo", "#222").display();
+var space = new CanvasSpace("demo", "#334fff").display();
 var form = new Form(space);
 
 var center = space.size.$divide(2);
@@ -143,7 +143,7 @@ var VectorLine = (function (_Vector) {
         this.pulled = true;
         this.moved = true;
 
-        color = "rgba(" + Math.ceil(this.pointer.y / comb.radius * 100 + 150) + ", 50, " + Math.ceil(this.pointer.x / comb.radius * 100 + 150);
+        color = "rgba(" + Math.ceil(this.pointer.y / comb.radius * 100 + 150) + ", " + Math.ceil(this.pointer.x / comb.radius * 100 + 100)+", 100";
 
         // not pulled
       } else {
@@ -161,7 +161,7 @@ var VectorLine = (function (_Vector) {
             this.intensity = Math.min(0.5, Math.max(5, _mag / (this.mag * 5)));
           }
 
-          color = this.pointer.y > 0 ? "rgba(255,240,30" : "rgba(180,200,255";
+          color = this.pointer.y > 0 ? "rgba(230,250,215" : "rgba(0,20,100";
         }
 
       return color + "," + this.intensity + ")";
@@ -179,7 +179,7 @@ var counter = 0;
 
 // fill canvas in white initially and no refresh
 space.refresh(false);
-space.clear("#222");
+space.clear("#334fff");
 
 function create() {
   return {
@@ -216,7 +216,7 @@ function create() {
       }
 
       // fade out effect
-      form.fill( "rgba(34,34,34,.1" ).rect( new Rectangle().to( space.size ) );
+      form.fill( "rgba(51,79,255,.1" ).rect( new Rectangle().to( space.size ) );
       lastTime = time;
     }
   }

@@ -9,8 +9,8 @@
 	<style>
 
 		body {
-			background: #222;
-			font-family: "Helvetica", sans-serif;
+			background: #fff;
+			font-family: "Roboto Slab", sans-serif;
             font-size: 10px;
             line-height: 1.35;
             margin: 0;
@@ -26,9 +26,10 @@
 
 		#board {
 			position: absolute;
-			left: 0; top: 0; bottom: 0; right: 30%;
+			left: 0; top: 0; bottom: 0; right: 40%;
 			overflow: hidden;
             cursor: pointer;
+            background-color: #334fff;
 		}
 
         #pt {
@@ -39,7 +40,7 @@
 
         #page {
             position: absolute;
-            right: 0; top: 0; bottom: 0; left: 70%;
+            right: 0; top: 0; bottom: 0; left: 60%;
             overflow: auto;
             padding: 0 5vw;
             background-color: rgba(51,79,255,.0);
@@ -71,16 +72,16 @@
         }
 
         #info {
+            font-family: "Helvetica Neue", Helvetica, sans-serif;
             font-size: 1em;
             color: #fff;
-            opacity: .2;
             position: absolute;
             left: 5vw;
-            bottom: 5vw;
+            bottom: 1vw;
         }
 
         #info a {
-            color: #fff;
+            color: #ccc;
             border-bottom: none;
         }
 
@@ -89,39 +90,41 @@
         }
 
         h1 {
-            font-family: "Roboto Slab", sans-serif;
-            font-size: 8em;
-            color: #fff;
+
+            font-size: 10em;
+            color: #667380;
             font-weight: 300;
             margin: 0;
         }
 
         p {
-            font-size: 1.4em;
+            font-size: 1.8em;
+            font-weight: 400;
             color: rgba(255,255,255,.8);
             margin: 0;
             margin-bottom: 5px;
         }
 
         h3 {
+            font-family: "Roboto Slab", sans-serif;
             font-weight: 400;
-            font-size: 1.4em;
-            color: #fff;
+            font-size: 1.8em;
+            color: #667380;
             margin: 1em 0 2em 0.15em;
         }
 
         a {
-            color: #4060ff;
+            color: #334fff;
 
             font-weight: 500;
             text-decoration: none;
             display: inline-block;
-            border-bottom: 1px solid transparent;
+            border-bottom: 2px solid #fff;
         }
 
         a:hover {
-            color: #fff;
-            border-bottom-color: #fe0;
+            color: #334fff;
+            border-bottom-color: #ff0;
         }
 
         #mobile {
@@ -140,15 +143,14 @@
             }
 
             #board {
-                position: absolute; top: 0; left: 0; right: auto; bottom: auto;
-                width: 100%; height: 80%;
-                background: url(./docs/images/pt/pair.collinear.png) no-repeat center center;
+                position: absolute; top: 0; left: 0; right: 0; bottom: 50%;
+                background: url(./docs/images/pt/index2.png) no-repeat center center;
                 background-size: cover;
-                opacity: .5;
             }
 
             #page {
-                left: 50%;
+                top: 50%;
+                left: 40%;
             }
 
             #cover {
@@ -163,17 +165,23 @@
 
             #cover h3 {
                 font-size: 4em;
+                margin-bottom: 1.2em;
             }
 
             #cover h1 {
+                margin-top: 0.5em;
                 font-size: 15em;
+            }
+
+            #cover p {
+                line-height: 1.5;
             }
 
             #info {
                 position: fixed;
                 left: 20px; width: 40%;
                 bottom: 20px;
-                font-size: 2em;
+                font-size: 2.2em;
             }
 
             #demoDesktop { display: none; }
@@ -203,11 +211,11 @@
 <div id="page">
     <div id="cover">
         <h1>Pt</h1>
-        <h3>An experiment on visual&nbsp;forms in&nbsp;code.</h3>
+        <h3>A Study of Point, Form, and Space.</h3>
         <p id="demoDesktop"><a href="./demo/index.html?name=color.LABtoRGB">Demos</a></p>
         <p id="demoMobile"><a href="./demo/mobile.html">Demos</a></p>
         <p><a href="http://medium.com/@williamngan/93382bf5943e/">Description</a></p>
-        <p><a href="https://github.com/williamngan/pt" target="_blank">Code</a></p>
+        <p><a href="https://github.com/williamngan/pt" target="_blank">pt.js</a></p>
         <p id="mobile">Try interactive demos in Desktop too</p>
     </div>
     <div id="info">
