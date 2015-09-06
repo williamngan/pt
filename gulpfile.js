@@ -40,7 +40,7 @@ var path = {
 // Parent classes needs to be defined before its extended children
 var coreElems = [
   "Const", "Matrix", "Util", "Timer",
-  "Space", "CanvasSpace",
+  "Space", "CanvasSpace", "DOMSpace",
   "Form",
   "Point", "Vector", "Color",
   "Circle", "Particle", "ParticleSystem",

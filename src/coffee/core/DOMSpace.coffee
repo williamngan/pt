@@ -1,25 +1,18 @@
-# ### CanvasSpace is a space that represents a html canvas. It creates a new canvas or get an existing one in DOM by its `id` attribute. It also provide methods specific to html canvas, such as tracking resize and mouse position.
 
-class CanvasSpace extends Space
+class DOMSpace extends Space
 
-  # ## Create a CanvasSpace which represents a HTML Canvas Space
-  # @param `id` an id property which refers to the "id" attribute of the canvas element in DOM. If no canvas element with this id is found, a new canvas element will be created.
-  # @param `bgcolor` a background color string to specify the canvas background. Default is `false` which shows a transparent background.
-  # @param `context` a string of canvas context type, such as "2d" or "webgl". Default is "2d"
-  constructor : ( id='pt_space', bgcolor=false, context='2d' ) ->
+  constructor: ( id='pt_space', bgcolor=false, context='html' ) ->
     super
 
-    # ## A property to store canvas DOM element
+    # ## A property to store the DOM element
     @canvas = document.querySelector("#"+@id)
+    @canvasCSS = {width: "100%", height: "100%"};
 
-    # ## A boolean property to track if the canvas element is added to dom or not
+    # ## A boolean property to track if the element is added to container or not
     @appended = true
 
     # either get existing one in the DOM or create a new one
-    if !@canvas
-      @canvas = document.createElement("canvas")
-      @canvas.setAttribute("id", @id)
-      @appended = false
+    if !@canvas then @_createElement()
 
     # Track mouse dragging
     @_mdown = false
@@ -30,6 +23,17 @@ class CanvasSpace extends Space
 
     # A property to store canvas rendering contenxt
     @ctx = @canvas.getContext( context )
+
+
+  # A private function to create the canvas element. By default this will create a <div>. Override to create a different element.
+  _createElement: () ->
+    @canvas = document.createElement("div")
+    @canvas.setAttribute("id", @id)
+    @appended = false
+
+
+  css: ( key, val, isPx=false) ->
+    @canvasCSS[key] = (if isPx then "#{val}px" else val);
 
 
   # ## Place a new canvas element into a container dom element. When canvas is ready, a "ready" event will be fired. Track this event with `space.canvas.addEventListener("ready")`
@@ -70,7 +74,6 @@ class CanvasSpace extends Space
           ).bind(@)
         )
 
-
       else
         throw 'Cannot add canvas to element '+parent_id
 
@@ -84,49 +87,22 @@ class CanvasSpace extends Space
 
     @size.set(w, h)
     @center = new Vector( w/2, h/2 )
-    @canvas.setAttribute( 'width', Math.floor(w) )
-    @canvas.setAttribute( 'height', Math.floor(h) )
 
     # player resize callback
     for k, p of @items
       if p.onSpaceResize? then p.onSpaceResize(w, h, evt)
 
-    # repaint canvas
-    @renderer( @ctx )
-
     return @
 
 
-  # ## Clear the canvas with its background color. Overrides Space's `clear` function.
-  # @param `bg` Optionally specify a custom background color. If evaluated to false, it will use its `bgcolor` property as background color.
-  # @return this CanvasSpace
-  clear: ( bg ) ->
-
-    if bg then @bgcolor = bg
-
-    lastColor = @ctx.fillStyle
-
-    if @bgcolor
-      @ctx.fillStyle = @bgcolor;
-      @ctx.fillRect( 0, 0, @size.x, @size.y )
-    else
-      @ctx.clearRect( 0, 0, @size.x, @size.y )
-
-    @ctx.fillStyle = lastColor
-
-    return @
+  clear: () ->
+    @canvas.innerHML = ""
 
 
-
-  # ## Overrides Space's `animate` function for canvas
+  # ## Overrides Space's `animate` function
   # @param `time` current time
   # @return this CanvasSpace
   animate : (time) ->
-
-
-    @ctx.save()
-
-    if @_refresh then @clear()
 
     # animate all players
     for k, v of @items
@@ -135,8 +111,6 @@ class CanvasSpace extends Space
     # stop if time ended
     if @_timeEnd >= 0 and time > @_timeEnd
       cancelAnimationFrame( @_animID )
-
-    @ctx.restore()
 
     return @
 
@@ -165,7 +139,7 @@ class CanvasSpace extends Space
       @canvas.removeEventListener( "mouseout", @_mouseOut.bind(@) )
       @canvas.removeEventListener( "mousemove", @_mouseMove.bind(@) )
 
-    
+
 
   # go through all item in `items` and call its onMouseAction callback function
   _mouseAction: (type, evt) ->
@@ -210,4 +184,4 @@ class CanvasSpace extends Space
 
 
 # namescape
-this.CanvasSpace = CanvasSpace
+this.DOMSpace = DOMSpace
