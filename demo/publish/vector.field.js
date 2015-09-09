@@ -143,7 +143,7 @@ var VectorLine = (function (_Vector) {
         this.pulled = true;
         this.moved = true;
 
-        color = "rgba(" + Math.ceil(this.pointer.y / comb.radius * 100 + 150) + ", " + Math.ceil(this.pointer.x / comb.radius * 100 + 100)+", 100";
+        color = "rgba(" + Math.ceil(this.pointer.y / comb.radius * 100 + 150) + ", " + Math.ceil(this.pointer.x / comb.radius * 250)+", 200";
 
         // not pulled
       } else {

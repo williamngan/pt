@@ -42,7 +42,7 @@
             position: absolute;
             right: 0; top: 0; bottom: 0; left: 60%;
             overflow: auto;
-            padding: 0 5vw;
+            padding: 0 2vw 0 5vw;
             background-color: rgba(51,79,255,.0);
             border-left: 1px solid rgba(51,79,255,.0);
             /*transition: border-color .5s, background-color .5s;*/
@@ -77,11 +77,11 @@
             color: #fff;
             position: absolute;
             left: 5vw;
-            bottom: 1vw;
+            bottom: 2vw;
         }
 
         #info a {
-            color: #ccc;
+            color: #c1c9d5;
             border-bottom: none;
         }
 
@@ -91,10 +91,21 @@
 
         h1 {
 
-            font-size: 10em;
+            font-size: 3.6em;
+            line-height: 1.25;
+            letter-spacing: -0.02em;
             color: #667380;
             font-weight: 300;
             margin: 0;
+            margin-bottom: 40px;
+        }
+
+        h1 > em {
+            color: #222;
+            font-style: normal;
+            font-size: 2em;
+            font-weight: 400;
+            line-height: 1;
         }
 
         p {
@@ -102,7 +113,7 @@
             font-weight: 400;
             color: rgba(255,255,255,.8);
             margin: 0;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
 
         h3 {
@@ -119,12 +130,12 @@
             font-weight: 500;
             text-decoration: none;
             display: inline-block;
-            border-bottom: 2px solid #fff;
+            border-bottom: 2px solid #e1e9f3;
         }
 
         a:hover {
             color: #334fff;
-            border-bottom-color: #ff0;
+            border-bottom-color: #fe0;
         }
 
         #mobile {
@@ -153,11 +164,6 @@
                 left: 40%;
             }
 
-            #cover {
-                vertical-align: bottom;
-                margin-bottom: 20vh;
-            }
-
             #cover p {
                 font-size: 4em;
                 line-height: 2;
@@ -169,8 +175,8 @@
             }
 
             #cover h1 {
-                margin-top: 0.5em;
-                font-size: 15em;
+                margin-top: 1.5em;
+                font-size: 6em;
             }
 
             #cover p {
@@ -210,8 +216,7 @@
 
 <div id="page">
     <div id="cover">
-        <h1>Pt</h1>
-        <h3>A Study of Point, Form, and Space.</h3>
+        <h1><em>Pt</em> &mdash; A&nbsp;code experiment on point, form, and space.</h1>
         <p id="demoDesktop"><a href="./demo/index.html?name=color.LABtoRGB">Demos</a></p>
         <p id="demoMobile"><a href="./demo/mobile.html">Demos</a></p>
         <p><a href="http://medium.com/@williamngan/93382bf5943e/">Description</a></p>
