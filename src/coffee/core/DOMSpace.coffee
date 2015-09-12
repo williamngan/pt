@@ -5,14 +5,14 @@ class DOMSpace extends Space
     super
 
     # ## A property to store the DOM element
-    @canvas = document.querySelector("#"+@id)
-    @canvasCSS = {width: "100%", height: "100%"};
+    @space = document.querySelector("#"+@id)
+    @css = {width: "100%", height: "100%"};
 
     # ## A boolean property to track if the element is added to container or not
     @appended = true
 
     # either get existing one in the DOM or create a new one
-    if !@canvas then @_createElement()
+    if !@space then @_createSpaceElement()
 
     # Track mouse dragging
     @_mdown = false
@@ -21,19 +21,25 @@ class DOMSpace extends Space
     # A property to store canvas background color
     @bgcolor = bgcolor
 
-    # A property to store canvas rendering contenxt
-    @ctx = @canvas.getContext( context )
+    # A property to store rendering contenxt
+    @ctx = {}
 
 
   # A private function to create the canvas element. By default this will create a <div>. Override to create a different element.
-  _createElement: () ->
-    @canvas = document.createElement("div")
-    @canvas.setAttribute("id", @id)
+  _createSpaceElement: () ->
+    @space = document.createElement("div")
+    @space.setAttribute("id", @id)
     @appended = false
 
 
-  css: ( key, val, isPx=false) ->
-    @canvasCSS[key] = (if isPx then "#{val}px" else val);
+  setCSS: ( key, val, isPx=false) ->
+    @css[key] = (if isPx then "#{val}px" else val)
+    return this
+
+
+  updateCSS: () ->
+    for k,v of @css
+      @space.style[k] = v
 
 
   # ## Place a new canvas element into a container dom element. When canvas is ready, a "ready" event will be fired. Track this event with `space.canvas.addEventListener("ready")`
@@ -59,17 +65,17 @@ class DOMSpace extends Space
         )
 
         # add to parent dom if not existing
-        if @canvas.parentNode != frame
-          frame.appendChild( @canvas )
+        if @space.parentNode != frame
+          frame.appendChild( @space )
 
         @appended = true
 
         # fire ready event
         setTimeout( (
             () ->
-              @canvas.dispatchEvent( new Event('ready') )
+              @space.dispatchEvent( new Event('ready') )
               if readyCallback
-                readyCallback( frame_rect.width, frame_rect.height,  @canvas )
+                readyCallback( frame_rect.width, frame_rect.height,  @space )
 
           ).bind(@)
         )
@@ -96,7 +102,7 @@ class DOMSpace extends Space
 
 
   clear: () ->
-    @canvas.innerHML = ""
+    @space.innerHML = ""
 
 
   # ## Overrides Space's `animate` function
@@ -119,7 +125,7 @@ class DOMSpace extends Space
   # @param `evt` Event object
   # @param `callback` a callback function for this event
   bindCanvas: ( evt, callback ) ->
-    @canvas.addEventListener( evt, callback )
+    @space.addEventListener( evt, callback )
 
 
   # ## A convenient method to bind (or unbind) all mouse events in canvas element. All item added to `items` property that implements an `onMouseAction` callback will receive mouse event callbacks. The types of mouse actions are: "up", "down", "move", "drag", "drop", "over", and "out".
@@ -127,17 +133,17 @@ class DOMSpace extends Space
   # @demo canvasspace.bindMouse
   bindMouse: ( _bind=true ) ->
     if _bind
-      @canvas.addEventListener( "mousedown", @_mouseDown.bind(@) )
-      @canvas.addEventListener( "mouseup", @_mouseUp.bind(@) )
-      @canvas.addEventListener( "mouseover", @_mouseOver.bind(@) )
-      @canvas.addEventListener( "mouseout", @_mouseOut.bind(@) )
-      @canvas.addEventListener( "mousemove", @_mouseMove.bind(@) )
+      @space.addEventListener( "mousedown", @_mouseDown.bind(@) )
+      @space.addEventListener( "mouseup", @_mouseUp.bind(@) )
+      @space.addEventListener( "mouseover", @_mouseOver.bind(@) )
+      @space.addEventListener( "mouseout", @_mouseOut.bind(@) )
+      @space.addEventListener( "mousemove", @_mouseMove.bind(@) )
     else
-      @canvas.removeEventListener( "mousedown", @_mouseDown.bind(@) )
-      @canvas.removeEventListener( "mouseup", @_mouseUp.bind(@) )
-      @canvas.removeEventListener( "mouseover", @_mouseOver.bind(@) )
-      @canvas.removeEventListener( "mouseout", @_mouseOut.bind(@) )
-      @canvas.removeEventListener( "mousemove", @_mouseMove.bind(@) )
+      @space.removeEventListener( "mousedown", @_mouseDown.bind(@) )
+      @space.removeEventListener( "mouseup", @_mouseUp.bind(@) )
+      @space.removeEventListener( "mouseover", @_mouseOver.bind(@) )
+      @space.removeEventListener( "mouseout", @_mouseOut.bind(@) )
+      @space.removeEventListener( "mousemove", @_mouseMove.bind(@) )
 
 
 
@@ -181,6 +187,19 @@ class DOMSpace extends Space
     @_mouseAction( "out", evt )
     if @_mdrag then @_mouseAction( "drop", evt )
     @_mdrag = false
+
+
+
+  @attr: (elem, data) ->
+    for k, v of data
+      elem.setAttribute( k, v );
+
+
+  @css: (data) ->
+    str = ""
+    for k, v of data
+      if (v) then str += "#{k}: #{v}; "
+    return str;
 
 
 # namescape

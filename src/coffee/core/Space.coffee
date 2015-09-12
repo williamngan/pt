@@ -9,9 +9,6 @@ class Space
     # ## A property to identify this space by name
     @id = id
 
-    # ## A render callback function, which needs to be implemented
-    @renderer = (ctx) =>
-
     # ## A property to indicate the size of this space as a Vector
     @size = new Vector()
 
@@ -43,10 +40,8 @@ class Space
 
 
   # ## set custom render function (on resize and other events)
-  # @param `func` a custom callback `function( ctx )` for rendering. The function will pass a context parameter.
   # @return this space
-  render: ( func ) ->
-    @renderer = func
+  render: ( context ) ->
     return @
 
 

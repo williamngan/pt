@@ -40,8 +40,8 @@ var path = {
 // Parent classes needs to be defined before its extended children
 var coreElems = [
   "Const", "Matrix", "Util", "Timer",
-  "Space", "CanvasSpace", "DOMSpace",
-  "Form",
+  "Space", "CanvasSpace", "DOMSpace", "SVGSpace",
+  "Form", "SVGForm",
   "Point", "Vector", "Color",
   "Circle", "Particle", "ParticleSystem",
   "Pair", "Line", "Rectangle", "Grid",
@@ -55,6 +55,10 @@ var extendElems = [
 ];
 var extendFiles = extendElems.map(function(n) { return path.src.extend+n+".coffee"; } );
 
+function handleError( error ) {
+  gutil.log( error.stack );
+  this.emit( 'end' );
+}
 
 gulp.task('default', ["watch"]);
 
@@ -116,7 +120,7 @@ gulp.task('pt', function() {
   return gulp.src( coreFiles.concat( extendFiles ) )
     .pipe( concat('pt.coffee') )
     .pipe( sourcemaps.init() )
-    .pipe( coffee({bare:true}).on('error', gutil.log))
+    .pipe( coffee({bare:true}).on('error', handleError) )
     .pipe( sourcemaps.write(".") )
     .pipe( gulp.dest( path.dist.path ) )
 });
@@ -150,7 +154,7 @@ gulp.task('core', function() {
   return gulp.src( coreFiles )
     .pipe( concat('pt-core.coffee') )
     .pipe( sourcemaps.init() )
-    .pipe( coffee({bare:true}).on('error', gutil.log))
+    .pipe( coffee({bare:true}).on('error', handleError))
     .pipe( sourcemaps.write(".") )
     .pipe( gulp.dest( path.dist.core ) )
 });
@@ -173,7 +177,7 @@ gulp.task('core-ns-min', function() {
 gulp.task('core-files', function() {
   gulp.src( path.src.core+'*.coffee' )
     .pipe(sourcemaps.init())
-    .pipe( coffee({bare:true}).on('error', gutil.log))
+    .pipe( coffee({bare:true}).on('error', handleError))
     .pipe(sourcemaps.write(".map"))
     .pipe( gulp.dest( path.dist.core+"/elements/" ) )
 });
@@ -186,7 +190,7 @@ gulp.task('extend', function() {
   return gulp.src( extendFiles )
     .pipe( concat('pt-extend.coffee') )
     .pipe( sourcemaps.init() )
-    .pipe( coffee({bare:true}).on('error', gutil.log))
+    .pipe( coffee({bare:true}).on('error', handleError))
     .pipe( sourcemaps.write(".") )
     .pipe( gulp.dest( path.dist.extend ) )
 });
@@ -209,7 +213,7 @@ gulp.task('extend-ns-min', function() {
 gulp.task('extend-files', function() {
   gulp.src( path.src.extend+'*.coffee')
     .pipe(sourcemaps.init())
-    .pipe( coffee({bare:true}).on('error', gutil.log))
+    .pipe( coffee({bare:true}).on('error', handleError))
     .pipe(sourcemaps.write("./map"))
     .pipe( gulp.dest( path.dist.extend+"/elements/" ) )
 });
@@ -218,6 +222,6 @@ gulp.task('extend-files', function() {
 // ES6 Babel
 gulp.task('es6-demo', function () {
     return gulp.src( path.demoEs6.src+"/*.js" )
-        .pipe(babel()).on('error', gutil.log)
+        .pipe(babel()).on('error', handleError)
         .pipe(gulp.dest( path.demoEs6.dist ));
 });

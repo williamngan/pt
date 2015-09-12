@@ -10,15 +10,15 @@ class CanvasSpace extends Space
     super
 
     # ## A property to store canvas DOM element
-    @canvas = document.querySelector("#"+@id)
+    @space = document.querySelector("#"+@id)
 
     # ## A boolean property to track if the canvas element is added to dom or not
     @appended = true
 
     # either get existing one in the DOM or create a new one
-    if !@canvas
-      @canvas = document.createElement("canvas")
-      @canvas.setAttribute("id", @id)
+    if !@space
+      @space = document.createElement("canvas")
+      @space.setAttribute("id", @id)
       @appended = false
 
     # Track mouse dragging
@@ -29,7 +29,7 @@ class CanvasSpace extends Space
     @bgcolor = bgcolor
 
     # A property to store canvas rendering contenxt
-    @ctx = @canvas.getContext( context )
+    @ctx = @space.getContext( context )
 
 
   # ## Place a new canvas element into a container dom element. When canvas is ready, a "ready" event will be fired. Track this event with `space.canvas.addEventListener("ready")`
@@ -55,17 +55,17 @@ class CanvasSpace extends Space
         )
 
         # add to parent dom if not existing
-        if @canvas.parentNode != frame
-          frame.appendChild( @canvas )
+        if @space.parentNode != frame
+          frame.appendChild( @space )
 
         @appended = true
 
         # fire ready event
         setTimeout( (
             () ->
-              @canvas.dispatchEvent( new Event('ready') )
+              @space.dispatchEvent( new Event('ready') )
               if readyCallback
-                readyCallback( frame_rect.width, frame_rect.height,  @canvas )
+                readyCallback( frame_rect.width, frame_rect.height,  @space )
 
           ).bind(@)
         )
@@ -84,15 +84,15 @@ class CanvasSpace extends Space
 
     @size.set(w, h)
     @center = new Vector( w/2, h/2 )
-    @canvas.setAttribute( 'width', Math.floor(w) )
-    @canvas.setAttribute( 'height', Math.floor(h) )
+    @space.setAttribute( 'width', Math.floor(w) )
+    @space.setAttribute( 'height', Math.floor(h) )
 
     # player resize callback
     for k, p of @items
       if p.onSpaceResize? then p.onSpaceResize(w, h, evt)
 
     # repaint canvas
-    @renderer( @ctx )
+    @render( @ctx )
 
     return @
 
@@ -145,7 +145,7 @@ class CanvasSpace extends Space
   # @param `evt` Event object
   # @param `callback` a callback function for this event
   bindCanvas: ( evt, callback ) ->
-    @canvas.addEventListener( evt, callback )
+    @space.addEventListener( evt, callback )
 
 
   # ## A convenient method to bind (or unbind) all mouse events in canvas element. All item added to `items` property that implements an `onMouseAction` callback will receive mouse event callbacks. The types of mouse actions are: "up", "down", "move", "drag", "drop", "over", and "out".
@@ -153,17 +153,17 @@ class CanvasSpace extends Space
   # @demo canvasspace.bindMouse
   bindMouse: ( _bind=true ) ->
     if _bind
-      @canvas.addEventListener( "mousedown", @_mouseDown.bind(@) )
-      @canvas.addEventListener( "mouseup", @_mouseUp.bind(@) )
-      @canvas.addEventListener( "mouseover", @_mouseOver.bind(@) )
-      @canvas.addEventListener( "mouseout", @_mouseOut.bind(@) )
-      @canvas.addEventListener( "mousemove", @_mouseMove.bind(@) )
+      @space.addEventListener( "mousedown", @_mouseDown.bind(@) )
+      @space.addEventListener( "mouseup", @_mouseUp.bind(@) )
+      @space.addEventListener( "mouseover", @_mouseOver.bind(@) )
+      @space.addEventListener( "mouseout", @_mouseOut.bind(@) )
+      @space.addEventListener( "mousemove", @_mouseMove.bind(@) )
     else
-      @canvas.removeEventListener( "mousedown", @_mouseDown.bind(@) )
-      @canvas.removeEventListener( "mouseup", @_mouseUp.bind(@) )
-      @canvas.removeEventListener( "mouseover", @_mouseOver.bind(@) )
-      @canvas.removeEventListener( "mouseout", @_mouseOut.bind(@) )
-      @canvas.removeEventListener( "mousemove", @_mouseMove.bind(@) )
+      @space.removeEventListener( "mousedown", @_mouseDown.bind(@) )
+      @space.removeEventListener( "mouseup", @_mouseUp.bind(@) )
+      @space.removeEventListener( "mouseover", @_mouseOver.bind(@) )
+      @space.removeEventListener( "mouseout", @_mouseOut.bind(@) )
+      @space.removeEventListener( "mousemove", @_mouseMove.bind(@) )
 
     
 
