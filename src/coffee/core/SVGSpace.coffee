@@ -6,7 +6,7 @@ class SVGSpace extends DOMSpace
 
 
 
-  # A private function to create the canvas element. By default this will create a <div>. Override to create a different element.
+  # Override DOMSpace function to create the root svg element
   _createSpaceElement: () ->
     @space = document.createElementNS( "http://www.w3.org/2000/svg", "svg")
     @space.setAttribute("id", @id)
@@ -14,17 +14,19 @@ class SVGSpace extends DOMSpace
 
 
 
-  appendChild: (parent, name, id) ->
-    if (!@appended) then return false
+  @svgElement: (parent, name, id) ->
 
-    @elem = document.querySelector("#"+id);
+    if (!parent || !parent.appendChild)
+      throw( "parent parameter needs to be a DOM node" )
 
-    if (!@elem)
-      @elem = document.createElementNS( "http://www.w3.org/2000/svg", name)
-      @elem.setAttribute("id",id)
-      parent.appendChild( @elem )
+    elem = document.querySelector("#"+id);
 
-    return @elem
+    if (!elem)
+      elem = document.createElementNS( "http://www.w3.org/2000/svg", name)
+      elem.setAttribute("id",id)
+      parent.appendChild( elem )
+
+    return elem
 
 
   # ## This overrides Space's `resize` function. It's a callback function for window's resize event. Keep track of this with `onSpaceResize(w,h,evt)` callback in your added objects.
