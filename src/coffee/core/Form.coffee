@@ -92,7 +92,7 @@ class Form
 
   # ## A static function to draw a triangle
   # @param `ctx` canvas rendering context
-  # @param `c` a Triangle object
+  # @param `tri` a Triangle object
   # @param `fill` a boolean value to specify if the points should be filled. Default to true.
   # @param `stroke` a boolean value to specify if the points should be stroked. Default to false.
   @triangle: ( ctx, tri, fill=true, stroke=false) ->

@@ -1408,11 +1408,11 @@ SVGForm = (function() {
     if (group == null) {
       group = false;
     }
-    this.cc.groupID = group_id;
-    this.cc.groupCount = 0;
     if (group) {
       this.cc.group = group;
     }
+    this.cc.groupID = group_id;
+    this.cc.groupCount = 0;
     this.nextID();
     return this.cc;
   };
@@ -1672,6 +1672,38 @@ SVGForm = (function() {
   SVGForm.prototype.polygon = function(ps, closePath) {
     this.nextID();
     SVGForm.polygon(this.cc, ps, closePath);
+    return this;
+  };
+
+  SVGForm.triangle = function(ctx, tri, fill, stroke) {
+    if (fill == null) {
+      fill = true;
+    }
+    if (stroke == null) {
+      stroke = false;
+    }
+    return SVGForm.polygon(ctx, tri.toArray());
+  };
+
+  SVGForm.prototype.triangle = function(tri) {
+    this.nextID();
+    SVGForm.triangle(this.cc, tri);
+    return this;
+  };
+
+  SVGForm.curve = function(ctx, pts, closePath) {
+    if (closePath == null) {
+      closePath = false;
+    }
+    return SVGForm.polygon(ctx, pts, closePath);
+  };
+
+  SVGForm.prototype.curve = function(ps, closePath) {
+    if (closePath == null) {
+      closePath = false;
+    }
+    this.nextID();
+    SVGForm.curve(this.cc, ps, closePath);
     return this;
   };
 

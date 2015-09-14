@@ -58,9 +58,10 @@ class SVGForm
 
 
   scope: ( group_id, group=false ) ->
+    if (group) then @cc.group = group
     @cc.groupID = group_id
     @cc.groupCount = 0
-    if (group) then @cc.group = group
+
     @nextID()
     return @cc
 
@@ -282,4 +283,38 @@ class SVGForm
   polygon: (ps, closePath) ->
     @nextID()
     SVGForm.polygon( @cc, ps, closePath)
+    return @
+
+  # ## A static function to draw a triangle
+  # @param `ctx` canvas rendering context
+  # @param `tri` a Triangle object
+  # @param `fill` not used - already defined in ctx
+  # @param `stroke` not used - already defined in ctx
+  @triangle: ( ctx, tri, fill=true, stroke=false) ->
+    return SVGForm.polygon(ctx, tri.toArray() )
+
+
+  # ## Draw a triangle
+  # @param `tri` a Triangle object
+  # @return this Form
+  triangle: (tri) ->
+    @nextID()
+    SVGForm.triangle( @cc, tri )
+    return @
+
+
+  # ## A static function to draw a curve as straight line segments. In future, this should be converted to bezier curves.
+  # @param `ctx` canvas rendering context
+  # @param `pts` an array of Points
+  @curve: ( ctx, pts, closePath=false ) ->
+    SVGForm.polygon( ctx, pts, closePath )
+
+
+  # ## Draw a curve
+  # @param `ps` an array of Points
+  # @demo form.curve
+  # @return this Form
+  curve: (ps, closePath=false ) ->
+    @nextID()
+    SVGForm.curve( @cc, ps, closePath )
     return @
