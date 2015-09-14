@@ -15,6 +15,7 @@ var form = new SVGForm( space.ctx );
 //// 2. Create Elements
 var p = new Vector(20, 20);
 var ps = [new Vector(10,10), new Vector(100,50), new Vector(30, 100)];
+var poly = [new Vector(100,10), new Vector(100,50), new Vector(50, 120), new Vector(50, 250)];
 
 var a = new Vector(350,20);
 
@@ -26,16 +27,30 @@ space.add({
 
     form.scope("item");
 
+
+    form.fill("#999").stroke(false);
     form.point( p, 5, true );
     form.points( ps );
-
+    //
     form.stroke("#f00", 2);
     form.line( new Line(ps[0]).to(p) );
+    //
 
+    form.stroke("#999", 1);
     form.lines( [ new Line(ps[0]).to(ps[1]),  new Line(ps[1]).to(ps[2]),  new Line(ps[2]).to(ps[0])  ]);
-
+    //
     form.stroke(false).fill("rgba(255,0,0,.2)");
-    form.rect( new Pair(a).to(p) )
+    form.rect( new Pair(a).to(p) );
+
+    form.circle( new Circle(a).setRadius(20) );
+
+
+    form.polygon( poly, true );
+
+    form.stroke("#0f9").fill(false);
+    var temp = poly.slice();
+    temp.push( p.clone() );
+    form.polygon( temp, false );
 
   },
   onMouseAction: function(type, x, y, evt) {

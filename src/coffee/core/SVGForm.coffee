@@ -11,16 +11,19 @@ class SVGForm
     @cc = space.ctx || {}
 
     # keep track of dom id names
-    @cc.group = null
+    @cc.group = @cc.group || null
     @cc.groupID = "ptx"
     @cc.groupCount = 0
     @cc.currentID = "ptx0"
 
     # default style or false for no fill
-    @cc.fillStyle = '#999'
-    @cc.strokeStyle = '#666'
-    @cc.lineWidth = false
-    @cc.lineJoint = false
+    @cc.style = {
+      fill: "#999"
+      stroke: "#666"
+      "stroke-width": 1
+      "stroke-linejoin": false
+      "stroke-linecap": false
+    }
     @cc.font = "11px sans-serif"
 
     # ## a property to specify the current font size
@@ -36,7 +39,7 @@ class SVGForm
   # @demo form.fill
   # @return this Form
   fill: (c) ->
-    @cc.fillStyle = if c then c else false
+    @cc.style.fill = if c then c else false
     return @
 
 
@@ -46,10 +49,11 @@ class SVGForm
   # @param `joint` Optional string to set line joint style. Can be "miter", "bevel", or "round".
   # @eg `form.stroke("#F90")` `form.stroke("rgba(0,0,0,.5")` `form.stroke(false)` `form.stroke("#000", 0.5, 'round')`
   # @return this Form
-  stroke: (c, width, joint) ->
-    @cc.strokeStyle = if c then c else false
-    if width then @cc.lineWidth = width
-    if joint then @cc.lineJoint = joint
+  stroke: (c, width, joint, cap) ->
+    @cc.style.stroke = if c then c else false
+    if width then @cc.style["stroke-width"] = width
+    if joint then @cc.style["stroke-linejoin"] = joint
+    if cap then @cc.style["stroke-linecap"] = joint
     return @
 
 
@@ -70,25 +74,26 @@ class SVGForm
   @id: (ctx) ->
     return ctx.currentID || "p-"+SVGForm._domId++
 
-  @style: (elem, fill, stroke=false, strokeWidth=false, joint=false) ->
-    DOMSpace.attr( elem, {
-      style: DOMSpace.css({
-        fill: if (fill) then fill else false
-        stroke: if (stroke) then stroke else false
-        "stroke-width": if (strokeWidth) then strokeWidth else false
-        joint: if (joint) then joint else false
-      })
-    })
+
+  @style: (elem, styles) ->
+    st = {}
+    for k,v of styles
+      if (!v)
+        if (k=="fill" or k=="stroke") then st[k] = "none"
+      else
+        st[k] = v
+
+    return DOMSpace.attr( elem, st )
 
 
   # ## A static function to draw a point
   # @param `ctx` canvas rendering context
   # @param `pt` a Point object
   # @param `halfsize` radius or half size of the point. Default is 2.
-  # @param `fill` a boolean value to specify if the points should be filled. Default to true.
-  # @param `stroke` a boolean value to specify if the points should be stroked. Default to false.
+  # @param `fill` not used - already defined in ctx
+  # @param `stroke` not used - already defined in ctx
   # @param `circle` a boolean value to specify if the points should be drawn as a circle. Default to false.
-  @point: (ctx, pt, halfsize=2, fill=true, stroke=false, circle=false ) ->
+  @point: (ctx, pt, halfsize=2, fill=true, stroke=true, circle=false ) ->
 
     elem = SVGSpace.svgElement( ctx.group, (if (circle) then "circle" else "rect"), SVGForm.id(ctx) )
     if (!elem) then return;
@@ -107,7 +112,7 @@ class SVGForm
         height: halfsize + halfsize
       })
 
-    SVGForm.style(elem, fill, stroke)
+    SVGForm.style(elem, ctx.style)
     return elem
 
 
@@ -118,7 +123,7 @@ class SVGForm
   # @return this Form
   point: (p, halfsize=2, isCircle=false) ->
     @nextID()
-    SVGForm.point(@cc, p, halfsize, @cc.fillStyle, @cc.strokeStyle, isCircle )
+    SVGForm.point(@cc, p, halfsize, true, true, isCircle )
     return @
 
 
@@ -126,7 +131,7 @@ class SVGForm
   # @param `ctx` canvas rendering context
   # @param `pts` an array of Points
   # @param `halfsize, fill, stroke, circle` same parameters as in `SVGForm.point()`
-  @points: (ctx, pts, halfsize=2, fill=true, stroke=false, circle=false ) ->
+  @points: (ctx, pts, halfsize=2, fill=true, stroke=true, circle=false ) ->
     return (SVGForm.point( ctx, p, halfsize, fill, stroke, circle ) for p in pts)
 
 
@@ -145,7 +150,7 @@ class SVGForm
   # ## A static function to draw a line
   # @param `ctx` canvas rendering context
   # @param `pair` a Pair object
-  @line: (ctx, pair, stroke) ->
+  @line: (ctx, pair) ->
     if !pair.p1 then throw "#{pair.toString()} is not a Pair"
     elem = SVGSpace.svgElement( ctx.group, "line", SVGForm.id(ctx) )
 
@@ -156,7 +161,7 @@ class SVGForm
       y2: pair.p1.y
     })
 
-    SVGForm.style(elem, false, stroke)
+    SVGForm.style(elem, ctx.style)
     return elem
 
 
@@ -165,7 +170,7 @@ class SVGForm
   # @return this Form
   line: (p) ->
     @nextID()
-    SVGForm.line( @cc, p, @cc.strokeStyle )
+    SVGForm.line( @cc, p )
     return @
 
 
@@ -188,9 +193,9 @@ class SVGForm
   # ## A static function to draw a rectangle
   # @param `ctx` canvas rendering context
   # @param `pair` a Pair object
-  # @param `fill` a boolean value to specify if the points should be filled. Default to true.
-  # @param `stroke` a boolean value to specify if the points should be stroked. Default to false.
-  @rect: (ctx, pair, fill=true, stroke=false) ->
+  # @param `fill` not used - already defined in ctx
+  # @param `stroke` not used - already defined in ctx
+  @rect: (ctx, pair, fill=true, stroke=true) ->
     if !pair.p1 then throw "#{pair.toString() is not a Pair}"
     elem = SVGSpace.svgElement( ctx.group, "rect", SVGForm.id(ctx) )
 
@@ -202,7 +207,7 @@ class SVGForm
       height: size.y
     })
 
-    SVGForm.style(elem, false, stroke)
+    SVGForm.style(elem, ctx.style)
     return elem
 
 
@@ -212,5 +217,69 @@ class SVGForm
   rect: (p, checkBounds=true) ->
     @nextID()
     r = if (checkBounds) then p.bounds() else p
-    SVGForm.rect( @cc, r, @cc.fillStyle, @cc.strokeStyle )
+    SVGForm.rect( @cc, r )
+    return @
+
+
+
+
+  # ## A static  function to draw a circle
+  # @param `ctx` canvas rendering context
+  # @param `c` a Circle object
+  # @param `fill` not used - already defined in ctx
+  # @param `stroke` not used - already defined in ctx
+  @circle: (ctx, c, fill=true, stroke=false) ->
+
+    elem = SVGSpace.svgElement( ctx.group, "circle", SVGForm.id(ctx) )
+    if (!elem) then return
+
+    DOMSpace.attr( elem, {
+      cx: c.x
+      cy: c.y
+      r: c.radius
+    })
+
+    SVGForm.style(elem, ctx.style)
+    return elem
+
+
+  # ## Draw a circle
+  # @param `c` a Circle object
+  # @return this Form
+  circle: (c) ->
+    @nextID()
+    SVGForm.circle( @cc, c )
+    return @
+
+
+
+  # ## A static function to draw a polygon
+  # @param `ctx` canvas rendering context
+  # @param `pts` an array of Points
+  # @param `closePath` a boolean value to specify if the path should be closed (joining last point with first point)
+  # @param `fill` not used - already defined in ctx
+  # @param `stroke` not used - already defined in ctx
+  @polygon: ( ctx, pts, closePath=true, fill=true, stroke=true) ->
+
+    elem = SVGSpace.svgElement( ctx.group, (if (closePath) then "polygon" else "polyline"), SVGForm.id(ctx) )
+    if (!elem) then return
+
+    if pts.length <= 1 then return;
+
+    points = ("#{pts[i].x},#{pts[i].y}" for i in [0...pts.length] by 1)
+    DOMSpace.attr( elem, {
+      points: points.join(" ")
+    })
+
+    SVGForm.style(elem, ctx.style)
+    return elem
+
+
+  # ## Draw a polygon
+  # @param `ps` an array of Points
+  # @param `closePath` a boolean value to specify if the path should be closed (joining last point with first point)
+  # @return this Form
+  polygon: (ps, closePath) ->
+    @nextID()
+    SVGForm.polygon( @cc, ps, closePath)
     return @
