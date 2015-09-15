@@ -57,6 +57,11 @@ class SVGForm
     return @
 
 
+  # ## Set the current group scope by an ID, and optionally define the group's parent element
+  # @param `group_id` a string to use as prefix for the group's id. For example, group_id "hello" will create elements with id like "hello-1", "hello-2", etc
+  # @param `group` optional dom element to define this group's parent element
+  # @eg `form.scope("dot")` `form.scope("dot", elem)`
+  # @return context object
   scope: ( group_id, group=false ) ->
     if (group) then @cc.group = group
     @cc.groupID = group_id
@@ -66,16 +71,36 @@ class SVGForm
     return @cc
 
 
+  # ## Set the current group scope based on an item added to Space. The item must have an `animateID` property. Its group id will become "item-##".
+  # @param `item` an item that's added to space.
+  # @return context object
+  getScope: ( item ) ->
+    if (!item || item.animateID == null )
+      throw "getScope()'s item must be added to a Space, and has an animateID property. Otherwise, use scope() instead."
+    return @scope( SVGForm._scopeID( item ) )
+
+
+  # ## Get next available id in the current group
+  # @return an id string
   nextID: () ->
     @cc.groupCount++
-    @cc.currentID = @cc.groupID+@cc.groupCount
+    @cc.currentID = @cc.groupID+"-"+@cc.groupCount
     return @cc.currentID
 
 
+  # ## A static function to context
   @id: (ctx) ->
     return ctx.currentID || "p-"+SVGForm._domId++
 
 
+  # compose a scope id
+  @_scopeID: (item) ->
+    return "item"+item.animateID
+
+  # ## A static function to help adding style object to an element
+  # @param `elem` a dom element to add to
+  # @param `styles` an object of style properties
+  # @eg `SVGForm.style(elem, {fill: "#f90", stroke: false})`
   @style: (elem, styles) ->
     st = {}
     for k,v of styles
@@ -220,8 +245,6 @@ class SVGForm
     r = if (checkBounds) then p.bounds() else p
     SVGForm.rect( @cc, r )
     return @
-
-
 
 
   # ## A static  function to draw a circle

@@ -990,6 +990,10 @@ SVGSpace = (function(superClass) {
       context = 'svg';
     }
     SVGSpace.__super__.constructor.apply(this, arguments);
+    this.bg = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    this.bg.setAttribute("id", id + "_bg");
+    this.bg.setAttribute("fill", bgcolor);
+    this.space.appendChild(this.bg);
   }
 
   SVGSpace.prototype._createSpaceElement = function() {
@@ -1007,6 +1011,7 @@ SVGSpace = (function(superClass) {
     if (!elem) {
       elem = document.createElementNS("http://www.w3.org/2000/svg", name);
       elem.setAttribute("id", id);
+      elem.setAttribute("class", id.substring(0, id.indexOf("-")));
       parent.appendChild(elem);
     }
     return elem;
@@ -1018,6 +1023,8 @@ SVGSpace = (function(superClass) {
     this.center = new Vector(w / 2, h / 2);
     this.space.setAttribute("width", w);
     this.space.setAttribute("height", h);
+    this.bg.setAttribute("width", w);
+    this.bg.setAttribute("height", h);
     ref = this.items;
     for (k in ref) {
       p = ref[k];
@@ -1026,6 +1033,24 @@ SVGSpace = (function(superClass) {
       }
     }
     return this;
+  };
+
+  SVGSpace.prototype.remove = function(item) {
+    var j, len1, t, temp;
+    temp = this.space.querySelectorAll("." + SVGForm._scopeID(item));
+    for (j = 0, len1 = temp.length; j < len1; j++) {
+      t = temp[j];
+      t.parentNode.removeChild(t);
+    }
+    delete this.items[item.animateID];
+    return this;
+  };
+
+  SVGSpace.prototype.removeAll = function() {
+    while (this.space.firstChild) {
+      this.space.removeChild(this.space.firstChild);
+      return this;
+    }
   };
 
   return SVGSpace;
@@ -1417,14 +1442,25 @@ SVGForm = (function() {
     return this.cc;
   };
 
+  SVGForm.prototype.getScope = function(item) {
+    if (!item || item.animateID === null) {
+      throw "getScope()'s item must be added to a Space, and has an animateID property. Otherwise, use scope() instead.";
+    }
+    return this.scope(SVGForm._scopeID(item));
+  };
+
   SVGForm.prototype.nextID = function() {
     this.cc.groupCount++;
-    this.cc.currentID = this.cc.groupID + this.cc.groupCount;
+    this.cc.currentID = this.cc.groupID + "-" + this.cc.groupCount;
     return this.cc.currentID;
   };
 
   SVGForm.id = function(ctx) {
     return ctx.currentID || "p-" + SVGForm._domId++;
+  };
+
+  SVGForm._scopeID = function(item) {
+    return "item" + item.animateID;
   };
 
   SVGForm.style = function(elem, styles) {
