@@ -27,10 +27,10 @@ class SVGForm
     @cc.font = "11px sans-serif"
 
     # ## a property to specify the current font size
-    @fontSize = 11
+    @cc.fontSize = 11
 
     # ## a property to specify the current font face
-    @fontFace = "sans-serif"
+    @cc.fontFace = "sans-serif"
 
 
   # ## Set current fill style
@@ -326,7 +326,7 @@ class SVGForm
     return @
 
 
-  # ## A static function to draw a curve as straight line segments. In future, this should be converted to bezier curves.
+  # ## A static function to draw a curve as straight polygon segments. In future, this should be converted to bezier curves.
   # @param `ctx` canvas rendering context
   # @param `pts` an array of Points
   @curve: ( ctx, pts, closePath=false ) ->
@@ -341,3 +341,96 @@ class SVGForm
     @nextID()
     SVGForm.curve( @cc, ps, closePath )
     return @
+
+
+  # ## A static function to draw text
+  # @param `ctx` canvas rendering context
+  # @param `pt` a Point object to specify the anchor point
+  # @param `txt` a string of text to draw
+  # @param `maxWidth` not applicable in svg
+  # @param `dx` optional shift in x position
+  # @param `dy` optional shift in y position
+  @text: ( ctx, pt, txt, maxWidth=0, dx=0, dy=0 ) ->
+    elem = SVGSpace.svgElement( ctx.group, "text", SVGForm.id(ctx) )
+    if (!elem) then return
+
+    DOMSpace.attr( elem, {
+      "pointer-events": "none",
+      x: pt.x,
+      y: pt.y,
+      dx: 0,
+      dy: 0
+    })
+
+    elem.textContent = txt
+
+    SVGForm.style(elem, {
+      fill: ctx.style.fill
+      stroke: ctx.style.stroke
+      "font-family": ctx.fontFace or false
+      "font-size": ctx.fontSize or false
+    })
+    return elem
+
+
+  # ## Draw text
+  # @param `p` a Point to specify anchor position
+  # @param `txt` a string of text
+  # @param `maxWidth` not applicable in svg
+  # @param `xoff, yoff` x and y positional offset values
+  text: (p, txt, maxWidth=1000, xoff, yoff) ->
+    @nextID()
+    SVGForm.text( @cc, p, txt, maxWidth, xoff, yoff)
+    return @
+
+
+
+  # ## Set font size and font face
+  # @param `size` an integer value to specify font size in pixels
+  # @param `face` optional name to change the font face, such as "sans-serif" or "Helvetica"
+  # @eg `form.font(24)` `form.font(12, "Georgia")`
+  # @demo form.font
+  # @return this Form
+  font: (size, face=false) ->
+    @cc.fontFace = face
+    @cc.fontSize = size
+    @cc.font = "#{size}px #{face}"
+    return @
+
+
+  # ## Draw a shape. Defaults to `sketch()`. Override this function to draw differently.
+  # @return this Form
+  draw: ( shape ) ->
+    @sketch( shape )
+
+
+  # ## Default draw based on the types of shape (Point, Line, Circle, etc)
+  # @param `shape` any shape such as `Point` or `Line`, or an array of Points
+  # @return this Form
+  sketch: ( shape ) ->
+    shape.floor()
+
+    if shape instanceof Circle
+      SVGForm.circle(@cc, shape, @filled, @stroked)
+
+    else if shape instanceof Rectangle
+      SVGForm.rect( @cc, shape, @filled, @stroked)
+
+    else if shape instanceof Triangle
+      SVGForm.triangle( @cc, shape, @filled, @stroked)
+
+    else if shape instanceof Line or shape instanceof Pair
+      SVGForm.line(@cc, shape)
+
+    else if shape instanceof PointSet
+      SVGForm.polygon(@cc, shape.points )
+
+    else if shape instanceof Vector or shape instanceof Point
+      SVGForm.point(@cc, shape)
+
+
+    return @
+
+
+# namespace
+this.SVGForm = SVGForm

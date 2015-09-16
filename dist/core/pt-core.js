@@ -1406,8 +1406,8 @@ SVGForm = (function() {
       "stroke-linecap": false
     };
     this.cc.font = "11px sans-serif";
-    this.fontSize = 11;
-    this.fontFace = "sans-serif";
+    this.cc.fontSize = 11;
+    this.cc.fontFace = "sans-serif";
   }
 
   SVGForm.prototype.fill = function(c) {
@@ -1743,9 +1743,84 @@ SVGForm = (function() {
     return this;
   };
 
+  SVGForm.text = function(ctx, pt, txt, maxWidth, dx, dy) {
+    var elem;
+    if (maxWidth == null) {
+      maxWidth = 0;
+    }
+    if (dx == null) {
+      dx = 0;
+    }
+    if (dy == null) {
+      dy = 0;
+    }
+    elem = SVGSpace.svgElement(ctx.group, "text", SVGForm.id(ctx));
+    if (!elem) {
+      return;
+    }
+    DOMSpace.attr(elem, {
+      "pointer-events": "none",
+      x: pt.x,
+      y: pt.y,
+      dx: 0,
+      dy: 0
+    });
+    elem.textContent = txt;
+    SVGForm.style(elem, {
+      fill: ctx.style.fill,
+      stroke: ctx.style.stroke,
+      "font-family": ctx.fontFace || false,
+      "font-size": ctx.fontSize || false
+    });
+    return elem;
+  };
+
+  SVGForm.prototype.text = function(p, txt, maxWidth, xoff, yoff) {
+    if (maxWidth == null) {
+      maxWidth = 1000;
+    }
+    this.nextID();
+    SVGForm.text(this.cc, p, txt, maxWidth, xoff, yoff);
+    return this;
+  };
+
+  SVGForm.prototype.font = function(size, face) {
+    if (face == null) {
+      face = false;
+    }
+    this.cc.fontFace = face;
+    this.cc.fontSize = size;
+    this.cc.font = size + "px " + face;
+    return this;
+  };
+
+  SVGForm.prototype.draw = function(shape) {
+    return this.sketch(shape);
+  };
+
+  SVGForm.prototype.sketch = function(shape) {
+    shape.floor();
+    if (shape instanceof Circle) {
+      SVGForm.circle(this.cc, shape, this.filled, this.stroked);
+    } else if (shape instanceof Rectangle) {
+      SVGForm.rect(this.cc, shape, this.filled, this.stroked);
+    } else if (shape instanceof Triangle) {
+      SVGForm.triangle(this.cc, shape, this.filled, this.stroked);
+    } else if (shape instanceof Line || shape instanceof Pair) {
+      SVGForm.line(this.cc, shape);
+    } else if (shape instanceof PointSet) {
+      SVGForm.polygon(this.cc, shape.points);
+    } else if (shape instanceof Vector || shape instanceof Point) {
+      SVGForm.point(this.cc, shape);
+    }
+    return this;
+  };
+
   return SVGForm;
 
 })();
+
+this.SVGForm = SVGForm;
 
 Point = (function() {
   function Point(args) {

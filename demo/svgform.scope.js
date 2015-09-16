@@ -39,8 +39,8 @@ space.add({
     form.points( pts );
     form.point( pts[0], 10, true );
 
-    form.stroke( false ).fill( "rgba(255,0,0,.3)" );
-    form.rect( new Pair( pts[0] ).to( pts[1] ) );
+    form.stroke( false ).fill( "rgba(0,255,80,.1)" );
+    form.rect( new Pair( pts[0] ).to( mouse ) );
 
     form.fill( false ).stroke( "#F99" );
     form.circle( new Circle( pts[2] ).setRadius( 20 ) );
@@ -49,12 +49,17 @@ space.add({
     form.fill( false ).stroke( "#99F", 5 );
     form.polygon( new PointSet().to( [pts[4], pts[5], mouse, pts[6]] ).toArray(), false );
 
-    form.fill( "rgba(255,200,10, .4)" ).stroke( false, 1 );
-    form.polygon( new PointSet().to( [pts[6], mouse, pts[8],  pts[7]] ).toArray(), true );
+    form.fill( "rgba(255,255,255, .5)" ).stroke( false, 1 );
+    form.polygon( new PointSet().to( [pts[6], pts[8],  pts[7], pts[2], pts[1]] ).toArray(), true );
 
     // Curve is currently drawn as a series of straight line segments. Later on these will be converted to proper svg <path>
     form.fill( false ).stroke( "#666" );
     form.curve( new Curve().to(pts).catmullRom() );
+
+
+    form.fill("#abc").stroke(false);
+    form.font(60, "Times New Roman");
+    form.text( mouse, mouse.x+", "+mouse.y );
   },
 
   onMouseAction: function(type, x, y, evt) {
@@ -71,5 +76,4 @@ function ready(w, h, dom) {
   form.scope("item", dom ); // initiate the scope which uses the svg dom as parent node
   space.bindMouse();
   space.play();
-  space.stop(1000000);
 }
