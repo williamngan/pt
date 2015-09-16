@@ -1,5 +1,5 @@
 //// 0. Describe this demo
-window.demoDescription = "A very simple demo of Pt's main concepts: extending Pt classes, drawing with Form, and animating in Space.";
+window.demoDescription = "Adding and removing circles in svg. Notice the rendering performance is much slower than html5 canvas.";
 
 
 //// 1. Define Space and Form

@@ -40,8 +40,8 @@ var path = {
 // Parent classes needs to be defined before its extended children
 var coreElems = [
   "Const", "Matrix", "Util", "Timer",
-  "Space", "CanvasSpace", "DOMSpace", "SVGSpace",
-  "Form", "SVGForm",
+  "Space", "CanvasSpace", "DOMSpace",
+  "Form",
   "Point", "Vector", "Color",
   "Circle", "Particle", "ParticleSystem",
   "Pair", "Line", "Rectangle", "Grid",
@@ -50,6 +50,7 @@ var coreElems = [
 var coreFiles = coreElems.map(function(n) { return path.src.core+n+".coffee"; } );
 
 var extendElems = [
+  "SVGForm", "SVGSpace",
   "Easing", "GridCascade", "ParticleEmitter", "ParticleField", "QuadTree",
   "SamplePoints", "StripeBound", "UI", "Noise"
 ];

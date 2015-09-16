@@ -1,11 +1,11 @@
-var CanvasSpace,
+var DOMSpace,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-CanvasSpace = (function(superClass) {
-  extend(CanvasSpace, superClass);
+DOMSpace = (function(superClass) {
+  extend(DOMSpace, superClass);
 
-  function CanvasSpace(id, bgcolor, context) {
+  function DOMSpace(id, bgcolor, context) {
     if (id == null) {
       id = 'pt_space';
     }
@@ -13,23 +13,50 @@ CanvasSpace = (function(superClass) {
       bgcolor = false;
     }
     if (context == null) {
-      context = '2d';
+      context = 'html';
     }
-    CanvasSpace.__super__.constructor.apply(this, arguments);
+    DOMSpace.__super__.constructor.apply(this, arguments);
     this.space = document.querySelector("#" + this.id);
+    this.css = {
+      width: "100%",
+      height: "100%"
+    };
     this.appended = true;
     if (!this.space) {
-      this.space = document.createElement("canvas");
-      this.space.setAttribute("id", this.id);
-      this.appended = false;
+      this._createSpaceElement();
     }
     this._mdown = false;
     this._mdrag = false;
     this.bgcolor = bgcolor;
-    this.ctx = this.space.getContext(context);
+    this.ctx = {};
   }
 
-  CanvasSpace.prototype.display = function(parent_id, readyCallback) {
+  DOMSpace.prototype._createSpaceElement = function() {
+    this.space = document.createElement("div");
+    this.space.setAttribute("id", this.id);
+    return this.appended = false;
+  };
+
+  DOMSpace.prototype.setCSS = function(key, val, isPx) {
+    if (isPx == null) {
+      isPx = false;
+    }
+    this.css[key] = (isPx ? val + "px" : val);
+    return this;
+  };
+
+  DOMSpace.prototype.updateCSS = function() {
+    var k, ref, results, v;
+    ref = this.css;
+    results = [];
+    for (k in ref) {
+      v = ref[k];
+      results.push(this.space.style[k] = v);
+    }
+    return results;
+  };
+
+  DOMSpace.prototype.display = function(parent_id, readyCallback) {
     var frame, frame_rect;
     if (parent_id == null) {
       parent_id = "#pt";
@@ -60,12 +87,10 @@ CanvasSpace = (function(superClass) {
     return this;
   };
 
-  CanvasSpace.prototype.resize = function(w, h, evt) {
+  DOMSpace.prototype.resize = function(w, h, evt) {
     var k, p, ref;
     this.size.set(w, h);
     this.center = new Vector(w / 2, h / 2);
-    this.space.setAttribute('width', Math.floor(w));
-    this.space.setAttribute('height', Math.floor(h));
     ref = this.items;
     for (k in ref) {
       p = ref[k];
@@ -73,32 +98,15 @@ CanvasSpace = (function(superClass) {
         p.onSpaceResize(w, h, evt);
       }
     }
-    this.render(this.ctx);
     return this;
   };
 
-  CanvasSpace.prototype.clear = function(bg) {
-    var lastColor;
-    if (bg) {
-      this.bgcolor = bg;
-    }
-    lastColor = this.ctx.fillStyle;
-    if (this.bgcolor) {
-      this.ctx.fillStyle = this.bgcolor;
-      this.ctx.fillRect(0, 0, this.size.x, this.size.y);
-    } else {
-      this.ctx.clearRect(0, 0, this.size.x, this.size.y);
-    }
-    this.ctx.fillStyle = lastColor;
-    return this;
+  DOMSpace.prototype.clear = function() {
+    return this.space.innerHML = "";
   };
 
-  CanvasSpace.prototype.animate = function(time) {
+  DOMSpace.prototype.animate = function(time) {
     var k, ref, v;
-    this.ctx.save();
-    if (this._refresh) {
-      this.clear();
-    }
     ref = this.items;
     for (k in ref) {
       v = ref[k];
@@ -107,15 +115,14 @@ CanvasSpace = (function(superClass) {
     if (this._timeEnd >= 0 && time > this._timeEnd) {
       cancelAnimationFrame(this._animID);
     }
-    this.ctx.restore();
     return this;
   };
 
-  CanvasSpace.prototype.bindCanvas = function(evt, callback) {
+  DOMSpace.prototype.bindCanvas = function(evt, callback) {
     return this.space.addEventListener(evt, callback);
   };
 
-  CanvasSpace.prototype.bindMouse = function(_bind) {
+  DOMSpace.prototype.bindMouse = function(_bind) {
     if (_bind == null) {
       _bind = true;
     }
@@ -134,7 +141,7 @@ CanvasSpace = (function(superClass) {
     }
   };
 
-  CanvasSpace.prototype._mouseAction = function(type, evt) {
+  DOMSpace.prototype._mouseAction = function(type, evt) {
     var k, px, py, ref, results, v;
     ref = this.items;
     results = [];
@@ -151,12 +158,12 @@ CanvasSpace = (function(superClass) {
     return results;
   };
 
-  CanvasSpace.prototype._mouseDown = function(evt) {
+  DOMSpace.prototype._mouseDown = function(evt) {
     this._mouseAction("down", evt);
     return this._mdown = true;
   };
 
-  CanvasSpace.prototype._mouseUp = function(evt) {
+  DOMSpace.prototype._mouseUp = function(evt) {
     this._mouseAction("up", evt);
     if (this._mdrag) {
       this._mouseAction("drop", evt);
@@ -165,7 +172,7 @@ CanvasSpace = (function(superClass) {
     return this._mdrag = false;
   };
 
-  CanvasSpace.prototype._mouseMove = function(evt) {
+  DOMSpace.prototype._mouseMove = function(evt) {
     this._mouseAction("move", evt);
     if (this._mdown) {
       this._mdrag = true;
@@ -173,11 +180,11 @@ CanvasSpace = (function(superClass) {
     }
   };
 
-  CanvasSpace.prototype._mouseOver = function(evt) {
+  DOMSpace.prototype._mouseOver = function(evt) {
     return this._mouseAction("over", evt);
   };
 
-  CanvasSpace.prototype._mouseOut = function(evt) {
+  DOMSpace.prototype._mouseOut = function(evt) {
     this._mouseAction("out", evt);
     if (this._mdrag) {
       this._mouseAction("drop", evt);
@@ -185,10 +192,32 @@ CanvasSpace = (function(superClass) {
     return this._mdrag = false;
   };
 
-  return CanvasSpace;
+  DOMSpace.attr = function(elem, data) {
+    var k, results, v;
+    results = [];
+    for (k in data) {
+      v = data[k];
+      results.push(elem.setAttribute(k, v));
+    }
+    return results;
+  };
+
+  DOMSpace.css = function(data) {
+    var k, str, v;
+    str = "";
+    for (k in data) {
+      v = data[k];
+      if (v) {
+        str += k + ": " + v + "; ";
+      }
+    }
+    return str;
+  };
+
+  return DOMSpace;
 
 })(Space);
 
-this.CanvasSpace = CanvasSpace;
+this.DOMSpace = DOMSpace;
 
-//# sourceMappingURL=.map/CanvasSpace.js.map
+//# sourceMappingURL=.map/DOMSpace.js.map

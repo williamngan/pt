@@ -1,4 +1,4 @@
-window.Pt = {};(function() {var CanvasSpace, Circle, Color, Const, Curve, Easing, Form, Grid, GridCascade, Line, Matrix, Noise, Pair, Particle, ParticleEmitter, ParticleField, ParticleSystem, Point, PointSet, QuadTree, Rectangle, SamplePoints, Space, StripeBound, Timer, Triangle, UI, Util, Vector,
+window.Pt = {};(function() {var CanvasSpace, Circle, Color, Const, Curve, DOMSpace, Easing, Form, Grid, GridCascade, Line, Matrix, Noise, Pair, Particle, ParticleEmitter, ParticleField, ParticleSystem, Point, PointSet, QuadTree, Rectangle, SVGForm, SVGSpace, SamplePoints, Space, StripeBound, Timer, Triangle, UI, Util, Vector,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty,
   slice = [].slice;
@@ -442,9 +442,6 @@ Space = (function() {
       id = 'space';
     }
     this.id = id;
-    this.renderer = (function(_this) {
-      return function(ctx) {};
-    })(this);
     this.size = new Vector();
     this.center = new Vector();
     this._timePrev = 0;
@@ -462,8 +459,7 @@ Space = (function() {
     return this;
   };
 
-  Space.prototype.render = function(func) {
-    this.renderer = func;
+  Space.prototype.render = function(context) {
     return this;
   };
 
@@ -587,17 +583,17 @@ CanvasSpace = (function(superClass) {
       context = '2d';
     }
     CanvasSpace.__super__.constructor.apply(this, arguments);
-    this.canvas = document.querySelector("#" + this.id);
+    this.space = document.querySelector("#" + this.id);
     this.appended = true;
-    if (!this.canvas) {
-      this.canvas = document.createElement("canvas");
-      this.canvas.setAttribute("id", this.id);
+    if (!this.space) {
+      this.space = document.createElement("canvas");
+      this.space.setAttribute("id", this.id);
       this.appended = false;
     }
     this._mdown = false;
     this._mdrag = false;
     this.bgcolor = bgcolor;
-    this.ctx = this.canvas.getContext(context);
+    this.ctx = this.space.getContext(context);
   }
 
   CanvasSpace.prototype.display = function(parent_id, readyCallback) {
@@ -614,14 +610,14 @@ CanvasSpace = (function(superClass) {
           frame_rect = frame.getBoundingClientRect();
           return this.resize(frame_rect.width, frame_rect.height, evt);
         }).bind(this));
-        if (this.canvas.parentNode !== frame) {
-          frame.appendChild(this.canvas);
+        if (this.space.parentNode !== frame) {
+          frame.appendChild(this.space);
         }
         this.appended = true;
         setTimeout((function() {
-          this.canvas.dispatchEvent(new Event('ready'));
+          this.space.dispatchEvent(new Event('ready'));
           if (readyCallback) {
-            return readyCallback(frame_rect.width, frame_rect.height, this.canvas);
+            return readyCallback(frame_rect.width, frame_rect.height, this.space);
           }
         }).bind(this));
       } else {
@@ -635,8 +631,8 @@ CanvasSpace = (function(superClass) {
     var k, p, ref;
     this.size.set(w, h);
     this.center = new Vector(w / 2, h / 2);
-    this.canvas.setAttribute('width', Math.floor(w));
-    this.canvas.setAttribute('height', Math.floor(h));
+    this.space.setAttribute('width', Math.floor(w));
+    this.space.setAttribute('height', Math.floor(h));
     ref = this.items;
     for (k in ref) {
       p = ref[k];
@@ -644,7 +640,7 @@ CanvasSpace = (function(superClass) {
         p.onSpaceResize(w, h, evt);
       }
     }
-    this.renderer(this.ctx);
+    this.render(this.ctx);
     return this;
   };
 
@@ -683,7 +679,7 @@ CanvasSpace = (function(superClass) {
   };
 
   CanvasSpace.prototype.bindCanvas = function(evt, callback) {
-    return this.canvas.addEventListener(evt, callback);
+    return this.space.addEventListener(evt, callback);
   };
 
   CanvasSpace.prototype.bindMouse = function(_bind) {
@@ -691,17 +687,17 @@ CanvasSpace = (function(superClass) {
       _bind = true;
     }
     if (_bind) {
-      this.canvas.addEventListener("mousedown", this._mouseDown.bind(this));
-      this.canvas.addEventListener("mouseup", this._mouseUp.bind(this));
-      this.canvas.addEventListener("mouseover", this._mouseOver.bind(this));
-      this.canvas.addEventListener("mouseout", this._mouseOut.bind(this));
-      return this.canvas.addEventListener("mousemove", this._mouseMove.bind(this));
+      this.space.addEventListener("mousedown", this._mouseDown.bind(this));
+      this.space.addEventListener("mouseup", this._mouseUp.bind(this));
+      this.space.addEventListener("mouseover", this._mouseOver.bind(this));
+      this.space.addEventListener("mouseout", this._mouseOut.bind(this));
+      return this.space.addEventListener("mousemove", this._mouseMove.bind(this));
     } else {
-      this.canvas.removeEventListener("mousedown", this._mouseDown.bind(this));
-      this.canvas.removeEventListener("mouseup", this._mouseUp.bind(this));
-      this.canvas.removeEventListener("mouseover", this._mouseOver.bind(this));
-      this.canvas.removeEventListener("mouseout", this._mouseOut.bind(this));
-      return this.canvas.removeEventListener("mousemove", this._mouseMove.bind(this));
+      this.space.removeEventListener("mousedown", this._mouseDown.bind(this));
+      this.space.removeEventListener("mouseup", this._mouseUp.bind(this));
+      this.space.removeEventListener("mouseover", this._mouseOver.bind(this));
+      this.space.removeEventListener("mouseout", this._mouseOut.bind(this));
+      return this.space.removeEventListener("mousemove", this._mouseMove.bind(this));
     }
   };
 
@@ -761,6 +757,224 @@ CanvasSpace = (function(superClass) {
 })(Space);
 
 this.CanvasSpace = CanvasSpace;
+
+DOMSpace = (function(superClass) {
+  extend(DOMSpace, superClass);
+
+  function DOMSpace(id, bgcolor, context) {
+    if (id == null) {
+      id = 'pt_space';
+    }
+    if (bgcolor == null) {
+      bgcolor = false;
+    }
+    if (context == null) {
+      context = 'html';
+    }
+    DOMSpace.__super__.constructor.apply(this, arguments);
+    this.space = document.querySelector("#" + this.id);
+    this.css = {
+      width: "100%",
+      height: "100%"
+    };
+    this.appended = true;
+    if (!this.space) {
+      this._createSpaceElement();
+    }
+    this._mdown = false;
+    this._mdrag = false;
+    this.bgcolor = bgcolor;
+    this.ctx = {};
+  }
+
+  DOMSpace.prototype._createSpaceElement = function() {
+    this.space = document.createElement("div");
+    this.space.setAttribute("id", this.id);
+    return this.appended = false;
+  };
+
+  DOMSpace.prototype.setCSS = function(key, val, isPx) {
+    if (isPx == null) {
+      isPx = false;
+    }
+    this.css[key] = (isPx ? val + "px" : val);
+    return this;
+  };
+
+  DOMSpace.prototype.updateCSS = function() {
+    var k, ref, results, v;
+    ref = this.css;
+    results = [];
+    for (k in ref) {
+      v = ref[k];
+      results.push(this.space.style[k] = v);
+    }
+    return results;
+  };
+
+  DOMSpace.prototype.display = function(parent_id, readyCallback) {
+    var frame, frame_rect;
+    if (parent_id == null) {
+      parent_id = "#pt";
+    }
+    if (!this.appended) {
+      frame = document.querySelector(parent_id);
+      frame_rect = frame.getBoundingClientRect();
+      if (frame) {
+        this.resize(frame_rect.width, frame_rect.height);
+        window.addEventListener('resize', (function(evt) {
+          frame_rect = frame.getBoundingClientRect();
+          return this.resize(frame_rect.width, frame_rect.height, evt);
+        }).bind(this));
+        if (this.space.parentNode !== frame) {
+          frame.appendChild(this.space);
+        }
+        this.appended = true;
+        setTimeout((function() {
+          this.space.dispatchEvent(new Event('ready'));
+          if (readyCallback) {
+            return readyCallback(frame_rect.width, frame_rect.height, this.space);
+          }
+        }).bind(this));
+      } else {
+        throw 'Cannot add canvas to element ' + parent_id;
+      }
+    }
+    return this;
+  };
+
+  DOMSpace.prototype.resize = function(w, h, evt) {
+    var k, p, ref;
+    this.size.set(w, h);
+    this.center = new Vector(w / 2, h / 2);
+    ref = this.items;
+    for (k in ref) {
+      p = ref[k];
+      if (p.onSpaceResize != null) {
+        p.onSpaceResize(w, h, evt);
+      }
+    }
+    return this;
+  };
+
+  DOMSpace.prototype.clear = function() {
+    return this.space.innerHML = "";
+  };
+
+  DOMSpace.prototype.animate = function(time) {
+    var k, ref, v;
+    ref = this.items;
+    for (k in ref) {
+      v = ref[k];
+      v.animate(time, this._timeDiff, this.ctx);
+    }
+    if (this._timeEnd >= 0 && time > this._timeEnd) {
+      cancelAnimationFrame(this._animID);
+    }
+    return this;
+  };
+
+  DOMSpace.prototype.bindCanvas = function(evt, callback) {
+    return this.space.addEventListener(evt, callback);
+  };
+
+  DOMSpace.prototype.bindMouse = function(_bind) {
+    if (_bind == null) {
+      _bind = true;
+    }
+    if (_bind) {
+      this.space.addEventListener("mousedown", this._mouseDown.bind(this));
+      this.space.addEventListener("mouseup", this._mouseUp.bind(this));
+      this.space.addEventListener("mouseover", this._mouseOver.bind(this));
+      this.space.addEventListener("mouseout", this._mouseOut.bind(this));
+      return this.space.addEventListener("mousemove", this._mouseMove.bind(this));
+    } else {
+      this.space.removeEventListener("mousedown", this._mouseDown.bind(this));
+      this.space.removeEventListener("mouseup", this._mouseUp.bind(this));
+      this.space.removeEventListener("mouseover", this._mouseOver.bind(this));
+      this.space.removeEventListener("mouseout", this._mouseOut.bind(this));
+      return this.space.removeEventListener("mousemove", this._mouseMove.bind(this));
+    }
+  };
+
+  DOMSpace.prototype._mouseAction = function(type, evt) {
+    var k, px, py, ref, results, v;
+    ref = this.items;
+    results = [];
+    for (k in ref) {
+      v = ref[k];
+      px = evt.offsetX || evt.layerX;
+      py = evt.offsetY || evt.layerY;
+      if (v.onMouseAction != null) {
+        results.push(v.onMouseAction(type, px, py, evt));
+      } else {
+        results.push(void 0);
+      }
+    }
+    return results;
+  };
+
+  DOMSpace.prototype._mouseDown = function(evt) {
+    this._mouseAction("down", evt);
+    return this._mdown = true;
+  };
+
+  DOMSpace.prototype._mouseUp = function(evt) {
+    this._mouseAction("up", evt);
+    if (this._mdrag) {
+      this._mouseAction("drop", evt);
+    }
+    this._mdown = false;
+    return this._mdrag = false;
+  };
+
+  DOMSpace.prototype._mouseMove = function(evt) {
+    this._mouseAction("move", evt);
+    if (this._mdown) {
+      this._mdrag = true;
+      return this._mouseAction("drag", evt);
+    }
+  };
+
+  DOMSpace.prototype._mouseOver = function(evt) {
+    return this._mouseAction("over", evt);
+  };
+
+  DOMSpace.prototype._mouseOut = function(evt) {
+    this._mouseAction("out", evt);
+    if (this._mdrag) {
+      this._mouseAction("drop", evt);
+    }
+    return this._mdrag = false;
+  };
+
+  DOMSpace.attr = function(elem, data) {
+    var k, results, v;
+    results = [];
+    for (k in data) {
+      v = data[k];
+      results.push(elem.setAttribute(k, v));
+    }
+    return results;
+  };
+
+  DOMSpace.css = function(data) {
+    var k, str, v;
+    str = "";
+    for (k in data) {
+      v = data[k];
+      if (v) {
+        str += k + ": " + v + "; ";
+      }
+    }
+    return str;
+  };
+
+  return DOMSpace;
+
+})(Space);
+
+this.DOMSpace = DOMSpace;
 
 Form = (function() {
   function Form(space) {
@@ -4294,6 +4508,522 @@ Triangle = (function(superClass) {
 })(Vector);
 
 this.Triangle = Triangle;
+
+SVGForm = (function() {
+  SVGForm._domId = 0;
+
+  function SVGForm(space) {
+    this.cc = space.ctx || {};
+    this.cc.group = this.cc.group || null;
+    this.cc.groupID = "ptx";
+    this.cc.groupCount = 0;
+    this.cc.currentID = "ptx0";
+    this.cc.style = {
+      fill: "#999",
+      stroke: "#666",
+      "stroke-width": 1,
+      "stroke-linejoin": false,
+      "stroke-linecap": false
+    };
+    this.cc.font = "11px sans-serif";
+    this.cc.fontSize = 11;
+    this.cc.fontFace = "sans-serif";
+  }
+
+  SVGForm.prototype.fill = function(c) {
+    this.cc.style.fill = c ? c : false;
+    return this;
+  };
+
+  SVGForm.prototype.stroke = function(c, width, joint, cap) {
+    this.cc.style.stroke = c ? c : false;
+    if (width) {
+      this.cc.style["stroke-width"] = width;
+    }
+    if (joint) {
+      this.cc.style["stroke-linejoin"] = joint;
+    }
+    if (cap) {
+      this.cc.style["stroke-linecap"] = joint;
+    }
+    return this;
+  };
+
+  SVGForm.prototype.scope = function(group_id, group) {
+    if (group == null) {
+      group = false;
+    }
+    if (group) {
+      this.cc.group = group;
+    }
+    this.cc.groupID = group_id;
+    this.cc.groupCount = 0;
+    this.nextID();
+    return this.cc;
+  };
+
+  SVGForm.prototype.getScope = function(item) {
+    if (!item || item.animateID === null) {
+      throw "getScope()'s item must be added to a Space, and has an animateID property. Otherwise, use scope() instead.";
+    }
+    return this.scope(SVGForm._scopeID(item));
+  };
+
+  SVGForm.prototype.nextID = function() {
+    this.cc.groupCount++;
+    this.cc.currentID = this.cc.groupID + "-" + this.cc.groupCount;
+    return this.cc.currentID;
+  };
+
+  SVGForm.id = function(ctx) {
+    return ctx.currentID || "p-" + SVGForm._domId++;
+  };
+
+  SVGForm._scopeID = function(item) {
+    return "item" + item.animateID;
+  };
+
+  SVGForm.style = function(elem, styles) {
+    var k, st, v;
+    st = {};
+    for (k in styles) {
+      v = styles[k];
+      if (!v) {
+        if (k === "fill" || k === "stroke") {
+          st[k] = "none";
+        }
+      } else {
+        st[k] = v;
+      }
+    }
+    return DOMSpace.attr(elem, st);
+  };
+
+  SVGForm.point = function(ctx, pt, halfsize, fill, stroke, circle) {
+    var elem;
+    if (halfsize == null) {
+      halfsize = 2;
+    }
+    if (fill == null) {
+      fill = true;
+    }
+    if (stroke == null) {
+      stroke = true;
+    }
+    if (circle == null) {
+      circle = false;
+    }
+    elem = SVGSpace.svgElement(ctx.group, (circle ? "circle" : "rect"), SVGForm.id(ctx));
+    if (!elem) {
+      return;
+    }
+    if (circle) {
+      DOMSpace.attr(elem, {
+        cx: pt.x,
+        cy: pt.y,
+        r: halfsize
+      });
+    } else {
+      DOMSpace.attr(elem, {
+        x: pt.x - halfsize,
+        y: pt.y - halfsize,
+        width: halfsize + halfsize,
+        height: halfsize + halfsize
+      });
+    }
+    SVGForm.style(elem, ctx.style);
+    return elem;
+  };
+
+  SVGForm.prototype.point = function(p, halfsize, isCircle) {
+    if (halfsize == null) {
+      halfsize = 2;
+    }
+    if (isCircle == null) {
+      isCircle = false;
+    }
+    this.nextID();
+    SVGForm.point(this.cc, p, halfsize, true, true, isCircle);
+    return this;
+  };
+
+  SVGForm.points = function(ctx, pts, halfsize, fill, stroke, circle) {
+    var p;
+    if (halfsize == null) {
+      halfsize = 2;
+    }
+    if (fill == null) {
+      fill = true;
+    }
+    if (stroke == null) {
+      stroke = true;
+    }
+    if (circle == null) {
+      circle = false;
+    }
+    return (function() {
+      var aa, len1, results;
+      results = [];
+      for (aa = 0, len1 = pts.length; aa < len1; aa++) {
+        p = pts[aa];
+        results.push(SVGForm.point(ctx, p, halfsize, fill, stroke, circle));
+      }
+      return results;
+    })();
+  };
+
+  SVGForm.prototype.points = function(ps, halfsize, isCircle) {
+    var aa, len1, p;
+    if (halfsize == null) {
+      halfsize = 2;
+    }
+    if (isCircle == null) {
+      isCircle = false;
+    }
+    for (aa = 0, len1 = ps.length; aa < len1; aa++) {
+      p = ps[aa];
+      this.point(p, halfsize, isCircle);
+    }
+    return this;
+  };
+
+  SVGForm.line = function(ctx, pair) {
+    var elem;
+    if (!pair.p1) {
+      throw (pair.toString()) + " is not a Pair";
+    }
+    elem = SVGSpace.svgElement(ctx.group, "line", SVGForm.id(ctx));
+    DOMSpace.attr(elem, {
+      x1: pair.x,
+      y1: pair.y,
+      x2: pair.p1.x,
+      y2: pair.p1.y
+    });
+    SVGForm.style(elem, ctx.style);
+    return elem;
+  };
+
+  SVGForm.prototype.line = function(p) {
+    this.nextID();
+    SVGForm.line(this.cc, p);
+    return this;
+  };
+
+  SVGForm.lines = function(ctx, pairs) {
+    var ln;
+    return (function() {
+      var aa, len1, results;
+      results = [];
+      for (aa = 0, len1 = pairs.length; aa < len1; aa++) {
+        ln = pairs[aa];
+        results.push(SVGForm.line(ctx, ln));
+      }
+      return results;
+    })();
+  };
+
+  SVGForm.prototype.lines = function(ps) {
+    var aa, len1, p;
+    for (aa = 0, len1 = ps.length; aa < len1; aa++) {
+      p = ps[aa];
+      this.line(p);
+    }
+    return this;
+  };
+
+  SVGForm.rect = function(ctx, pair, fill, stroke) {
+    var elem, size;
+    if (fill == null) {
+      fill = true;
+    }
+    if (stroke == null) {
+      stroke = true;
+    }
+    if (!pair.p1) {
+      throw "" + (pair.toString() === !a(Pair));
+    }
+    elem = SVGSpace.svgElement(ctx.group, "rect", SVGForm.id(ctx));
+    size = pair.size();
+    DOMSpace.attr(elem, {
+      x: pair.x,
+      y: pair.y,
+      width: size.x,
+      height: size.y
+    });
+    SVGForm.style(elem, ctx.style);
+    return elem;
+  };
+
+  SVGForm.prototype.rect = function(p, checkBounds) {
+    var r;
+    if (checkBounds == null) {
+      checkBounds = true;
+    }
+    this.nextID();
+    r = checkBounds ? p.bounds() : p;
+    SVGForm.rect(this.cc, r);
+    return this;
+  };
+
+  SVGForm.circle = function(ctx, c, fill, stroke) {
+    var elem;
+    if (fill == null) {
+      fill = true;
+    }
+    if (stroke == null) {
+      stroke = false;
+    }
+    elem = SVGSpace.svgElement(ctx.group, "circle", SVGForm.id(ctx));
+    if (!elem) {
+      return;
+    }
+    DOMSpace.attr(elem, {
+      cx: c.x,
+      cy: c.y,
+      r: c.radius
+    });
+    SVGForm.style(elem, ctx.style);
+    return elem;
+  };
+
+  SVGForm.prototype.circle = function(c) {
+    this.nextID();
+    SVGForm.circle(this.cc, c);
+    return this;
+  };
+
+  SVGForm.polygon = function(ctx, pts, closePath, fill, stroke) {
+    var elem, i, points;
+    if (closePath == null) {
+      closePath = true;
+    }
+    if (fill == null) {
+      fill = true;
+    }
+    if (stroke == null) {
+      stroke = true;
+    }
+    elem = SVGSpace.svgElement(ctx.group, (closePath ? "polygon" : "polyline"), SVGForm.id(ctx));
+    if (!elem) {
+      return;
+    }
+    if (pts.length <= 1) {
+      return;
+    }
+    points = (function() {
+      var aa, ref, results;
+      results = [];
+      for (i = aa = 0, ref = pts.length; aa < ref; i = aa += 1) {
+        results.push(pts[i].x + "," + pts[i].y);
+      }
+      return results;
+    })();
+    DOMSpace.attr(elem, {
+      points: points.join(" ")
+    });
+    SVGForm.style(elem, ctx.style);
+    return elem;
+  };
+
+  SVGForm.prototype.polygon = function(ps, closePath) {
+    this.nextID();
+    SVGForm.polygon(this.cc, ps, closePath);
+    return this;
+  };
+
+  SVGForm.triangle = function(ctx, tri, fill, stroke) {
+    if (fill == null) {
+      fill = true;
+    }
+    if (stroke == null) {
+      stroke = false;
+    }
+    return SVGForm.polygon(ctx, tri.toArray());
+  };
+
+  SVGForm.prototype.triangle = function(tri) {
+    this.nextID();
+    SVGForm.triangle(this.cc, tri);
+    return this;
+  };
+
+  SVGForm.curve = function(ctx, pts, closePath) {
+    if (closePath == null) {
+      closePath = false;
+    }
+    return SVGForm.polygon(ctx, pts, closePath);
+  };
+
+  SVGForm.prototype.curve = function(ps, closePath) {
+    if (closePath == null) {
+      closePath = false;
+    }
+    this.nextID();
+    SVGForm.curve(this.cc, ps, closePath);
+    return this;
+  };
+
+  SVGForm.text = function(ctx, pt, txt, maxWidth, dx, dy) {
+    var elem;
+    if (maxWidth == null) {
+      maxWidth = 0;
+    }
+    if (dx == null) {
+      dx = 0;
+    }
+    if (dy == null) {
+      dy = 0;
+    }
+    elem = SVGSpace.svgElement(ctx.group, "text", SVGForm.id(ctx));
+    if (!elem) {
+      return;
+    }
+    DOMSpace.attr(elem, {
+      "pointer-events": "none",
+      x: pt.x,
+      y: pt.y,
+      dx: 0,
+      dy: 0
+    });
+    elem.textContent = txt;
+    SVGForm.style(elem, {
+      fill: ctx.style.fill,
+      stroke: ctx.style.stroke,
+      "font-family": ctx.fontFace || false,
+      "font-size": ctx.fontSize || false
+    });
+    return elem;
+  };
+
+  SVGForm.prototype.text = function(p, txt, maxWidth, xoff, yoff) {
+    if (maxWidth == null) {
+      maxWidth = 1000;
+    }
+    this.nextID();
+    SVGForm.text(this.cc, p, txt, maxWidth, xoff, yoff);
+    return this;
+  };
+
+  SVGForm.prototype.font = function(size, face) {
+    if (face == null) {
+      face = false;
+    }
+    this.cc.fontFace = face;
+    this.cc.fontSize = size;
+    this.cc.font = size + "px " + face;
+    return this;
+  };
+
+  SVGForm.prototype.draw = function(shape) {
+    return this.sketch(shape);
+  };
+
+  SVGForm.prototype.sketch = function(shape) {
+    shape.floor();
+    if (shape instanceof Circle) {
+      SVGForm.circle(this.cc, shape, this.filled, this.stroked);
+    } else if (shape instanceof Rectangle) {
+      SVGForm.rect(this.cc, shape, this.filled, this.stroked);
+    } else if (shape instanceof Triangle) {
+      SVGForm.triangle(this.cc, shape, this.filled, this.stroked);
+    } else if (shape instanceof Line || shape instanceof Pair) {
+      SVGForm.line(this.cc, shape);
+    } else if (shape instanceof PointSet) {
+      SVGForm.polygon(this.cc, shape.points);
+    } else if (shape instanceof Vector || shape instanceof Point) {
+      SVGForm.point(this.cc, shape);
+    }
+    return this;
+  };
+
+  return SVGForm;
+
+})();
+
+this.SVGForm = SVGForm;
+
+SVGSpace = (function(superClass) {
+  extend(SVGSpace, superClass);
+
+  function SVGSpace(id, bgcolor, context) {
+    if (id == null) {
+      id = 'pt_space';
+    }
+    if (bgcolor == null) {
+      bgcolor = false;
+    }
+    if (context == null) {
+      context = 'svg';
+    }
+    SVGSpace.__super__.constructor.apply(this, arguments);
+    this.bg = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    this.bg.setAttribute("id", id + "_bg");
+    this.bg.setAttribute("fill", bgcolor);
+    this.space.appendChild(this.bg);
+  }
+
+  SVGSpace.prototype._createSpaceElement = function() {
+    this.space = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    this.space.setAttribute("id", this.id);
+    return this.appended = false;
+  };
+
+  SVGSpace.svgElement = function(parent, name, id) {
+    var elem;
+    if (!parent || !parent.appendChild) {
+      throw "parent parameter needs to be a DOM node";
+    }
+    elem = document.querySelector("#" + id);
+    if (!elem) {
+      elem = document.createElementNS("http://www.w3.org/2000/svg", name);
+      elem.setAttribute("id", id);
+      elem.setAttribute("class", id.substring(0, id.indexOf("-")));
+      parent.appendChild(elem);
+    }
+    return elem;
+  };
+
+  SVGSpace.prototype.resize = function(w, h, evt) {
+    var k, p, ref;
+    this.size.set(w, h);
+    this.center = new Vector(w / 2, h / 2);
+    this.space.setAttribute("width", w);
+    this.space.setAttribute("height", h);
+    this.bg.setAttribute("width", w);
+    this.bg.setAttribute("height", h);
+    ref = this.items;
+    for (k in ref) {
+      p = ref[k];
+      if (p.onSpaceResize != null) {
+        p.onSpaceResize(w, h, evt);
+      }
+    }
+    return this;
+  };
+
+  SVGSpace.prototype.remove = function(item) {
+    var aa, len1, t, temp;
+    temp = this.space.querySelectorAll("." + SVGForm._scopeID(item));
+    for (aa = 0, len1 = temp.length; aa < len1; aa++) {
+      t = temp[aa];
+      t.parentNode.removeChild(t);
+    }
+    delete this.items[item.animateID];
+    return this;
+  };
+
+  SVGSpace.prototype.removeAll = function() {
+    while (this.space.firstChild) {
+      this.space.removeChild(this.space.firstChild);
+      return this;
+    }
+  };
+
+  return SVGSpace;
+
+})(DOMSpace);
+
+this.SVGSpace = SVGSpace;
 
 Easing = (function() {
   function Easing() {}

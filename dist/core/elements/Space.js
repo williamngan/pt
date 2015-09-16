@@ -6,9 +6,6 @@ Space = (function() {
       id = 'space';
     }
     this.id = id;
-    this.renderer = (function(_this) {
-      return function(ctx) {};
-    })(this);
     this.size = new Vector();
     this.center = new Vector();
     this._timePrev = 0;
@@ -26,8 +23,7 @@ Space = (function() {
     return this;
   };
 
-  Space.prototype.render = function(func) {
-    this.renderer = func;
+  Space.prototype.render = function(context) {
     return this;
   };
 
