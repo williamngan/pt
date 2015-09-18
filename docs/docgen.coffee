@@ -1,6 +1,6 @@
 class Docs
 
-  constructor: (template_id ) ->
+  constructor: (template_id, @doc_id ) ->
 
     @flatTree = []
     @json = {}
@@ -352,7 +352,7 @@ class Docs
       if (window.coverDemo)
         this.coverDemoTimeout = setTimeout(
           (() =>
-            window.coverDemo()
+            window.coverDemo( @doc_id )
             @coverDemoLoaded = true
           ), 500
         )
@@ -404,7 +404,7 @@ class Docs
       @coverDemoLoaded = true
 
     else
-      if (this.coverDemoLoaded)
+      if (this.coverDemoLoaded && window.restartCoverDemo)
         if (window.scrollY < 5) then window.restartCoverDemo() else window.stopCoverDemo()
 
     return

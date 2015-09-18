@@ -249,12 +249,11 @@ section.inherited ul {
   }
 
   .header-right {
-    display: none;
+    display: block;
     position: absolute;
     top: 0; right: 20px;
     cursor: pointer;
     color: $link;
-    .menu-item { font-size: 18px; }
   }
   .menu-item {
     display: inline-block;
@@ -420,7 +419,10 @@ section.inherited ul {
   right: 100%;
 }
 
-
+#header #mobile.menu-item {
+  display: none;
+  font-size: 18px;
+}
 
 @media only screen and (max-device-width : 768px) {
 
@@ -433,8 +435,22 @@ section.inherited ul {
     display: none;
   }
 
-  #header .header-right {
-    display: block;
+  #header #mobile.menu-item {
+    display: inline-block;
+    font-size: 30px;
+    line-height: 70px;
+  }
+
+  #header {
+    height: 70px;
+    .menu-item {
+      font-size: 20px;
+      line-height: 70px;
+      &.homepage {
+        font-size: 30px;
+      }
+    }
+
   }
 
   #menu, .sticky-step1 #menu {

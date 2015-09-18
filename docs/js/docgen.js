@@ -3,7 +3,8 @@
   var Docs;
 
   Docs = (function() {
-    function Docs(template_id) {
+    function Docs(template_id, doc_id) {
+      this.doc_id = doc_id;
       this.flatTree = [];
       this.json = {};
       this.elems = {};
@@ -373,7 +374,7 @@
         if (window.coverDemo) {
           return this.coverDemoTimeout = setTimeout(((function(_this) {
             return function() {
-              window.coverDemo();
+              window.coverDemo(_this.doc_id);
               return _this.coverDemoLoaded = true;
             };
           })(this)), 500);
@@ -431,7 +432,7 @@
         window.coverDemo();
         this.coverDemoLoaded = true;
       } else {
-        if (this.coverDemoLoaded) {
+        if (this.coverDemoLoaded && window.restartCoverDemo) {
           if (window.scrollY < 5) {
             window.restartCoverDemo();
           } else {

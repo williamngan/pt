@@ -118,7 +118,7 @@
 <div id="head">
 	<div id="pt"></div>
 	<div id="overview">
-		<h1>Pt <small>&nbsp; Documentation <small>v0.1</small></small></h1>
+		<h1>Pt <small>&nbsp; <span id="docLabel"></span> Documentation <small>v0.1</small></small></h1>
 	</div>
 </div>
 
@@ -155,11 +155,14 @@
 <div id="header">
     <div class="header-left">
         <div class="homepage menu-item"><a href="../">Pt</a></div>
+		<div class="menu-item"><a href="#" onclick="generateDoc('core')">Core docs</a></div>
+		<div class="menu-item"><a href="#" onclick="generateDoc('extend')">Extended docs</a></div>
+
+    </div>
+    <div class="header-right">
 		<div class="menu-item"><a href="../demo/index.html?name=color.LABtoRGB">Demos</a></div>
         <div class="menu-item"><a href="http://medium.com/@williamngan/93382bf5943e/">Description</a></div>
         <div class="menu-item"><a href="https://github.com/williamngan/pt/">pt.js</a></div>
-    </div>
-    <div class="header-right">
         <div class="menu-item" id="mobile">&#9776</div>
     </div>
 </div>
@@ -169,15 +172,37 @@
 <script type="text/javascript" src="./js/demo.js"></script>
 
 <script type="text/javascript">
-	var docs = new Docs("#comp");
- 	docs.getJSON("json/core/all.json");
 
-	if (document.readyState != 'loading') {
-		docs.resize();
-	} else {
-		document.addEventListener('DOMContentLoaded', docs.resize.bind(docs));
+	function generateDoc( folder ) {
+
+		// reset everything
+		var i=0;
+		var elems = document.querySelectorAll(".element");
+		for (i=0; i<elems.length; i++) {
+			elems[i].parentNode.removeChild(elems[i]);
+		}
+
+		elems = document.querySelectorAll(".depth-0");
+		for (i=0; i<elems.length; i++) {
+			elems[i].parentNode.removeChild(elems[i]);
+		}
+		document.querySelector("#submenu" ).innerHTML = "";
+		document.querySelector("#pt" ).innerHTML = "";
+
+		document.querySelector("#docLabel" ).textContent = (folder=="extend") ? "Extended" : "Core";
+
+		// load the docs
+		var docs = new Docs( "#comp", folder );
+		docs.getJSON( "json/"+folder+"/all.json" );
+
+		if (document.readyState != 'loading') {
+			docs.resize();
+		} else {
+			document.addEventListener( 'DOMContentLoaded', docs.resize.bind( docs ) );
+		}
 	}
 
+	generateDoc("core");
 
 </script>
 

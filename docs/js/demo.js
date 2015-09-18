@@ -1,4 +1,4 @@
-function coverDemo() {
+function coverDemo( docType ) {
 
   function mobilecheck() {
     var check = false;
@@ -54,6 +54,8 @@ function coverDemo() {
 //// 3. Visualize, Animate, Interact
   space.add( {
     animate: function ( time, fps, context ) {
+
+      var fillcolor = (docType == "extend") ? colors.a1 : colors.a3;
       for (var i = 0; i < rects.length; i++) {
         var rect = rects[i];
 
@@ -63,7 +65,7 @@ function coverDemo() {
 
         // resize rectangles from center point based on distance and diffs
         rect.resizeCenterTo( diff.subtract( 50 ).divide( 6 ).add( mag / 2 ).$max( 5, 5 ) );
-        form.fill( colors.a3 ).rect( rect );
+        form.fill( fillcolor ).rect( rect );
       }
     },
 

@@ -190,14 +190,12 @@ section.inherited ul {
     top: 0;
     left: 20px; }
   #header .header-right {
-    display: none;
+    display: block;
     position: absolute;
     top: 0;
     right: 20px;
     cursor: pointer;
     color: #334fff; }
-    #header .header-right .menu-item {
-      font-size: 18px; }
   #header .menu-item {
     display: inline-block;
     font-size: 12px;
@@ -327,6 +325,10 @@ section.inherited ul {
 .sticky-step1 .active #mask {
   right: 100%; }
 
+#header #mobile.menu-item {
+  display: none;
+  font-size: 18px; }
+
 @media only screen and (max-device-width : 768px) {
   #pt {
     background: url("../images/pt/rectangle.resizeCenterTo.png") no-repeat center center;
@@ -335,8 +337,18 @@ section.inherited ul {
   #demo {
     display: none; }
 
-  #header .header-right {
-    display: block; }
+  #header #mobile.menu-item {
+    display: inline-block;
+    font-size: 30px;
+    line-height: 70px; }
+
+  #header {
+    height: 70px; }
+    #header .menu-item {
+      font-size: 20px;
+      line-height: 70px; }
+      #header .menu-item.homepage {
+        font-size: 30px; }
 
   #menu, .sticky-step1 #menu {
     position: fixed;

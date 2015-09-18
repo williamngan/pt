@@ -36,7 +36,6 @@ class SVGForm
   # ## Set current fill style
   # @param `c` fill color which can be as color, gradient, or pattern. (See [canvas documentation](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillStyle)) Default is `false` (transparent)
   # @eg `form.fill("#F90")` `form.fill("rgba(0,0,0,.5")` `form.fill(false)`
-  # @demo form.fill
   # @return this Form
   fill: (c) ->
     @cc.style.fill = if c then c else false
@@ -61,6 +60,7 @@ class SVGForm
   # @param `group_id` a string to use as prefix for the group's id. For example, group_id "hello" will create elements with id like "hello-1", "hello-2", etc
   # @param `group` optional dom element to define this group's parent element
   # @eg `form.scope("dot")` `form.scope("dot", elem)`
+  # @demo svgform.scope
   # @return context object
   scope: ( group_id, group=false ) ->
     if (group) then @cc.group = group
@@ -165,7 +165,6 @@ class SVGForm
   # @param `ps` an array of Points
   # @param `halfsize` radius or half size of the point. Default is 2.
   # @param `isCircle` a boolean value to specify if the point should be drawn as a circle. Default is false.
-  # @demo form.points
   # @return this Form
   points: (ps, halfsize=2, isCircle=false) ->
     for p in ps
@@ -269,6 +268,7 @@ class SVGForm
 
   # ## Draw a circle
   # @param `c` a Circle object
+  # @demo svgform.circle
   # @return this Form
   circle: (c) ->
     @nextID()
@@ -335,7 +335,6 @@ class SVGForm
 
   # ## Draw a curve
   # @param `ps` an array of Points
-  # @demo form.curve
   # @return this Form
   curve: (ps, closePath=false ) ->
     @nextID()
@@ -389,7 +388,6 @@ class SVGForm
   # @param `size` an integer value to specify font size in pixels
   # @param `face` optional name to change the font face, such as "sans-serif" or "Helvetica"
   # @eg `form.font(24)` `form.font(12, "Georgia")`
-  # @demo form.font
   # @return this Form
   font: (size, face=false) ->
     @cc.fontFace = face

@@ -35,7 +35,6 @@ class SVGSpace extends DOMSpace
 
 
   # ## This overrides Space's `resize` function. It's a callback function for window's resize event. Keep track of this with `onSpaceResize(w,h,evt)` callback in your added objects.
-  # @demo canvasspace.resize
   # @return this CanvasSpace
   resize: (w, h, evt) ->
 
@@ -57,6 +56,7 @@ class SVGSpace extends DOMSpace
 
   # ## Remove an item from this Space
   # @param an object with an auto-assigned `animateID` property
+  # @demo svgspace.remove
   # @return this space
   remove : (item) ->
     temp = @space.querySelectorAll( "."+SVGForm._scopeID(item) )

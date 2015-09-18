@@ -1,0 +1,335 @@
+{
+    "cls": "SVGForm", 
+    "description": "", 
+    "extend": "", 
+    "file": "SVGForm.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>Create a new Form which is based on SVG</h2>", 
+            "name": "SVGForm", 
+            "param": [
+                "<p><code>space</code> A space that has a valid context for this form. In this case, the space should represent an html canvas.</p>"
+            ], 
+            "pname": "space", 
+            "return": "<p>a new Form object</p>"
+        }, 
+        {
+            "description": "<h2>Set current fill style</h2>", 
+            "eg": "<p><code>form.fill(\"#F90\")</code> <code>form.fill(\"rgba(0,0,0,.5\")</code> <code>form.fill(false)</code></p>", 
+            "name": "fill", 
+            "param": [
+                "<p><code>c</code> fill color which can be as color, gradient, or pattern. (See <a href=\"https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillStyle\">canvas documentation</a>) Default is <code>false</code> (transparent)</p>"
+            ], 
+            "pname": "c", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Set current stroke style</h2>", 
+            "eg": "<p><code>form.stroke(\"#F90\")</code> <code>form.stroke(\"rgba(0,0,0,.5\")</code> <code>form.stroke(false)</code> <code>form.stroke(\"#000\", 0.5, 'round')</code></p>", 
+            "name": "stroke", 
+            "param": [
+                "<p><code>c</code> stroke color which can be as color, gradient, or pattern. (See <a href=\"https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/strokeStyle\">canvas documentation</a>) Default is false (transparent)</p>", 
+                "<p><code>width</code> Optional value (can be floating point) to set line width</p>", 
+                "<p><code>joint</code> Optional string to set line joint style. Can be \"miter\", \"bevel\", or \"round\".</p>"
+            ], 
+            "pname": "c, width, joint, cap", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "demo": "svgform.scope", 
+            "description": "<h2>Set the current group scope by an ID, and optionally define the group's parent element</h2>", 
+            "eg": "<p><code>form.scope(\"dot\")</code> <code>form.scope(\"dot\", elem)</code></p>", 
+            "name": "scope", 
+            "param": [
+                "<p><code>group_id</code> a string to use as prefix for the group's id. For example, group_id \"hello\" will create elements with id like \"hello-1\", \"hello-2\", etc</p>", 
+                "<p><code>group</code> optional dom element to define this group's parent element</p>"
+            ], 
+            "pname": "group_id, group=false", 
+            "return": "<p>context object</p>"
+        }, 
+        {
+            "description": "<h2>Set the current group scope based on an item added to Space. The item must have an <code>animateID</code> property. Its group id will become \"item-##\".</h2>", 
+            "name": "getScope", 
+            "param": [
+                "<p><code>item</code> an item that's added to space.</p>"
+            ], 
+            "pname": "item", 
+            "return": "<p>context object</p>"
+        }, 
+        {
+            "description": "<h2>Get next available id in the current group</h2>", 
+            "name": "nextID", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>an id string</p>"
+        }, 
+        {
+            "description": "<h2>Draw a point</h2>", 
+            "name": "point", 
+            "param": [
+                "<p><code>p</code> a Point object</p>", 
+                "<p><code>halfsize</code> radius or half size of the point. Default is 2.</p>", 
+                "<p><code>isCircle</code> a boolean value to specify if the point should be drawn as a circle. Default is false.</p>"
+            ], 
+            "pname": "p, halfsize=2, isCircle=false", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a series of points</h2>", 
+            "name": "points", 
+            "param": [
+                "<p><code>ps</code> an array of Points</p>", 
+                "<p><code>halfsize</code> radius or half size of the point. Default is 2.</p>", 
+                "<p><code>isCircle</code> a boolean value to specify if the point should be drawn as a circle. Default is false.</p>"
+            ], 
+            "pname": "ps, halfsize=2, isCircle=false", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a line</h2>", 
+            "name": "line", 
+            "param": [
+                "<p><code>p</code> a Pair object</p>"
+            ], 
+            "pname": "p", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a series of lines</h2>", 
+            "name": "lines", 
+            "param": [
+                "<p><code>ps</code> an array of Lines</p>"
+            ], 
+            "pname": "ps", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a rectangle</h2>", 
+            "name": "rect", 
+            "param": [
+                "<p><code>p</code> a Pair object</p>"
+            ], 
+            "pname": "p, checkBounds=true", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "demo": "svgform.circle", 
+            "description": "<h2>Draw a circle</h2>", 
+            "name": "circle", 
+            "param": [
+                "<p><code>c</code> a Circle object</p>"
+            ], 
+            "pname": "c", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a polygon</h2>", 
+            "name": "polygon", 
+            "param": [
+                "<p><code>ps</code> an array of Points</p>", 
+                "<p><code>closePath</code> a boolean value to specify if the path should be closed (joining last point with first point)</p>"
+            ], 
+            "pname": "ps, closePath", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a triangle</h2>", 
+            "name": "triangle", 
+            "param": [
+                "<p><code>tri</code> a Triangle object</p>"
+            ], 
+            "pname": "tri", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a curve</h2>", 
+            "name": "curve", 
+            "param": [
+                "<p><code>ps</code> an array of Points</p>"
+            ], 
+            "pname": "ps, closePath=false", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw text</h2>", 
+            "name": "text", 
+            "param": [
+                "<p><code>p</code> a Point to specify anchor position</p>", 
+                "<p><code>txt</code> a string of text</p>", 
+                "<p><code>maxWidth</code> not applicable in svg</p>", 
+                "<p><code>xoff, yoff</code> x and y positional offset values</p>"
+            ], 
+            "pname": "p, txt, maxWidth=1000, xoff, yoff"
+        }, 
+        {
+            "description": "<h2>Set font size and font face</h2>", 
+            "eg": "<p><code>form.font(24)</code> <code>form.font(12, \"Georgia\")</code></p>", 
+            "name": "font", 
+            "param": [
+                "<p><code>size</code> an integer value to specify font size in pixels</p>", 
+                "<p><code>face</code> optional name to change the font face, such as \"sans-serif\" or \"Helvetica\"</p>"
+            ], 
+            "pname": "size, face=false", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Draw a shape. Defaults to <code>sketch()</code>. Override this function to draw differently.</h2>", 
+            "name": "draw", 
+            "param": [], 
+            "pname": "shape", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
+            "description": "<h2>Default draw based on the types of shape (Point, Line, Circle, etc)</h2>", 
+            "name": "sketch", 
+            "param": [
+                "<p><code>shape</code> any shape such as <code>Point</code> or <code>Line</code>, or an array of Points</p>"
+            ], 
+            "pname": "shape", 
+            "return": "<p>this Form</p>"
+        }
+    ], 
+    "props": [
+        {
+            "description": "<h2>a property to reference the space's rendering context</h2>", 
+            "name": "cc", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>a property to specify the current font size</h2>", 
+            "name": "cc.fontSize", 
+            "param": []
+        }, 
+        {
+            "description": "<h2>a property to specify the current font face</h2>", 
+            "name": "cc.fontFace", 
+            "param": []
+        }
+    ], 
+    "statics": [
+        {
+            "description": "<h2>A static function to context</h2>", 
+            "name": "id", 
+            "param": [], 
+            "pname": "ctx"
+        }, 
+        {
+            "description": "<h2>A static function to help adding style object to an element</h2>", 
+            "eg": "<p><code>SVGForm.style(elem, {fill: \"#f90\", stroke: false})</code></p>", 
+            "name": "style", 
+            "param": [
+                "<p><code>elem</code> a dom element to add to</p>", 
+                "<p><code>styles</code> an object of style properties</p>"
+            ], 
+            "pname": "elem, styles"
+        }, 
+        {
+            "description": "<h2>A static function to draw a point</h2>", 
+            "name": "point", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pt</code> a Point object</p>", 
+                "<p><code>halfsize</code> radius or half size of the point. Default is 2.</p>", 
+                "<p><code>fill</code> not used - already defined in ctx</p>", 
+                "<p><code>stroke</code> not used - already defined in ctx</p>", 
+                "<p><code>circle</code> a boolean value to specify if the points should be drawn as a circle. Default to false.</p>"
+            ], 
+            "pname": "ctx, pt, halfsize=2, fill=true, stroke=true, circle=false"
+        }, 
+        {
+            "description": "<h2>A static function similar to <code>SVGForm.point()</code> but draw a series of points</h2>", 
+            "name": "points", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pts</code> an array of Points</p>", 
+                "<p><code>halfsize, fill, stroke, circle</code> same parameters as in <code>SVGForm.point()</code></p>"
+            ], 
+            "pname": "ctx, pts, halfsize=2, fill=true, stroke=true, circle=false"
+        }, 
+        {
+            "description": "<h2>A static function to draw a line</h2>", 
+            "name": "line", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pair</code> a Pair object</p>"
+            ], 
+            "pname": "ctx, pair"
+        }, 
+        {
+            "description": "<h2>A static function to draw a line</h2>", 
+            "name": "lines", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pairs</code> an array of Pair objects</p>"
+            ], 
+            "pname": "ctx, pairs"
+        }, 
+        {
+            "description": "<h2>A static function to draw a rectangle</h2>", 
+            "name": "rect", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pair</code> a Pair object</p>", 
+                "<p><code>fill</code> not used - already defined in ctx</p>", 
+                "<p><code>stroke</code> not used - already defined in ctx</p>"
+            ], 
+            "pname": "ctx, pair, fill=true, stroke=true"
+        }, 
+        {
+            "description": "<h2>A static  function to draw a circle</h2>", 
+            "name": "circle", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>c</code> a Circle object</p>", 
+                "<p><code>fill</code> not used - already defined in ctx</p>", 
+                "<p><code>stroke</code> not used - already defined in ctx</p>"
+            ], 
+            "pname": "ctx, c, fill=true, stroke=false"
+        }, 
+        {
+            "description": "<h2>A static function to draw a polygon</h2>", 
+            "name": "polygon", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pts</code> an array of Points</p>", 
+                "<p><code>closePath</code> a boolean value to specify if the path should be closed (joining last point with first point)</p>", 
+                "<p><code>fill</code> not used - already defined in ctx</p>", 
+                "<p><code>stroke</code> not used - already defined in ctx</p>"
+            ], 
+            "pname": "ctx, pts, closePath=true, fill=true, stroke=true"
+        }, 
+        {
+            "description": "<h2>A static function to draw a triangle</h2>", 
+            "name": "triangle", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>tri</code> a Triangle object</p>", 
+                "<p><code>fill</code> not used - already defined in ctx</p>", 
+                "<p><code>stroke</code> not used - already defined in ctx</p>"
+            ], 
+            "pname": "ctx, tri, fill=true, stroke=false"
+        }, 
+        {
+            "description": "<h2>A static function to draw a curve as straight polygon segments. In future, this should be converted to bezier curves.</h2>", 
+            "name": "curve", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pts</code> an array of Points</p>"
+            ], 
+            "pname": "ctx, pts, closePath=false"
+        }, 
+        {
+            "description": "<h2>A static function to draw text</h2>", 
+            "name": "text", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pt</code> a Point object to specify the anchor point</p>", 
+                "<p><code>txt</code> a string of text to draw</p>", 
+                "<p><code>maxWidth</code> not applicable in svg</p>", 
+                "<p><code>dx</code> optional shift in x position</p>", 
+                "<p><code>dy</code> optional shift in y position</p>"
+            ], 
+            "pname": "ctx, pt, txt, maxWidth=0, dx=0, dy=0"
+        }
+    ]
+}

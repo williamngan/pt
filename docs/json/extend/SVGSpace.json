@@ -1,0 +1,34 @@
+{
+    "cls": "SVGSpace", 
+    "description": "", 
+    "extend": "DOMSpace", 
+    "file": "SVGSpace.coffee", 
+    "funcs": [
+        {
+            "description": "<h2>This overrides Space's <code>resize</code> function. It's a callback function for window's resize event. Keep track of this with <code>onSpaceResize(w,h,evt)</code> callback in your added objects.</h2>", 
+            "name": "resize", 
+            "param": [], 
+            "pname": "w, h, evt", 
+            "return": "<p>this CanvasSpace</p>"
+        }, 
+        {
+            "demo": "svgspace.remove", 
+            "description": "<h2>Remove an item from this Space</h2>", 
+            "name": "remove", 
+            "param": [
+                "<p>an object with an auto-assigned <code>animateID</code> property</p>"
+            ], 
+            "pname": "item", 
+            "return": "<p>this space</p>"
+        }, 
+        {
+            "description": "<h2>Remove all items from this Space</h2>", 
+            "name": "removeAll", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>this space</p>"
+        }
+    ], 
+    "props": [], 
+    "statics": []
+}
