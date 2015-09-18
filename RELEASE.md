@@ -1,5 +1,18 @@
 # Release notes
 
+## v0.1.1
+**SVG!**
+- Pt now supports both html5 canvas and svg. To render in svg, you can simply replace `CanvasSpace` and `Form` with `SVGSpace` and `SVGForm`, and just an additional line of `form.scope(...)` in your code. Everything else stays the same. See  demos [here](http://williamngan.github.io/pt/demo/index.html?name=svgform.scope) and [here](http://williamngan.github.io/pt/demo/index.html?name=svgform.circle).
+
+**Extended documentations**
+- [Documentations page]((http://williamngan.github.io/pt/docs/) now includes a section on extended Pt classes such as SVGForm and Noise..
+
+**Bug fixes**
+- improved gulp error handling
+- improved homepage design
+- other minor stuff
+
+
 ## v0.1 [experimental]
 > The world was so recent that many things lacked names, and in order to indicate them it was necessary to point.  
 > -- Gabriel Garcia Marquez
