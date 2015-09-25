@@ -6,7 +6,7 @@ Hello there. Allow me to introduce Pt, which is a study of Point, Form, and Spac
 
 ### Get started
 The best places to get started are:
-- **[Demos page](http://williamngan.github.io/pt/demo/index.html)** shows various interactive sketches, usually done in short form (50-70 lines of code).
+- **[Demos page](http://williamngan.github.io/pt/demo/index.html?name=pair.collinear)** shows various interactive sketches, usually done in short form (50-70 lines of code).
 - **[Description](http://medium.com/@williamngan/93382bf5943e/)** is a little essay about the motivations behind Pt. 7 mins read.
 - **[Quick start guide](https://github.com/williamngan/pt/blob/master/QUICKSTART.md)** helps you understand how Pt works, intended for both technical and non-technical audiences.
 - [Documentation](http://williamngan.github.io/pt/docs/) describes Pt's classes and functions.
