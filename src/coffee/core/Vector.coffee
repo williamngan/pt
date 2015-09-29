@@ -119,7 +119,7 @@ class Vector extends Point
   op: ( name, args... ) ->
     pts = @toArray()
     for p in pts
-      p[name]( args )
+      p[name]( args... )
     return @
 
 
@@ -128,7 +128,7 @@ class Vector extends Point
     instance = @clone()
     pts = instance.toArray()
     for p in pts
-      p[name]( args )
+      p[name]( args... )
     return instance
 
 

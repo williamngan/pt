@@ -108,7 +108,7 @@ Vector = (function(superClass) {
     pts = this.toArray();
     for (i = 0, len = pts.length; i < len; i++) {
       p = pts[i];
-      p[name](args);
+      p[name].apply(p, args);
     }
     return this;
   };
@@ -120,7 +120,7 @@ Vector = (function(superClass) {
     pts = instance.toArray();
     for (i = 0, len = pts.length; i < len; i++) {
       p = pts[i];
-      p[name](args);
+      p[name].apply(p, args);
     }
     return instance;
   };
