@@ -11,7 +11,7 @@ The best places to get started are:
 - **[Quick start guide](https://github.com/williamngan/pt/blob/master/QUICKSTART.md)** helps you understand how Pt works, intended for both technical and non-technical audiences.
 - [Documentation](http://williamngan.github.io/pt/docs/) describes Pt's classes and functions.
 - [Release notes](https://github.com/williamngan/pt/blob/master/RELEASE.md) talks about what's past, or passing, or to come.
-- Your feedbacks and questions are appreciated. Please file bugs and feature requests in [Issues page](https://github.com/williamngan/pt/issues), and ask questions in [stackoverflow](http://stackoverflow.com/questions/tagged/ptjs) with #ptjs tag. You can also ping me [@williamngan](http://twitter.com/williamngan).
+- [Issues page](https://github.com/williamngan/pt/issues) is the place to report bugs and discuss features. Also you can ask questions on [stackoverflow](http://stackoverflow.com/questions/tagged/ptjs) with `#ptjs` tag, or ping me anytime [@williamngan](http://twitter.com/williamngan). Your feedbacks and ideas are appreciated!
 
 ### Files
 Looking for the actual javascript library files? Here you go:
