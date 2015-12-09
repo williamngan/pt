@@ -84,6 +84,12 @@ Form = (function() {
     }
   };
 
+  Form.arc = function(ctx, pt, radius, start, end) {
+    ctx.beginPath();
+    ctx.arc(pt.x, pt.y, radius, start, end);
+    return ctx.stroke();
+  };
+
   Form.triangle = function(ctx, tri, fill, stroke) {
     if (fill == null) {
       fill = true;
@@ -290,6 +296,11 @@ Form = (function() {
 
   Form.prototype.circle = function(p) {
     Form.circle(this.cc, p, this.filled, this.stroked);
+    return this;
+  };
+
+  Form.prototype.arc = function(p, start, end) {
+    Form.arc(this.cc, p, p.radius, start, end);
     return this;
   };
 

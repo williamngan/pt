@@ -90,6 +90,18 @@ class Form
     return
 
 
+  # ## A static function to draw an arc
+  # @param `ctx` canvas rendering context
+  # @param `pt` a Point
+  # @param `radius` radius of the arc's circle
+  # @param `start` start angle
+  # @param `stroke` end angle
+  @arc: (ctx, pt, radius, start, end ) ->
+    ctx.beginPath()
+    ctx.arc( pt.x, pt.y, radius, start, end)
+    ctx.stroke()
+
+
   # ## A static function to draw a triangle
   # @param `ctx` canvas rendering context
   # @param `tri` a Triangle object
@@ -302,6 +314,14 @@ class Form
     Form.circle( @cc, p, @filled, @stroked )
     return @
 
+  # ## Draw an arc
+  # @param `p` a Circle object
+  # @param `start` start angle
+  # @param `end` end angle
+  # @return this Form
+  arc: (p, start, end) ->
+    Form.arc( @cc, p, p.radius, start, end);
+    return @
 
   # ## Draw a triangle
   # @param `p` a Triangle object

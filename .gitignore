@@ -1,3 +1,6 @@
 .sass-cache
 node_modules
 .idea
+.map/*.*
+dist/core/**/*.js.map
+dist/extend/**/*.js.map
