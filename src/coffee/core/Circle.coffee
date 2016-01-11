@@ -176,5 +176,10 @@ class Circle extends Vector
       return if get_pts then [] else false
 
 
+
+  # ## Describe this point as a text string
+  # @return "Vector x, y, z" text
+  toString: () -> "Circle of #{@radius} radius at center #{ @x }, #{ @y }, #{ @z }"
+
 # namespace
 this.Circle = Circle

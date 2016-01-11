@@ -1,6 +1,522 @@
-var Easing, GridCascade, Noise, ParticleEmitter, ParticleField, QuadTree, SamplePoints, StripeBound, UI,
+var Delaunay, Easing, GridCascade, Noise, ParticleEmitter, ParticleField, QuadTree, SVGForm, SVGSpace, SamplePoints, StripeBound, UI,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
+
+SVGForm = (function() {
+  SVGForm._domId = 0;
+
+  function SVGForm(space) {
+    this.cc = space.ctx || {};
+    this.cc.group = this.cc.group || null;
+    this.cc.groupID = "ptx";
+    this.cc.groupCount = 0;
+    this.cc.currentID = "ptx0";
+    this.cc.style = {
+      fill: "#999",
+      stroke: "#666",
+      "stroke-width": 1,
+      "stroke-linejoin": false,
+      "stroke-linecap": false
+    };
+    this.cc.font = "11px sans-serif";
+    this.cc.fontSize = 11;
+    this.cc.fontFace = "sans-serif";
+  }
+
+  SVGForm.prototype.fill = function(c) {
+    this.cc.style.fill = c ? c : false;
+    return this;
+  };
+
+  SVGForm.prototype.stroke = function(c, width, joint, cap) {
+    this.cc.style.stroke = c ? c : false;
+    if (width) {
+      this.cc.style["stroke-width"] = width;
+    }
+    if (joint) {
+      this.cc.style["stroke-linejoin"] = joint;
+    }
+    if (cap) {
+      this.cc.style["stroke-linecap"] = joint;
+    }
+    return this;
+  };
+
+  SVGForm.prototype.scope = function(group_id, group) {
+    if (group == null) {
+      group = false;
+    }
+    if (group) {
+      this.cc.group = group;
+    }
+    this.cc.groupID = group_id;
+    this.cc.groupCount = 0;
+    this.nextID();
+    return this.cc;
+  };
+
+  SVGForm.prototype.getScope = function(item) {
+    if (!item || item.animateID === null) {
+      throw "getScope()'s item must be added to a Space, and has an animateID property. Otherwise, use scope() instead.";
+    }
+    return this.scope(SVGForm._scopeID(item));
+  };
+
+  SVGForm.prototype.nextID = function() {
+    this.cc.groupCount++;
+    this.cc.currentID = this.cc.groupID + "-" + this.cc.groupCount;
+    return this.cc.currentID;
+  };
+
+  SVGForm.id = function(ctx) {
+    return ctx.currentID || "p-" + SVGForm._domId++;
+  };
+
+  SVGForm._scopeID = function(item) {
+    return "item" + item.animateID;
+  };
+
+  SVGForm.style = function(elem, styles) {
+    var k, st, v;
+    st = {};
+    for (k in styles) {
+      v = styles[k];
+      if (!v) {
+        if (k === "fill" || k === "stroke") {
+          st[k] = "none";
+        }
+      } else {
+        st[k] = v;
+      }
+    }
+    return DOMSpace.attr(elem, st);
+  };
+
+  SVGForm.point = function(ctx, pt, halfsize, fill, stroke, circle) {
+    var elem;
+    if (halfsize == null) {
+      halfsize = 2;
+    }
+    if (fill == null) {
+      fill = true;
+    }
+    if (stroke == null) {
+      stroke = true;
+    }
+    if (circle == null) {
+      circle = false;
+    }
+    elem = SVGSpace.svgElement(ctx.group, (circle ? "circle" : "rect"), SVGForm.id(ctx));
+    if (!elem) {
+      return;
+    }
+    if (circle) {
+      DOMSpace.attr(elem, {
+        cx: pt.x,
+        cy: pt.y,
+        r: halfsize
+      });
+    } else {
+      DOMSpace.attr(elem, {
+        x: pt.x - halfsize,
+        y: pt.y - halfsize,
+        width: halfsize + halfsize,
+        height: halfsize + halfsize
+      });
+    }
+    SVGForm.style(elem, ctx.style);
+    return elem;
+  };
+
+  SVGForm.prototype.point = function(p, halfsize, isCircle) {
+    if (halfsize == null) {
+      halfsize = 2;
+    }
+    if (isCircle == null) {
+      isCircle = false;
+    }
+    this.nextID();
+    SVGForm.point(this.cc, p, halfsize, true, true, isCircle);
+    return this;
+  };
+
+  SVGForm.points = function(ctx, pts, halfsize, fill, stroke, circle) {
+    var p;
+    if (halfsize == null) {
+      halfsize = 2;
+    }
+    if (fill == null) {
+      fill = true;
+    }
+    if (stroke == null) {
+      stroke = true;
+    }
+    if (circle == null) {
+      circle = false;
+    }
+    return (function() {
+      var l, len, results;
+      results = [];
+      for (l = 0, len = pts.length; l < len; l++) {
+        p = pts[l];
+        results.push(SVGForm.point(ctx, p, halfsize, fill, stroke, circle));
+      }
+      return results;
+    })();
+  };
+
+  SVGForm.prototype.points = function(ps, halfsize, isCircle) {
+    var l, len, p;
+    if (halfsize == null) {
+      halfsize = 2;
+    }
+    if (isCircle == null) {
+      isCircle = false;
+    }
+    for (l = 0, len = ps.length; l < len; l++) {
+      p = ps[l];
+      this.point(p, halfsize, isCircle);
+    }
+    return this;
+  };
+
+  SVGForm.line = function(ctx, pair) {
+    var elem;
+    if (!pair.p1) {
+      throw (pair.toString()) + " is not a Pair";
+    }
+    elem = SVGSpace.svgElement(ctx.group, "line", SVGForm.id(ctx));
+    DOMSpace.attr(elem, {
+      x1: pair.x,
+      y1: pair.y,
+      x2: pair.p1.x,
+      y2: pair.p1.y
+    });
+    SVGForm.style(elem, ctx.style);
+    return elem;
+  };
+
+  SVGForm.prototype.line = function(p) {
+    this.nextID();
+    SVGForm.line(this.cc, p);
+    return this;
+  };
+
+  SVGForm.lines = function(ctx, pairs) {
+    var ln;
+    return (function() {
+      var l, len, results;
+      results = [];
+      for (l = 0, len = pairs.length; l < len; l++) {
+        ln = pairs[l];
+        results.push(SVGForm.line(ctx, ln));
+      }
+      return results;
+    })();
+  };
+
+  SVGForm.prototype.lines = function(ps) {
+    var l, len, p;
+    for (l = 0, len = ps.length; l < len; l++) {
+      p = ps[l];
+      this.line(p);
+    }
+    return this;
+  };
+
+  SVGForm.rect = function(ctx, pair, fill, stroke) {
+    var elem, size;
+    if (fill == null) {
+      fill = true;
+    }
+    if (stroke == null) {
+      stroke = true;
+    }
+    if (!pair.p1) {
+      throw "" + (pair.toString() === !a(Pair));
+    }
+    elem = SVGSpace.svgElement(ctx.group, "rect", SVGForm.id(ctx));
+    size = pair.size();
+    DOMSpace.attr(elem, {
+      x: pair.x,
+      y: pair.y,
+      width: size.x,
+      height: size.y
+    });
+    SVGForm.style(elem, ctx.style);
+    return elem;
+  };
+
+  SVGForm.prototype.rect = function(p, checkBounds) {
+    var r;
+    if (checkBounds == null) {
+      checkBounds = true;
+    }
+    this.nextID();
+    r = checkBounds ? p.bounds() : p;
+    SVGForm.rect(this.cc, r);
+    return this;
+  };
+
+  SVGForm.circle = function(ctx, c, fill, stroke) {
+    var elem;
+    if (fill == null) {
+      fill = true;
+    }
+    if (stroke == null) {
+      stroke = false;
+    }
+    elem = SVGSpace.svgElement(ctx.group, "circle", SVGForm.id(ctx));
+    if (!elem) {
+      return;
+    }
+    DOMSpace.attr(elem, {
+      cx: c.x,
+      cy: c.y,
+      r: c.radius
+    });
+    SVGForm.style(elem, ctx.style);
+    return elem;
+  };
+
+  SVGForm.prototype.circle = function(c) {
+    this.nextID();
+    SVGForm.circle(this.cc, c);
+    return this;
+  };
+
+  SVGForm.polygon = function(ctx, pts, closePath, fill, stroke) {
+    var elem, i, points;
+    if (closePath == null) {
+      closePath = true;
+    }
+    if (fill == null) {
+      fill = true;
+    }
+    if (stroke == null) {
+      stroke = true;
+    }
+    elem = SVGSpace.svgElement(ctx.group, (closePath ? "polygon" : "polyline"), SVGForm.id(ctx));
+    if (!elem) {
+      return;
+    }
+    if (pts.length <= 1) {
+      return;
+    }
+    points = (function() {
+      var l, ref, results;
+      results = [];
+      for (i = l = 0, ref = pts.length; l < ref; i = l += 1) {
+        results.push(pts[i].x + "," + pts[i].y);
+      }
+      return results;
+    })();
+    DOMSpace.attr(elem, {
+      points: points.join(" ")
+    });
+    SVGForm.style(elem, ctx.style);
+    return elem;
+  };
+
+  SVGForm.prototype.polygon = function(ps, closePath) {
+    this.nextID();
+    SVGForm.polygon(this.cc, ps, closePath);
+    return this;
+  };
+
+  SVGForm.triangle = function(ctx, tri, fill, stroke) {
+    if (fill == null) {
+      fill = true;
+    }
+    if (stroke == null) {
+      stroke = false;
+    }
+    return SVGForm.polygon(ctx, tri.toArray());
+  };
+
+  SVGForm.prototype.triangle = function(tri) {
+    this.nextID();
+    SVGForm.triangle(this.cc, tri);
+    return this;
+  };
+
+  SVGForm.curve = function(ctx, pts, closePath) {
+    if (closePath == null) {
+      closePath = false;
+    }
+    return SVGForm.polygon(ctx, pts, closePath);
+  };
+
+  SVGForm.prototype.curve = function(ps, closePath) {
+    if (closePath == null) {
+      closePath = false;
+    }
+    this.nextID();
+    SVGForm.curve(this.cc, ps, closePath);
+    return this;
+  };
+
+  SVGForm.text = function(ctx, pt, txt, maxWidth, dx, dy) {
+    var elem;
+    if (maxWidth == null) {
+      maxWidth = 0;
+    }
+    if (dx == null) {
+      dx = 0;
+    }
+    if (dy == null) {
+      dy = 0;
+    }
+    elem = SVGSpace.svgElement(ctx.group, "text", SVGForm.id(ctx));
+    if (!elem) {
+      return;
+    }
+    DOMSpace.attr(elem, {
+      "pointer-events": "none",
+      x: pt.x,
+      y: pt.y,
+      dx: 0,
+      dy: 0
+    });
+    elem.textContent = txt;
+    SVGForm.style(elem, {
+      fill: ctx.style.fill,
+      stroke: ctx.style.stroke,
+      "font-family": ctx.fontFace || false,
+      "font-size": ctx.fontSize || false
+    });
+    return elem;
+  };
+
+  SVGForm.prototype.text = function(p, txt, maxWidth, xoff, yoff) {
+    if (maxWidth == null) {
+      maxWidth = 1000;
+    }
+    this.nextID();
+    SVGForm.text(this.cc, p, txt, maxWidth, xoff, yoff);
+    return this;
+  };
+
+  SVGForm.prototype.font = function(size, face) {
+    if (face == null) {
+      face = false;
+    }
+    this.cc.fontFace = face;
+    this.cc.fontSize = size;
+    this.cc.font = size + "px " + face;
+    return this;
+  };
+
+  SVGForm.prototype.draw = function(shape) {
+    return this.sketch(shape);
+  };
+
+  SVGForm.prototype.sketch = function(shape) {
+    shape.floor();
+    if (shape instanceof Circle) {
+      SVGForm.circle(this.cc, shape, this.filled, this.stroked);
+    } else if (shape instanceof Rectangle) {
+      SVGForm.rect(this.cc, shape, this.filled, this.stroked);
+    } else if (shape instanceof Triangle) {
+      SVGForm.triangle(this.cc, shape, this.filled, this.stroked);
+    } else if (shape instanceof Line || shape instanceof Pair) {
+      SVGForm.line(this.cc, shape);
+    } else if (shape instanceof PointSet) {
+      SVGForm.polygon(this.cc, shape.points);
+    } else if (shape instanceof Vector || shape instanceof Point) {
+      SVGForm.point(this.cc, shape);
+    }
+    return this;
+  };
+
+  return SVGForm;
+
+})();
+
+this.SVGForm = SVGForm;
+
+SVGSpace = (function(superClass) {
+  extend(SVGSpace, superClass);
+
+  function SVGSpace(id, bgcolor, context) {
+    if (id == null) {
+      id = 'pt_space';
+    }
+    if (bgcolor == null) {
+      bgcolor = false;
+    }
+    if (context == null) {
+      context = 'svg';
+    }
+    SVGSpace.__super__.constructor.apply(this, arguments);
+    this.bg = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    this.bg.setAttribute("id", id + "_bg");
+    this.bg.setAttribute("fill", bgcolor);
+    this.space.appendChild(this.bg);
+  }
+
+  SVGSpace.prototype._createSpaceElement = function() {
+    this.space = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    this.space.setAttribute("id", this.id);
+    return this.appended = false;
+  };
+
+  SVGSpace.svgElement = function(parent, name, id) {
+    var elem;
+    if (!parent || !parent.appendChild) {
+      throw "parent parameter needs to be a DOM node";
+    }
+    elem = document.querySelector("#" + id);
+    if (!elem) {
+      elem = document.createElementNS("http://www.w3.org/2000/svg", name);
+      elem.setAttribute("id", id);
+      elem.setAttribute("class", id.substring(0, id.indexOf("-")));
+      parent.appendChild(elem);
+    }
+    return elem;
+  };
+
+  SVGSpace.prototype.resize = function(w, h, evt) {
+    var k, p, ref;
+    this.size.set(w, h);
+    this.center = new Vector(w / 2, h / 2);
+    this.space.setAttribute("width", w);
+    this.space.setAttribute("height", h);
+    this.bg.setAttribute("width", w);
+    this.bg.setAttribute("height", h);
+    ref = this.items;
+    for (k in ref) {
+      p = ref[k];
+      if (p.onSpaceResize != null) {
+        p.onSpaceResize(w, h, evt);
+      }
+    }
+    return this;
+  };
+
+  SVGSpace.prototype.remove = function(item) {
+    var l, len, t, temp;
+    temp = this.space.querySelectorAll("." + SVGForm._scopeID(item));
+    for (l = 0, len = temp.length; l < len; l++) {
+      t = temp[l];
+      t.parentNode.removeChild(t);
+    }
+    delete this.items[item.animateID];
+    return this;
+  };
+
+  SVGSpace.prototype.removeAll = function() {
+    while (this.space.firstChild) {
+      this.space.removeChild(this.space.firstChild);
+      return this;
+    }
+  };
+
+  return SVGSpace;
+
+})(DOMSpace);
+
+this.SVGSpace = SVGSpace;
 
 Easing = (function() {
   function Easing() {}
@@ -113,9 +629,9 @@ GridCascade = (function(superClass) {
   };
 
   GridCascade.prototype.occupy = function(x, y, w, h) {
-    var c, l, m, r, ref, ref1, ref2, ref3;
+    var c, l, r, ref, ref1, ref2, ref3, u;
     for (c = l = ref = x, ref1 = w + x; ref <= ref1 ? l < ref1 : l > ref1; c = ref <= ref1 ? ++l : --l) {
-      for (r = m = ref2 = y, ref3 = h + y; ref2 <= ref3 ? m < ref3 : m > ref3; r = ref2 <= ref3 ? ++m : --m) {
+      for (r = u = ref2 = y, ref3 = h + y; ref2 <= ref3 ? u < ref3 : u > ref3; r = ref2 <= ref3 ? ++u : --u) {
         if (this.layout[r] == null) {
           this.layout[r] = [];
         }
@@ -126,11 +642,11 @@ GridCascade = (function(superClass) {
   };
 
   GridCascade.prototype.findStartRow = function() {
-    var c, index, l, m, r, ref, ref1, ref2;
+    var c, index, l, r, ref, ref1, ref2, u;
     index = this.startRow;
     for (r = l = ref = this.startRow, ref1 = this.rows; ref <= ref1 ? l < ref1 : l > ref1; r = ref <= ref1 ? ++l : --l) {
       index = r;
-      for (c = m = 0, ref2 = this.columns; 0 <= ref2 ? m < ref2 : m > ref2; c = 0 <= ref2 ? ++m : --m) {
+      for (c = u = 0, ref2 = this.columns; 0 <= ref2 ? u < ref2 : u > ref2; c = 0 <= ref2 ? ++u : --u) {
         if (this.layout[r] != null) {
           if ((this.layout[r][c] == null) || this.layout[r][c] <= 0) {
             return index;
@@ -142,7 +658,7 @@ GridCascade = (function(superClass) {
   };
 
   GridCascade.prototype.fit = function(cols, rows) {
-    var allRowsFree, b, cell, colCount, colSize, currCol, currRow, freeCol, l, m, n, rc, ref, ref1, ref2, ref3, ref4;
+    var allRowsFree, b, cell, colCount, colSize, currCol, currRow, freeCol, l, rc, ref, ref1, ref2, ref3, ref4, u, z;
     colSize = Math.min(cols, this.columns);
     for (currRow = l = ref = this.startRow, ref1 = this.rows; ref <= ref1 ? l < ref1 : l > ref1; currRow = ref <= ref1 ? ++l : --l) {
       colCount = colSize;
@@ -153,7 +669,7 @@ GridCascade = (function(superClass) {
       if (this.layout[currRow] == null) {
         this.layout[currRow] = [];
       }
-      for (currCol = m = 0, ref2 = this.columns; 0 <= ref2 ? m < ref2 : m > ref2; currCol = 0 <= ref2 ? ++m : --m) {
+      for (currCol = u = 0, ref2 = this.columns; 0 <= ref2 ? u < ref2 : u > ref2; currCol = 0 <= ref2 ? ++u : --u) {
         cell = this.layout[currRow][currCol];
         if ((cell != null) && cell > 0) {
           freeCol = currCol + 1;
@@ -163,7 +679,7 @@ GridCascade = (function(superClass) {
           if (colCount === 0) {
             allRowsFree = true;
             if (rows > 1) {
-              for (rc = n = ref3 = currRow, ref4 = currRow + rows; ref3 <= ref4 ? n < ref4 : n > ref4; rc = ref3 <= ref4 ? ++n : --n) {
+              for (rc = z = ref3 = currRow, ref4 = currRow + rows; ref3 <= ref4 ? z < ref4 : z > ref4; rc = ref3 <= ref4 ? ++z : --z) {
                 if (rc <= this.rows && (this.layout[rc] != null) && this.layout[rc][freeCol] > 0) {
                   allRowsFree = false;
                   break;
@@ -351,7 +867,7 @@ QuadTree = (function(superClass) {
   };
 
   QuadTree.prototype.splitQuad = function() {
-    var _depth, i, item, k, l, len, len1, m, q, ref, ref1, ref2, results, t;
+    var _depth, i, item, k, l, len, len1, q, ref, ref1, ref2, results, t, u;
     this.quads = this.quadrants();
     ref = this.quads;
     for (k in ref) {
@@ -368,8 +884,8 @@ QuadTree = (function(superClass) {
     }
     ref2 = this.items;
     results = [];
-    for (m = 0, len1 = ref2.length; m < len1; m++) {
-      t = ref2[m];
+    for (u = 0, len1 = ref2.length; u < len1; u++) {
+      t = ref2[u];
       if (!t) {
         results.push(this.items.splice(t, 1));
       } else {
@@ -459,7 +975,7 @@ SamplePoints = (function(superClass) {
   };
 
   SamplePoints.prototype.sample = function(numSamples, type) {
-    var a, best, bestDist, i, j, l, m, nearest, p, r, ref, ref1, s, x, y;
+    var a, best, bestDist, i, j, l, nearest, p, r, ref, ref1, s, u, x, y;
     if (numSamples == null) {
       numSamples = 10;
     }
@@ -492,7 +1008,7 @@ SamplePoints = (function(superClass) {
     } else if (this.bestcandidate) {
       best = null;
       bestDist = -1;
-      for (i = m = 0, ref1 = numSamples; m < ref1; i = m += 1) {
+      for (i = u = 0, ref1 = numSamples; u < ref1; i = u += 1) {
         p = new Vector(this.bound.x + this.boundsize.x * Math.random(), this.bound.y + this.boundsize.y * Math.random());
         if (this.points.length === 0) {
           best = p;
@@ -551,7 +1067,7 @@ SamplePoints = (function(superClass) {
   };
 
   SamplePoints.prototype._poissonCheck = function(x, y) {
-    var dx, dy, i, i0, i1, j, j0, j1, l, m, o, ref, ref1, ref2, ref3, s;
+    var dx, dy, i, i0, i1, j, j0, j1, l, o, ref, ref1, ref2, ref3, s, u;
     i = Math.floor(x / this.poisson.cellSize);
     j = Math.floor(y / this.poisson.cellSize);
     i0 = Math.max(i - 2, 0);
@@ -560,7 +1076,7 @@ SamplePoints = (function(superClass) {
     j1 = Math.min(j + 3, this.poisson.gridHeight);
     for (j = l = ref = j0, ref1 = j1; l < ref1; j = l += 1) {
       o = j * this.poisson.gridWidth;
-      for (i = m = ref2 = i0, ref3 = i1; m < ref3; i = m += 1) {
+      for (i = u = ref2 = i0, ref3 = i1; u < ref3; i = u += 1) {
         s = this.poisson.grid[o + i];
         if (s) {
           dx = s.x - x;
@@ -654,7 +1170,7 @@ StripeBound = (function(superClass) {
   };
 
   StripeBound.prototype.getStripes = function() {
-    var d, diff, dx, dy, freq, l, m, p, ref, ref1, result, size;
+    var d, diff, dx, dy, freq, l, p, ref, ref1, result, size, u;
     size = this.size();
     result = {
       columns: [],
@@ -668,7 +1184,7 @@ StripeBound = (function(superClass) {
       p.p1.add(this);
       result.rows.push(p);
     }
-    for (d = m = 0, ref1 = freq.x - 1; 0 <= ref1 ? m <= ref1 : m >= ref1; d = 0 <= ref1 ? ++m : --m) {
+    for (d = u = 0, ref1 = freq.x - 1; 0 <= ref1 ? u <= ref1 : u >= ref1; d = 0 <= ref1 ? ++u : --u) {
       dx = diff.x * d;
       p = new Pair(dx, 0).to(dx + diff.x + 0.5, size.y).add(this);
       p.p1.add(this);
@@ -678,7 +1194,7 @@ StripeBound = (function(superClass) {
   };
 
   StripeBound.prototype.getStripeLines = function() {
-    var d, diff, dx, dy, freq, l, m, p, ref, ref1, result, size;
+    var d, diff, dx, dy, freq, l, p, ref, ref1, result, size, u;
     size = this.size();
     result = {
       columns: [],
@@ -692,7 +1208,7 @@ StripeBound = (function(superClass) {
       p.p1.add(this);
       result.rows.push(p);
     }
-    for (d = m = 0, ref1 = freq.x; 0 <= ref1 ? m <= ref1 : m >= ref1; d = 0 <= ref1 ? ++m : --m) {
+    for (d = u = 0, ref1 = freq.x; 0 <= ref1 ? u <= ref1 : u >= ref1; d = 0 <= ref1 ? ++u : --u) {
       dx = diff.x * d;
       p = new Pair(dx, 0).to(dx, size.y).add(this);
       p.p1.add(this);
@@ -893,5 +1409,135 @@ Noise = (function(superClass) {
   return Noise;
 
 })(Vector);
+
+Delaunay = (function(superClass) {
+  extend(Delaunay, superClass);
+
+  function Delaunay() {
+    Delaunay.__super__.constructor.apply(this, arguments);
+    this.mesh = [];
+  }
+
+  Delaunay.prototype.generate = function() {
+    var c, circum, closed, dx, dy, edges, i, indices, j, l, len, len1, n, open, opened, pts, ref, st, u, z;
+    if (this.points.length < 3) {
+      return;
+    }
+    n = this.points.length;
+    indices = [];
+    for (i = l = 0, ref = n; l < ref; i = l += 1) {
+      indices[i] = i;
+    }
+    indices.sort((function(_this) {
+      return function(i, j) {
+        return _this.points[j].x - _this.points[i].x;
+      };
+    })(this));
+    pts = this.points.slice();
+    st = this._supertriangle();
+    pts.push(new Vector(st), new Vector(st.p1), new Vector(st.p2));
+    opened = [this._circum(n, n + 1, n + 2, st)];
+    closed = [];
+    edges = [];
+    for (u = 0, len = indices.length; u < len; u++) {
+      c = indices[u];
+      edges = [];
+      j = opened.length;
+      while (j--) {
+        circum = opened[j];
+        dx = pts[c].x - circum.circle.x;
+        dy = pts[c].y - circum.circle.y;
+        if (dx > 0 && dx * dx > circum.circle.radius * circum.circle.radius) {
+          closed.push(circum);
+          opened.splice(j, 1);
+          continue;
+        }
+        if (dx * dx + dy * dy - circum.circle.radius * circum.circle.radius > Const.epsilon) {
+          continue;
+        }
+        edges.push(circum.i, circum.j, circum.j, circum.k, circum.k, circum.i);
+        opened.splice(j, 1);
+      }
+      this._dedupe(edges);
+      j = edges.length;
+      while (j > 1) {
+        opened.push(this._circum(edges[--j], edges[--j], c, null, pts));
+      }
+    }
+    for (z = 0, len1 = opened.length; z < len1; z++) {
+      open = opened[z];
+      if (open.i < n && open.j < n && open.k < n) {
+        closed.push(open);
+      }
+    }
+    this.mesh = closed;
+    return this.mesh;
+  };
+
+  Delaunay.prototype._supertriangle = function() {
+    var d, dmax, l, len, maxPt, mid, minPt, p, ref;
+    minPt = new Vector();
+    maxPt = new Vector();
+    ref = this.points;
+    for (l = 0, len = ref.length; l < len; l++) {
+      p = ref[l];
+      minPt.min(p);
+      maxPt.max(p);
+    }
+    d = maxPt.$subtract(minPt);
+    mid = minPt.$add(maxPt).divide(2);
+    dmax = Math.max(d.x, d.y);
+    return new Triangle(mid.$subtract(20 * dmax, dmax)).to(mid.$add(0, 20 * dmax), mid.$add(20 * dmax, -dmax));
+  };
+
+  Delaunay.prototype._triangle = function(i, j, k, pts) {
+    if (pts == null) {
+      pts = this.points;
+    }
+    return new Triangle(pts[i]).to(pts[j], pts[k]);
+  };
+
+  Delaunay.prototype._circum = function(i, j, k, tri, pts) {
+    if (tri == null) {
+      tri = null;
+    }
+    if (pts == null) {
+      pts = this.points;
+    }
+    tri = tri || this._triangle(i, j, k, pts);
+    return {
+      i: i,
+      j: j,
+      k: k,
+      triangle: tri,
+      circle: tri.circumcircle()
+    };
+  };
+
+  Delaunay.prototype._dedupe = function(edges) {
+    var a, b, i, j, m, n;
+    j = edges.length;
+    while (j > 1) {
+      b = edges[--j];
+      a = edges[--j];
+      i = j;
+      while (i > 1) {
+        n = edges[--i];
+        m = edges[--i];
+        if ((a === m && b === n) || (a === n && b === m)) {
+          edges.splice(j, 2);
+          edges.splice(i, 2);
+          break;
+        }
+      }
+    }
+    return edges;
+  };
+
+  return Delaunay;
+
+})(PointSet);
+
+this.Delaunay = Delaunay;
 
 //# sourceMappingURL=pt-extend.js.map

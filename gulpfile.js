@@ -52,7 +52,7 @@ var coreFiles = coreElems.map(function(n) { return path.src.core+n+".coffee"; } 
 var extendElems = [
   "SVGForm", "SVGSpace",
   "Easing", "GridCascade", "ParticleEmitter", "ParticleField", "QuadTree",
-  "SamplePoints", "StripeBound", "UI", "Noise"
+  "SamplePoints", "StripeBound", "UI", "Noise", "Delaunay"
 ];
 var extendFiles = extendElems.map(function(n) { return path.src.extend+n+".coffee"; } );
 

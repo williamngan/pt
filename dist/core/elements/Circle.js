@@ -141,6 +141,10 @@ Circle = (function(superClass) {
     }
   };
 
+  Circle.prototype.toString = function() {
+    return "Circle of " + this.radius + " radius at center " + this.x + ", " + this.y + ", " + this.z;
+  };
+
   return Circle;
 
 })(Vector);
