@@ -1,4 +1,4 @@
-var Pt = {}; (function() {var CanvasSpace, Circle, Color, Const, Curve, DOMSpace, Easing, Form, Grid, GridCascade, Line, Matrix, Noise, Pair, Particle, ParticleEmitter, ParticleField, ParticleSystem, Point, PointSet, QuadTree, Rectangle, SVGForm, SVGSpace, SamplePoints, Space, StripeBound, Timer, Triangle, UI, Util, Vector,
+var Pt = {}; (function() {var CanvasSpace, Circle, Color, Const, Curve, DOMSpace, Delaunay, Easing, Form, Grid, GridCascade, Line, Matrix, Noise, Pair, Particle, ParticleEmitter, ParticleField, ParticleSystem, Point, PointSet, QuadTree, Rectangle, SVGForm, SVGSpace, SamplePoints, Space, StripeBound, Timer, Triangle, UI, Util, Vector,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty,
   slice = [].slice;
@@ -2545,6 +2545,10 @@ Circle = (function(superClass) {
         return false;
       }
     }
+  };
+
+  Circle.prototype.toString = function() {
+    return "Circle of " + this.radius + " radius at center " + this.x + ", " + this.y + ", " + this.z;
   };
 
   return Circle;
@@ -5927,6 +5931,136 @@ Noise = (function(superClass) {
   return Noise;
 
 })(Vector);
+
+Delaunay = (function(superClass) {
+  extend(Delaunay, superClass);
+
+  function Delaunay() {
+    Delaunay.__super__.constructor.apply(this, arguments);
+    this.mesh = [];
+  }
+
+  Delaunay.prototype.generate = function() {
+    var aa, ab, ac, c, circum, closed, dx, dy, edges, i, indices, j, len1, len2, n, open, opened, pts, ref, st;
+    if (this.points.length < 3) {
+      return;
+    }
+    n = this.points.length;
+    indices = [];
+    for (i = aa = 0, ref = n; aa < ref; i = aa += 1) {
+      indices[i] = i;
+    }
+    indices.sort((function(_this) {
+      return function(i, j) {
+        return _this.points[j].x - _this.points[i].x;
+      };
+    })(this));
+    pts = this.points.slice();
+    st = this._supertriangle();
+    pts.push(new Vector(st), new Vector(st.p1), new Vector(st.p2));
+    opened = [this._circum(n, n + 1, n + 2, st)];
+    closed = [];
+    edges = [];
+    for (ab = 0, len1 = indices.length; ab < len1; ab++) {
+      c = indices[ab];
+      edges = [];
+      j = opened.length;
+      while (j--) {
+        circum = opened[j];
+        dx = pts[c].x - circum.circle.x;
+        dy = pts[c].y - circum.circle.y;
+        if (dx > 0 && dx * dx > circum.circle.radius * circum.circle.radius) {
+          closed.push(circum);
+          opened.splice(j, 1);
+          continue;
+        }
+        if (dx * dx + dy * dy - circum.circle.radius * circum.circle.radius > Const.epsilon) {
+          continue;
+        }
+        edges.push(circum.i, circum.j, circum.j, circum.k, circum.k, circum.i);
+        opened.splice(j, 1);
+      }
+      this._dedupe(edges);
+      j = edges.length;
+      while (j > 1) {
+        opened.push(this._circum(edges[--j], edges[--j], c, null, pts));
+      }
+    }
+    for (ac = 0, len2 = opened.length; ac < len2; ac++) {
+      open = opened[ac];
+      if (open.i < n && open.j < n && open.k < n) {
+        closed.push(open);
+      }
+    }
+    this.mesh = closed;
+    return this.mesh;
+  };
+
+  Delaunay.prototype._supertriangle = function() {
+    var aa, d, dmax, len1, maxPt, mid, minPt, p, ref;
+    minPt = new Vector();
+    maxPt = new Vector();
+    ref = this.points;
+    for (aa = 0, len1 = ref.length; aa < len1; aa++) {
+      p = ref[aa];
+      minPt.min(p);
+      maxPt.max(p);
+    }
+    d = maxPt.$subtract(minPt);
+    mid = minPt.$add(maxPt).divide(2);
+    dmax = Math.max(d.x, d.y);
+    return new Triangle(mid.$subtract(20 * dmax, dmax)).to(mid.$add(0, 20 * dmax), mid.$add(20 * dmax, -dmax));
+  };
+
+  Delaunay.prototype._triangle = function(i, j, k, pts) {
+    if (pts == null) {
+      pts = this.points;
+    }
+    return new Triangle(pts[i]).to(pts[j], pts[k]);
+  };
+
+  Delaunay.prototype._circum = function(i, j, k, tri, pts) {
+    if (tri == null) {
+      tri = null;
+    }
+    if (pts == null) {
+      pts = this.points;
+    }
+    tri = tri || this._triangle(i, j, k, pts);
+    return {
+      i: i,
+      j: j,
+      k: k,
+      triangle: tri,
+      circle: tri.circumcircle()
+    };
+  };
+
+  Delaunay.prototype._dedupe = function(edges) {
+    var a, b, i, j, m, n;
+    j = edges.length;
+    while (j > 1) {
+      b = edges[--j];
+      a = edges[--j];
+      i = j;
+      while (i > 1) {
+        n = edges[--i];
+        m = edges[--i];
+        if ((a === m && b === n) || (a === n && b === m)) {
+          edges.splice(j, 2);
+          edges.splice(i, 2);
+          break;
+        }
+      }
+    }
+    return edges;
+  };
+
+  return Delaunay;
+
+})(PointSet);
+
+this.Delaunay = Delaunay;
 
 //# sourceMappingURL=pt.js.map
 }).call(Pt); module.exports = Pt;
