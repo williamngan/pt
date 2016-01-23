@@ -78,18 +78,22 @@ SVGForm = (function() {
 
   SVGForm.style = function(elem, styles) {
     var k, st, v;
-    st = {};
+    st = [];
     for (k in styles) {
       v = styles[k];
       if (!v) {
-        if (k === "fill" || k === "stroke") {
-          st[k] = "none";
+        if (k === "fill") {
+          st.push("fill: none");
+        } else if (k === "stroke") {
+          st.push("stroke: none");
         }
       } else {
-        st[k] = v;
+        st.push(k + ":" + v);
       }
     }
-    return DOMSpace.attr(elem, st);
+    return DOMSpace.attr(elem, {
+      style: st.join(";")
+    });
   };
 
   SVGForm.point = function(ctx, pt, halfsize, fill, stroke, circle) {

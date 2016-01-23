@@ -97,19 +97,23 @@ class SVGForm
   @_scopeID: (item) ->
     return "item"+item.animateID
 
-  # ## A static function to help adding style object to an element
+  # ## A static function to help adding style object to an element. This put all styles into `style` attribute instead of individual attributes, so that the styles can be parsed by Adobe Illustrator.
   # @param `elem` a dom element to add to
   # @param `styles` an object of style properties
   # @eg `SVGForm.style(elem, {fill: "#f90", stroke: false})`
   @style: (elem, styles) ->
-    st = {}
+    st = []
+
     for k,v of styles
       if (!v)
-        if (k=="fill" or k=="stroke") then st[k] = "none"
+        if (k=="fill")
+          st.push( "fill: none" )
+        else if (k=="stroke")
+          st.push( "stroke: none" )
       else
-        st[k] = v
+        st.push( k+":"+v )
 
-    return DOMSpace.attr( elem, st )
+    return DOMSpace.attr( elem, {style: st.join(";")} )
 
 
   # ## A static function to draw a point
