@@ -21,7 +21,7 @@ var debounceTimer = 0;
 // Creates a "pentomino" in the middle
 var halfC = Math.floor( grid.columns/2 );
 var halfR = Math.floor( grid.rows/2 );
-grid.occupy( grid.columns/2 );
+
 grid.occupy( halfC, halfR, 1,1 );
 grid.occupy( halfC-1, halfR, 1,1 );
 grid.occupy( halfC, halfR+1, 1,1 );

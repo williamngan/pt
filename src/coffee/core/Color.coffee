@@ -129,6 +129,12 @@ class Color extends Vector
     return (Math.floor( v ) for v in cs)
 
 
+  # ## override clone
+  clone: () ->
+    c = new Color(@x, @y, @z, @alpha)
+    c.mode = @mode
+    return c
+
   # color conversion code ported to coffeescript
   # http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
 

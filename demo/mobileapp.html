@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mobile test</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!--<script type="text/javascript" src="../dist/pt.js"></script>-->
+    <script type="text/javascript" src="../dist/core/pt-core.js"></script>
+   	<script type="text/javascript" src="../dist/extend/pt-extend.js"></script>
+
+    <style>
+        body {
+            overflow: hidden;
+        }
+        #board {
+            position: absolute;
+            top: 100px; left: 100px; right: 100px; bottom: 100px;
+            background: #eee;
+        }
+
+        #pt {
+            width: 100%; height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="board">
+    <div id="pt"></div>
+</div>
+
+<script type="text/javascript">
+    document.addEventListener('touchmove', function(e) {e.preventDefault(); }, false);
+</script>
+
+<script type="text/javascript" src="./circle.intersectCircle.mobile.js"></script>
+
+</body>
+</html>

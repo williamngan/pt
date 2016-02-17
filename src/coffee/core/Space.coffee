@@ -165,6 +165,100 @@ class Space
 
 
 
+  # ## Bind event listener in canvas element, for events such as mouse events
+  # @param `evt` Event object
+  # @param `callback` a callback function for this event
+  bindCanvas: ( evt, callback ) ->
+    if @space.addEventListener then @space.addEventListener( evt, callback )
+
+
+  # ## A convenient method to bind (or unbind) all mouse events in canvas element. All item added to `items` property that implements an `onMouseAction` callback will receive mouse event callbacks. The types of mouse actions are: "up", "down", "move", "drag", "drop", "over", and "out".
+  # @param `bind` a boolean value to bind mouse events if set to `true`. If `false`, all mouse events will be unbound. Default is true.
+  # @demo canvasspace.bindMouse
+  bindMouse: ( _bind=true ) ->
+    console.log("bind mouse");
+    if @space.addEventListener and @space.removeEventListener
+      if _bind
+        @space.addEventListener( "mousedown", @_mouseDown.bind(@) )
+        @space.addEventListener( "mouseup", @_mouseUp.bind(@) )
+        @space.addEventListener( "mouseover", @_mouseOver.bind(@) )
+        @space.addEventListener( "mouseout", @_mouseOut.bind(@) )
+        @space.addEventListener( "mousemove", @_mouseMove.bind(@) )
+      else
+        @space.removeEventListener( "mousedown", @_mouseDown.bind(@) )
+        @space.removeEventListener( "mouseup", @_mouseUp.bind(@) )
+        @space.removeEventListener( "mouseover", @_mouseOver.bind(@) )
+        @space.removeEventListener( "mouseout", @_mouseOut.bind(@) )
+        @space.removeEventListener( "mousemove", @_mouseMove.bind(@) )
+
+
+  bindTouch: ( _bind=true ) ->
+    if @space.addEventListener and @space.removeEventListener
+      if _bind
+        @space.addEventListener( "touchstart", @_mouseDown.bind(@) )
+        @space.addEventListener( "touchend", @_mouseUp.bind(@) )
+        @space.addEventListener( "touchmove", @_mouseMove.bind(@) )
+        @space.addEventListener( "touchcancel", @_mouseOut.bind(@) )
+      else
+        @space.removeEventListener( "touchstart", @_mouseDown.bind(@) )
+        @space.removeEventListener( "touchend", @_mouseUp.bind(@) )
+        @space.removeEventListener( "touchmove", @_mouseMove.bind(@) )
+        @space.removeEventListener( "touchcancel", @_mouseOut.bind(@) )
+
+
+  # go through all item in `items` and call its onMouseAction callback function
+  _mouseAction: (type, evt) ->
+    if (evt.touches || evt.changedTouches)
+      for k, v of @items
+        if v.onTouchAction?
+          _c = evt.changedTouches and evt.changedTouches.length > 0
+          px = if (_c) then evt.changedTouches.item(0).pageX else 0;
+          py = if (_c) then evt.changedTouches.item(0).pageY else 0;
+          el = evt.target.getBoundingClientRect()
+          v.onTouchAction( type, px-el.left, py-el.top, px, py, evt )
+    else
+      for k, v of @items
+        if v.onMouseAction?
+          px = evt.offsetX || evt.layerX;
+          py = evt.offsetY || evt.layerY;
+          console.log("#", px, py);
+          v.onMouseAction( type, px, py, evt )
+
+
+  # mouse down action
+  _mouseDown: (evt) ->
+    @_mouseAction( "down", evt )
+    @_mdown = true
+
+
+  # mouse up action
+  _mouseUp: (evt) ->
+    @_mouseAction( "up", evt )
+    if @_mdrag then @_mouseAction( "drop", evt )
+    @_mdown = false
+    @_mdrag = false
+
+
+  # mouse move action
+  _mouseMove: (evt) ->
+    @_mouseAction( "move", evt )
+    if @_mdown
+      @_mdrag = true
+      @_mouseAction( "drag", evt )
+
+
+  # mouse over action
+  _mouseOver: (evt) ->
+    @_mouseAction( "over", evt )
+
+
+  # mouse out action
+  _mouseOut: (evt) ->
+    @_mouseAction( "out", evt )
+    if @_mdrag then @_mouseAction( "drop", evt )
+    @_mdrag = false
+
+
 # namespace
 this.Space = Space
 
