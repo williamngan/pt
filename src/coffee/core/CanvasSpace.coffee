@@ -12,6 +12,8 @@ class CanvasSpace extends Space
     # ## A property to store canvas DOM element
     @space = document.querySelector("#"+@id)
 
+    @boundRect = {top: 0, left: 0, width: 0, height: 0}
+
     # ## A boolean property to track if the canvas element is added to dom or not
     @appended = true
 
@@ -42,6 +44,7 @@ class CanvasSpace extends Space
       # frame
       frame = document.querySelector(parent_id)
       frame_rect = frame.getBoundingClientRect()
+      @boundRect = frame_rect
 
       if frame
         # resize to fit frame
@@ -84,6 +87,8 @@ class CanvasSpace extends Space
 
     @size.set(w, h)
     @center = new Vector( w/2, h/2 )
+    @boundRect.width = Math.floor(w)
+    @boundRect.height = Math.floor(h)
     @space.setAttribute( 'width', Math.floor(w) )
     @space.setAttribute( 'height', Math.floor(h) )
 

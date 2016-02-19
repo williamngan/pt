@@ -96,6 +96,13 @@ class PointSet extends Vector
     return @
 
 
+  # ## Remove all the points
+  # @return this PointSet
+  clear: () ->
+    @points = []
+    return @
+
+
   # ## Get an array of Lines that represents this PointSet's sides
   # @param `close_path` a boolean value to include the side from last point to first point when set to `true`
   # @demo pointset.sides

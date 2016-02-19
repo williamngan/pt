@@ -599,7 +599,12 @@ Space = (function() {
       if (_bind) {
         this.space.addEventListener("touchstart", this._mouseDown.bind(this));
         this.space.addEventListener("touchend", this._mouseUp.bind(this));
-        this.space.addEventListener("touchmove", this._mouseMove.bind(this));
+        this.space.addEventListener("touchmove", ((function(_this) {
+          return function(evt) {
+            evt.preventDefault();
+            return _this._mouseMove(evt);
+          };
+        })(this)));
         return this.space.addEventListener("touchcancel", this._mouseOut.bind(this));
       } else {
         this.space.removeEventListener("touchstart", this._mouseDown.bind(this));
@@ -611,7 +616,7 @@ Space = (function() {
   };
 
   Space.prototype._mouseAction = function(type, evt) {
-    var _c, el, k, px, py, ref, ref1, results, results1, v;
+    var _c, k, px, py, ref, ref1, results, results1, v;
     if (evt.touches || evt.changedTouches) {
       ref = this.items;
       results = [];
@@ -621,8 +626,7 @@ Space = (function() {
           _c = evt.changedTouches && evt.changedTouches.length > 0;
           px = _c ? evt.changedTouches.item(0).pageX : 0;
           py = _c ? evt.changedTouches.item(0).pageY : 0;
-          el = evt.target.getBoundingClientRect();
-          results.push(v.onTouchAction(type, px - el.left, py - el.top, px, py, evt));
+          results.push(v.onTouchAction(type, px, py, evt));
         } else {
           results.push(void 0);
         }
@@ -701,6 +705,12 @@ CanvasSpace = (function(superClass) {
     }
     CanvasSpace.__super__.constructor.apply(this, arguments);
     this.space = document.querySelector("#" + this.id);
+    this.boundRect = {
+      top: 0,
+      left: 0,
+      width: 0,
+      height: 0
+    };
     this.appended = true;
     if (!this.space) {
       this.space = document.createElement("canvas");
@@ -721,6 +731,7 @@ CanvasSpace = (function(superClass) {
     if (!this.appended) {
       frame = document.querySelector(parent_id);
       frame_rect = frame.getBoundingClientRect();
+      this.boundRect = frame_rect;
       if (frame) {
         this.resize(frame_rect.width, frame_rect.height);
         window.addEventListener('resize', (function(evt) {
@@ -748,6 +759,8 @@ CanvasSpace = (function(superClass) {
     var k, p, ref;
     this.size.set(w, h);
     this.center = new Vector(w / 2, h / 2);
+    this.boundRect.width = Math.floor(w);
+    this.boundRect.height = Math.floor(h);
     this.space.setAttribute('width', Math.floor(w));
     this.space.setAttribute('height', Math.floor(h));
     ref = this.items;
@@ -3799,6 +3812,11 @@ PointSet = (function(superClass) {
     } else {
       this.points = this.points.slice(index + 1);
     }
+    return this;
+  };
+
+  PointSet.prototype.clear = function() {
+    this.points = [];
     return this;
   };
 

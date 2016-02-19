@@ -197,7 +197,11 @@ class Space
       if _bind
         @space.addEventListener( "touchstart", @_mouseDown.bind(@) )
         @space.addEventListener( "touchend", @_mouseUp.bind(@) )
-        @space.addEventListener( "touchmove", @_mouseMove.bind(@) )
+        @space.addEventListener( "touchmove",
+          ((evt) =>
+            evt.preventDefault();
+            @_mouseMove(evt)
+          ) )
         @space.addEventListener( "touchcancel", @_mouseOut.bind(@) )
       else
         @space.removeEventListener( "touchstart", @_mouseDown.bind(@) )
@@ -214,8 +218,7 @@ class Space
           _c = evt.changedTouches and evt.changedTouches.length > 0
           px = if (_c) then evt.changedTouches.item(0).pageX else 0;
           py = if (_c) then evt.changedTouches.item(0).pageY else 0;
-          el = evt.target.getBoundingClientRect()
-          v.onTouchAction( type, px-el.left, py-el.top, px, py, evt )
+          v.onTouchAction( type, px, py, evt )
     else
       for k, v of @items
         if v.onMouseAction?
