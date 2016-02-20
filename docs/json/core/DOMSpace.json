@@ -1,18 +1,18 @@
 {
-    "cls": "CanvasSpace", 
-    "description": "<h3>CanvasSpace is a space that represents a html canvas. It creates a new canvas or get an existing one in DOM by its <code>id</code> attribute. It also provide methods specific to html canvas, such as tracking resize and mouse position.</h3>", 
+    "cls": "DOMSpace", 
+    "description": "<h3>DOMSpace is a space that represents a html dom. It is similar to <code>CanvasSpace</code> but usually used as a space for SVG or HTML.</h3>", 
     "extend": "Space", 
-    "file": "CanvasSpace.coffee", 
+    "file": "DOMSpace.coffee", 
     "funcs": [
         {
-            "description": "<h2>Create a CanvasSpace which represents a HTML Canvas Space</h2>", 
-            "name": "CanvasSpace", 
+            "description": "<h2>Create a DOMSpace which represents a HTML DOM</h2>", 
+            "name": "DOMSpace", 
             "param": [
-                "<p><code>id</code> an id property which refers to the \"id\" attribute of the canvas element in DOM. If no canvas element with this id is found, a new canvas element will be created.</p>", 
-                "<p><code>bgcolor</code> a background color string to specify the canvas background. Default is <code>false</code> which shows a transparent background.</p>", 
-                "<p><code>context</code> a string of canvas context type, such as \"2d\" or \"webgl\". Default is \"2d\"</p>"
+                "<p><code>id</code> an id property which refers to the \"id\" attribute of the element in DOM.</p>", 
+                "<p><code>bgcolor</code> a background color string to specify the background. Default is <code>false</code> which shows a transparent background.</p>", 
+                "<p><code>context</code> a string of dom context type, such as \"html\" or \"svg\". Default is \"html\"</p>"
             ], 
-            "pname": "id='pt_space', bgcolor=false, context='2d'"
+            "pname": "id='pt_space', bgcolor=false, context='html'"
         }, 
         {
             "description": "<h2>Place a new canvas element into a container dom element. When canvas is ready, a \"ready\" event will be fired. Track this event with <code>space.canvas.addEventListener(\"ready\")</code></h2>", 
@@ -42,16 +42,7 @@
             "return": "<p>this CanvasSpace</p>"
         }, 
         {
-            "description": "<h2>Clear the canvas with its background color. Overrides Space's <code>clear</code> function.</h2>", 
-            "name": "clear", 
-            "param": [
-                "<p><code>bg</code> Optionally specify a custom background color. If evaluated to false, it will use its <code>bgcolor</code> property as background color.</p>"
-            ], 
-            "pname": "bg", 
-            "return": "<p>this CanvasSpace</p>"
-        }, 
-        {
-            "description": "<h2>Overrides Space's <code>animate</code> function for canvas</h2>", 
+            "description": "<h2>Overrides Space's <code>animate</code> function</h2>", 
             "name": "animate", 
             "param": [
                 "<p><code>time</code> current time</p>"
@@ -62,12 +53,12 @@
     ], 
     "props": [
         {
-            "description": "<h2>A property to store canvas DOM element</h2>", 
+            "description": "<h2>A property to store the DOM element</h2>", 
             "name": "space", 
             "param": []
         }, 
         {
-            "description": "<h2>A boolean property to track if the canvas element is added to dom or not</h2>", 
+            "description": "<h2>A boolean property to track if the element is added to container or not</h2>", 
             "name": "appended", 
             "param": []
         }

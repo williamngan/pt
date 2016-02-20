@@ -1,4 +1,5 @@
 window.Pt = {};(function() {var CanvasSpace, Circle, Color, Const, Curve, DOMSpace, Delaunay, Easing, Form, Grid, GridCascade, Line, Matrix, Noise, Pair, Particle, ParticleEmitter, ParticleField, ParticleSystem, Point, PointSet, QuadTree, Rectangle, SVGForm, SVGSpace, SamplePoints, Space, StripeBound, Timer, Triangle, UI, Util, Vector,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty,
   slice = [].slice;
@@ -563,6 +564,145 @@ Space = (function() {
     return this.stop(duration);
   };
 
+  Space.prototype.bindCanvas = function(evt, callback) {
+    if (this.space.addEventListener) {
+      return this.space.addEventListener(evt, callback);
+    }
+  };
+
+  Space.prototype.bindMouse = function(_bind) {
+    if (_bind == null) {
+      _bind = true;
+    }
+    if (this.space.addEventListener && this.space.removeEventListener) {
+      if (_bind) {
+        this.space.addEventListener("mousedown", this._mouseDown.bind(this));
+        this.space.addEventListener("mouseup", this._mouseUp.bind(this));
+        this.space.addEventListener("mouseover", this._mouseOver.bind(this));
+        this.space.addEventListener("mouseout", this._mouseOut.bind(this));
+        return this.space.addEventListener("mousemove", this._mouseMove.bind(this));
+      } else {
+        this.space.removeEventListener("mousedown", this._mouseDown.bind(this));
+        this.space.removeEventListener("mouseup", this._mouseUp.bind(this));
+        this.space.removeEventListener("mouseover", this._mouseOver.bind(this));
+        this.space.removeEventListener("mouseout", this._mouseOut.bind(this));
+        return this.space.removeEventListener("mousemove", this._mouseMove.bind(this));
+      }
+    }
+  };
+
+  Space.prototype.bindTouch = function(_bind) {
+    if (_bind == null) {
+      _bind = true;
+    }
+    if (this.space.addEventListener && this.space.removeEventListener) {
+      if (_bind) {
+        this.space.addEventListener("touchstart", this._mouseDown.bind(this));
+        this.space.addEventListener("touchend", this._mouseUp.bind(this));
+        this.space.addEventListener("touchmove", ((function(_this) {
+          return function(evt) {
+            evt.preventDefault();
+            return _this._mouseMove(evt);
+          };
+        })(this)));
+        return this.space.addEventListener("touchcancel", this._mouseOut.bind(this));
+      } else {
+        this.space.removeEventListener("touchstart", this._mouseDown.bind(this));
+        this.space.removeEventListener("touchend", this._mouseUp.bind(this));
+        this.space.removeEventListener("touchmove", this._mouseMove.bind(this));
+        return this.space.removeEventListener("touchcancel", this._mouseOut.bind(this));
+      }
+    }
+  };
+
+  Space.prototype.touchesToPoints = function(evt, which) {
+    var t;
+    if (which == null) {
+      which = "touches";
+    }
+    if (!evt || !evt[which]) {
+      return [];
+    }
+    return (function() {
+      var aa, len1, ref, results;
+      ref = evt[which];
+      results = [];
+      for (aa = 0, len1 = ref.length; aa < len1; aa++) {
+        t = ref[aa];
+        results.push(new Vector(t.pageX - this.boundRect.left, t.pageY - this.boundRect.top));
+      }
+      return results;
+    }).call(this);
+  };
+
+  Space.prototype._mouseAction = function(type, evt) {
+    var _c, k, px, py, ref, ref1, results, results1, v;
+    if (evt.touches || evt.changedTouches) {
+      ref = this.items;
+      results = [];
+      for (k in ref) {
+        v = ref[k];
+        if (v.onTouchAction != null) {
+          _c = evt.changedTouches && evt.changedTouches.length > 0;
+          px = _c ? evt.changedTouches.item(0).pageX : 0;
+          py = _c ? evt.changedTouches.item(0).pageY : 0;
+          results.push(v.onTouchAction(type, px, py, evt));
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    } else {
+      ref1 = this.items;
+      results1 = [];
+      for (k in ref1) {
+        v = ref1[k];
+        if (v.onMouseAction != null) {
+          px = evt.offsetX || evt.layerX;
+          py = evt.offsetY || evt.layerY;
+          results1.push(v.onMouseAction(type, px, py, evt));
+        } else {
+          results1.push(void 0);
+        }
+      }
+      return results1;
+    }
+  };
+
+  Space.prototype._mouseDown = function(evt) {
+    this._mouseAction("down", evt);
+    return this._mdown = true;
+  };
+
+  Space.prototype._mouseUp = function(evt) {
+    this._mouseAction("up", evt);
+    if (this._mdrag) {
+      this._mouseAction("drop", evt);
+    }
+    this._mdown = false;
+    return this._mdrag = false;
+  };
+
+  Space.prototype._mouseMove = function(evt) {
+    this._mouseAction("move", evt);
+    if (this._mdown) {
+      this._mdrag = true;
+      return this._mouseAction("drag", evt);
+    }
+  };
+
+  Space.prototype._mouseOver = function(evt) {
+    return this._mouseAction("over", evt);
+  };
+
+  Space.prototype._mouseOut = function(evt) {
+    this._mouseAction("out", evt);
+    if (this._mdrag) {
+      this._mouseAction("drop", evt);
+    }
+    return this._mdrag = false;
+  };
+
   return Space;
 
 })();
@@ -582,8 +722,16 @@ CanvasSpace = (function(superClass) {
     if (context == null) {
       context = '2d';
     }
+    this._resizeHandler = bind(this._resizeHandler, this);
     CanvasSpace.__super__.constructor.apply(this, arguments);
     this.space = document.querySelector("#" + this.id);
+    this.bound = null;
+    this.boundRect = {
+      top: 0,
+      left: 0,
+      width: 0,
+      height: 0
+    };
     this.appended = true;
     if (!this.space) {
       this.space = document.createElement("canvas");
@@ -597,27 +745,23 @@ CanvasSpace = (function(superClass) {
   }
 
   CanvasSpace.prototype.display = function(parent_id, readyCallback) {
-    var frame, frame_rect;
     if (parent_id == null) {
       parent_id = "#pt";
     }
     if (!this.appended) {
-      frame = document.querySelector(parent_id);
-      frame_rect = frame.getBoundingClientRect();
-      if (frame) {
-        this.resize(frame_rect.width, frame_rect.height);
-        window.addEventListener('resize', (function(evt) {
-          frame_rect = frame.getBoundingClientRect();
-          return this.resize(frame_rect.width, frame_rect.height, evt);
-        }).bind(this));
-        if (this.space.parentNode !== frame) {
-          frame.appendChild(this.space);
+      this.bound = document.querySelector(parent_id);
+      this.boundRect = this.bound.getBoundingClientRect();
+      if (this.bound) {
+        this.resize(this.boundRect.width, this.boundRect.height);
+        this.autoResize(true);
+        if (this.space.parentNode !== this.bound) {
+          this.bound.appendChild(this.space);
         }
         this.appended = true;
         setTimeout((function() {
           this.space.dispatchEvent(new Event('ready'));
           if (readyCallback) {
-            return readyCallback(frame_rect.width, frame_rect.height, this.space);
+            return readyCallback(this.boundRect.width, this.boundRect.height, this.space);
           }
         }).bind(this));
       } else {
@@ -627,10 +771,29 @@ CanvasSpace = (function(superClass) {
     return this;
   };
 
+  CanvasSpace.prototype._resizeHandler = function(evt) {
+    this.boundRect = this.bound.getBoundingClientRect();
+    return this.resize(this.boundRect.width, this.boundRect.height, evt);
+  };
+
+  CanvasSpace.prototype.autoResize = function(auto) {
+    if (auto == null) {
+      auto = true;
+    }
+    if (auto) {
+      window.addEventListener('resize', this._resizeHandler);
+    } else {
+      window.removeEventListener('resize', this._resizeHandler);
+    }
+    return this;
+  };
+
   CanvasSpace.prototype.resize = function(w, h, evt) {
     var k, p, ref;
     this.size.set(w, h);
     this.center = new Vector(w / 2, h / 2);
+    this.boundRect.width = Math.floor(w);
+    this.boundRect.height = Math.floor(h);
     this.space.setAttribute('width', Math.floor(w));
     this.space.setAttribute('height', Math.floor(h));
     ref = this.items;
@@ -678,80 +841,6 @@ CanvasSpace = (function(superClass) {
     return this;
   };
 
-  CanvasSpace.prototype.bindCanvas = function(evt, callback) {
-    return this.space.addEventListener(evt, callback);
-  };
-
-  CanvasSpace.prototype.bindMouse = function(_bind) {
-    if (_bind == null) {
-      _bind = true;
-    }
-    if (_bind) {
-      this.space.addEventListener("mousedown", this._mouseDown.bind(this));
-      this.space.addEventListener("mouseup", this._mouseUp.bind(this));
-      this.space.addEventListener("mouseover", this._mouseOver.bind(this));
-      this.space.addEventListener("mouseout", this._mouseOut.bind(this));
-      return this.space.addEventListener("mousemove", this._mouseMove.bind(this));
-    } else {
-      this.space.removeEventListener("mousedown", this._mouseDown.bind(this));
-      this.space.removeEventListener("mouseup", this._mouseUp.bind(this));
-      this.space.removeEventListener("mouseover", this._mouseOver.bind(this));
-      this.space.removeEventListener("mouseout", this._mouseOut.bind(this));
-      return this.space.removeEventListener("mousemove", this._mouseMove.bind(this));
-    }
-  };
-
-  CanvasSpace.prototype._mouseAction = function(type, evt) {
-    var k, px, py, ref, results, v;
-    ref = this.items;
-    results = [];
-    for (k in ref) {
-      v = ref[k];
-      px = evt.offsetX || evt.layerX;
-      py = evt.offsetY || evt.layerY;
-      if (v.onMouseAction != null) {
-        results.push(v.onMouseAction(type, px, py, evt));
-      } else {
-        results.push(void 0);
-      }
-    }
-    return results;
-  };
-
-  CanvasSpace.prototype._mouseDown = function(evt) {
-    this._mouseAction("down", evt);
-    return this._mdown = true;
-  };
-
-  CanvasSpace.prototype._mouseUp = function(evt) {
-    this._mouseAction("up", evt);
-    if (this._mdrag) {
-      this._mouseAction("drop", evt);
-    }
-    this._mdown = false;
-    return this._mdrag = false;
-  };
-
-  CanvasSpace.prototype._mouseMove = function(evt) {
-    this._mouseAction("move", evt);
-    if (this._mdown) {
-      this._mdrag = true;
-      return this._mouseAction("drag", evt);
-    }
-  };
-
-  CanvasSpace.prototype._mouseOver = function(evt) {
-    return this._mouseAction("over", evt);
-  };
-
-  CanvasSpace.prototype._mouseOut = function(evt) {
-    this._mouseAction("out", evt);
-    if (this._mdrag) {
-      this._mouseAction("drop", evt);
-    }
-    return this._mdrag = false;
-  };
-
   return CanvasSpace;
 
 })(Space);
@@ -771,11 +860,19 @@ DOMSpace = (function(superClass) {
     if (context == null) {
       context = 'html';
     }
+    this._resizeHandler = bind(this._resizeHandler, this);
     DOMSpace.__super__.constructor.apply(this, arguments);
     this.space = document.querySelector("#" + this.id);
     this.css = {
       width: "100%",
       height: "100%"
+    };
+    this.bound = null;
+    this.boundRect = {
+      top: 0,
+      left: 0,
+      width: 0,
+      height: 0
     };
     this.appended = true;
     if (!this.space) {
@@ -813,32 +910,45 @@ DOMSpace = (function(superClass) {
   };
 
   DOMSpace.prototype.display = function(parent_id, readyCallback) {
-    var frame, frame_rect;
     if (parent_id == null) {
       parent_id = "#pt";
     }
     if (!this.appended) {
-      frame = document.querySelector(parent_id);
-      frame_rect = frame.getBoundingClientRect();
-      if (frame) {
-        this.resize(frame_rect.width, frame_rect.height);
-        window.addEventListener('resize', (function(evt) {
-          frame_rect = frame.getBoundingClientRect();
-          return this.resize(frame_rect.width, frame_rect.height, evt);
-        }).bind(this));
-        if (this.space.parentNode !== frame) {
-          frame.appendChild(this.space);
+      this.bound = document.querySelector(parent_id);
+      this.boundRect = this.bound.getBoundingClientRect();
+      if (this.bound) {
+        this.resize(this.boundRect.width, this.boundRect.height);
+        this.autoResize(true);
+        if (this.space.parentNode !== this.bound) {
+          this.bound.appendChild(this.space);
         }
         this.appended = true;
         setTimeout((function() {
           this.space.dispatchEvent(new Event('ready'));
           if (readyCallback) {
-            return readyCallback(frame_rect.width, frame_rect.height, this.space);
+            return readyCallback(this.boundRect.width, this.boundRect.height, this.space);
           }
         }).bind(this));
       } else {
         throw 'Cannot add canvas to element ' + parent_id;
       }
+    }
+    return this;
+  };
+
+  DOMSpace.prototype._resizeHandler = function(evt) {
+    this.boundRect = this.bound.getBoundingClientRect();
+    return this.resize(this.boundRect.width, this.boundRect.height, evt);
+  };
+
+  DOMSpace.prototype.autoResize = function(auto) {
+    if (auto == null) {
+      auto = true;
+    }
+    if (auto) {
+      window.addEventListener('resize', this._resizeHandler);
+    } else {
+      window.removeEventListener('resize', this._resizeHandler);
     }
     return this;
   };
@@ -872,80 +982,6 @@ DOMSpace = (function(superClass) {
       cancelAnimationFrame(this._animID);
     }
     return this;
-  };
-
-  DOMSpace.prototype.bindCanvas = function(evt, callback) {
-    return this.space.addEventListener(evt, callback);
-  };
-
-  DOMSpace.prototype.bindMouse = function(_bind) {
-    if (_bind == null) {
-      _bind = true;
-    }
-    if (_bind) {
-      this.space.addEventListener("mousedown", this._mouseDown.bind(this));
-      this.space.addEventListener("mouseup", this._mouseUp.bind(this));
-      this.space.addEventListener("mouseover", this._mouseOver.bind(this));
-      this.space.addEventListener("mouseout", this._mouseOut.bind(this));
-      return this.space.addEventListener("mousemove", this._mouseMove.bind(this));
-    } else {
-      this.space.removeEventListener("mousedown", this._mouseDown.bind(this));
-      this.space.removeEventListener("mouseup", this._mouseUp.bind(this));
-      this.space.removeEventListener("mouseover", this._mouseOver.bind(this));
-      this.space.removeEventListener("mouseout", this._mouseOut.bind(this));
-      return this.space.removeEventListener("mousemove", this._mouseMove.bind(this));
-    }
-  };
-
-  DOMSpace.prototype._mouseAction = function(type, evt) {
-    var k, px, py, ref, results, v;
-    ref = this.items;
-    results = [];
-    for (k in ref) {
-      v = ref[k];
-      px = evt.offsetX || evt.layerX;
-      py = evt.offsetY || evt.layerY;
-      if (v.onMouseAction != null) {
-        results.push(v.onMouseAction(type, px, py, evt));
-      } else {
-        results.push(void 0);
-      }
-    }
-    return results;
-  };
-
-  DOMSpace.prototype._mouseDown = function(evt) {
-    this._mouseAction("down", evt);
-    return this._mdown = true;
-  };
-
-  DOMSpace.prototype._mouseUp = function(evt) {
-    this._mouseAction("up", evt);
-    if (this._mdrag) {
-      this._mouseAction("drop", evt);
-    }
-    this._mdown = false;
-    return this._mdrag = false;
-  };
-
-  DOMSpace.prototype._mouseMove = function(evt) {
-    this._mouseAction("move", evt);
-    if (this._mdown) {
-      this._mdrag = true;
-      return this._mouseAction("drag", evt);
-    }
-  };
-
-  DOMSpace.prototype._mouseOver = function(evt) {
-    return this._mouseAction("over", evt);
-  };
-
-  DOMSpace.prototype._mouseOut = function(evt) {
-    this._mouseAction("out", evt);
-    if (this._mdrag) {
-      this._mouseAction("drop", evt);
-    }
-    return this._mdrag = false;
   };
 
   DOMSpace.attr = function(elem, data) {
@@ -2064,6 +2100,13 @@ Color = (function(superClass) {
       }
       return results;
     })();
+  };
+
+  Color.prototype.clone = function() {
+    var c;
+    c = new Color(this.x, this.y, this.z, this.alpha);
+    c.mode = this.mode;
+    return c;
   };
 
   Color.RGBtoHSL = function(r, g, b, normalizedInput, normalizedOutput) {
@@ -3823,6 +3866,11 @@ PointSet = (function(superClass) {
     } else {
       this.points = this.points.slice(index + 1);
     }
+    return this;
+  };
+
+  PointSet.prototype.clear = function() {
+    this.points = [];
     return this;
   };
 

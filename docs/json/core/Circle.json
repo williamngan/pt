@@ -82,6 +82,13 @@
             ], 
             "pname": "item, get_pts=false", 
             "return": "<p>s an Array of intersection points or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+        }, 
+        {
+            "description": "<h2>Describe this point as a text string</h2>", 
+            "name": "toString", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>\"Vector x, y, z\" text</p>"
         }
     ], 
     "props": [

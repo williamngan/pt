@@ -50,6 +50,12 @@
             ], 
             "pname": "toRGB=false", 
             "return": "<p>an array of colro values</p>"
+        }, 
+        {
+            "description": "<h2>override clone</h2>", 
+            "name": "clone", 
+            "param": [], 
+            "pname": ""
         }
     ], 
     "props": [

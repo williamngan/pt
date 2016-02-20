@@ -26,6 +26,15 @@
         "return": "<p>this CanvasSpace</p>"
       }, 
       {
+        "description": "<h2>Set whether the canvas element should resize when its container is resized. Default will auto size</h2>", 
+        "name": "autoResize", 
+        "param": [
+          "<p><code>auto</code> a boolean value indicating if auto size is set. Default is <code>true</code>.</p>"
+        ], 
+        "pname": "auto=true", 
+        "return": "<p>this CanvasSpace</p>"
+      }, 
+      {
         "demo": "canvasspace.resize", 
         "description": "<h2>This overrides Space's <code>resize</code> function. It's a callback function for window's resize event. Keep track of this with <code>onSpaceResize(w,h,evt)</code> callback in your added objects.</h2>", 
         "name": "resize", 
@@ -50,30 +59,12 @@
         ], 
         "pname": "time", 
         "return": "<p>this CanvasSpace</p>"
-      }, 
-      {
-        "description": "<h2>Bind event listener in canvas element, for events such as mouse events</h2>", 
-        "name": "bindCanvas", 
-        "param": [
-          "<p><code>evt</code> Event object</p>", 
-          "<p><code>callback</code> a callback function for this event</p>"
-        ], 
-        "pname": "evt, callback"
-      }, 
-      {
-        "demo": "canvasspace.bindMouse", 
-        "description": "<h2>A convenient method to bind (or unbind) all mouse events in canvas element. All item added to <code>items</code> property that implements an <code>onMouseAction</code> callback will receive mouse event callbacks. The types of mouse actions are: \"up\", \"down\", \"move\", \"drag\", \"drop\", \"over\", and \"out\".</h2>", 
-        "name": "bindMouse", 
-        "param": [
-          "<p><code>bind</code> a boolean value to bind mouse events if set to <code>true</code>. If <code>false</code>, all mouse events will be unbound. Default is true.</p>"
-        ], 
-        "pname": "_bind=true"
       }
     ], 
     "props": [
       {
         "description": "<h2>A property to store canvas DOM element</h2>", 
-        "name": "canvas", 
+        "name": "space", 
         "param": []
       }, 
       {
@@ -168,6 +159,13 @@
         ], 
         "pname": "item, get_pts=false", 
         "return": "<p>s an Array of intersection points or a boolean value. (Based on <code>get_pts</code> parameter)</p>"
+      }, 
+      {
+        "description": "<h2>Describe this point as a text string</h2>", 
+        "name": "toString", 
+        "param": [], 
+        "pname": "", 
+        "return": "<p>\"Vector x, y, z\" text</p>"
       }
     ], 
     "props": [
@@ -231,6 +229,12 @@
         ], 
         "pname": "toRGB=false", 
         "return": "<p>an array of colro values</p>"
+      }, 
+      {
+        "description": "<h2>override clone</h2>", 
+        "name": "clone", 
+        "param": [], 
+        "pname": ""
       }
     ], 
     "props": [
@@ -695,6 +699,73 @@
     ], 
     "statics": []
   }, 
+  "DOMSpace": {
+    "cls": "DOMSpace", 
+    "description": "<h3>DOMSpace is a space that represents a html dom. It is similar to <code>CanvasSpace</code> but usually used as a space for SVG or HTML.</h3>", 
+    "extend": "Space", 
+    "file": "DOMSpace.coffee", 
+    "funcs": [
+      {
+        "description": "<h2>Create a DOMSpace which represents a HTML DOM</h2>", 
+        "name": "DOMSpace", 
+        "param": [
+          "<p><code>id</code> an id property which refers to the \"id\" attribute of the element in DOM.</p>", 
+          "<p><code>bgcolor</code> a background color string to specify the background. Default is <code>false</code> which shows a transparent background.</p>", 
+          "<p><code>context</code> a string of dom context type, such as \"html\" or \"svg\". Default is \"html\"</p>"
+        ], 
+        "pname": "id='pt_space', bgcolor=false, context='html'"
+      }, 
+      {
+        "description": "<h2>Place a new canvas element into a container dom element. When canvas is ready, a \"ready\" event will be fired. Track this event with <code>space.canvas.addEventListener(\"ready\")</code></h2>", 
+        "name": "display", 
+        "param": [
+          "<p><code>parent_id</code> the DOM element into which the canvas element should be appended</p>", 
+          "<p><code>readyCallback</code> a callback function with parameters <code>width</code>, <code>height</code>, and <code>canvas_element</code>, which will get called when canvas is appended and ready.</p>"
+        ], 
+        "pname": "parent_id=\"#pt\", readyCallback", 
+        "return": "<p>this CanvasSpace</p>"
+      }, 
+      {
+        "description": "<h2>Set whether the canvas element should resize when its container is resized. Default will auto size</h2>", 
+        "name": "autoResize", 
+        "param": [
+          "<p><code>auto</code> a boolean value indicating if auto size is set. Default is <code>true</code>.</p>"
+        ], 
+        "pname": "auto=true", 
+        "return": "<p>this CanvasSpace</p>"
+      }, 
+      {
+        "demo": "canvasspace.resize", 
+        "description": "<h2>This overrides Space's <code>resize</code> function. It's a callback function for window's resize event. Keep track of this with <code>onSpaceResize(w,h,evt)</code> callback in your added objects.</h2>", 
+        "name": "resize", 
+        "param": [], 
+        "pname": "w, h, evt", 
+        "return": "<p>this CanvasSpace</p>"
+      }, 
+      {
+        "description": "<h2>Overrides Space's <code>animate</code> function</h2>", 
+        "name": "animate", 
+        "param": [
+          "<p><code>time</code> current time</p>"
+        ], 
+        "pname": "time", 
+        "return": "<p>this CanvasSpace</p>"
+      }
+    ], 
+    "props": [
+      {
+        "description": "<h2>A property to store the DOM element</h2>", 
+        "name": "space", 
+        "param": []
+      }, 
+      {
+        "description": "<h2>A boolean property to track if the element is added to container or not</h2>", 
+        "name": "appended", 
+        "param": []
+      }
+    ], 
+    "statics": []
+  }, 
   "Form": {
     "cls": "Form", 
     "description": "<h3>Form makes visible the invisible. It transforms a point into an inkblot, or an arrow, or a musical note. By separating forms from its concepts, we may create a myriad of expressions on a single concept, or apply a unified style to various concepts. The Form class provides basic method to draw points, lines, and other primitives on CanvasSpace. Extend this class to visualize in different ways in different contexts.</h3>", 
@@ -821,6 +892,17 @@
         "return": "<p>this Form</p>"
       }, 
       {
+        "description": "<h2>Draw an arc</h2>", 
+        "name": "arc", 
+        "param": [
+          "<p><code>p</code> a Circle object</p>", 
+          "<p><code>start</code> start angle</p>", 
+          "<p><code>end</code> end angle</p>"
+        ], 
+        "pname": "p, start, end", 
+        "return": "<p>this Form</p>"
+      }, 
+      {
         "description": "<h2>Draw a triangle</h2>", 
         "name": "triangle", 
         "param": [
@@ -940,11 +1022,23 @@
         "pname": "ctx, c, fill=true, stroke=false"
       }, 
       {
+        "description": "<h2>A static function to draw an arc</h2>", 
+        "name": "arc", 
+        "param": [
+          "<p><code>ctx</code> canvas rendering context</p>", 
+          "<p><code>pt</code> a Point</p>", 
+          "<p><code>radius</code> radius of the arc's circle</p>", 
+          "<p><code>start</code> start angle</p>", 
+          "<p><code>stroke</code> end angle</p>"
+        ], 
+        "pname": "ctx, pt, radius, start, end"
+      }, 
+      {
         "description": "<h2>A static function to draw a triangle</h2>", 
         "name": "triangle", 
         "param": [
           "<p><code>ctx</code> canvas rendering context</p>", 
-          "<p><code>c</code> a Triangle object</p>", 
+          "<p><code>tri</code> a Triangle object</p>", 
           "<p><code>fill</code> a boolean value to specify if the points should be filled. Default to true.</p>", 
           "<p><code>stroke</code> a boolean value to specify if the points should be stroked. Default to false.</p>"
         ], 
@@ -2100,6 +2194,13 @@
         "return": "<p>this PointSet</p>"
       }, 
       {
+        "description": "<h2>Remove all the points</h2>", 
+        "name": "clear", 
+        "param": [], 
+        "pname": "", 
+        "return": "<p>this PointSet</p>"
+      }, 
+      {
         "demo": "pointset.sides", 
         "description": "<h2>Get an array of Lines that represents this PointSet's sides</h2>", 
         "name": "sides", 
@@ -2388,10 +2489,8 @@
       {
         "description": "<h2>set custom render function (on resize and other events)</h2>", 
         "name": "render", 
-        "param": [
-          "<p><code>func</code> a custom callback <code>function( ctx )</code> for rendering. The function will pass a context parameter.</p>"
-        ], 
-        "pname": "func", 
+        "param": [], 
+        "pname": "context", 
         "return": "<p>this space</p>"
       }, 
       {
@@ -2473,17 +2572,48 @@
           "<p><code>duration</code> a value in millisecond to specify a time period to play before stopping, or <code>-1</code> to play forever</p>"
         ], 
         "pname": "duration=5000"
+      }, 
+      {
+        "description": "<h2>Bind event listener in canvas element, for events such as mouse events</h2>", 
+        "name": "bindCanvas", 
+        "param": [
+          "<p><code>evt</code> Event object</p>", 
+          "<p><code>callback</code> a callback function for this event</p>"
+        ], 
+        "pname": "evt, callback"
+      }, 
+      {
+        "demo": "canvasspace.bindMouse", 
+        "description": "<h2>A convenient method to bind (or unbind) all mouse events in canvas element. All item added to <code>items</code> property that implements an <code>onMouseAction</code> callback will receive mouse event callbacks. The types of mouse actions are: \"up\", \"down\", \"move\", \"drag\", \"drop\", \"over\", and \"out\".</h2>", 
+        "name": "bindMouse", 
+        "param": [
+          "<p><code>bind</code> a boolean value to bind mouse events if set to <code>true</code>. If <code>false</code>, all mouse events will be unbound. Default is true.</p>"
+        ], 
+        "pname": "_bind=true"
+      }, 
+      {
+        "description": "<h2>A convenient method to bind (or unbind) all mobile touch events in canvas element. All item added to <code>items</code> property that implements an <code>onTouchAction</code> callback will receive touch event callbacks. The types of touch actions are the same as the mouse actions: \"up\", \"down\", \"move\", and \"out\".</h2>", 
+        "name": "bindTouch", 
+        "param": [
+          "<p><code>bind</code> a boolean value to bind touch events if set to <code>true</code>. If <code>false</code>, all touch events will be unbound. Default is true.</p>"
+        ], 
+        "pname": "_bind=true"
+      }, 
+      {
+        "description": "<h2>A convenient method to convert the touch points in a touch event to an array of <code>Vectors</code>.</h2>", 
+        "name": "touchesToPoints", 
+        "param": [
+          "<p>evt a touch event which contains touches, changedTouches, and targetTouches list.</p>", 
+          "<p>which a string to select a touches list: \"touches\", \"changedTouches\", or \"targetTouches\". Default is \"touches\"</p>"
+        ], 
+        "pname": "evt, which=\"touches\"", 
+        "return": "<p>an array of Vectors, whose origin position (0,0) is offset to the top-left of this space.</p>"
       }
     ], 
     "props": [
       {
         "description": "<h2>A property to identify this space by name</h2>", 
         "name": "id", 
-        "param": []
-      }, 
-      {
-        "description": "<h2>A render callback function, which needs to be implemented</h2>", 
-        "name": "renderer", 
         "param": []
       }, 
       {

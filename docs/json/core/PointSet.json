@@ -89,6 +89,13 @@
             "return": "<p>this PointSet</p>"
         }, 
         {
+            "description": "<h2>Remove all the points</h2>", 
+            "name": "clear", 
+            "param": [], 
+            "pname": "", 
+            "return": "<p>this PointSet</p>"
+        }, 
+        {
             "demo": "pointset.sides", 
             "description": "<h2>Get an array of Lines that represents this PointSet's sides</h2>", 
             "name": "sides", 

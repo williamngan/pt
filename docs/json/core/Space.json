@@ -25,10 +25,8 @@
         {
             "description": "<h2>set custom render function (on resize and other events)</h2>", 
             "name": "render", 
-            "param": [
-                "<p><code>func</code> a custom callback <code>function( ctx )</code> for rendering. The function will pass a context parameter.</p>"
-            ], 
-            "pname": "func", 
+            "param": [], 
+            "pname": "context", 
             "return": "<p>this space</p>"
         }, 
         {
@@ -110,17 +108,48 @@
                 "<p><code>duration</code> a value in millisecond to specify a time period to play before stopping, or <code>-1</code> to play forever</p>"
             ], 
             "pname": "duration=5000"
+        }, 
+        {
+            "description": "<h2>Bind event listener in canvas element, for events such as mouse events</h2>", 
+            "name": "bindCanvas", 
+            "param": [
+                "<p><code>evt</code> Event object</p>", 
+                "<p><code>callback</code> a callback function for this event</p>"
+            ], 
+            "pname": "evt, callback"
+        }, 
+        {
+            "demo": "canvasspace.bindMouse", 
+            "description": "<h2>A convenient method to bind (or unbind) all mouse events in canvas element. All item added to <code>items</code> property that implements an <code>onMouseAction</code> callback will receive mouse event callbacks. The types of mouse actions are: \"up\", \"down\", \"move\", \"drag\", \"drop\", \"over\", and \"out\".</h2>", 
+            "name": "bindMouse", 
+            "param": [
+                "<p><code>bind</code> a boolean value to bind mouse events if set to <code>true</code>. If <code>false</code>, all mouse events will be unbound. Default is true.</p>"
+            ], 
+            "pname": "_bind=true"
+        }, 
+        {
+            "description": "<h2>A convenient method to bind (or unbind) all mobile touch events in canvas element. All item added to <code>items</code> property that implements an <code>onTouchAction</code> callback will receive touch event callbacks. The types of touch actions are the same as the mouse actions: \"up\", \"down\", \"move\", and \"out\".</h2>", 
+            "name": "bindTouch", 
+            "param": [
+                "<p><code>bind</code> a boolean value to bind touch events if set to <code>true</code>. If <code>false</code>, all touch events will be unbound. Default is true.</p>"
+            ], 
+            "pname": "_bind=true"
+        }, 
+        {
+            "description": "<h2>A convenient method to convert the touch points in a touch event to an array of <code>Vectors</code>.</h2>", 
+            "name": "touchesToPoints", 
+            "param": [
+                "<p>evt a touch event which contains touches, changedTouches, and targetTouches list.</p>", 
+                "<p>which a string to select a touches list: \"touches\", \"changedTouches\", or \"targetTouches\". Default is \"touches\"</p>"
+            ], 
+            "pname": "evt, which=\"touches\"", 
+            "return": "<p>an array of Vectors, whose origin position (0,0) is offset to the top-left of this space.</p>"
         }
     ], 
     "props": [
         {
             "description": "<h2>A property to identify this space by name</h2>", 
             "name": "id", 
-            "param": []
-        }, 
-        {
-            "description": "<h2>A render callback function, which needs to be implemented</h2>", 
-            "name": "renderer", 
             "param": []
         }, 
         {

@@ -86,6 +86,11 @@ PointSet = (function(superClass) {
     return this;
   };
 
+  PointSet.prototype.clear = function() {
+    this.points = [];
+    return this;
+  };
+
   PointSet.prototype.sides = function(close_path) {
     var j, lastP, len, p, ref, sides;
     if (close_path == null) {

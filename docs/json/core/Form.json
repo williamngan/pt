@@ -124,6 +124,17 @@
             "return": "<p>this Form</p>"
         }, 
         {
+            "description": "<h2>Draw an arc</h2>", 
+            "name": "arc", 
+            "param": [
+                "<p><code>p</code> a Circle object</p>", 
+                "<p><code>start</code> start angle</p>", 
+                "<p><code>end</code> end angle</p>"
+            ], 
+            "pname": "p, start, end", 
+            "return": "<p>this Form</p>"
+        }, 
+        {
             "description": "<h2>Draw a triangle</h2>", 
             "name": "triangle", 
             "param": [
@@ -243,11 +254,23 @@
             "pname": "ctx, c, fill=true, stroke=false"
         }, 
         {
+            "description": "<h2>A static function to draw an arc</h2>", 
+            "name": "arc", 
+            "param": [
+                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>pt</code> a Point</p>", 
+                "<p><code>radius</code> radius of the arc's circle</p>", 
+                "<p><code>start</code> start angle</p>", 
+                "<p><code>stroke</code> end angle</p>"
+            ], 
+            "pname": "ctx, pt, radius, start, end"
+        }, 
+        {
             "description": "<h2>A static function to draw a triangle</h2>", 
             "name": "triangle", 
             "param": [
                 "<p><code>ctx</code> canvas rendering context</p>", 
-                "<p><code>c</code> a Triangle object</p>", 
+                "<p><code>tri</code> a Triangle object</p>", 
                 "<p><code>fill</code> a boolean value to specify if the points should be filled. Default to true.</p>", 
                 "<p><code>stroke</code> a boolean value to specify if the points should be stroked. Default to false.</p>"
             ], 

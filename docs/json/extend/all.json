@@ -1,4 +1,31 @@
 {
+  "Delaunay": {
+    "cls": "Delaunay", 
+    "description": "<h3>Generate a set of triangles from a set of points, so that none of the points will be inside the circumcenter of any triangle.</h3>", 
+    "extend": "PointSet", 
+    "file": "Delaunay.coffee", 
+    "funcs": [
+      {
+        "description": "<h2>Create a new Delaunay which extends <code>PointSet</code>. The generated results are stored in <code>this.mesh</code>.</h2>", 
+        "eg": "<p><code>new Delaunay()</code> <code>new Delaunay(1,2,3)</code> <code>new Delaunay([2,4])</code> <code>new Delaunay({x:3, y:6, z:9}).to(1,2,3)</code> <code>new Delaunay(1,2,3).to([p1, p2, p3, p4, p5])</code></p>", 
+        "name": "Delaunay", 
+        "param": [
+          "<p><code>args</code> Similar to Point constructor, use comma-separated values, an array, or an object as parameters to specify the anchor point. Use <code>to()</code> to add points to the set.</p>"
+        ], 
+        "pname": "", 
+        "return": "<p>a new Delaunay object</p>"
+      }, 
+      {
+        "description": "<h2>Calculate delaunay triangulation and store the results in <code>this.mesh</code> array</h2>", 
+        "name": "generate", 
+        "param": [], 
+        "pname": "", 
+        "return": "<p>an array of {i, j, k, triangle, circle} which records the indices of the vertices, and the calculated triangles and circumcircles</p>"
+      }
+    ], 
+    "props": [], 
+    "statics": []
+  }, 
   "Easing": {
     "cls": "Easing", 
     "description": "<h3>Simple easing functions based on Robert Penner's functions.</h3>", 
@@ -440,7 +467,7 @@
         "pname": "ctx"
       }, 
       {
-        "description": "<h2>A static function to help adding style object to an element</h2>", 
+        "description": "<h2>A static function to help adding style object to an element. This put all styles into <code>style</code> attribute instead of individual attributes, so that the styles can be parsed by Adobe Illustrator.</h2>", 
         "eg": "<p><code>SVGForm.style(elem, {fill: \"#f90\", stroke: false})</code></p>", 
         "name": "style", 
         "param": [

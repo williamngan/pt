@@ -162,6 +162,13 @@ Color = (function(superClass) {
     })();
   };
 
+  Color.prototype.clone = function() {
+    var c;
+    c = new Color(this.x, this.y, this.z, this.alpha);
+    c.mode = this.mode;
+    return c;
+  };
+
   Color.RGBtoHSL = function(r, g, b, normalizedInput, normalizedOutput) {
     var d, h, l, max, min, s;
     if (!normalizedInput) {

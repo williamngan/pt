@@ -191,6 +191,8 @@ class Space
         @space.removeEventListener( "mousemove", @_mouseMove.bind(@) )
 
 
+  # ## A convenient method to bind (or unbind) all mobile touch events in canvas element. All item added to `items` property that implements an `onTouchAction` callback will receive touch event callbacks. The types of touch actions are the same as the mouse actions: "up", "down", "move", and "out".
+  # @param `bind` a boolean value to bind touch events if set to `true`. If `false`, all touch events will be unbound. Default is true.
   bindTouch: ( _bind=true ) ->
     if @space.addEventListener and @space.removeEventListener
       if _bind
@@ -209,6 +211,10 @@ class Space
         @space.removeEventListener( "touchcancel", @_mouseOut.bind(@) )
 
 
+  # ## A convenient method to convert the touch points in a touch event to an array of `Vectors`.
+  # @param evt a touch event which contains touches, changedTouches, and targetTouches list.
+  # @param which a string to select a touches list: "touches", "changedTouches", or "targetTouches". Default is "touches"
+  # @return an array of Vectors, whose origin position (0,0) is offset to the top-left of this space.
   touchesToPoints: ( evt, which="touches" ) ->
     if (!evt or !evt[which]) then return []
     return ( new Vector(t.pageX - this.boundRect.left, t.pageY - this.boundRect.top) for t in evt[which] )

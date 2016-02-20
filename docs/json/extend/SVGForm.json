@@ -214,7 +214,7 @@
             "pname": "ctx"
         }, 
         {
-            "description": "<h2>A static function to help adding style object to an element</h2>", 
+            "description": "<h2>A static function to help adding style object to an element. This put all styles into <code>style</code> attribute instead of individual attributes, so that the styles can be parsed by Adobe Illustrator.</h2>", 
             "eg": "<p><code>SVGForm.style(elem, {fill: \"#f90\", stroke: false})</code></p>", 
             "name": "style", 
             "param": [
