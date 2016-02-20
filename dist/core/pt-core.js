@@ -573,7 +573,6 @@ Space = (function() {
     if (_bind == null) {
       _bind = true;
     }
-    console.log("bind mouse");
     if (this.space.addEventListener && this.space.removeEventListener) {
       if (_bind) {
         this.space.addEventListener("mousedown", this._mouseDown.bind(this));
@@ -615,6 +614,26 @@ Space = (function() {
     }
   };
 
+  Space.prototype.touchesToPoints = function(evt, which) {
+    var t;
+    if (which == null) {
+      which = "touches";
+    }
+    if (!evt || !evt[which]) {
+      return [];
+    }
+    return (function() {
+      var j, len1, ref, results;
+      ref = evt[which];
+      results = [];
+      for (j = 0, len1 = ref.length; j < len1; j++) {
+        t = ref[j];
+        results.push(new Vector(t.pageX - this.boundRect.left, t.pageY - this.boundRect.top));
+      }
+      return results;
+    }).call(this);
+  };
+
   Space.prototype._mouseAction = function(type, evt) {
     var _c, k, px, py, ref, ref1, results, results1, v;
     if (evt.touches || evt.changedTouches) {
@@ -640,7 +659,6 @@ Space = (function() {
         if (v.onMouseAction != null) {
           px = evt.offsetX || evt.layerX;
           py = evt.offsetY || evt.layerY;
-          console.log("#", px, py);
           results1.push(v.onMouseAction(type, px, py, evt));
         } else {
           results1.push(void 0);

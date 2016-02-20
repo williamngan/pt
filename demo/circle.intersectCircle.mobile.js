@@ -12,10 +12,9 @@ var form = new Form( space );
 
 
 //// 2. Create Elements
-var touchPoints = new PointSet();
-var touchMaxRadius = Math.min(space.size.x, space.size.y)/4;
+var touchPoints = [];
 
-var mouse = new Circle( space.size.$divide(2) ).setRadius( touchMaxRadius );
+var mouse = new Circle( space.size.$divide(2) ).setRadius( Math.min(space.size.x, space.size.y)/4 );
 var mouse2 = new Circle( space.size.$divide(2) ).setRadius(  Math.min(space.size.x, space.size.y)/8 );
 var circle = new Circle( space.size.$divide(2) ).setRadius( Math.min(space.size.x, space.size.y)/5 );
 
@@ -48,14 +47,14 @@ space.add({
     form.fill( "#fff" );
     for (i=0; i<ps2.length; i++) { form.point( ps2[i], 3, true); }
 
-
+    // Draw finger touch points and lines
     form.stroke("#f00").fill( false );
-    form.points( touchPoints.points, 30, true );
-    form.polygon( touchPoints.points, false );
+    form.points( touchPoints, 30, true );
+    form.polygon( touchPoints, false );
     form.stroke(false);
 
     if (_evt) {
-      form.fill( "#000" ).text( new Vector( 20, 20 ), touchMaxRadius + "//" +touchPoints.count()+" -- "+_evt.touches.length + " ,"+_evt.changedTouches.length+".. "+_evt.targetTouches.length );
+      form.fill( "#000" ).text( new Vector( 10, 20 ), "touch points:" +touchPoints.length + ", changed points:"+_evt.changedTouches.length );
     }
 
   },
@@ -67,30 +66,22 @@ space.add({
   },
   onTouchAction: function(type, x, y, evt) {
 
-    _evt = evt;
-    touchMaxRadius = 20;
+    _evt = evt; // for printing event values
 
-    touchPoints.clear();
-    for (var i=0; i<evt.targetTouches.length; i++) {
-      var t = evt.touches[i];
-      touchPoints.to( t.pageX - space.boundRect.left, t.pageY - space.boundRect.top );
-    }
+    // Convert event.touches' points to Pt vector objects
+    touchPoints = space.touchesToPoints( evt );
 
-    if (touchPoints.count() > 1) {
-      touchMaxRadius = touchPoints.getAt(1).distance( touchPoints.getAt(0));
-    } else {
-      touchMaxRadius = Math.min(space.size.x, space.size.y)/4;
-    }
+    if (type=="move" && touchPoints.length > 0) {
+      mouse.set( touchPoints[0] );
+      mouse2.set( touchPoints[0] );
 
-    if (type=="move" && touchPoints.count() > 0) {
-      mouse.set( touchPoints.getAt(0) );
-      mouse.setRadius( touchMaxRadius );
-      mouse2.set( touchPoints.getAt(0) );
-      if ( touchPoints.count() > 2 ) circle.set( touchPoints.getAt(2) );
-      if ( touchPoints.count() > 3 ) {
-        var dist = touchPoints.getAt(3).distance( touchPoints.getAt(2))
-        circle.setRadius( dist );
-      }
+      // 2 fingers pinch/expand to resize the mouse circles
+      var r = (touchPoints.length > 1) ? touchPoints[1].distance( touchPoints[0] ) : Math.min(space.size.x, space.size.y)/4;
+      mouse.setRadius( r );
+
+      // 3rd and 4th fingers: move and pinch/expand the static circle
+      if ( touchPoints.length > 2 ) circle.set( touchPoints[2] );
+      if ( touchPoints.length > 3 ) circle.setRadius( touchPoints[3].distance( touchPoints[2]) );
     }
   }
 
@@ -98,6 +89,6 @@ space.add({
 
 
 // 4. Start playing
-//space.bindMouse();
+space.bindMouse();
 space.bindTouch();
 space.play();

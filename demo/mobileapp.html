@@ -14,10 +14,27 @@
     <style>
         body {
             overflow: hidden;
+            font: 12px/1.5 sans-serif;
         }
+
+        #mobile_info {
+            padding: 20px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            margin: 0;
+            color: #2e43eb;
+        }
+
+        p {
+            margin: 0;
+            color: #345;
+        }
+
         #board {
             position: absolute;
-            top: 5vh; left: 5vw; right: 5vw; bottom: 5vh;
+            top: 120px; left: 0; right: 0; bottom: 0;
             background: #eee;
             user-select: none;
             -webkit-user-select: none;
@@ -31,6 +48,11 @@
     </style>
 </head>
 <body>
+
+<div id="mobile_info">
+    <h3>Pt: mobile touch test</h3>
+    <p>Try 1 finger to move, 2 fingers to pinch or expand, and 3 or 4 fingers for more.</p>
+</div>
 
 <div id="board">
     <div id="pt"></div>

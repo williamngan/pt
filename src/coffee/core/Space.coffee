@@ -176,7 +176,6 @@ class Space
   # @param `bind` a boolean value to bind mouse events if set to `true`. If `false`, all mouse events will be unbound. Default is true.
   # @demo canvasspace.bindMouse
   bindMouse: ( _bind=true ) ->
-    console.log("bind mouse");
     if @space.addEventListener and @space.removeEventListener
       if _bind
         @space.addEventListener( "mousedown", @_mouseDown.bind(@) )
@@ -210,6 +209,11 @@ class Space
         @space.removeEventListener( "touchcancel", @_mouseOut.bind(@) )
 
 
+  touchesToPoints: ( evt, which="touches" ) ->
+    if (!evt or !evt[which]) then return []
+    return ( new Vector(t.pageX - this.boundRect.left, t.pageY - this.boundRect.top) for t in evt[which] )
+
+
   # go through all item in `items` and call its onMouseAction callback function
   _mouseAction: (type, evt) ->
     if (evt.touches || evt.changedTouches)
@@ -224,7 +228,6 @@ class Space
         if v.onMouseAction?
           px = evt.offsetX || evt.layerX;
           py = evt.offsetY || evt.layerY;
-          console.log("#", px, py);
           v.onMouseAction( type, px, py, evt )
 
 
