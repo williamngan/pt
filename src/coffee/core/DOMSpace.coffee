@@ -1,12 +1,20 @@
+# ### DOMSpace is a space that represents a html dom. It is similar to `CanvasSpace` but usually used as a space for SVG or HTML.
 
 class DOMSpace extends Space
 
+  # ## Create a DOMSpace which represents a HTML DOM
+  # @param `id` an id property which refers to the "id" attribute of the element in DOM.
+  # @param `bgcolor` a background color string to specify the background. Default is `false` which shows a transparent background.
+  # @param `context` a string of dom context type, such as "html" or "svg". Default is "html"
   constructor: ( id='pt_space', bgcolor=false, context='html' ) ->
     super
 
     # ## A property to store the DOM element
     @space = document.querySelector("#"+@id)
     @css = {width: "100%", height: "100%"};
+
+    @bound = null
+    @boundRect = {top: 0, left: 0, width: 0, height: 0}
 
     # ## A boolean property to track if the element is added to container or not
     @appended = true
@@ -49,24 +57,17 @@ class DOMSpace extends Space
   display: ( parent_id="#pt", readyCallback ) ->
     if not @appended
 
-      # frame
-      frame = document.querySelector(parent_id)
-      frame_rect = frame.getBoundingClientRect()
+      @bound = document.querySelector(parent_id)
+      @boundRect = @bound.getBoundingClientRect()
 
-      if frame
-        # resize to fit frame
-        @resize( frame_rect.width, frame_rect.height )
-
-        # listen for window resize event and callback
-        window.addEventListener( 'resize',
-          ((evt) ->
-            frame_rect = frame.getBoundingClientRect()
-            @resize( frame_rect.width, frame_rect.height, evt ) ).bind(this)
-        )
+      if @bound
+        # resize to fit bound
+        @resize( @boundRect.width, @boundRect.height )
+        @autoResize(true)
 
         # add to parent dom if not existing
-        if @space.parentNode != frame
-          frame.appendChild( @space )
+        if @space.parentNode != @bound
+          @bound.appendChild( @space )
 
         @appended = true
 
@@ -75,7 +76,7 @@ class DOMSpace extends Space
             () ->
               @space.dispatchEvent( new Event('ready') )
               if readyCallback
-                readyCallback( frame_rect.width, frame_rect.height,  @space )
+                readyCallback( @boundRect.width, @boundRect.height,  @space )
 
           ).bind(@)
         )
@@ -84,6 +85,26 @@ class DOMSpace extends Space
         throw 'Cannot add canvas to element '+parent_id
 
     return this
+
+
+
+  # window resize handler
+  _resizeHandler: (evt) =>
+    @boundRect = @bound.getBoundingClientRect()
+    @resize( @boundRect.width, @boundRect.height, evt )
+
+
+  # ## Set whether the canvas element should resize when its container is resized. Default will auto size
+  # @param `auto` a boolean value indicating if auto size is set. Default is `true`.
+  # @return this CanvasSpace
+  autoResize: (auto=true) ->
+    # listen/unlisten for window resize event and callback
+    if (auto)
+      window.addEventListener( 'resize', @_resizeHandler )
+    else
+      window.removeEventListener( 'resize', @_resizeHandler )
+
+    return @
 
 
   # ## This overrides Space's `resize` function. It's a callback function for window's resize event. Keep track of this with `onSpaceResize(w,h,evt)` callback in your added objects.

@@ -12,6 +12,7 @@ class CanvasSpace extends Space
     # ## A property to store canvas DOM element
     @space = document.querySelector("#"+@id)
 
+    @bound = null
     @boundRect = {top: 0, left: 0, width: 0, height: 0}
 
     # ## A boolean property to track if the canvas element is added to dom or not
@@ -41,25 +42,18 @@ class CanvasSpace extends Space
   display: ( parent_id="#pt", readyCallback ) ->
     if not @appended
 
-      # frame
-      frame = document.querySelector(parent_id)
-      frame_rect = frame.getBoundingClientRect()
-      @boundRect = frame_rect
+      # @bound
+      @bound = document.querySelector(parent_id)
+      @boundRect = @bound.getBoundingClientRect()
 
-      if frame
-        # resize to fit frame
-        @resize( frame_rect.width, frame_rect.height )
-
-        # listen for window resize event and callback
-        window.addEventListener( 'resize',
-          ((evt) ->
-            frame_rect = frame.getBoundingClientRect()
-            @resize( frame_rect.width, frame_rect.height, evt ) ).bind(this)
-        )
+      if @bound
+        # resize to fit bound
+        @resize( @boundRect.width, @boundRect.height )
+        @autoResize(true)
 
         # add to parent dom if not existing
-        if @space.parentNode != frame
-          frame.appendChild( @space )
+        if @space.parentNode != @bound
+          @bound.appendChild( @space )
 
         @appended = true
 
@@ -68,7 +62,7 @@ class CanvasSpace extends Space
             () ->
               @space.dispatchEvent( new Event('ready') )
               if readyCallback
-                readyCallback( frame_rect.width, frame_rect.height,  @space )
+                readyCallback( @boundRect.width, @boundRect.height,  @space )
 
           ).bind(@)
         )
@@ -79,6 +73,24 @@ class CanvasSpace extends Space
 
     return this
 
+
+  # window resize handler
+  _resizeHandler: (evt) =>
+    @boundRect = @bound.getBoundingClientRect()
+    @resize( @boundRect.width, @boundRect.height, evt )
+
+
+  # ## Set whether the canvas element should resize when its container is resized. Default will auto size
+  # @param `auto` a boolean value indicating if auto size is set. Default is `true`.
+  # @return this CanvasSpace
+  autoResize: (auto=true) ->
+    # listen/unlisten for window resize event and callback
+    if (auto)
+      window.addEventListener( 'resize', @_resizeHandler )
+    else
+      window.removeEventListener( 'resize', @_resizeHandler )
+
+    return @
 
   # ## This overrides Space's `resize` function. It's a callback function for window's resize event. Keep track of this with `onSpaceResize(w,h,evt)` callback in your added objects.
   # @demo canvasspace.resize
