@@ -6,6 +6,9 @@ class Form
   # @return a new Form object
   constructor: ( space ) ->
 
+    # ## a property to reference the space
+    @space = space
+
     # ## a property to reference the canvas rendering context
     @cc = space.ctx
 

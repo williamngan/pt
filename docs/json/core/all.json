@@ -945,6 +945,11 @@
     ], 
     "props": [
       {
+        "description": "<h2>a property to reference the space</h2>", 
+        "name": "space", 
+        "param": []
+      }, 
+      {
         "description": "<h2>a property to reference the canvas rendering context</h2>", 
         "name": "cc", 
         "param": []

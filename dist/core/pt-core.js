@@ -1014,6 +1014,7 @@ this.DOMSpace = DOMSpace;
 
 Form = (function() {
   function Form(space) {
+    this.space = space;
     this.cc = space.ctx;
     this.cc.fillStyle = '#999';
     this.cc.strokeStyle = '#666';
