@@ -7,9 +7,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <script type="text/javascript" src="../dist/pt.js"></script>
-    <!--<script type="text/javascript" src="../dist/core/pt-core.js"></script>-->
-   	<!--<script type="text/javascript" src="../dist/extend/pt-extend.js"></script>-->
+    <!--<script type="text/javascript" src="../dist/pt.js"></script>-->
+    <script type="text/javascript" src="../dist/core/pt-core.js"></script>
+   	<script type="text/javascript" src="../dist/extend/pt-extend.js"></script>
 
     <style>
         body {
@@ -50,8 +50,8 @@
 <body>
 
 <div id="mobile_info">
-    <h3>Pt: mobile touch test</h3>
-    <p>Try 1 finger to move, 2 fingers to pinch or expand, and 3 or 4 fingers for more.</p>
+    <h3>Pt: mobile touch test </h3>
+    <p>Try 1 finger to move, 2 fingers to pinch or expand, and 3 or 4 fingers for more. (pixel ratio: <span id="debug"></span>)</p>
 </div>
 
 <div id="board">
@@ -62,7 +62,13 @@
     document.addEventListener('touchmove', function(e) {e.preventDefault(); }, false);
 </script>
 
+
+
 <script type="text/javascript" src="./circle.intersectCircle.mobile.js"></script>
+
+<script type="text/javascript">
+    document.querySelector("#debug" ).textContent = space.pixelScale;
+</script>
 
 </body>
 </html>

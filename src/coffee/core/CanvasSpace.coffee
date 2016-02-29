@@ -14,6 +14,7 @@ class CanvasSpace extends Space
 
     @bound = null
     @boundRect = {top: 0, left: 0, width: 0, height: 0}
+    @pixelScale = 1
 
     # ## A boolean property to track if the canvas element is added to dom or not
     @appended = true
@@ -38,13 +39,21 @@ class CanvasSpace extends Space
   # ## Place a new canvas element into a container dom element. When canvas is ready, a "ready" event will be fired. Track this event with `space.canvas.addEventListener("ready")`
   # @param `parent_id` the DOM element into which the canvas element should be appended
   # @param `readyCallback` a callback function with parameters `width`, `height`, and `canvas_element`, which will get called when canvas is appended and ready.
+  # @param `devicePixelSupport` a boolean to set if device pixel scaling should be checked. This may make drawings on retina displays look sharper. Default is `true`.
   # @return this CanvasSpace
-  display: ( parent_id="#pt", readyCallback ) ->
+  display: ( parent_id="#pt", readyCallback, devicePixelSupport=true ) ->
     if not @appended
 
       # @bound
       @bound = document.querySelector(parent_id)
       @boundRect = @bound.getBoundingClientRect()
+
+      # check for retina pixel ratio
+      @pixelScale = 1;
+      if (devicePixelSupport)
+        r1 = window.devicePixelRatio or 1
+        r2 = @ctx.webkitBackingStorePixelRatio or @ctx.mozBackingStorePixelRatio or @ctx.msBackingStorePixelRatio or @ctx.oBackingStorePixelRatio or @ctx.backingStorePixelRatio || 1;
+        @pixelScale = r1/r2
 
       if @bound
         # resize to fit bound
@@ -97,12 +106,23 @@ class CanvasSpace extends Space
   # @return this CanvasSpace
   resize: (w, h, evt) ->
 
+    w = Math.floor(w)
+    h = Math.floor(h)
+
     @size.set(w, h)
     @center = new Vector( w/2, h/2 )
-    @boundRect.width = Math.floor(w)
-    @boundRect.height = Math.floor(h)
-    @space.setAttribute( 'width', Math.floor(w) )
-    @space.setAttribute( 'height', Math.floor(h) )
+    @boundRect.width = w
+    @boundRect.height = h
+
+    # if retina, resize the canvas size and rescale
+    @space.width = w * @pixelScale
+    @space.height = h * @pixelScale
+    @space.style.width = w + "px"
+    @space.style.height = h + "px"
+
+    if (@pixelScale != 1)
+      @ctx.scale( @pixelScale, @pixelScale )
+
 
     # player resize callback
     for k, p of @items
