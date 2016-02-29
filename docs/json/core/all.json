@@ -20,9 +20,10 @@
         "name": "display", 
         "param": [
           "<p><code>parent_id</code> the DOM element into which the canvas element should be appended</p>", 
-          "<p><code>readyCallback</code> a callback function with parameters <code>width</code>, <code>height</code>, and <code>canvas_element</code>, which will get called when canvas is appended and ready.</p>"
+          "<p><code>readyCallback</code> a callback function with parameters <code>width</code>, <code>height</code>, and <code>canvas_element</code>, which will get called when canvas is appended and ready.</p>", 
+          "<p><code>devicePixelSupport</code> a boolean to set if device pixel scaling should be checked. This may make drawings on retina displays look sharper. Default is <code>true</code>.</p>"
         ], 
-        "pname": "parent_id=\"#pt\", readyCallback", 
+        "pname": "parent_id=\"#pt\", readyCallback, devicePixelSupport=true", 
         "return": "<p>this CanvasSpace</p>"
       }, 
       {

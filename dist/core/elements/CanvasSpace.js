@@ -26,6 +26,7 @@ CanvasSpace = (function(superClass) {
       width: 0,
       height: 0
     };
+    this.pixelScale = 1;
     this.appended = true;
     if (!this.space) {
       this.space = document.createElement("canvas");
@@ -38,13 +39,23 @@ CanvasSpace = (function(superClass) {
     this.ctx = this.space.getContext(context);
   }
 
-  CanvasSpace.prototype.display = function(parent_id, readyCallback) {
+  CanvasSpace.prototype.display = function(parent_id, readyCallback, devicePixelSupport) {
+    var r1, r2;
     if (parent_id == null) {
       parent_id = "#pt";
+    }
+    if (devicePixelSupport == null) {
+      devicePixelSupport = true;
     }
     if (!this.appended) {
       this.bound = document.querySelector(parent_id);
       this.boundRect = this.bound.getBoundingClientRect();
+      this.pixelScale = 1;
+      if (devicePixelSupport) {
+        r1 = window.devicePixelRatio || 1;
+        r2 = this.ctx.webkitBackingStorePixelRatio || this.ctx.mozBackingStorePixelRatio || this.ctx.msBackingStorePixelRatio || this.ctx.oBackingStorePixelRatio || this.ctx.backingStorePixelRatio || 1;
+        this.pixelScale = r1 / r2;
+      }
       if (this.bound) {
         this.resize(this.boundRect.width, this.boundRect.height);
         this.autoResize(true);
@@ -84,12 +95,19 @@ CanvasSpace = (function(superClass) {
 
   CanvasSpace.prototype.resize = function(w, h, evt) {
     var k, p, ref;
+    w = Math.floor(w);
+    h = Math.floor(h);
     this.size.set(w, h);
     this.center = new Vector(w / 2, h / 2);
-    this.boundRect.width = Math.floor(w);
-    this.boundRect.height = Math.floor(h);
-    this.space.setAttribute('width', Math.floor(w));
-    this.space.setAttribute('height', Math.floor(h));
+    this.boundRect.width = w;
+    this.boundRect.height = h;
+    this.space.width = w * this.pixelScale;
+    this.space.height = h * this.pixelScale;
+    this.space.style.width = w + "px";
+    this.space.style.height = h + "px";
+    if (this.pixelScale !== 1) {
+      this.ctx.scale(this.pixelScale, this.pixelScale);
+    }
     ref = this.items;
     for (k in ref) {
       p = ref[k];
