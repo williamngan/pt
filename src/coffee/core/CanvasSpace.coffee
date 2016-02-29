@@ -39,7 +39,7 @@ class CanvasSpace extends Space
   # ## Place a new canvas element into a container dom element. When canvas is ready, a "ready" event will be fired. Track this event with `space.canvas.addEventListener("ready")`
   # @param `parent_id` the DOM element into which the canvas element should be appended
   # @param `readyCallback` a callback function with parameters `width`, `height`, and `canvas_element`, which will get called when canvas is appended and ready.
-  # @param `devicePixelSupport` a boolean to set if device pixel scaling should be checked. This may make drawings on retina displays look sharper. Default is `true`.
+  # @param `devicePixelSupport` a boolean to set if device pixel scaling should be checked. This may make drawings on retina displays look sharper but may reduce performance slightly. Default is `true`.
   # @return this CanvasSpace
   display: ( parent_id="#pt", readyCallback, devicePixelSupport=true ) ->
     if not @appended
