@@ -18,7 +18,7 @@
         }
 
         #mobile_info {
-            padding: 20px;
+            padding: 60px 20px 20px;
         }
 
         h3 {
@@ -34,7 +34,7 @@
 
         #board {
             position: absolute;
-            top: 120px; left: 0; right: 0; bottom: 0;
+            top: 180px; left: 0; right: 0; bottom: 0;
             background: #eee;
             user-select: none;
             -webkit-user-select: none;
@@ -45,17 +45,30 @@
         #pt {
             width: 100%; height: 100%;
         }
+
+        #desktop {
+            position: fixed;
+            z-index: 10;
+            top: 0; height: 40px; line-height: 40px; left: 0; right: 0;
+            padding: 0 30px;
+            background: #2e43eb; color: #fff;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
 
 <div id="mobile_info">
-    <h3>Pt: mobile touch test </h3>
-    <p>Try 1 finger to move, 2 fingers to pinch or expand, and 3 or 4 fingers for more. (pixel ratio: <span id="debug"></span>)</p>
+    <h3>Pt Mobile Demo <small style="font-size: 10px">(pixel ratio: <span id="debug"></span>)</small></h3>
+    <p>1 finger to move <br />2 fingers to pinch or expand <br />3 or 4 fingers for more </p>
 </div>
 
 <div id="board">
     <div id="pt"></div>
+</div>
+
+<div id="desktop">
+    50+ Demos are available on desktop
 </div>
 
 <script type="text/javascript">
