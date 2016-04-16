@@ -326,6 +326,10 @@
 
     if (src) document.querySelector("body").appendChild( src );
 
+    if (window.location.pathname.indexOf("index.html") < 0) {
+        window.location.href = window.location.origin+window.location.pathname+"index.html?name=color.LABtoRGB";
+    }
+
     var demos = document.querySelectorAll(".demo");
 
 	for (var i=0; i<demos.length; i++) {
