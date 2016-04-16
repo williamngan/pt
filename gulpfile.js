@@ -57,6 +57,7 @@ var extendElems = [
 var extendFiles = extendElems.map(function(n) { return path.src.extend+n+".coffee"; } );
 
 var licenseText = "\n/* Licensed under the Apache License, Version 2.0. (http://www.apache.org/licenses/LICENSE-2.0). Copyright 2015-2016 William Ngan. (https://github.com/williamngan/pt/) */\n\n";
+var licenseTextCoffee = "### Licensed under the Apache License, Version 2.0. (http://www.apache.org/licenses/LICENSE-2.0). Copyright 2015-2016 William Ngan. (https://github.com/williamngan/pt/) ###";
 
 function handleError( error ) {
   gutil.log( error.stack );
@@ -122,10 +123,10 @@ gulp.task('pt', function() {
 
   return gulp.src( coreFiles.concat( extendFiles ) )
     .pipe( concat('pt.coffee') )
+    .pipe( insert.prepend(licenseTextCoffee) )
     .pipe( sourcemaps.init() )
     .pipe( coffee({bare:true}).on('error', handleError) )
     .pipe( sourcemaps.write(".") )
-    .pipe( insert.prepend(licenseText) )
     .pipe( gulp.dest( path.dist.path ) )
 });
 
@@ -159,10 +160,10 @@ gulp.task('demos', function() {
 gulp.task('core', function() {
   return gulp.src( coreFiles )
     .pipe( concat('pt-core.coffee') )
+    .pipe( insert.prepend(licenseTextCoffee) )
     .pipe( sourcemaps.init() )
     .pipe( coffee({bare:true}).on('error', handleError))
     .pipe( sourcemaps.write(".") )
-    .pipe( insert.prepend(licenseText) )
     .pipe( gulp.dest( path.dist.core ) )
 });
 
@@ -198,10 +199,10 @@ gulp.task('core-files', function() {
 gulp.task('extend', function() {
   return gulp.src( extendFiles )
     .pipe( concat('pt-extend.coffee') )
+    .pipe( insert.prepend(licenseTextCoffee) )
     .pipe( sourcemaps.init() )
     .pipe( coffee({bare:true}).on('error', handleError))
     .pipe( sourcemaps.write(".") )
-    .pipe( insert.prepend(licenseText) )
     .pipe( gulp.dest( path.dist.extend ) )
 });
 

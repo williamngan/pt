@@ -50,7 +50,7 @@
 				<h1><%= cls %>.<%= f.name %> <span class="param">(<%= f.pname %>)</span></h1>
 				<%= f.description %>
                 <% if (f.demo) { %>
-                    <a href="/demo/demo.html?file=<%= f.demo %>.js" target="_blank">
+                    <a href="../demo/index.html?name=<%= f.demo %>" target="_blank">
                         <div class="demo" data-demo="<%= f.demo %>" style="background-image: url(images/pt/<%= f.demo %>.png)"></div>
                     </a>
                 <% } %>
