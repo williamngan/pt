@@ -1,3 +1,5 @@
+/* Licensed under the Apache License, Version 2.0. (http://www.apache.org/licenses/LICENSE-2.0). Copyright 2015-2016 William Ngan. */
+
 var Delaunay, Easing, GridCascade, Noise, ParticleEmitter, ParticleField, QuadTree, SVGForm, SVGSpace, SamplePoints, StripeBound, UI,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;

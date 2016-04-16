@@ -56,6 +56,8 @@ var extendElems = [
 ];
 var extendFiles = extendElems.map(function(n) { return path.src.extend+n+".coffee"; } );
 
+var licenseText = "\n/* Licensed under the Apache License, Version 2.0. (http://www.apache.org/licenses/LICENSE-2.0). Copyright 2015-2016 William Ngan. (https://github.com/williamngan/pt/) */\n\n";
+
 function handleError( error ) {
   gutil.log( error.stack );
   this.emit( 'end' );
@@ -123,6 +125,7 @@ gulp.task('pt', function() {
     .pipe( sourcemaps.init() )
     .pipe( coffee({bare:true}).on('error', handleError) )
     .pipe( sourcemaps.write(".") )
+    .pipe( insert.prepend(licenseText) )
     .pipe( gulp.dest( path.dist.path ) )
 });
 
@@ -130,6 +133,7 @@ gulp.task('pt-min', function() {
   return gulp.src( path.dist.path+'pt.js' )
     .pipe( rename('pt.min.js') )
     .pipe( uglify() )
+    .pipe( insert.prepend(licenseText) )
     .pipe( gulp.dest( path.dist.path ) )
 
 });
@@ -138,6 +142,7 @@ gulp.task('pt-ns-min', function() {
   return gulp.src( path.dist.path+'pt-ns.js' )
     .pipe( rename('pt-ns.min.js') )
     .pipe( uglify() )
+    .pipe( insert.prepend(licenseText) )
     .pipe( gulp.dest( path.dist.path ) )
 
 });
@@ -157,6 +162,7 @@ gulp.task('core', function() {
     .pipe( sourcemaps.init() )
     .pipe( coffee({bare:true}).on('error', handleError))
     .pipe( sourcemaps.write(".") )
+    .pipe( insert.prepend(licenseText) )
     .pipe( gulp.dest( path.dist.core ) )
 });
 
@@ -164,6 +170,7 @@ gulp.task('core-min', function() {
   return gulp.src( path.dist.core+'pt-core.js' )
     .pipe( rename('pt-core.min.js') )
     .pipe( uglify() )
+    .pipe( insert.prepend(licenseText) )
     .pipe( gulp.dest( path.dist.core ) )
 });
 
@@ -171,6 +178,7 @@ gulp.task('core-ns-min', function() {
   return gulp.src( path.dist.core+'pt-core-ns.js' )
     .pipe( rename('pt-core-ns.min.js') )
     .pipe( uglify() )
+    .pipe( insert.prepend(licenseText) )
     .pipe( gulp.dest( path.dist.core ) )
 });
 
@@ -193,6 +201,7 @@ gulp.task('extend', function() {
     .pipe( sourcemaps.init() )
     .pipe( coffee({bare:true}).on('error', handleError))
     .pipe( sourcemaps.write(".") )
+    .pipe( insert.prepend(licenseText) )
     .pipe( gulp.dest( path.dist.extend ) )
 });
 
@@ -201,6 +210,7 @@ gulp.task('extend-min', function() {
   return gulp.src( path.dist.extend+'pt-extend.js' )
     .pipe( rename('pt-extend.min.js') )
     .pipe( uglify() )
+    .pipe( insert.prepend(licenseText) )
     .pipe( gulp.dest( path.dist.extend ) )
 });
 
@@ -208,6 +218,7 @@ gulp.task('extend-ns-min', function() {
   return gulp.src( path.dist.extend+'pt-extend-ns.js' )
     .pipe( rename('pt-extend-ns.min.js') )
     .pipe( uglify() )
+    .pipe( insert.prepend(licenseText) )
     .pipe( gulp.dest( path.dist.extend ) )
 });
 
