@@ -15,7 +15,9 @@ The best places to get started are:
 
 ### Files
 Looking for the actual javascript library files? Here you go:
-- **[pt.js](https://github.com/williamngan/pt/blob/master/dist/pt.js)** is the full version, **without namespace**. If you just want to sketch out a simple idea with Pt, this is probably what you need.
+- If using **npm:**, you can do: `npm install ptjs` and then use it like `import {Vector, Rectangle} from 'ptjs'`   
+
+- If using standalone file, **[pt.js](https://github.com/williamngan/pt/blob/master/dist/pt.js)** is the full version, **without namespace**. If you just want to sketch out a simple idea with Pt, this is probably what you need.
 - [pt.min.js](https://github.com/williamngan/pt/blob/master/dist/pt.min.js) is the minified version of the above.
 
 - [pt-ns.js](https://github.com/williamngan/pt/blob/master/dist/pt-ns.js) is the full version **with namespace**. That means, instead of `new Point()`, you'll write `new Pt.Point()`. It's unaesthetic but perhaps necessary (sometimes).
