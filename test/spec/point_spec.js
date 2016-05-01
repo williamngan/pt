@@ -310,6 +310,18 @@ describe("Circle", function() {
 });
 
 describe("Color", function() {
+  it("can have 4 parameters", function() {
+    return expect(new Color(0, 233, 0, 0.12).alpha).toEqual( 0.12);
+  });
+  it("can have 5 parameters", function() {
+    return expect(new Color(0, 233, 0, 0.12, "hsl").mode).toEqual("hsl");
+  });
+  it("can be an array with alpha", function() {
+    return expect(new Color([0, 233, 0, 0.32]).alpha).toEqual(0.32);
+  });
+  it("can be an array or object with 2nd parameter as mode", function() {
+    return expect(new Color({x:10, y:20}, "lab").mode).toEqual("lab");
+  });
   it("can convert to hex string", function() {
     return expect(new Color(0, 233, 0).hex()).toEqual('#00e900');
   });

@@ -10,10 +10,13 @@ class Color extends Vector
     super
 
     # ## alpha value from 0 to 1, where 0 is fully transparent, and 1 is fully opaque
-    @alpha = if arguments.length >=4 then Math.min( 1, Math.max( arguments[3], 0) ) else 1
+    _args = if ( Array.isArray(arguments[0]) and arguments[0][3] != undefined ) then arguments[0] else arguments
+    @alpha = if _args.length >=4 then Math.min( 1, Math.max( _args[3], 0) ) else 1
 
     # ## color mode id such as "lab" or "rgb"
-    @mode = if arguments.length >=5 then arguments[4] else 'rgb'
+    @mode = 'rgb'
+    if arguments.length >=5 then @mode = arguments[4]
+    if typeof arguments[1] == "string" then @mode = arguments[1]
 
 
   # ## A property to adject XYZ for Standard Observer 2deg, Daylight/sRGB illuminant D65
@@ -134,6 +137,12 @@ class Color extends Vector
     c = new Color(@x, @y, @z, @alpha)
     c.mode = @mode
     return c
+
+
+  # ## Describe this color as a text string
+  # @return "Color(mode) x, y, z, alpha" text
+  toString: () -> "Color (#{@mode} mode): #{ @x }, #{ @y }, #{ @z } #{ @alpha }"
+
 
   # color conversion code ported to coffeescript
   # http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
