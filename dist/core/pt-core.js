@@ -773,6 +773,9 @@ CanvasSpace = (function(superClass) {
         this.appended = true;
         setTimeout((function() {
           this.space.dispatchEvent(new Event('ready'));
+          if (this.bgcolor) {
+            this.clear(this.bgcolor);
+          }
           if (readyCallback) {
             return readyCallback(this.boundRect.width, this.boundRect.height, this.space);
           }

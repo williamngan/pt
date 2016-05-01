@@ -70,6 +70,8 @@ class CanvasSpace extends Space
         setTimeout( (
             () ->
               @space.dispatchEvent( new Event('ready') )
+              if @bgcolor then @clear( @bgcolor )
+
               if readyCallback
                 readyCallback( @boundRect.width, @boundRect.height,  @space )
 
