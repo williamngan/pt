@@ -6,9 +6,17 @@ Color = (function(superClass) {
   extend(Color, superClass);
 
   function Color(args) {
+    var _args;
     Color.__super__.constructor.apply(this, arguments);
-    this.alpha = arguments.length >= 4 ? Math.min(1, Math.max(arguments[3], 0)) : 1;
-    this.mode = arguments.length >= 5 ? arguments[4] : 'rgb';
+    _args = Array.isArray(arguments[0]) && arguments[0][3] !== void 0 ? arguments[0] : arguments;
+    this.alpha = _args.length >= 4 ? Math.min(1, Math.max(_args[3], 0)) : 1;
+    this.mode = 'rgb';
+    if (arguments.length >= 5) {
+      this.mode = arguments[4];
+    }
+    if (typeof arguments[1] === "string") {
+      this.mode = arguments[1];
+    }
   }
 
   Color.XYZ = {
@@ -167,6 +175,10 @@ Color = (function(superClass) {
     c = new Color(this.x, this.y, this.z, this.alpha);
     c.mode = this.mode;
     return c;
+  };
+
+  Color.prototype.toString = function() {
+    return "Color (" + this.mode + " mode): " + this.x + ", " + this.y + ", " + this.z + " " + this.alpha;
   };
 
   Color.RGBtoHSL = function(r, g, b, normalizedInput, normalizedOutput) {
