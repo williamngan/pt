@@ -155,3 +155,19 @@ class Shaping extends Vector
   # @param `c` the value to shape, default is 1
   @bounceInOut: (t, c=1) ->
     return if (t<0.5) then Shaping.bounceIn( t*2, c ) / 2 else Shaping.bounceOut( t*2 - 1, c) / 2 + c/2
+    
+  # ---
+
+  # ## Sigmoid curve changes its shape based on the input value, but always returns a value between 0 to 1.
+  # @param `t` a value between 0 to 1
+  # @param `c` the larger the value, the "steeper" the curve will be. Default is 8
+  @sigmoid: (t, c=8) ->
+    d = c*(t-0.5)
+    return 1 / (1 + Math.exp( d*-1 ) )
+
+
+  # ## Step function is a simple jump from 0 to 1 at a specific point in time
+  # @param `t` a value between 0 to 1
+  # @param `c` usually a value between 0 to 1, which specify the point to "jump". Default is 0.5 which is in the middle.
+  @step: (t, c=0.5) ->
+    return (t - 0.5 - (c-0.5) ) ? 1: 0
