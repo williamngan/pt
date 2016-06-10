@@ -6,81 +6,108 @@ class CanvasSpace extends Space
   # @param `id` an id property which refers to the "id" attribute of the canvas element in DOM. If no canvas element with this id is found, a new canvas element will be created.
   # @param `bgcolor` a background color string to specify the canvas background. Default is `false` which shows a transparent background.
   # @param `context` a string of canvas context type, such as "2d" or "webgl". Default is "2d"
-  constructor : ( id='pt_space', bgcolor=false, context='2d' ) ->
-    super
+  constructor : ( id='#pt', callback, context='2d' ) ->
+    super( id )
 
     # ## A property to store canvas DOM element
-    @space = document.querySelector("#"+@id)
+    if typeof @id != 'string'
+      throw "id parameter is not valid"
+      return false
 
+    @id = if (@id[0] == "#") then @id.substr(1) else @id
+
+    console.log( @id);
+
+    @space = null
     @bound = null
     @boundRect = {top: 0, left: 0, width: 0, height: 0}
+
     @pixelScale = 1
+    @_autoResize = true
 
     # ## A boolean property to track if the canvas element is added to dom or not
-    @appended = true
+    @appended = false
+    _selector = document.querySelector("#"+@id)
 
-    # either get existing one in the DOM or create a new one
-    if !@space
-      @space = document.createElement("canvas")
-      @space.setAttribute("id", @id)
-      @appended = false
+    # if selector is not defined, create a canvas
+    if !_selector
+      @bound = @_createElement( "div", @id+"_container" )
+      @space = @_createElement("canvas", @id)
+      @bound.appendChild( @space )
+      document.body.appendChild( @bound )
+
+    # if selector is not canvas, create a canvas
+    else if _selector.nodeName.toLowerCase() != "canvas"
+      @bound = _selector
+      @space = @_createElement("canvas", @id+"_canvas" )
+      @bound.appendChild( @space )
+
+    else
+      @space = _selector
+      @bound = @space.parentElement
 
     # Track mouse dragging
     @_mdown = false
     @_mdrag = false
 
     # A property to store canvas background color
-    @bgcolor = bgcolor
+    @bgcolor = "#FFF"
 
     # A property to store canvas rendering contenxt
     @ctx = @space.getContext( context )
+
+    setTimeout( @_ready.bind(@, callback) )
+
+
+  # A private function to create the canvas element. This will create a <div> if elem parameter is not set.
+  _createElement: ( elem="div", id ) ->
+    d = document.createElement( elem )
+    d.setAttribute("id", id )
+    return d
+
+
+  # A private function to handle callbacks after DOM element is mounted
+  _ready: ( callback ) ->
+
+    if @bound
+      # measurement of the bounds and resize to fit
+      @boundRect = @bound.getBoundingClientRect()
+      @resize( @boundRect.width, @boundRect.height )
+      @autoResize( @_autoResize )
+
+      if @bgcolor then @clear( @bgcolor )
+      @space.dispatchEvent( new Event('ready') )
+
+      if (callback) then callback( @boundRect, @space )
+
+    else
+      throw "Cannot initiate #"+@id+" element"
+
+
+  # ## `display(...)` function is deprecated as of 0.2.0. You can now set the canvas element directly in the constructor.
+  display: () ->
+    console.warn( "space.display(...) function is deprecated as of version 0.2.0. You can now set the canvas element in the constructor. Please see the release note for details." )
 
 
   # ## Place a new canvas element into a container dom element. When canvas is ready, a "ready" event will be fired. Track this event with `space.canvas.addEventListener("ready")`
   # @param `parent_id` the DOM element into which the canvas element should be appended
   # @param `readyCallback` a callback function with parameters `width`, `height`, and `canvas_element`, which will get called when canvas is appended and ready.
-  # @param `devicePixelSupport` a boolean to set if device pixel scaling should be checked. This may make drawings on retina displays look sharper but may reduce performance slightly. Default is `true`.
+  # @param `opt.retina` a boolean to set if device pixel scaling should be checked. This may make drawings on retina displays look sharper but may reduce performance slightly. Default is `true`.
   # @return this CanvasSpace
-  display: ( parent_id="#pt", readyCallback, devicePixelSupport=true ) ->
-    if not @appended
+  setup: ( opt ) ->
 
-      # @bound
-      @bound = document.querySelector(parent_id)
-      @boundRect = @bound.getBoundingClientRect()
+    # background color
+    if opt.color then @bgcolor = opt.color;
 
-      # check for retina pixel ratio
-      @pixelScale = 1;
-      if (devicePixelSupport)
-        r1 = window.devicePixelRatio or 1
-        r2 = @ctx.webkitBackingStorePixelRatio or @ctx.mozBackingStorePixelRatio or @ctx.msBackingStorePixelRatio or @ctx.oBackingStorePixelRatio or @ctx.backingStorePixelRatio || 1;
-        @pixelScale = r1/r2
+    # auto resize canvas to fit its container
+    @_autoResize = if (opt.resize != false) then true else false
 
-      if @bound
-        # resize to fit bound
-        @resize( @boundRect.width, @boundRect.height )
-        @autoResize(true)
-
-        # add to parent dom if not existing
-        if @space.parentNode != @bound
-          @bound.appendChild( @space )
-
-        @appended = true
-
-        # fire ready event
-        setTimeout( (
-            () ->
-              @space.dispatchEvent( new Event('ready') )
-              if @bgcolor then @clear( @bgcolor )
-
-              if readyCallback
-                readyCallback( @boundRect.width, @boundRect.height,  @space )
-
-          ).bind(@)
-        )
-
-
-      else
-        throw 'Cannot add canvas to element '+parent_id
+    # check for retina pixel ratio
+    @pixelScale = 1
+    if (opt.retina != false)
+      r1 = window.devicePixelRatio or 1
+      r2 = @ctx.webkitBackingStorePixelRatio or @ctx.mozBackingStorePixelRatio or @ctx.msBackingStorePixelRatio or @ctx.oBackingStorePixelRatio or @ctx.backingStorePixelRatio || 1;
+      @pixelScale = r1/r2
 
     return this
 

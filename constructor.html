@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="./dist/core/pt-core.js"></script>
+    <meta charset="UTF-8">
+
+    <style type="text/css">
+        #hello2 {
+            width: 500px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="hello2">
+<canvas id="hello"></canvas>
+</div>
+
+<script type="text/javascript">
+    var pt = new CanvasSpace("hello", function(size, space){ console.log(size, space)} );
+    pt.setup({color:"#f00", retina: false, resize: false})
+</script>
+
+</body>
+</html>
