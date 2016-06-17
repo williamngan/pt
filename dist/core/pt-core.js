@@ -714,15 +714,12 @@ this.Space = Space;
 CanvasSpace = (function(superClass) {
   extend(CanvasSpace, superClass);
 
-  function CanvasSpace(id, callback, context) {
+  function CanvasSpace(id, callback) {
+    this._resizeHandler = bind(this._resizeHandler, this);
     var _selector;
-    if (id == null) {
+    if (!id) {
       id = '#pt';
     }
-    if (context == null) {
-      context = '2d';
-    }
-    this._resizeHandler = bind(this._resizeHandler, this);
     CanvasSpace.__super__.constructor.call(this, id);
     if (typeof this.id !== 'string') {
       throw "id parameter is not valid";
@@ -758,7 +755,7 @@ CanvasSpace = (function(superClass) {
     this._mdown = false;
     this._mdrag = false;
     this.bgcolor = "#FFF";
-    this.ctx = this.space.getContext(context);
+    this.ctx = this.space.getContext('2d');
     setTimeout(this._ready.bind(this, callback));
   }
 
@@ -795,8 +792,8 @@ CanvasSpace = (function(superClass) {
 
   CanvasSpace.prototype.setup = function(opt) {
     var r1, r2;
-    if (opt.color) {
-      this.bgcolor = opt.color;
+    if (opt.bgcolor) {
+      this.bgcolor = opt.bgcolor;
     }
     this._autoResize = opt.resize !== false ? true : false;
     this.pixelScale = 1;

@@ -3,10 +3,10 @@
 class CanvasSpace extends Space
 
   # ## Create a CanvasSpace which represents a HTML Canvas Space
-  # @param `id` an id property which refers to the "id" attribute of the canvas element in DOM. If no canvas element with this id is found, a new canvas element will be created.
-  # @param `bgcolor` a background color string to specify the canvas background. Default is `false` which shows a transparent background.
-  # @param `context` a string of canvas context type, such as "2d" or "webgl". Default is "2d"
-  constructor : ( id='#pt', callback, context='2d' ) ->
+  # @param `id` an optional string which refers to the "id" attribute of either a `<div>` container in which a `<canvas>` will be created within, or an existing `<canvas>` itself. If not defined, a `<div id="pt_container"><canvas id="pt" /></div>` will be added to DOM.
+  # @param `callback` an optional callback function with parameters `function (bounds, space)` which will get called when canvas is appended and ready. A "ready" event will also be fired, which you may track with `this.space.addEventListener("ready")`
+  constructor : ( id, callback ) ->
+    if (!id) then id = '#pt'
     super( id )
 
     # ## A property to store canvas DOM element
@@ -42,6 +42,7 @@ class CanvasSpace extends Space
       @space = @_createElement("canvas", @id+"_canvas" )
       @bound.appendChild( @space )
 
+    # if selector is an existing canvas
     else
       @space = _selector
       @bound = @space.parentElement
@@ -54,7 +55,7 @@ class CanvasSpace extends Space
     @bgcolor = "#FFF"
 
     # A property to store canvas rendering contenxt
-    @ctx = @space.getContext( context )
+    @ctx = @space.getContext( '2d' )
 
     setTimeout( @_ready.bind(@, callback) )
 
@@ -84,20 +85,23 @@ class CanvasSpace extends Space
       throw "Cannot initiate #"+@id+" element"
 
 
-  # ## `display(...)` function is deprecated as of 0.2.0. You can now set the canvas element directly in the constructor.
+  # ## `display(...)` function is deprecated as of 0.2.0. You can now set the canvas element directly in the constructor, and customize it using `setup()`.
   display: () ->
     console.warn( "space.display(...) function is deprecated as of version 0.2.0. You can now set the canvas element in the constructor. Please see the release note for details." )
 
 
-  # ## Place a new canvas element into a container dom element. When canvas is ready, a "ready" event will be fired. Track this event with `space.canvas.addEventListener("ready")`
-  # @param `parent_id` the DOM element into which the canvas element should be appended
-  # @param `readyCallback` a callback function with parameters `width`, `height`, and `canvas_element`, which will get called when canvas is appended and ready.
+  # ## Set up various options for CanvasSpace. The `opt` parameter is an object with the following fields. This is usually used during instantiation, eg `new CanvasSpace(...).setup( { opt } )`
+  # @param `opt.bgcolor` a hex or rgba string initial background color of the canvas
+  # @param `opt.resize` a boolean to set whether `<canvas>` size should auto resize to match its container's size
   # @param `opt.retina` a boolean to set if device pixel scaling should be checked. This may make drawings on retina displays look sharper but may reduce performance slightly. Default is `true`.
   # @return this CanvasSpace
   setup: ( opt ) ->
 
+    # graphics context
+    # if opt.context then @ctx = @space.getContext( opt.context )
+
     # background color
-    if opt.color then @bgcolor = opt.color;
+    if opt.bgcolor then @bgcolor = opt.bgcolor;
 
     # auto resize canvas to fit its container
     @_autoResize = if (opt.resize != false) then true else false
