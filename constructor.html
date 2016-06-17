@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
 
     <style type="text/css">
-        #hello2 {
+        #pt {
             width: 500px;
             height: 400px;
         }
@@ -14,13 +14,15 @@
 </head>
 <body>
 
-<div id="hello2">
-<canvas id="hello"></canvas>
+<div id="pt">
 </div>
 
 <script type="text/javascript">
-    var pt = new CanvasSpace("hello", function(size, space){ console.log(size, space)} );
-    pt.setup({color:"#f00", retina: false, resize: false})
+    var pt = new CanvasSpace(false, function(size, space){ console.log(size, space)} )
+    pt.setup({bgcolor:"#f00", retina: false, resize: false})
+    pt.space.addEventListener( "ready", function(evt) {
+        console.log( evt, this );
+    });
 </script>
 
 </body>
