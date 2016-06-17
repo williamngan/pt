@@ -15,14 +15,18 @@
 <body>
 
 <div id="pt">
+    <canvas id="pt2"></canvas>
 </div>
 
 <script type="text/javascript">
     var pt = new CanvasSpace(false, function(size, space){ console.log(size, space)} )
     pt.setup({bgcolor:"#f00", retina: false, resize: false})
+
+    console.log( "---", pt.size )
     pt.space.addEventListener( "ready", function(evt) {
-        console.log( evt, this );
+        console.log( "@@@", evt, this );
     });
+
 </script>
 
 </body>

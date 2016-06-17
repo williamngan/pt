@@ -4,12 +4,11 @@ class CanvasSpace extends Space
 
   # ## Create a CanvasSpace which represents a HTML Canvas Space
   # @param `id` an optional string which refers to the "id" attribute of either a `<div>` container in which a `<canvas>` will be created within, or an existing `<canvas>` itself. If not defined, a `<div id="pt_container"><canvas id="pt" /></div>` will be added to DOM.
-  # @param `callback` an optional callback function with parameters `function (bounds, space)` which will get called when canvas is appended and ready. A "ready" event will also be fired, which you may track with `this.space.addEventListener("ready")`
+  # @param `callback` an optional callback function with parameters `function (bounds, space)` which will get called when canvas is appended and ready. A "ready" event will also be fired from the `<canvas>` element when it's appended, which you may track with `instance.space.addEventListener("ready")`
   constructor : ( id, callback ) ->
-    if (!id) then id = '#pt'
+    if (!id) then id = 'pt'
     super( id )
 
-    # ## A property to store canvas DOM element
     if typeof @id != 'string'
       throw "id parameter is not valid"
       return false
@@ -18,6 +17,7 @@ class CanvasSpace extends Space
 
     console.log( @id);
 
+    # ## A property to store canvas DOM element
     @space = null
     @bound = null
     @boundRect = {top: 0, left: 0, width: 0, height: 0}
@@ -42,14 +42,25 @@ class CanvasSpace extends Space
       @space = @_createElement("canvas", @id+"_canvas" )
       @bound.appendChild( @space )
 
+      # size is known so set it immediately
+      b = @bound.getBoundingClientRect()
+      @resize( b.width, b.height )
+
     # if selector is an existing canvas
     else
       @space = _selector
       @bound = @space.parentElement
 
+      # size is known so set it immediately
+      b = @space.getBoundingClientRect()
+      @resize( b.width, b.height )
+
     # Track mouse dragging
     @_mdown = false
     @_mdrag = false
+
+    # no mutation observer, so we set a timeout for ready event
+    setTimeout( @_ready.bind(@, callback), 50 )
 
     # A property to store canvas background color
     @bgcolor = "#FFF"
@@ -57,7 +68,7 @@ class CanvasSpace extends Space
     # A property to store canvas rendering contenxt
     @ctx = @space.getContext( '2d' )
 
-    setTimeout( @_ready.bind(@, callback) )
+
 
 
   # A private function to create the canvas element. This will create a <div> if elem parameter is not set.
@@ -69,6 +80,8 @@ class CanvasSpace extends Space
 
   # A private function to handle callbacks after DOM element is mounted
   _ready: ( callback ) ->
+
+    console.log( @bound, "!!33!" );
 
     if @bound
       # measurement of the bounds and resize to fit
