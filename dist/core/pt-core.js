@@ -716,9 +716,9 @@ CanvasSpace = (function(superClass) {
 
   function CanvasSpace(id, callback) {
     this._resizeHandler = bind(this._resizeHandler, this);
-    var _selector;
+    var _selector, b;
     if (!id) {
-      id = '#pt';
+      id = 'pt';
     }
     CanvasSpace.__super__.constructor.call(this, id);
     if (typeof this.id !== 'string') {
@@ -748,15 +748,19 @@ CanvasSpace = (function(superClass) {
       this.bound = _selector;
       this.space = this._createElement("canvas", this.id + "_canvas");
       this.bound.appendChild(this.space);
+      b = this.bound.getBoundingClientRect();
+      this.resize(b.width, b.height);
     } else {
       this.space = _selector;
       this.bound = this.space.parentElement;
+      b = this.space.getBoundingClientRect();
+      this.resize(b.width, b.height);
     }
     this._mdown = false;
     this._mdrag = false;
+    setTimeout(this._ready.bind(this, callback), 50);
     this.bgcolor = "#FFF";
     this.ctx = this.space.getContext('2d');
-    setTimeout(this._ready.bind(this, callback));
   }
 
   CanvasSpace.prototype._createElement = function(elem, id) {
@@ -770,6 +774,7 @@ CanvasSpace = (function(superClass) {
   };
 
   CanvasSpace.prototype._ready = function(callback) {
+    console.log(this.bound, "!!33!");
     if (this.bound) {
       this.boundRect = this.bound.getBoundingClientRect();
       this.resize(this.boundRect.width, this.boundRect.height);
