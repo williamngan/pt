@@ -4,7 +4,11 @@ class Space
 
   # ## Create a Space which is the context for displaying and animating elements. Extend this to create specific Spaces, for example, a space for HTML Canvas or SVG.
   # @param `id` an id property to identify this space
-  constructor : ( id='space' ) ->
+  constructor : ( id ) ->
+
+    if typeof id != 'string' or id.length == 0
+      throw "id parameter is not valid"
+      return false
 
     # ## A property to identify this space by name
     @id = id
