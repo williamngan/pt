@@ -6,39 +6,75 @@ class DOMSpace extends Space
   # @param `id` an id property which refers to the "id" attribute of the element in DOM.
   # @param `bgcolor` a background color string to specify the background. Default is `false` which shows a transparent background.
   # @param `context` a string of dom context type, such as "html" or "svg". Default is "html"
-  constructor: ( id='pt_space', bgcolor=false, context='html' ) ->
-    super
+  constructor: ( id, callback, container="div" ) ->
+    if (!id) then id = 'pt'
+    super( id )
+
+    @id = if (@id[0] == "#") then @id.substr(1) else @id
 
     # ## A property to store the DOM element
-    @space = document.querySelector("#"+@id)
-    @css = {width: "100%", height: "100%"};
-
+    @space = null
     @bound = null
     @boundRect = {top: 0, left: 0, width: 0, height: 0}
 
-    # ## A boolean property to track if the element is added to container or not
-    @appended = true
+    @css = {};
 
-    # either get existing one in the DOM or create a new one
-    if !@space then @_createSpaceElement()
+    _selector = document.querySelector("#"+@id)
+
+    # if selector is not defined, create the container element
+    if !_selector
+      @space = @_createElement(container, @id)
+      document.body.appendChild( @space )
+      @bound = @space.parentElement
+
+    # if selector is an existing element
+    else
+      @space = _selector
+      @bound = @space.parentElement
 
     # Track mouse dragging
     @_mdown = false
     @_mdrag = false
 
+    # no mutation observer, so we set a timeout for ready event
+    setTimeout( @_ready.bind(@, callback), 50 )
+
     # A property to store canvas background color
-    @bgcolor = bgcolor
+    @bgcolor = false
 
     # A property to store rendering contenxt
     @ctx = {}
 
 
-  # A private function to create the canvas element. By default this will create a <div>. Override to create a different element.
-  _createSpaceElement: () ->
-    @space = document.createElement("div")
-    @space.setAttribute("id", @id)
-    @appended = false
+  # A private function to create the dom element. This will create a <div> if elem parameter is not set.
+  _createElement: ( elem="div", id ) ->
+    d = document.createElement( elem )
+    d.setAttribute("id", id )
+    return d
 
+
+  # A private function to handle callbacks after DOM element is mounted
+  _ready: ( callback ) ->
+  
+    if @bound
+      # measurement of the bounds and resize to fit
+      @boundRect = @bound.getBoundingClientRect()
+      @resize( @boundRect.width, @boundRect.height )
+      @autoResize( @_autoResize )
+
+      if @bgcolor
+        @setCSS( "backgroundColor", @bgcolor )
+
+
+      @updateCSS()
+
+      @space.dispatchEvent( new Event('ready') )
+  
+      if (callback) then callback( @boundRect, @space )
+  
+    else
+      throw "Cannot initiate #"+@id+" element"
+    
 
   setCSS: ( key, val, isPx=false) ->
     @css[key] = (if isPx then "#{val}px" else val)
@@ -50,64 +86,34 @@ class DOMSpace extends Space
       @space.style[k] = v
 
 
-  # ## Place a new canvas element into a container dom element. When canvas is ready, a "ready" event will be fired. Track this event with `space.canvas.addEventListener("ready")`
-  # @param `parent_id` the DOM element into which the canvas element should be appended
-  # @param `readyCallback` a callback function with parameters `width`, `height`, and `canvas_element`, which will get called when canvas is appended and ready.
-  # @return this CanvasSpace
-  display: ( parent_id="#pt", readyCallback ) ->
-    if not @appended
+  # ## `display(...)` function is deprecated as of 0.2.0. You can now set the canvas element directly in the constructor, and customize it using `setup()`.
+  display: () ->
+    console.warn( "space.display(...) function is deprecated as of version 0.2.0. You can now set the canvas element in the constructor. Please see the release note for details." )
 
-      @bound = document.querySelector(parent_id)
-      @boundRect = @bound.getBoundingClientRect()
+  # ## Set up various options for CanvasSpace. The `opt` parameter is an object with the following fields. This is usually used during instantiation, eg `new CanvasSpace(...).setup( { opt } )`
+  # @param `opt.bgcolor` a hex or rgba string initial background color of the canvas
+  # @param `opt.resize` a boolean to set whether `<canvas>` size should auto resize to match its container's size
+  # @return this DOMSpace
+  setup: ( opt ) ->
 
-      if @bound
-        # resize to fit bound
-        @resize( @boundRect.width, @boundRect.height )
-        @autoResize(true)
+    # background color
+    if opt.bgcolor then @bgcolor = opt.bgcolor
 
-        # add to parent dom if not existing
-        if @space.parentNode != @bound
-          @bound.appendChild( @space )
-
-        @appended = true
-
-        # fire ready event
-        setTimeout( (
-            () ->
-              @space.dispatchEvent( new Event('ready') )
-              if readyCallback
-                readyCallback( @boundRect.width, @boundRect.height,  @space )
-
-          ).bind(@)
-        )
-
-      else
-        throw 'Cannot add canvas to element '+parent_id
-
-    return this
-
-
-
-  # window resize handler
-  _resizeHandler: (evt) =>
-    @boundRect = @bound.getBoundingClientRect()
-    @resize( @boundRect.width, @boundRect.height, evt )
-
-
-  # ## Set whether the canvas element should resize when its container is resized. Default will auto size
-  # @param `auto` a boolean value indicating if auto size is set. Default is `true`.
-  # @return this CanvasSpace
-  autoResize: (auto=true) ->
-    # listen/unlisten for window resize event and callback
-    if (auto)
-      window.addEventListener( 'resize', @_resizeHandler )
-    else
-      window.removeEventListener( 'resize', @_resizeHandler )
+    # auto resize canvas to fit its container
+    @_autoResize = if (opt.resize != false) then true else false
 
     return @
 
 
-  # ## This overrides Space's `resize` function. It's a callback function for window's resize event. Keep track of this with `onSpaceResize(w,h,evt)` callback in your added objects.
+  # window resize handler
+  _resizeHandler: (evt) =>
+
+    @boundRect = @bound.getBoundingClientRect()
+    @resize( @boundRect.width, @boundRect.height, evt )
+
+
+
+  # ## This overrides Space's `resize` function. It's a callback function for window's resize event when `autoResize` is true. Keep track of this with `onSpaceResize(w,h,evt)` callback in your added objects.
   # @demo canvasspace.resize
   # @return this CanvasSpace
   resize: (w, h, evt) ->
@@ -122,6 +128,25 @@ class DOMSpace extends Space
     return @
 
 
+  # ## Set whether the svg element should resize when its container is resized.
+  # @param `auto` a boolean value indicating if auto size is set. Default is `true`.
+  # @return this CanvasSpace
+  autoResize: (auto=true) ->
+
+    # listen/unlisten for window resize event and callback
+    if (auto)
+      @css['width'] = '100%'
+      @css['height'] = '100%'
+      window.addEventListener( 'resize', @_resizeHandler )
+    else
+      delete @css['width']
+      delete @css['height']
+      window.removeEventListener( 'resize', @_resizeHandler )
+
+    return @
+
+
+  # ## Clear the space. This removes all the child nodes inside `space`
   clear: () ->
     @space.innerHML = ""
 

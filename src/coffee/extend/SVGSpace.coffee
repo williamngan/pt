@@ -1,21 +1,27 @@
 
 class SVGSpace extends DOMSpace
 
-  constructor: ( id='pt_space', bgcolor=false, context='svg' ) ->
-    super
+  constructor: ( id, callback ) ->
+    super( id, callback, 'svg')
 
-    # background color rectangle
-    @bg = document.createElementNS( "http://www.w3.org/2000/svg", "rect")
-    @bg.setAttribute("id", id+"_bg");
-    @bg.setAttribute("fill", bgcolor);
+    if @space.nodeName.toLowerCase() != "svg"
+      s = @_createElement("svg", @id+"_svg" )
+      @space.appendChild( s )
+      @bound = @space
+      @space = s
 
-    @space.appendChild(@bg)
+      # size is known so set it immediately
+      b = @bound.getBoundingClientRect()
+      @resize( b.width, b.height )
 
-  # Override DOMSpace function to create the root svg element
-  _createSpaceElement: () ->
-    @space = document.createElementNS( "http://www.w3.org/2000/svg", "svg")
-    @space.setAttribute("id", @id)
-    @appended = false
+
+
+  # A private function to create the svg namespaced element. This will create a <svg> if elem parameter is not set.
+  _createElement: ( elem="svg", id ) ->
+    d = document.createElementNS( "http://www.w3.org/2000/svg", elem )
+    if (id) then d.setAttribute("id", id )
+    return d
+
 
 
   @svgElement: (parent, name, id) ->
@@ -32,26 +38,6 @@ class SVGSpace extends DOMSpace
       parent.appendChild( elem )
 
     return elem
-
-
-  # ## This overrides Space's `resize` function. It's a callback function for window's resize event. Keep track of this with `onSpaceResize(w,h,evt)` callback in your added objects.
-  # @return this CanvasSpace
-  resize: (w, h, evt) ->
-
-    @size.set(w, h)
-    @center = new Vector( w/2, h/2 )
-
-    @space.setAttribute("width", w)
-    @space.setAttribute("height", h)
-
-    @bg.setAttribute("width", w)
-    @bg.setAttribute("height", h)
-
-    # player resize callback
-    for k, p of @items
-      if p.onSpaceResize? then p.onSpaceResize(w, h, evt)
-
-    return @
 
 
   # ## Remove an item from this Space

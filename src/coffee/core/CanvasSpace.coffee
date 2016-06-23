@@ -9,10 +9,6 @@ class CanvasSpace extends Space
     if (!id) then id = 'pt'
     super( id )
 
-    if typeof @id != 'string'
-      throw "id parameter is not valid"
-      return false
-
     @id = if (@id[0] == "#") then @id.substr(1) else @id
 
     console.log( @id);
@@ -25,9 +21,8 @@ class CanvasSpace extends Space
     @pixelScale = 1
     @_autoResize = true
 
-    # ## A boolean property to track if the canvas element is added to dom or not
-    @appended = false
     _selector = document.querySelector("#"+@id)
+    _existed = true
 
     # if selector is not defined, create a canvas
     if !_selector
@@ -35,24 +30,22 @@ class CanvasSpace extends Space
       @space = @_createElement("canvas", @id)
       @bound.appendChild( @space )
       document.body.appendChild( @bound )
+      _existed = false
 
-    # if selector is not canvas, create a canvas
+    # if selector is not canvas, create a canvas inside it
     else if _selector.nodeName.toLowerCase() != "canvas"
       @bound = _selector
       @space = @_createElement("canvas", @id+"_canvas" )
       @bound.appendChild( @space )
-
-      # size is known so set it immediately
-      b = @bound.getBoundingClientRect()
-      @resize( b.width, b.height )
 
     # if selector is an existing canvas
     else
       @space = _selector
       @bound = @space.parentElement
 
-      # size is known so set it immediately
-      b = @space.getBoundingClientRect()
+    # size is known so set it immediately
+    if _existed
+      b = @bound.getBoundingClientRect()
       @resize( b.width, b.height )
 
     # Track mouse dragging
@@ -63,7 +56,7 @@ class CanvasSpace extends Space
     setTimeout( @_ready.bind(@, callback), 50 )
 
     # A property to store canvas background color
-    @bgcolor = "#FFF"
+    @bgcolor = "#F3F7FA"
 
     # A property to store canvas rendering contenxt
     @ctx = @space.getContext( '2d' )
@@ -80,8 +73,6 @@ class CanvasSpace extends Space
 
   # A private function to handle callbacks after DOM element is mounted
   _ready: ( callback ) ->
-
-    console.log( @bound, "!!33!" );
 
     if @bound
       # measurement of the bounds and resize to fit

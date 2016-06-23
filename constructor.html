@@ -3,12 +3,24 @@
 <head>
 	<title></title>
 	<script type="text/javascript" src="./dist/core/pt-core.js"></script>
+	<script type="text/javascript" src="./dist/extend/pt-extend.js"></script>
     <meta charset="UTF-8">
 
     <style type="text/css">
         #pt {
             width: 500px;
             height: 400px;
+        }
+
+        #svg {
+            position: absolute;
+            top: 40%; left: 40%;
+            right: 40%; bottom: 40%;
+        }
+
+        #ptsvg {
+            width: 600px;
+            height: 300px;
         }
     </style>
 </head>
@@ -18,14 +30,20 @@
     <canvas id="pt2"></canvas>
 </div>
 
+<div id="svg">
+    <svg id="ptsvg2"></svg>
+</div>
+
+
 <script type="text/javascript">
-    var pt = new CanvasSpace(false, function(size, space){ console.log(size, space)} )
+    var pt = new CanvasSpace("pt2", function(size, space){ console.log(size, space)} )
     pt.setup({bgcolor:"#f00", retina: false, resize: false})
 
-    console.log( "---", pt.size )
     pt.space.addEventListener( "ready", function(evt) {
-        console.log( "@@@", evt, this );
+//        console.log( "@@@", evt, this );
     });
+
+    var svg = new SVGSpace("ptsvg2").setup({bgcolor: "#FF0", resize: false})
 
 </script>
 

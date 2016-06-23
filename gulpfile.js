@@ -57,7 +57,7 @@ var extendElems = [
 var extendFiles = extendElems.map(function(n) { return path.src.extend+n+".coffee"; } );
 
 var licenseText = "\n/* Licensed under the Apache License, Version 2.0. (http://www.apache.org/licenses/LICENSE-2.0). Copyright 2015-2016 William Ngan. (https://github.com/williamngan/pt/) */\n\n";
-var licenseTextCoffee = "### Licensed under the Apache License, Version 2.0. (http://www.apache.org/licenses/LICENSE-2.0). Copyright 2015-2016 William Ngan. (https://github.com/williamngan/pt/) ###";
+var licenseTextCoffee = "\n### Licensed under the Apache License, Version 2.0. (http://www.apache.org/licenses/LICENSE-2.0). Copyright 2015-2016 William Ngan. (https://github.com/williamngan/pt/) ###\n\n";
 
 function handleError( error ) {
   gutil.log( error.stack );

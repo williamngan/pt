@@ -1,5 +1,5 @@
-/* Licensed under the Apache License, Version 2.0. (http://www.apache.org/licenses/LICENSE-2.0). Copyright 2015-2016 William Ngan. */
 
+/* Licensed under the Apache License, Version 2.0. (http://www.apache.org/licenses/LICENSE-2.0). Copyright 2015-2016 William Ngan. (https://github.com/williamngan/pt/) */
 var Delaunay, Easing, GridCascade, Noise, ParticleEmitter, ParticleField, QuadTree, SVGForm, SVGSpace, SamplePoints, StripeBound, UI,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
@@ -444,27 +444,29 @@ this.SVGForm = SVGForm;
 SVGSpace = (function(superClass) {
   extend(SVGSpace, superClass);
 
-  function SVGSpace(id, bgcolor, context) {
-    if (id == null) {
-      id = 'pt_space';
+  function SVGSpace(id, callback) {
+    var b, s;
+    SVGSpace.__super__.constructor.call(this, id, callback, 'svg');
+    if (this.space.nodeName.toLowerCase() !== "svg") {
+      s = this._createElement("svg", this.id + "_svg");
+      this.space.appendChild(s);
+      this.bound = this.space;
+      this.space = s;
+      b = this.bound.getBoundingClientRect();
+      this.resize(b.width, b.height);
     }
-    if (bgcolor == null) {
-      bgcolor = false;
-    }
-    if (context == null) {
-      context = 'svg';
-    }
-    SVGSpace.__super__.constructor.apply(this, arguments);
-    this.bg = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    this.bg.setAttribute("id", id + "_bg");
-    this.bg.setAttribute("fill", bgcolor);
-    this.space.appendChild(this.bg);
   }
 
-  SVGSpace.prototype._createSpaceElement = function() {
-    this.space = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    this.space.setAttribute("id", this.id);
-    return this.appended = false;
+  SVGSpace.prototype._createElement = function(elem, id) {
+    var d;
+    if (elem == null) {
+      elem = "svg";
+    }
+    d = document.createElementNS("http://www.w3.org/2000/svg", elem);
+    if (id) {
+      d.setAttribute("id", id);
+    }
+    return d;
   };
 
   SVGSpace.svgElement = function(parent, name, id) {
@@ -480,24 +482,6 @@ SVGSpace = (function(superClass) {
       parent.appendChild(elem);
     }
     return elem;
-  };
-
-  SVGSpace.prototype.resize = function(w, h, evt) {
-    var k, p, ref;
-    this.size.set(w, h);
-    this.center = new Vector(w / 2, h / 2);
-    this.space.setAttribute("width", w);
-    this.space.setAttribute("height", h);
-    this.bg.setAttribute("width", w);
-    this.bg.setAttribute("height", h);
-    ref = this.items;
-    for (k in ref) {
-      p = ref[k];
-      if (p.onSpaceResize != null) {
-        p.onSpaceResize(w, h, evt);
-      }
-    }
-    return this;
   };
 
   SVGSpace.prototype.remove = function(item) {
