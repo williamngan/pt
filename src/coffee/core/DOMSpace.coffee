@@ -4,9 +4,9 @@ class DOMSpace extends Space
 
   # ## Create a DOMSpace which represents a HTML DOM
   # @param `id` an id property which refers to the "id" attribute of the element in DOM.
-  # @param `bgcolor` a background color string to specify the background. Default is `false` which shows a transparent background.
-  # @param `context` a string of dom context type, such as "html" or "svg". Default is "html"
-  constructor: ( id, callback, container="div" ) ->
+  # @param `callback` an optional callback function with parameters `function (boundingBox, spaceElement)` which will get called when element is appended and ready. A "ready" event will also be fired from the space's element when it's appended, which you may track with `instance.space.addEventListener("ready")`
+  # @param `spaceElement` a string of space's dom element name, such as "div" or "svg" or . Default is "div"
+  constructor: ( id, callback, spaceElement="div" ) ->
     if (!id) then id = 'pt'
     super( id )
 
@@ -21,9 +21,9 @@ class DOMSpace extends Space
 
     _selector = document.querySelector("#"+@id)
 
-    # if selector is not defined, create the container element
+    # if selector is not defined, create the spaceElement element
     if !_selector
-      @space = @_createElement(container, @id)
+      @space = @_createElement(spaceElement, @id)
       document.body.appendChild( @space )
       @bound = @space.parentElement
 
@@ -55,7 +55,7 @@ class DOMSpace extends Space
 
   # A private function to handle callbacks after DOM element is mounted
   _ready: ( callback ) ->
-  
+
     if @bound
       # measurement of the bounds and resize to fit
       @boundRect = @bound.getBoundingClientRect()
@@ -89,6 +89,7 @@ class DOMSpace extends Space
   # ## `display(...)` function is deprecated as of 0.2.0. You can now set the canvas element directly in the constructor, and customize it using `setup()`.
   display: () ->
     console.warn( "space.display(...) function is deprecated as of version 0.2.0. You can now set the canvas element in the constructor. Please see the release note for details." )
+    return @
 
   # ## Set up various options for CanvasSpace. The `opt` parameter is an object with the following fields. This is usually used during instantiation, eg `new CanvasSpace(...).setup( { opt } )`
   # @param `opt.bgcolor` a hex or rgba string initial background color of the canvas

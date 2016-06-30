@@ -4,14 +4,12 @@ class CanvasSpace extends Space
 
   # ## Create a CanvasSpace which represents a HTML Canvas Space
   # @param `id` an optional string which refers to the "id" attribute of either a `<div>` container in which a `<canvas>` will be created within, or an existing `<canvas>` itself. If not defined, a `<div id="pt_container"><canvas id="pt" /></div>` will be added to DOM.
-  # @param `callback` an optional callback function with parameters `function (bounds, space)` which will get called when canvas is appended and ready. A "ready" event will also be fired from the `<canvas>` element when it's appended, which you may track with `instance.space.addEventListener("ready")`
+  # @param `callback` an optional callback function with parameters `function (boundingBox, spaceElement)` which will get called when canvas is appended and ready. A "ready" event will also be fired from the `<canvas>` element when it's appended, which you may track with `instance.space.addEventListener("ready")`
   constructor : ( id, callback ) ->
     if (!id) then id = 'pt'
     super( id )
 
     @id = if (@id[0] == "#") then @id.substr(1) else @id
-
-    console.log( @id);
 
     # ## A property to store canvas DOM element
     @space = null
@@ -92,7 +90,7 @@ class CanvasSpace extends Space
   # ## `display(...)` function is deprecated as of 0.2.0. You can now set the canvas element directly in the constructor, and customize it using `setup()`.
   display: () ->
     console.warn( "space.display(...) function is deprecated as of version 0.2.0. You can now set the canvas element in the constructor. Please see the release note for details." )
-
+    return @
 
   # ## Set up various options for CanvasSpace. The `opt` parameter is an object with the following fields. This is usually used during instantiation, eg `new CanvasSpace(...).setup( { opt } )`
   # @param `opt.bgcolor` a hex or rgba string initial background color of the canvas

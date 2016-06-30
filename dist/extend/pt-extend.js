@@ -472,7 +472,10 @@ SVGSpace = (function(superClass) {
   SVGSpace.svgElement = function(parent, name, id) {
     var elem;
     if (!parent || !parent.appendChild) {
-      throw "parent parameter needs to be a DOM node";
+      parent = this.space;
+      if (!parent) {
+        throw "parent parameter needs to be a DOM node";
+      }
     }
     elem = document.querySelector("#" + id);
     if (!elem) {
