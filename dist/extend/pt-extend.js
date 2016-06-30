@@ -57,11 +57,19 @@ SVGForm = (function() {
     return this.cc;
   };
 
-  SVGForm.prototype.getScope = function(item) {
+  SVGForm.prototype.enterScope = function(item) {
     if (!item || item.animateID === null) {
       throw "getScope()'s item must be added to a Space, and has an animateID property. Otherwise, use scope() instead.";
     }
     return this.scope(SVGForm._scopeID(item));
+  };
+
+  SVGForm.prototype.getScope = function(item) {
+    if (!this._warn1) {
+      console.warn("form.getScope(...) function is deprecated as of version 0.2.0. It is renamed as `enterScope()`.");
+      this._warn1 = true;
+    }
+    return this.enterScope(item);
   };
 
   SVGForm.prototype.nextID = function() {
@@ -75,7 +83,7 @@ SVGForm = (function() {
   };
 
   SVGForm._scopeID = function(item) {
-    return "item" + item.animateID;
+    return "item-" + item.animateID;
   };
 
   SVGForm.style = function(elem, styles) {
