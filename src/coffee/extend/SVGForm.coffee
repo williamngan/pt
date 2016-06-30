@@ -3,7 +3,7 @@ class SVGForm
   @_domId = 0
 
   # ## Create a new Form which is based on SVG
-  # @param `space` A space that has a valid context for this form. In this case, the space should represent an html canvas.
+  # @param `space` A space that has a valid context for this form. In this case, the space should represent an <svg>.
   # @return a new Form object
   constructor: ( space ) ->
 
@@ -34,7 +34,7 @@ class SVGForm
 
 
   # ## Set current fill style
-  # @param `c` fill color which can be as color, gradient, or pattern. (See [canvas documentation](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillStyle)) Default is `false` (transparent)
+  # @param `c` fill color. Default is `false` (transparent)
   # @eg `form.fill("#F90")` `form.fill("rgba(0,0,0,.5")` `form.fill(false)`
   # @return this Form
   fill: (c) ->
@@ -43,7 +43,7 @@ class SVGForm
 
 
   # ## Set current stroke style
-  # @param `c` stroke color which can be as color, gradient, or pattern. (See [canvas documentation](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/strokeStyle)) Default is false (transparent)
+  # @param `c` stroke color. Default is false (transparent)
   # @param `width` Optional value (can be floating point) to set line width
   # @param `joint` Optional string to set line joint style. Can be "miter", "bevel", or "round".
   # @eg `form.stroke("#F90")` `form.stroke("rgba(0,0,0,.5")` `form.stroke(false)` `form.stroke("#000", 0.5, 'round')`
@@ -56,7 +56,7 @@ class SVGForm
     return @
 
 
-  # ## Set the current group scope by an ID, and optionally define the group's parent element
+  # ## Set this form's group scope by an ID, and optionally define the group's parent element. A group scope keeps track of DOM elements by their generated IDs, and updates their properties as needed. See also `enterScope()`.
   # @param `group_id` a string to use as prefix for the group's id. For example, group_id "hello" will create elements with id like "hello-1", "hello-2", etc
   # @param `group` optional dom element to define this group's parent element
   # @eg `form.scope("dot")` `form.scope("dot", elem)`
@@ -71,13 +71,21 @@ class SVGForm
     return @cc
 
 
-  # ## Set the current group scope based on an item added to Space. The item must have an `animateID` property. Its group id will become "item-##".
-  # @param `item` an item that's added to space.
+  # ## Set the current group scope to an item added into space, in order to keep track of any point, circle, etc created within it. The item must have an `animateID` property, so that elements created within the item will have generated IDs like "item-{animateID}-{count}".
+  # @param `item` an item that's added to space (see `space.add(...)`) and has an `animateID` property
   # @return context object
-  getScope: ( item ) ->
+  enterScope: ( item ) ->
     if (!item || item.animateID == null )
       throw "getScope()'s item must be added to a Space, and has an animateID property. Otherwise, use scope() instead."
     return @scope( SVGForm._scopeID( item ) )
+
+
+  # ## `getScope(...)` function is deprecated as of 0.2.0. Use `enterScope()` instead.
+  getScope: ( item ) ->
+    if !@_warn1
+      console.warn( "form.getScope(...) function is deprecated as of version 0.2.0. It is renamed as `enterScope()`." )
+      @_warn1 = true
+    return @enterScope( item )
 
 
   # ## Get next available id in the current group
@@ -95,7 +103,7 @@ class SVGForm
 
   # compose a scope id
   @_scopeID: (item) ->
-    return "item"+item.animateID
+    return "item-"+item.animateID
 
   # ## A static function to help adding style object to an element. This put all styles into `style` attribute instead of individual attributes, so that the styles can be parsed by Adobe Illustrator.
   # @param `elem` a dom element to add to
@@ -117,7 +125,7 @@ class SVGForm
 
 
   # ## A static function to draw a point
-  # @param `ctx` canvas rendering context
+  # @param `ctx` rendering context object
   # @param `pt` a Point object
   # @param `halfsize` radius or half size of the point. Default is 2.
   # @param `fill` not used - already defined in ctx
@@ -158,7 +166,7 @@ class SVGForm
 
 
   # ## A static function similar to `SVGForm.point()` but draw a series of points
-  # @param `ctx` canvas rendering context
+  # @param `ctx` rendering context object
   # @param `pts` an array of Points
   # @param `halfsize, fill, stroke, circle` same parameters as in `SVGForm.point()`
   @points: (ctx, pts, halfsize=2, fill=true, stroke=true, circle=false ) ->
@@ -177,7 +185,7 @@ class SVGForm
 
 
   # ## A static function to draw a line
-  # @param `ctx` canvas rendering context
+  # @param `ctx` rendering context object
   # @param `pair` a Pair object
   @line: (ctx, pair) ->
     if !pair.p1 then throw "#{pair.toString()} is not a Pair"
@@ -204,7 +212,7 @@ class SVGForm
 
 
   # ## A static function to draw a line
-  # @param `ctx` canvas rendering context
+  # @param `ctx` rendering context object
   # @param `pairs` an array of Pair objects
   @lines: (ctx, pairs) ->
     return ( SVGForm.line( ctx, ln ) for ln in pairs )
@@ -220,7 +228,7 @@ class SVGForm
 
 
   # ## A static function to draw a rectangle
-  # @param `ctx` canvas rendering context
+  # @param `ctx` rendering context object
   # @param `pair` a Pair object
   # @param `fill` not used - already defined in ctx
   # @param `stroke` not used - already defined in ctx
@@ -251,7 +259,7 @@ class SVGForm
 
 
   # ## A static  function to draw a circle
-  # @param `ctx` canvas rendering context
+  # @param `ctx` rendering context object
   # @param `c` a Circle object
   # @param `fill` not used - already defined in ctx
   # @param `stroke` not used - already defined in ctx
@@ -282,7 +290,7 @@ class SVGForm
 
 
   # ## A static function to draw a polygon
-  # @param `ctx` canvas rendering context
+  # @param `ctx` rendering context object
   # @param `pts` an array of Points
   # @param `closePath` a boolean value to specify if the path should be closed (joining last point with first point)
   # @param `fill` not used - already defined in ctx
@@ -313,7 +321,7 @@ class SVGForm
     return @
 
   # ## A static function to draw a triangle
-  # @param `ctx` canvas rendering context
+  # @param `ctx` rendering context object
   # @param `tri` a Triangle object
   # @param `fill` not used - already defined in ctx
   # @param `stroke` not used - already defined in ctx
@@ -331,7 +339,7 @@ class SVGForm
 
 
   # ## A static function to draw a curve as straight polygon segments. In future, this should be converted to bezier curves.
-  # @param `ctx` canvas rendering context
+  # @param `ctx` rendering context object
   # @param `pts` an array of Points
   @curve: ( ctx, pts, closePath=false ) ->
     SVGForm.polygon( ctx, pts, closePath )
@@ -347,7 +355,7 @@ class SVGForm
 
 
   # ## A static function to draw text
-  # @param `ctx` canvas rendering context
+  # @param `ctx` rendering context object
   # @param `pt` a Point object to specify the anchor point
   # @param `txt` a string of text to draw
   # @param `maxWidth` not applicable in svg

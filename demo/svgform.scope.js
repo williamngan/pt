@@ -28,7 +28,7 @@ space.add({
   animate: function(time, fps, context) {
 
     // reset the item counts
-    form.getScope( this );
+    form.enterScope( this );
 
     for (var i=0; i<pts.length; i++) {
       pts[i].add( (Math.random()-Math.random())*2, 0)
@@ -73,7 +73,6 @@ space.add({
 // 4. Start playing
 // Here we need to make sure the svg dom is ready first, via callback function (see constructor SVGSpace(...))
 function ready(bounds, elem) {
-  console.log( elem );
   form.scope("item", elem ); // initiate the scope which uses the svg dom as parent node
   space.bindMouse();
   space.play();
