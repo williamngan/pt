@@ -723,7 +723,6 @@ CanvasSpace = (function(superClass) {
     }
     CanvasSpace.__super__.constructor.call(this, id);
     this.id = this.id[0] === "#" ? this.id.substr(1) : this.id;
-    console.log(this.id);
     this.space = null;
     this.bound = null;
     this.boundRect = {
@@ -789,7 +788,8 @@ CanvasSpace = (function(superClass) {
   };
 
   CanvasSpace.prototype.display = function() {
-    return console.warn("space.display(...) function is deprecated as of version 0.2.0. You can now set the canvas element in the constructor. Please see the release note for details.");
+    console.warn("space.display(...) function is deprecated as of version 0.2.0. You can now set the canvas element in the constructor. Please see the release note for details.");
+    return this;
   };
 
   CanvasSpace.prototype.setup = function(opt) {
@@ -893,10 +893,10 @@ this.CanvasSpace = CanvasSpace;
 DOMSpace = (function(superClass) {
   extend(DOMSpace, superClass);
 
-  function DOMSpace(id, callback, container) {
+  function DOMSpace(id, callback, spaceElement) {
     var _selector;
-    if (container == null) {
-      container = "div";
+    if (spaceElement == null) {
+      spaceElement = "div";
     }
     this._resizeHandler = bind(this._resizeHandler, this);
     if (!id) {
@@ -915,7 +915,7 @@ DOMSpace = (function(superClass) {
     this.css = {};
     _selector = document.querySelector("#" + this.id);
     if (!_selector) {
-      this.space = this._createElement(container, this.id);
+      this.space = this._createElement(spaceElement, this.id);
       document.body.appendChild(this.space);
       this.bound = this.space.parentElement;
     } else {
@@ -977,7 +977,8 @@ DOMSpace = (function(superClass) {
   };
 
   DOMSpace.prototype.display = function() {
-    return console.warn("space.display(...) function is deprecated as of version 0.2.0. You can now set the canvas element in the constructor. Please see the release note for details.");
+    console.warn("space.display(...) function is deprecated as of version 0.2.0. You can now set the canvas element in the constructor. Please see the release note for details.");
+    return this;
   };
 
   DOMSpace.prototype.setup = function(opt) {

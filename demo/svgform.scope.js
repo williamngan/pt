@@ -8,7 +8,7 @@ var colors = {
   b1: "#96bfed", b2: "#f5ead6", b3: "#f1f3f7", b4: "#e2e6ef"
 };
 
-var space = new SVGSpace("demo", colors.b4 ).display("#pt", ready);
+var space = new SVGSpace("pt", ready).setup({bgcolor: colors.b3});
 var form = new SVGForm( space.ctx );
 
 
@@ -71,9 +71,10 @@ space.add({
 
 
 // 4. Start playing
-// Here we need to make sure the svg dom is ready first, via callback function (see line 11: SVGSpace(...).display("#pt", ready)
-function ready(w, h, dom) {
-  form.scope("item", dom ); // initiate the scope which uses the svg dom as parent node
+// Here we need to make sure the svg dom is ready first, via callback function (see constructor SVGSpace(...))
+function ready(bounds, elem) {
+  console.log( elem );
+  form.scope("item", elem ); // initiate the scope which uses the svg dom as parent node
   space.bindMouse();
   space.play();
 }

@@ -1,6 +1,10 @@
+# ### SVGSpace is an extension of `DOMSpace` that represents an svg element in DOM.
 
 class SVGSpace extends DOMSpace
 
+  # ## Create a DOMSpace which represents a HTML DOM
+  # @param `id` an id property which refers to the "id" attribute of the element in DOM.
+  # @param `callback` an optional callback function with parameters `function (boundingBox, spaceElement)` which will get called when svg is appended and ready. A "ready" event will also be fired from the space's element when it's appended, which you may track with `instance.space.addEventListener("ready")`
   constructor: ( id, callback ) ->
     super( id, callback, 'svg')
 
@@ -27,7 +31,8 @@ class SVGSpace extends DOMSpace
   @svgElement: (parent, name, id) ->
 
     if (!parent || !parent.appendChild)
-      throw( "parent parameter needs to be a DOM node" )
+      parent = @space
+      if !parent then throw( "parent parameter needs to be a DOM node" )
 
     elem = document.querySelector("#"+id);
 
