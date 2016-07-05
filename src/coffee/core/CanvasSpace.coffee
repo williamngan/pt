@@ -81,7 +81,7 @@ class CanvasSpace extends Space
       if @bgcolor then @clear( @bgcolor )
       @space.dispatchEvent( new Event('ready') )
 
-      if (callback) then callback( @boundRect, @space )
+      if (callback and typeof callback == "function") then callback( @boundRect, @space )
 
     else
       throw "Cannot initiate #"+@id+" element"

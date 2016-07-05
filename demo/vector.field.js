@@ -13,7 +13,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 window.demoDescription = "If this is a sphere, it would visualize Hairy Ball Theorem, where you can't comb a hairy ball flat without creating a cowlick. This demo was done in javascript ES6 and compiled with babel.";
 
-var space = new CanvasSpace("demo", "#f5ead6").display();
+var space = new CanvasSpace("pt").setup( {bgcolor: "#f5ead6"} );
 var form = new Form(space);
 
 var center = space.size.$divide(2);

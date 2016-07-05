@@ -7,7 +7,7 @@ var colors = {
   a1: "#ff2d5d", a2: "#42dc8e", a3: "#2e43eb", a4: "#ffe359",
   b1: "#96bfed", b2: "#f5ead6", b3: "#f1f3f7", b4: "#e2e6ef"
 };
-var space = new CanvasSpace("demo", "#222" ).display();
+var space = new CanvasSpace("pt", init).setup( {bgcolor: "#222"} );
 var form = new Form( space );
 space.refresh(false);
 space.clear( "#222");
@@ -18,7 +18,7 @@ var lastTime = 0;
 var samples;
 var shift = 0;
 
-// initiate a new set of SamplePoints. SamplePoints is a kind of PointSet.
+// when ready, initiate a new set of SamplePoints. SamplePoints is a kind of PointSet.
 function init() {
   shift++;
   samples = new SamplePoints();
@@ -26,11 +26,12 @@ function init() {
   samples.poissonSampler( 6 ); // target 6px radius
 }
 
-init();
 
 //// 3. Visualize, Animate, Interact
 space.add({
   animate: function(time, fps, context) {
+
+    if (!samples) return; // make sure samples are initiated first
 
     // every 25ms, calculate and draw the next 50 points
     var count = 0;

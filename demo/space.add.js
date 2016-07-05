@@ -9,7 +9,7 @@ var colors = {
   c1: "#111", c2: "#567", c3: "#abc", c4: "rgba(255,255,255,.9)"
 };
 
-var space = new CanvasSpace("demo", colors.b2 ).display();
+var space = new CanvasSpace("pt").setup( {bgcolor: colors.b2} );
 
 var form = new Form( space );
 form.stroke( false );
