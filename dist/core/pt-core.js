@@ -779,7 +779,7 @@ CanvasSpace = (function(superClass) {
         this.clear(this.bgcolor);
       }
       this.space.dispatchEvent(new Event('ready'));
-      if (callback) {
+      if (callback && typeof callback === "function") {
         return callback(this.boundRect, this.space);
       }
     } else {

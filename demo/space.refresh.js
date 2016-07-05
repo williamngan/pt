@@ -7,7 +7,7 @@ var colors = {
   a1: "#ff2d5d", a2: "#42dc8e", a3: "#2e43eb", a4: "#ffe359",
   b1: "#96bfed", b2: "#f5ead6", b3: "#f1f3f7", b4: "#e2e6ef"
 };
-var space = new CanvasSpace("space-refresh-demo", colors.a2 ).display();
+var space = new CanvasSpace("pt").setup( {bgcolor: colors.a2} );
 var form = new Form( space );
 
 space.clear();  // fill background once and then no more repaint
