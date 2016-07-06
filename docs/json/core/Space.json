@@ -10,7 +10,7 @@
             "param": [
                 "<p><code>id</code> an id property to identify this space</p>"
             ], 
-            "pname": "id='space'"
+            "pname": "id"
         }, 
         {
             "demo": "space.refresh", 

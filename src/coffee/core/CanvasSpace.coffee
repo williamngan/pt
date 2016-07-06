@@ -3,7 +3,7 @@
 class CanvasSpace extends Space
 
   # ## Create a CanvasSpace which represents a HTML Canvas Space
-  # @param `id` an optional string which refers to the "id" attribute of either a `<div>` container in which a `<canvas>` will be created within, or an existing `<canvas>` itself. If not defined, a `<div id="pt_container"><canvas id="pt" /></div>` will be added to DOM.
+  # @param `id` an optional string which refers to the "id" attribute of a DOM element. It can either refer to an existing `<canvas>`, or a `<div>` container in which a new `<canvas>` will be created. If left empty, a `<div id="pt_container"><canvas id="pt" /></div>` will be added to DOM. Use css to customize its appearance if needed.
   # @param `callback` an optional callback function with parameters `function (boundingBox, spaceElement)` which will get called when canvas is appended and ready. A "ready" event will also be fired from the `<canvas>` element when it's appended, which you may track with `instance.space.addEventListener("ready")`
   constructor : ( id, callback ) ->
     if (!id) then id = 'pt'

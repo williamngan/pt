@@ -441,8 +441,9 @@ this.Timer = Timer;
 
 Space = (function() {
   function Space(id) {
-    if (id == null) {
-      id = 'space';
+    if (typeof id !== 'string' || id.length === 0) {
+      throw "id parameter is not valid";
+      return false;
     }
     this.id = id;
     this.size = new Vector();
@@ -714,19 +715,15 @@ this.Space = Space;
 CanvasSpace = (function(superClass) {
   extend(CanvasSpace, superClass);
 
-  function CanvasSpace(id, bgcolor, context) {
-    if (id == null) {
-      id = 'pt_space';
-    }
-    if (bgcolor == null) {
-      bgcolor = false;
-    }
-    if (context == null) {
-      context = '2d';
-    }
+  function CanvasSpace(id, callback) {
     this._resizeHandler = bind(this._resizeHandler, this);
-    CanvasSpace.__super__.constructor.apply(this, arguments);
-    this.space = document.querySelector("#" + this.id);
+    var _existed, _selector, b;
+    if (!id) {
+      id = 'pt';
+    }
+    CanvasSpace.__super__.constructor.call(this, id);
+    this.id = this.id[0] === "#" ? this.id.substr(1) : this.id;
+    this.space = null;
     this.bound = null;
     this.boundRect = {
       top: 0,
@@ -735,54 +732,77 @@ CanvasSpace = (function(superClass) {
       height: 0
     };
     this.pixelScale = 1;
-    this.appended = true;
-    if (!this.space) {
-      this.space = document.createElement("canvas");
-      this.space.setAttribute("id", this.id);
-      this.appended = false;
+    this._autoResize = true;
+    _selector = document.querySelector("#" + this.id);
+    _existed = true;
+    if (!_selector) {
+      this.bound = this._createElement("div", this.id + "_container");
+      this.space = this._createElement("canvas", this.id);
+      this.bound.appendChild(this.space);
+      document.body.appendChild(this.bound);
+      _existed = false;
+    } else if (_selector.nodeName.toLowerCase() !== "canvas") {
+      this.bound = _selector;
+      this.space = this._createElement("canvas", this.id + "_canvas");
+      this.bound.appendChild(this.space);
+    } else {
+      this.space = _selector;
+      this.bound = this.space.parentElement;
+    }
+    if (_existed) {
+      b = this.bound.getBoundingClientRect();
+      this.resize(b.width, b.height);
     }
     this._mdown = false;
     this._mdrag = false;
-    this.bgcolor = bgcolor;
-    this.ctx = this.space.getContext(context);
+    setTimeout(this._ready.bind(this, callback), 50);
+    this.bgcolor = "#F3F7FA";
+    this.ctx = this.space.getContext('2d');
   }
 
-  CanvasSpace.prototype.display = function(parent_id, readyCallback, devicePixelSupport) {
-    var r1, r2;
-    if (parent_id == null) {
-      parent_id = "#pt";
+  CanvasSpace.prototype._createElement = function(elem, id) {
+    var d;
+    if (elem == null) {
+      elem = "div";
     }
-    if (devicePixelSupport == null) {
-      devicePixelSupport = true;
-    }
-    if (!this.appended) {
-      this.bound = document.querySelector(parent_id);
+    d = document.createElement(elem);
+    d.setAttribute("id", id);
+    return d;
+  };
+
+  CanvasSpace.prototype._ready = function(callback) {
+    if (this.bound) {
       this.boundRect = this.bound.getBoundingClientRect();
-      this.pixelScale = 1;
-      if (devicePixelSupport) {
-        r1 = window.devicePixelRatio || 1;
-        r2 = this.ctx.webkitBackingStorePixelRatio || this.ctx.mozBackingStorePixelRatio || this.ctx.msBackingStorePixelRatio || this.ctx.oBackingStorePixelRatio || this.ctx.backingStorePixelRatio || 1;
-        this.pixelScale = r1 / r2;
+      this.resize(this.boundRect.width, this.boundRect.height);
+      this.autoResize(this._autoResize);
+      if (this.bgcolor) {
+        this.clear(this.bgcolor);
       }
-      if (this.bound) {
-        this.resize(this.boundRect.width, this.boundRect.height);
-        this.autoResize(true);
-        if (this.space.parentNode !== this.bound) {
-          this.bound.appendChild(this.space);
-        }
-        this.appended = true;
-        setTimeout((function() {
-          this.space.dispatchEvent(new Event('ready'));
-          if (this.bgcolor) {
-            this.clear(this.bgcolor);
-          }
-          if (readyCallback) {
-            return readyCallback(this.boundRect.width, this.boundRect.height, this.space);
-          }
-        }).bind(this));
-      } else {
-        throw 'Cannot add canvas to element ' + parent_id;
+      this.space.dispatchEvent(new Event('ready'));
+      if (callback && typeof callback === "function") {
+        return callback(this.boundRect, this.space);
       }
+    } else {
+      throw "Cannot initiate #" + this.id + " element";
+    }
+  };
+
+  CanvasSpace.prototype.display = function() {
+    console.warn("space.display(...) function is deprecated as of version 0.2.0. You can now set the canvas element in the constructor. Please see the release note for details.");
+    return this;
+  };
+
+  CanvasSpace.prototype.setup = function(opt) {
+    var r1, r2;
+    if (opt.bgcolor) {
+      this.bgcolor = opt.bgcolor;
+    }
+    this._autoResize = opt.resize !== false ? true : false;
+    this.pixelScale = 1;
+    if (opt.retina !== false) {
+      r1 = window.devicePixelRatio || 1;
+      r2 = this.ctx.webkitBackingStorePixelRatio || this.ctx.mozBackingStorePixelRatio || this.ctx.msBackingStorePixelRatio || this.ctx.oBackingStorePixelRatio || this.ctx.backingStorePixelRatio || 1;
+      this.pixelScale = r1 / r2;
     }
     return this;
   };
@@ -873,23 +893,18 @@ this.CanvasSpace = CanvasSpace;
 DOMSpace = (function(superClass) {
   extend(DOMSpace, superClass);
 
-  function DOMSpace(id, bgcolor, context) {
-    if (id == null) {
-      id = 'pt_space';
-    }
-    if (bgcolor == null) {
-      bgcolor = false;
-    }
-    if (context == null) {
-      context = 'html';
+  function DOMSpace(id, callback, spaceElement) {
+    var _selector;
+    if (spaceElement == null) {
+      spaceElement = "div";
     }
     this._resizeHandler = bind(this._resizeHandler, this);
-    DOMSpace.__super__.constructor.apply(this, arguments);
-    this.space = document.querySelector("#" + this.id);
-    this.css = {
-      width: "100%",
-      height: "100%"
-    };
+    if (!id) {
+      id = 'pt';
+    }
+    DOMSpace.__super__.constructor.call(this, id);
+    this.id = this.id[0] === "#" ? this.id.substr(1) : this.id;
+    this.space = null;
     this.bound = null;
     this.boundRect = {
       top: 0,
@@ -897,20 +912,49 @@ DOMSpace = (function(superClass) {
       width: 0,
       height: 0
     };
-    this.appended = true;
-    if (!this.space) {
-      this._createSpaceElement();
+    this.css = {};
+    _selector = document.querySelector("#" + this.id);
+    if (!_selector) {
+      this.space = this._createElement(spaceElement, this.id);
+      document.body.appendChild(this.space);
+      this.bound = this.space.parentElement;
+    } else {
+      this.space = _selector;
+      this.bound = this.space.parentElement;
     }
     this._mdown = false;
     this._mdrag = false;
-    this.bgcolor = bgcolor;
+    setTimeout(this._ready.bind(this, callback), 50);
+    this.bgcolor = false;
     this.ctx = {};
   }
 
-  DOMSpace.prototype._createSpaceElement = function() {
-    this.space = document.createElement("div");
-    this.space.setAttribute("id", this.id);
-    return this.appended = false;
+  DOMSpace.prototype._createElement = function(elem, id) {
+    var d;
+    if (elem == null) {
+      elem = "div";
+    }
+    d = document.createElement(elem);
+    d.setAttribute("id", id);
+    return d;
+  };
+
+  DOMSpace.prototype._ready = function(callback) {
+    if (this.bound) {
+      this.boundRect = this.bound.getBoundingClientRect();
+      this.resize(this.boundRect.width, this.boundRect.height);
+      this.autoResize(this._autoResize);
+      if (this.bgcolor) {
+        this.setCSS("backgroundColor", this.bgcolor);
+      }
+      this.updateCSS();
+      this.space.dispatchEvent(new Event('ready'));
+      if (callback) {
+        return callback(this.boundRect, this.space);
+      }
+    } else {
+      throw "Cannot initiate #" + this.id + " element";
+    }
   };
 
   DOMSpace.prototype.setCSS = function(key, val, isPx) {
@@ -932,48 +976,22 @@ DOMSpace = (function(superClass) {
     return results;
   };
 
-  DOMSpace.prototype.display = function(parent_id, readyCallback) {
-    if (parent_id == null) {
-      parent_id = "#pt";
+  DOMSpace.prototype.display = function() {
+    console.warn("space.display(...) function is deprecated as of version 0.2.0. You can now set the canvas element in the constructor. Please see the release note for details.");
+    return this;
+  };
+
+  DOMSpace.prototype.setup = function(opt) {
+    if (opt.bgcolor) {
+      this.bgcolor = opt.bgcolor;
     }
-    if (!this.appended) {
-      this.bound = document.querySelector(parent_id);
-      this.boundRect = this.bound.getBoundingClientRect();
-      if (this.bound) {
-        this.resize(this.boundRect.width, this.boundRect.height);
-        this.autoResize(true);
-        if (this.space.parentNode !== this.bound) {
-          this.bound.appendChild(this.space);
-        }
-        this.appended = true;
-        setTimeout((function() {
-          this.space.dispatchEvent(new Event('ready'));
-          if (readyCallback) {
-            return readyCallback(this.boundRect.width, this.boundRect.height, this.space);
-          }
-        }).bind(this));
-      } else {
-        throw 'Cannot add canvas to element ' + parent_id;
-      }
-    }
+    this._autoResize = opt.resize !== false ? true : false;
     return this;
   };
 
   DOMSpace.prototype._resizeHandler = function(evt) {
     this.boundRect = this.bound.getBoundingClientRect();
     return this.resize(this.boundRect.width, this.boundRect.height, evt);
-  };
-
-  DOMSpace.prototype.autoResize = function(auto) {
-    if (auto == null) {
-      auto = true;
-    }
-    if (auto) {
-      window.addEventListener('resize', this._resizeHandler);
-    } else {
-      window.removeEventListener('resize', this._resizeHandler);
-    }
-    return this;
   };
 
   DOMSpace.prototype.resize = function(w, h, evt) {
@@ -986,6 +1004,22 @@ DOMSpace = (function(superClass) {
       if (p.onSpaceResize != null) {
         p.onSpaceResize(w, h, evt);
       }
+    }
+    return this;
+  };
+
+  DOMSpace.prototype.autoResize = function(auto) {
+    if (auto == null) {
+      auto = true;
+    }
+    if (auto) {
+      this.css['width'] = '100%';
+      this.css['height'] = '100%';
+      window.addEventListener('resize', this._resizeHandler);
+    } else {
+      delete this.css['width'];
+      delete this.css['height'];
+      window.removeEventListener('resize', this._resizeHandler);
     }
     return this;
   };
@@ -4661,11 +4695,19 @@ SVGForm = (function() {
     return this.cc;
   };
 
-  SVGForm.prototype.getScope = function(item) {
+  SVGForm.prototype.enterScope = function(item) {
     if (!item || item.animateID === null) {
       throw "getScope()'s item must be added to a Space, and has an animateID property. Otherwise, use scope() instead.";
     }
     return this.scope(SVGForm._scopeID(item));
+  };
+
+  SVGForm.prototype.getScope = function(item) {
+    if (!this._warn1) {
+      console.warn("form.getScope(...) function is deprecated as of version 0.2.0. It is renamed as `enterScope()`.");
+      this._warn1 = true;
+    }
+    return this.enterScope(item);
   };
 
   SVGForm.prototype.nextID = function() {
@@ -4679,7 +4721,7 @@ SVGForm = (function() {
   };
 
   SVGForm._scopeID = function(item) {
-    return "item" + item.animateID;
+    return "item-" + item.animateID;
   };
 
   SVGForm.style = function(elem, styles) {
@@ -5048,33 +5090,38 @@ this.SVGForm = SVGForm;
 SVGSpace = (function(superClass) {
   extend(SVGSpace, superClass);
 
-  function SVGSpace(id, bgcolor, context) {
-    if (id == null) {
-      id = 'pt_space';
+  function SVGSpace(id, callback) {
+    var b, s;
+    SVGSpace.__super__.constructor.call(this, id, callback, 'svg');
+    if (this.space.nodeName.toLowerCase() !== "svg") {
+      s = this._createElement("svg", this.id + "_svg");
+      this.space.appendChild(s);
+      this.bound = this.space;
+      this.space = s;
+      b = this.bound.getBoundingClientRect();
+      this.resize(b.width, b.height);
     }
-    if (bgcolor == null) {
-      bgcolor = false;
-    }
-    if (context == null) {
-      context = 'svg';
-    }
-    SVGSpace.__super__.constructor.apply(this, arguments);
-    this.bg = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    this.bg.setAttribute("id", id + "_bg");
-    this.bg.setAttribute("fill", bgcolor);
-    this.space.appendChild(this.bg);
   }
 
-  SVGSpace.prototype._createSpaceElement = function() {
-    this.space = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    this.space.setAttribute("id", this.id);
-    return this.appended = false;
+  SVGSpace.prototype._createElement = function(elem, id) {
+    var d;
+    if (elem == null) {
+      elem = "svg";
+    }
+    d = document.createElementNS("http://www.w3.org/2000/svg", elem);
+    if (id) {
+      d.setAttribute("id", id);
+    }
+    return d;
   };
 
   SVGSpace.svgElement = function(parent, name, id) {
     var elem;
     if (!parent || !parent.appendChild) {
-      throw "parent parameter needs to be a DOM node";
+      parent = this.space;
+      if (!parent) {
+        throw "parent parameter needs to be a DOM node";
+      }
     }
     elem = document.querySelector("#" + id);
     if (!elem) {
@@ -5084,24 +5131,6 @@ SVGSpace = (function(superClass) {
       parent.appendChild(elem);
     }
     return elem;
-  };
-
-  SVGSpace.prototype.resize = function(w, h, evt) {
-    var k, p, ref;
-    this.size.set(w, h);
-    this.center = new Vector(w / 2, h / 2);
-    this.space.setAttribute("width", w);
-    this.space.setAttribute("height", h);
-    this.bg.setAttribute("width", w);
-    this.bg.setAttribute("height", h);
-    ref = this.items;
-    for (k in ref) {
-      p = ref[k];
-      if (p.onSpaceResize != null) {
-        p.onSpaceResize(w, h, evt);
-      }
-    }
-    return this;
   };
 
   SVGSpace.prototype.remove = function(item) {
