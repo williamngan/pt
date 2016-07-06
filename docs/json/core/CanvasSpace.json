@@ -8,21 +8,26 @@
             "description": "<h2>Create a CanvasSpace which represents a HTML Canvas Space</h2>", 
             "name": "CanvasSpace", 
             "param": [
-                "<p><code>id</code> an id property which refers to the \"id\" attribute of the canvas element in DOM. If no canvas element with this id is found, a new canvas element will be created.</p>", 
-                "<p><code>bgcolor</code> a background color string to specify the canvas background. Default is <code>false</code> which shows a transparent background.</p>", 
-                "<p><code>context</code> a string of canvas context type, such as \"2d\" or \"webgl\". Default is \"2d\"</p>"
+                "<p><code>id</code> an optional string which refers to the \"id\" attribute of either a <code>&lt;div&gt;</code> container in which a <code>&lt;canvas&gt;</code> will be created within, or an existing <code>&lt;canvas&gt;</code> itself. If not defined, a <code>&lt;div id=\"pt_container\"&gt;&lt;canvas id=\"pt\" /&gt;&lt;/div&gt;</code> will be added to DOM.</p>", 
+                "<p><code>callback</code> an optional callback function with parameters <code>function (boundingBox, spaceElement)</code> which will get called when canvas is appended and ready. A \"ready\" event will also be fired from the <code>&lt;canvas&gt;</code> element when it's appended, which you may track with <code>instance.space.addEventListener(\"ready\")</code></p>"
             ], 
-            "pname": "id='pt_space', bgcolor=false, context='2d'"
+            "pname": "id, callback"
         }, 
         {
-            "description": "<h2>Place a new canvas element into a container dom element. When canvas is ready, a \"ready\" event will be fired. Track this event with <code>space.canvas.addEventListener(\"ready\")</code></h2>", 
+            "description": "<h2><code>display(...)</code> function is deprecated as of 0.2.0. You can now set the canvas element directly in the constructor, and customize it using <code>setup()</code>.</h2>", 
             "name": "display", 
+            "param": [], 
+            "pname": ""
+        }, 
+        {
+            "description": "<h2>Set up various options for CanvasSpace. The <code>opt</code> parameter is an object with the following fields. This is usually used during instantiation, eg <code>new CanvasSpace(...).setup( { opt } )</code></h2>", 
+            "name": "setup", 
             "param": [
-                "<p><code>parent_id</code> the DOM element into which the canvas element should be appended</p>", 
-                "<p><code>readyCallback</code> a callback function with parameters <code>width</code>, <code>height</code>, and <code>canvas_element</code>, which will get called when canvas is appended and ready.</p>", 
-                "<p><code>devicePixelSupport</code> a boolean to set if device pixel scaling should be checked. This may make drawings on retina displays look sharper but may reduce performance slightly. Default is <code>true</code>.</p>"
+                "<p><code>opt.bgcolor</code> a hex or rgba string initial background color of the canvas</p>", 
+                "<p><code>opt.resize</code> a boolean to set whether <code>&lt;canvas&gt;</code> size should auto resize to match its container's size</p>", 
+                "<p><code>opt.retina</code> a boolean to set if device pixel scaling should be checked. This may make drawings on retina displays look sharper but may reduce performance slightly. Default is <code>true</code>.</p>"
             ], 
-            "pname": "parent_id=\"#pt\", readyCallback, devicePixelSupport=true", 
+            "pname": "opt", 
             "return": "<p>this CanvasSpace</p>"
         }, 
         {
@@ -65,11 +70,6 @@
         {
             "description": "<h2>A property to store canvas DOM element</h2>", 
             "name": "space", 
-            "param": []
-        }, 
-        {
-            "description": "<h2>A boolean property to track if the canvas element is added to dom or not</h2>", 
-            "name": "appended", 
             "param": []
         }
     ], 

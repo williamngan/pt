@@ -1,15 +1,17 @@
 {
     "cls": "SVGSpace", 
-    "description": "", 
+    "description": "<h3>SVGSpace is an extension of <code>DOMSpace</code> that represents an svg element in DOM.</h3>", 
     "extend": "DOMSpace", 
     "file": "SVGSpace.coffee", 
     "funcs": [
         {
-            "description": "<h2>This overrides Space's <code>resize</code> function. It's a callback function for window's resize event. Keep track of this with <code>onSpaceResize(w,h,evt)</code> callback in your added objects.</h2>", 
-            "name": "resize", 
-            "param": [], 
-            "pname": "w, h, evt", 
-            "return": "<p>this CanvasSpace</p>"
+            "description": "<h2>Create a DOMSpace which represents a HTML DOM</h2>", 
+            "name": "SVGSpace", 
+            "param": [
+                "<p><code>id</code> an id property which refers to the \"id\" attribute of the element in DOM.</p>", 
+                "<p><code>callback</code> an optional callback function with parameters <code>function (boundingBox, spaceElement)</code> which will get called when svg is appended and ready. A \"ready\" event will also be fired from the space's element when it's appended, which you may track with <code>instance.space.addEventListener(\"ready\")</code></p>"
+            ], 
+            "pname": "id, callback"
         }, 
         {
             "demo": "svgspace.remove", 

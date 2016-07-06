@@ -9,21 +9,26 @@
         "description": "<h2>Create a CanvasSpace which represents a HTML Canvas Space</h2>", 
         "name": "CanvasSpace", 
         "param": [
-          "<p><code>id</code> an id property which refers to the \"id\" attribute of the canvas element in DOM. If no canvas element with this id is found, a new canvas element will be created.</p>", 
-          "<p><code>bgcolor</code> a background color string to specify the canvas background. Default is <code>false</code> which shows a transparent background.</p>", 
-          "<p><code>context</code> a string of canvas context type, such as \"2d\" or \"webgl\". Default is \"2d\"</p>"
+          "<p><code>id</code> an optional string which refers to the \"id\" attribute of either a <code>&lt;div&gt;</code> container in which a <code>&lt;canvas&gt;</code> will be created within, or an existing <code>&lt;canvas&gt;</code> itself. If not defined, a <code>&lt;div id=\"pt_container\"&gt;&lt;canvas id=\"pt\" /&gt;&lt;/div&gt;</code> will be added to DOM.</p>", 
+          "<p><code>callback</code> an optional callback function with parameters <code>function (boundingBox, spaceElement)</code> which will get called when canvas is appended and ready. A \"ready\" event will also be fired from the <code>&lt;canvas&gt;</code> element when it's appended, which you may track with <code>instance.space.addEventListener(\"ready\")</code></p>"
         ], 
-        "pname": "id='pt_space', bgcolor=false, context='2d'"
+        "pname": "id, callback"
       }, 
       {
-        "description": "<h2>Place a new canvas element into a container dom element. When canvas is ready, a \"ready\" event will be fired. Track this event with <code>space.canvas.addEventListener(\"ready\")</code></h2>", 
+        "description": "<h2><code>display(...)</code> function is deprecated as of 0.2.0. You can now set the canvas element directly in the constructor, and customize it using <code>setup()</code>.</h2>", 
         "name": "display", 
+        "param": [], 
+        "pname": ""
+      }, 
+      {
+        "description": "<h2>Set up various options for CanvasSpace. The <code>opt</code> parameter is an object with the following fields. This is usually used during instantiation, eg <code>new CanvasSpace(...).setup( { opt } )</code></h2>", 
+        "name": "setup", 
         "param": [
-          "<p><code>parent_id</code> the DOM element into which the canvas element should be appended</p>", 
-          "<p><code>readyCallback</code> a callback function with parameters <code>width</code>, <code>height</code>, and <code>canvas_element</code>, which will get called when canvas is appended and ready.</p>", 
-          "<p><code>devicePixelSupport</code> a boolean to set if device pixel scaling should be checked. This may make drawings on retina displays look sharper but may reduce performance slightly. Default is <code>true</code>.</p>"
+          "<p><code>opt.bgcolor</code> a hex or rgba string initial background color of the canvas</p>", 
+          "<p><code>opt.resize</code> a boolean to set whether <code>&lt;canvas&gt;</code> size should auto resize to match its container's size</p>", 
+          "<p><code>opt.retina</code> a boolean to set if device pixel scaling should be checked. This may make drawings on retina displays look sharper but may reduce performance slightly. Default is <code>true</code>.</p>"
         ], 
-        "pname": "parent_id=\"#pt\", readyCallback, devicePixelSupport=true", 
+        "pname": "opt", 
         "return": "<p>this CanvasSpace</p>"
       }, 
       {
@@ -66,11 +71,6 @@
       {
         "description": "<h2>A property to store canvas DOM element</h2>", 
         "name": "space", 
-        "param": []
-      }, 
-      {
-        "description": "<h2>A boolean property to track if the canvas element is added to dom or not</h2>", 
-        "name": "appended", 
         "param": []
       }
     ], 
@@ -236,14 +236,16 @@
         "name": "clone", 
         "param": [], 
         "pname": ""
+      }, 
+      {
+        "description": "<h2>Describe this color as a text string</h2>", 
+        "name": "toString", 
+        "param": [], 
+        "pname": "", 
+        "return": "<p>\"Color(mode) x, y, z, alpha\" text</p>"
       }
     ], 
     "props": [
-      {
-        "description": "<h2>alpha value from 0 to 1, where 0 is fully transparent, and 1 is fully opaque</h2>", 
-        "name": "alpha", 
-        "param": []
-      }, 
       {
         "description": "<h2>color mode id such as \"lab\" or \"rgb\"</h2>", 
         "name": "mode", 
@@ -711,23 +713,37 @@
         "name": "DOMSpace", 
         "param": [
           "<p><code>id</code> an id property which refers to the \"id\" attribute of the element in DOM.</p>", 
-          "<p><code>bgcolor</code> a background color string to specify the background. Default is <code>false</code> which shows a transparent background.</p>", 
-          "<p><code>context</code> a string of dom context type, such as \"html\" or \"svg\". Default is \"html\"</p>"
+          "<p><code>callback</code> an optional callback function with parameters <code>function (boundingBox, spaceElement)</code> which will get called when element is appended and ready. A \"ready\" event will also be fired from the space's element when it's appended, which you may track with <code>instance.space.addEventListener(\"ready\")</code></p>", 
+          "<p><code>spaceElement</code> a string of space's dom element name, such as \"div\" or \"svg\" or . Default is \"div\"</p>"
         ], 
-        "pname": "id='pt_space', bgcolor=false, context='html'"
+        "pname": "id, callback, spaceElement=\"div\""
       }, 
       {
-        "description": "<h2>Place a new canvas element into a container dom element. When canvas is ready, a \"ready\" event will be fired. Track this event with <code>space.canvas.addEventListener(\"ready\")</code></h2>", 
+        "description": "<h2><code>display(...)</code> function is deprecated as of 0.2.0. You can now set the canvas element directly in the constructor, and customize it using <code>setup()</code>.</h2>", 
         "name": "display", 
+        "param": [], 
+        "pname": ""
+      }, 
+      {
+        "description": "<h2>Set up various options for CanvasSpace. The <code>opt</code> parameter is an object with the following fields. This is usually used during instantiation, eg <code>new CanvasSpace(...).setup( { opt } )</code></h2>", 
+        "name": "setup", 
         "param": [
-          "<p><code>parent_id</code> the DOM element into which the canvas element should be appended</p>", 
-          "<p><code>readyCallback</code> a callback function with parameters <code>width</code>, <code>height</code>, and <code>canvas_element</code>, which will get called when canvas is appended and ready.</p>"
+          "<p><code>opt.bgcolor</code> a hex or rgba string initial background color of the canvas</p>", 
+          "<p><code>opt.resize</code> a boolean to set whether <code>&lt;canvas&gt;</code> size should auto resize to match its container's size</p>"
         ], 
-        "pname": "parent_id=\"#pt\", readyCallback", 
+        "pname": "opt", 
+        "return": "<p>this DOMSpace</p>"
+      }, 
+      {
+        "demo": "canvasspace.resize", 
+        "description": "<h2>This overrides Space's <code>resize</code> function. It's a callback function for window's resize event when <code>autoResize</code> is true. Keep track of this with <code>onSpaceResize(w,h,evt)</code> callback in your added objects.</h2>", 
+        "name": "resize", 
+        "param": [], 
+        "pname": "w, h, evt", 
         "return": "<p>this CanvasSpace</p>"
       }, 
       {
-        "description": "<h2>Set whether the canvas element should resize when its container is resized. Default will auto size</h2>", 
+        "description": "<h2>Set whether the svg element should resize when its container is resized.</h2>", 
         "name": "autoResize", 
         "param": [
           "<p><code>auto</code> a boolean value indicating if auto size is set. Default is <code>true</code>.</p>"
@@ -736,12 +752,10 @@
         "return": "<p>this CanvasSpace</p>"
       }, 
       {
-        "demo": "canvasspace.resize", 
-        "description": "<h2>This overrides Space's <code>resize</code> function. It's a callback function for window's resize event. Keep track of this with <code>onSpaceResize(w,h,evt)</code> callback in your added objects.</h2>", 
-        "name": "resize", 
+        "description": "<h2>Clear the space. This removes all the child nodes inside <code>space</code></h2>", 
+        "name": "clear", 
         "param": [], 
-        "pname": "w, h, evt", 
-        "return": "<p>this CanvasSpace</p>"
+        "pname": ""
       }, 
       {
         "description": "<h2>Overrides Space's <code>animate</code> function</h2>", 
@@ -757,11 +771,6 @@
       {
         "description": "<h2>A property to store the DOM element</h2>", 
         "name": "space", 
-        "param": []
-      }, 
-      {
-        "description": "<h2>A boolean property to track if the element is added to container or not</h2>", 
-        "name": "appended", 
         "param": []
       }
     ], 
@@ -2480,7 +2489,7 @@
         "param": [
           "<p><code>id</code> an id property to identify this space</p>"
         ], 
-        "pname": "id='space'"
+        "pname": "id"
       }, 
       {
         "demo": "space.refresh", 

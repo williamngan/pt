@@ -2,8 +2,9 @@ var Space;
 
 Space = (function() {
   function Space(id) {
-    if (id == null) {
-      id = 'space';
+    if (typeof id !== 'string' || id.length === 0) {
+      throw "id parameter is not valid";
+      return false;
     }
     this.id = id;
     this.size = new Vector();

@@ -6,19 +6,15 @@ var CanvasSpace,
 CanvasSpace = (function(superClass) {
   extend(CanvasSpace, superClass);
 
-  function CanvasSpace(id, bgcolor, context) {
-    if (id == null) {
-      id = 'pt_space';
-    }
-    if (bgcolor == null) {
-      bgcolor = false;
-    }
-    if (context == null) {
-      context = '2d';
-    }
+  function CanvasSpace(id, callback) {
     this._resizeHandler = bind(this._resizeHandler, this);
-    CanvasSpace.__super__.constructor.apply(this, arguments);
-    this.space = document.querySelector("#" + this.id);
+    var _existed, _selector, b;
+    if (!id) {
+      id = 'pt';
+    }
+    CanvasSpace.__super__.constructor.call(this, id);
+    this.id = this.id[0] === "#" ? this.id.substr(1) : this.id;
+    this.space = null;
     this.bound = null;
     this.boundRect = {
       top: 0,
@@ -27,54 +23,77 @@ CanvasSpace = (function(superClass) {
       height: 0
     };
     this.pixelScale = 1;
-    this.appended = true;
-    if (!this.space) {
-      this.space = document.createElement("canvas");
-      this.space.setAttribute("id", this.id);
-      this.appended = false;
+    this._autoResize = true;
+    _selector = document.querySelector("#" + this.id);
+    _existed = true;
+    if (!_selector) {
+      this.bound = this._createElement("div", this.id + "_container");
+      this.space = this._createElement("canvas", this.id);
+      this.bound.appendChild(this.space);
+      document.body.appendChild(this.bound);
+      _existed = false;
+    } else if (_selector.nodeName.toLowerCase() !== "canvas") {
+      this.bound = _selector;
+      this.space = this._createElement("canvas", this.id + "_canvas");
+      this.bound.appendChild(this.space);
+    } else {
+      this.space = _selector;
+      this.bound = this.space.parentElement;
+    }
+    if (_existed) {
+      b = this.bound.getBoundingClientRect();
+      this.resize(b.width, b.height);
     }
     this._mdown = false;
     this._mdrag = false;
-    this.bgcolor = bgcolor;
-    this.ctx = this.space.getContext(context);
+    setTimeout(this._ready.bind(this, callback), 50);
+    this.bgcolor = "#F3F7FA";
+    this.ctx = this.space.getContext('2d');
   }
 
-  CanvasSpace.prototype.display = function(parent_id, readyCallback, devicePixelSupport) {
-    var r1, r2;
-    if (parent_id == null) {
-      parent_id = "#pt";
+  CanvasSpace.prototype._createElement = function(elem, id) {
+    var d;
+    if (elem == null) {
+      elem = "div";
     }
-    if (devicePixelSupport == null) {
-      devicePixelSupport = true;
-    }
-    if (!this.appended) {
-      this.bound = document.querySelector(parent_id);
+    d = document.createElement(elem);
+    d.setAttribute("id", id);
+    return d;
+  };
+
+  CanvasSpace.prototype._ready = function(callback) {
+    if (this.bound) {
       this.boundRect = this.bound.getBoundingClientRect();
-      this.pixelScale = 1;
-      if (devicePixelSupport) {
-        r1 = window.devicePixelRatio || 1;
-        r2 = this.ctx.webkitBackingStorePixelRatio || this.ctx.mozBackingStorePixelRatio || this.ctx.msBackingStorePixelRatio || this.ctx.oBackingStorePixelRatio || this.ctx.backingStorePixelRatio || 1;
-        this.pixelScale = r1 / r2;
+      this.resize(this.boundRect.width, this.boundRect.height);
+      this.autoResize(this._autoResize);
+      if (this.bgcolor) {
+        this.clear(this.bgcolor);
       }
-      if (this.bound) {
-        this.resize(this.boundRect.width, this.boundRect.height);
-        this.autoResize(true);
-        if (this.space.parentNode !== this.bound) {
-          this.bound.appendChild(this.space);
-        }
-        this.appended = true;
-        setTimeout((function() {
-          this.space.dispatchEvent(new Event('ready'));
-          if (this.bgcolor) {
-            this.clear(this.bgcolor);
-          }
-          if (readyCallback) {
-            return readyCallback(this.boundRect.width, this.boundRect.height, this.space);
-          }
-        }).bind(this));
-      } else {
-        throw 'Cannot add canvas to element ' + parent_id;
+      this.space.dispatchEvent(new Event('ready'));
+      if (callback && typeof callback === "function") {
+        return callback(this.boundRect, this.space);
       }
+    } else {
+      throw "Cannot initiate #" + this.id + " element";
+    }
+  };
+
+  CanvasSpace.prototype.display = function() {
+    console.warn("space.display(...) function is deprecated as of version 0.2.0. You can now set the canvas element in the constructor. Please see the release note for details.");
+    return this;
+  };
+
+  CanvasSpace.prototype.setup = function(opt) {
+    var r1, r2;
+    if (opt.bgcolor) {
+      this.bgcolor = opt.bgcolor;
+    }
+    this._autoResize = opt.resize !== false ? true : false;
+    this.pixelScale = 1;
+    if (opt.retina !== false) {
+      r1 = window.devicePixelRatio || 1;
+      r2 = this.ctx.webkitBackingStorePixelRatio || this.ctx.mozBackingStorePixelRatio || this.ctx.msBackingStorePixelRatio || this.ctx.oBackingStorePixelRatio || this.ctx.backingStorePixelRatio || 1;
+      this.pixelScale = r1 / r2;
     }
     return this;
   };

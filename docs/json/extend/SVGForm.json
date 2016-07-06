@@ -8,7 +8,7 @@
             "description": "<h2>Create a new Form which is based on SVG</h2>", 
             "name": "SVGForm", 
             "param": [
-                "<p><code>space</code> A space that has a valid context for this form. In this case, the space should represent an html canvas.</p>"
+                "<p><code>space</code> A space that has a valid context for this form. In this case, the space should represent an <svg>.</p>"
             ], 
             "pname": "space", 
             "return": "<p>a new Form object</p>"
@@ -18,7 +18,7 @@
             "eg": "<p><code>form.fill(\"#F90\")</code> <code>form.fill(\"rgba(0,0,0,.5\")</code> <code>form.fill(false)</code></p>", 
             "name": "fill", 
             "param": [
-                "<p><code>c</code> fill color which can be as color, gradient, or pattern. (See <a href=\"https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillStyle\">canvas documentation</a>) Default is <code>false</code> (transparent)</p>"
+                "<p><code>c</code> fill color. Default is <code>false</code> (transparent)</p>"
             ], 
             "pname": "c", 
             "return": "<p>this Form</p>"
@@ -28,7 +28,7 @@
             "eg": "<p><code>form.stroke(\"#F90\")</code> <code>form.stroke(\"rgba(0,0,0,.5\")</code> <code>form.stroke(false)</code> <code>form.stroke(\"#000\", 0.5, 'round')</code></p>", 
             "name": "stroke", 
             "param": [
-                "<p><code>c</code> stroke color which can be as color, gradient, or pattern. (See <a href=\"https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/strokeStyle\">canvas documentation</a>) Default is false (transparent)</p>", 
+                "<p><code>c</code> stroke color. Default is false (transparent)</p>", 
                 "<p><code>width</code> Optional value (can be floating point) to set line width</p>", 
                 "<p><code>joint</code> Optional string to set line joint style. Can be \"miter\", \"bevel\", or \"round\".</p>"
             ], 
@@ -37,7 +37,7 @@
         }, 
         {
             "demo": "svgform.scope", 
-            "description": "<h2>Set the current group scope by an ID, and optionally define the group's parent element</h2>", 
+            "description": "<h2>Set this form's group scope by an ID, and optionally define the group's parent element. A group scope keeps track of DOM elements by their generated IDs, and updates their properties as needed. See also <code>enterScope()</code>.</h2>", 
             "eg": "<p><code>form.scope(\"dot\")</code> <code>form.scope(\"dot\", elem)</code></p>", 
             "name": "scope", 
             "param": [
@@ -48,13 +48,19 @@
             "return": "<p>context object</p>"
         }, 
         {
-            "description": "<h2>Set the current group scope based on an item added to Space. The item must have an <code>animateID</code> property. Its group id will become \"item-##\".</h2>", 
-            "name": "getScope", 
+            "description": "<h2>Set the current group scope to an item added into space, in order to keep track of any point, circle, etc created within it. The item must have an <code>animateID</code> property, so that elements created within the item will have generated IDs like \"item-{animateID}-{count}\".</h2>", 
+            "name": "enterScope", 
             "param": [
-                "<p><code>item</code> an item that's added to space.</p>"
+                "<p><code>item</code> an item that's added to space (see <code>space.add(...)</code>) and has an <code>animateID</code> property</p>"
             ], 
             "pname": "item", 
             "return": "<p>context object</p>"
+        }, 
+        {
+            "description": "<h2><code>getScope(...)</code> function is deprecated as of 0.2.0. Use <code>enterScope()</code> instead.</h2>", 
+            "name": "getScope", 
+            "param": [], 
+            "pname": "item"
         }, 
         {
             "description": "<h2>Get next available id in the current group</h2>", 
@@ -227,7 +233,7 @@
             "description": "<h2>A static function to draw a point</h2>", 
             "name": "point", 
             "param": [
-                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>ctx</code> rendering context object</p>", 
                 "<p><code>pt</code> a Point object</p>", 
                 "<p><code>halfsize</code> radius or half size of the point. Default is 2.</p>", 
                 "<p><code>fill</code> not used - already defined in ctx</p>", 
@@ -240,7 +246,7 @@
             "description": "<h2>A static function similar to <code>SVGForm.point()</code> but draw a series of points</h2>", 
             "name": "points", 
             "param": [
-                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>ctx</code> rendering context object</p>", 
                 "<p><code>pts</code> an array of Points</p>", 
                 "<p><code>halfsize, fill, stroke, circle</code> same parameters as in <code>SVGForm.point()</code></p>"
             ], 
@@ -250,7 +256,7 @@
             "description": "<h2>A static function to draw a line</h2>", 
             "name": "line", 
             "param": [
-                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>ctx</code> rendering context object</p>", 
                 "<p><code>pair</code> a Pair object</p>"
             ], 
             "pname": "ctx, pair"
@@ -259,7 +265,7 @@
             "description": "<h2>A static function to draw a line</h2>", 
             "name": "lines", 
             "param": [
-                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>ctx</code> rendering context object</p>", 
                 "<p><code>pairs</code> an array of Pair objects</p>"
             ], 
             "pname": "ctx, pairs"
@@ -268,7 +274,7 @@
             "description": "<h2>A static function to draw a rectangle</h2>", 
             "name": "rect", 
             "param": [
-                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>ctx</code> rendering context object</p>", 
                 "<p><code>pair</code> a Pair object</p>", 
                 "<p><code>fill</code> not used - already defined in ctx</p>", 
                 "<p><code>stroke</code> not used - already defined in ctx</p>"
@@ -279,7 +285,7 @@
             "description": "<h2>A static  function to draw a circle</h2>", 
             "name": "circle", 
             "param": [
-                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>ctx</code> rendering context object</p>", 
                 "<p><code>c</code> a Circle object</p>", 
                 "<p><code>fill</code> not used - already defined in ctx</p>", 
                 "<p><code>stroke</code> not used - already defined in ctx</p>"
@@ -290,7 +296,7 @@
             "description": "<h2>A static function to draw a polygon</h2>", 
             "name": "polygon", 
             "param": [
-                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>ctx</code> rendering context object</p>", 
                 "<p><code>pts</code> an array of Points</p>", 
                 "<p><code>closePath</code> a boolean value to specify if the path should be closed (joining last point with first point)</p>", 
                 "<p><code>fill</code> not used - already defined in ctx</p>", 
@@ -302,7 +308,7 @@
             "description": "<h2>A static function to draw a triangle</h2>", 
             "name": "triangle", 
             "param": [
-                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>ctx</code> rendering context object</p>", 
                 "<p><code>tri</code> a Triangle object</p>", 
                 "<p><code>fill</code> not used - already defined in ctx</p>", 
                 "<p><code>stroke</code> not used - already defined in ctx</p>"
@@ -313,7 +319,7 @@
             "description": "<h2>A static function to draw a curve as straight polygon segments. In future, this should be converted to bezier curves.</h2>", 
             "name": "curve", 
             "param": [
-                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>ctx</code> rendering context object</p>", 
                 "<p><code>pts</code> an array of Points</p>"
             ], 
             "pname": "ctx, pts, closePath=false"
@@ -322,7 +328,7 @@
             "description": "<h2>A static function to draw text</h2>", 
             "name": "text", 
             "param": [
-                "<p><code>ctx</code> canvas rendering context</p>", 
+                "<p><code>ctx</code> rendering context object</p>", 
                 "<p><code>pt</code> a Point object to specify the anchor point</p>", 
                 "<p><code>txt</code> a string of text to draw</p>", 
                 "<p><code>maxWidth</code> not applicable in svg</p>", 
