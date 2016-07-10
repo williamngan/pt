@@ -1,0 +1,12 @@
+body {
+  font: 14px/1.5 "Roboto Slab", sans-serif; }
+
+#menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 40px;
+  width: 200px; }
+
+#content {
+  margin-left: 300px; }
