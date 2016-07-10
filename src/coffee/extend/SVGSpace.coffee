@@ -1,10 +1,10 @@
-# ### SVGSpace is an extension of `DOMSpace` that represents an svg element in DOM.
+# ### SVGSpace is an extension of DOMSpace that represents an svg element in DOM. Also refers to DOMSpace for inherited methods.
 
 class SVGSpace extends DOMSpace
 
-  # ## Create a DOMSpace which represents a HTML DOM
-  # @param `id` an id property which refers to the "id" attribute of the element in DOM.
-  # @param `callback` an optional callback function with parameters `function (boundingBox, spaceElement)` which will get called when svg is appended and ready. A "ready" event will also be fired from the space's element when it's appended, which you may track with `instance.space.addEventListener("ready")`
+  # ## Create a SVGSpace which represents a svg element
+  # @param `id` an optional string which refers to the "id" attribute of a DOM element. It can either refer to an existing `<svg>`, or a `<div>` container in which a new `<svg>` will be created. If left empty, a `<div id="pt"><svg id="pt_svg" /></div>` will be added to DOM. Use css to customize its appearance if needed.
+  # @param `callback` an optional callback `function(boundingBox, spaceElement)` to be called when element is appended and ready. A "ready" event will also be fired from the space's element when it's appended, which can be tracked with `spaceInstance.space.addEventListener("ready")`
   constructor: ( id, callback ) ->
     super( id, callback, 'svg')
 
@@ -27,7 +27,10 @@ class SVGSpace extends DOMSpace
     return d
 
 
-
+  # ## A static helper method to add a svg element inside a node. Usually you don't need to use this directly. See methods in `SVGForm` instead.
+  # @param `parent` the parent node element, or `null` to use current `<svg>` as parent.
+  # @param `name` a string of element name,  such as `"rect"` or `"circle"`
+  # @param `id` id attribute of the new element
   @svgElement: (parent, name, id) ->
 
     if (!parent || !parent.appendChild)

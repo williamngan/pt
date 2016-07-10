@@ -977,7 +977,7 @@ DOMSpace = (function(superClass) {
   };
 
   DOMSpace.prototype.display = function() {
-    console.warn("space.display(...) function is deprecated as of version 0.2.0. You can now set the canvas element in the constructor. Please see the release note for details.");
+    console.warn("space.display(...) function is deprecated as of version 0.2.0. You can now set the DOM element in the constructor. Please see the release note for details.");
     return this;
   };
 

@@ -3,7 +3,7 @@ $link-hover: #4a11df;
 $link-menu: #345;
 $link-hover: lighten( $link, 10 );
 $grey-medium: #89a;
-$grey-dark: #556070;
+$grey-dark: #678;
 
 $bg: #f1f3f7;
 
@@ -200,8 +200,12 @@ section.inherited ul {
 .param .group code {
   padding-right: 5px;
   padding-left: 0;
+  color: $grey-dark;
 }
 
+h2 code {
+  color: $grey-dark;
+}
 
 // head
 #head {

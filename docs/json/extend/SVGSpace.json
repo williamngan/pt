@@ -1,15 +1,15 @@
 {
     "cls": "SVGSpace", 
-    "description": "<h3>SVGSpace is an extension of <code>DOMSpace</code> that represents an svg element in DOM.</h3>", 
+    "description": "<h3>SVGSpace is an extension of DOMSpace that represents an svg element in DOM. Also refers to DOMSpace for inherited methods.</h3>", 
     "extend": "DOMSpace", 
     "file": "SVGSpace.coffee", 
     "funcs": [
         {
-            "description": "<h2>Create a DOMSpace which represents a HTML DOM</h2>", 
+            "description": "<h2>Create a SVGSpace which represents a svg element</h2>", 
             "name": "SVGSpace", 
             "param": [
-                "<p><code>id</code> an id property which refers to the \"id\" attribute of the element in DOM.</p>", 
-                "<p><code>callback</code> an optional callback function with parameters <code>function (boundingBox, spaceElement)</code> which will get called when svg is appended and ready. A \"ready\" event will also be fired from the space's element when it's appended, which you may track with <code>instance.space.addEventListener(\"ready\")</code></p>"
+                "<p><code>id</code> an optional string which refers to the \"id\" attribute of a DOM element. It can either refer to an existing <code>&lt;svg&gt;</code>, or a <code>&lt;div&gt;</code> container in which a new <code>&lt;svg&gt;</code> will be created. If left empty, a <code>&lt;div id=\"pt\"&gt;&lt;svg id=\"pt_svg\" /&gt;&lt;/div&gt;</code> will be added to DOM. Use css to customize its appearance if needed.</p>", 
+                "<p><code>callback</code> an optional callback <code>function(boundingBox, spaceElement)</code> to be called when element is appended and ready. A \"ready\" event will also be fired from the space's element when it's appended, which can be tracked with <code>spaceInstance.space.addEventListener(\"ready\")</code></p>"
             ], 
             "pname": "id, callback"
         }, 
@@ -32,5 +32,16 @@
         }
     ], 
     "props": [], 
-    "statics": []
+    "statics": [
+        {
+            "description": "<h2>A static helper method to add a svg element inside a node. Usually you don't need to use this directly. See methods in <code>SVGForm</code> instead.</h2>", 
+            "name": "svgElement", 
+            "param": [
+                "<p><code>parent</code> the parent node element, or <code>null</code> to use current <code>&lt;svg&gt;</code> as parent.</p>", 
+                "<p><code>name</code> a string of element name,  such as <code>\"rect\"</code> or <code>\"circle\"</code></p>", 
+                "<p><code>id</code> id attribute of the new element</p>"
+            ], 
+            "pname": "parent, name, id"
+        }
+    ]
 }
