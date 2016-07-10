@@ -1,7 +1,7 @@
 {
   "CanvasSpace": {
     "cls": "CanvasSpace", 
-    "description": "<h3>CanvasSpace is a space that represents a html canvas. It creates a new canvas or get an existing one in DOM by its <code>id</code> attribute. It also provide methods specific to html canvas, such as tracking resize and mouse position.</h3>", 
+    "description": "<h3>CanvasSpace is a space that represents a html canvas. It creates a new canvas or get an existing one in DOM by its id attribute. It also provide methods specific to html canvas, such as tracking resize and mouse position.</h3>", 
     "extend": "Space", 
     "file": "CanvasSpace.coffee", 
     "funcs": [
@@ -9,24 +9,24 @@
         "description": "<h2>Create a CanvasSpace which represents a HTML Canvas Space</h2>", 
         "name": "CanvasSpace", 
         "param": [
-          "<p><code>id</code> an optional string which refers to the \"id\" attribute of either a <code>&lt;div&gt;</code> container in which a <code>&lt;canvas&gt;</code> will be created within, or an existing <code>&lt;canvas&gt;</code> itself. If not defined, a <code>&lt;div id=\"pt_container\"&gt;&lt;canvas id=\"pt\" /&gt;&lt;/div&gt;</code> will be added to DOM.</p>", 
-          "<p><code>callback</code> an optional callback function with parameters <code>function (boundingBox, spaceElement)</code> which will get called when canvas is appended and ready. A \"ready\" event will also be fired from the <code>&lt;canvas&gt;</code> element when it's appended, which you may track with <code>instance.space.addEventListener(\"ready\")</code></p>"
+          "<p><code>id</code> an optional string which refers to the \"id\" attribute of a DOM element. It can either refer to an existing <code>&lt;canvas&gt;</code>, or a <code>&lt;div&gt;</code> container in which a new <code>&lt;canvas&gt;</code> will be created. If left empty, a <code>&lt;div id=\"pt_container\"&gt;&lt;canvas id=\"pt\" /&gt;&lt;/div&gt;</code> will be added to DOM. Use css to customize its appearance if needed.</p>", 
+          "<p><code>callback</code> an optional callback <code>function(boundingBox, spaceElement)</code> to be called when canvas is appended and ready. A \"ready\" event will also be fired from the <code>&lt;canvas&gt;</code> element when it's appended, which can be traced with <code>spaceInstance.space.addEventListener(\"ready\")</code></p>"
         ], 
         "pname": "id, callback"
       }, 
       {
-        "description": "<h2><code>display(...)</code> function is deprecated as of 0.2.0. You can now set the canvas element directly in the constructor, and customize it using <code>setup()</code>.</h2>", 
+        "description": "<h2><code>display(...)</code> is deprecated as of 0.2.0. You can now set the canvas element directly in the constructor, and customize it using <code>setup()</code>.</h2>", 
         "name": "display", 
         "param": [], 
         "pname": ""
       }, 
       {
-        "description": "<h2>Set up various options for CanvasSpace. The <code>opt</code> parameter is an object with the following fields. This is usually used during instantiation, eg <code>new CanvasSpace(...).setup( { opt } )</code></h2>", 
+        "description": "<h2>Set up various options for CanvasSpace. The <code>opt</code> parameter is an object with the following fields. This is usually set during instantiation, eg <code>new CanvasSpace(...).setup( { opt } )</code></h2>", 
         "name": "setup", 
         "param": [
-          "<p><code>opt.bgcolor</code> a hex or rgba string initial background color of the canvas</p>", 
-          "<p><code>opt.resize</code> a boolean to set whether <code>&lt;canvas&gt;</code> size should auto resize to match its container's size</p>", 
-          "<p><code>opt.retina</code> a boolean to set if device pixel scaling should be checked. This may make drawings on retina displays look sharper but may reduce performance slightly. Default is <code>true</code>.</p>"
+          "<p><code>opt.bgcolor</code> a hex or rgba string to set initial background color of the canvas. You may also change it later with <code>clear()</code></p>", 
+          "<p><code>opt.resize</code> a boolean to set whether <code>&lt;canvas&gt;</code> size should auto resize to match its container's size. You can also set it manually with <code>autoSize()</code></p>", 
+          "<p><code>opt.retina</code> a boolean to set if device pixel scaling should be used. This may make drawings on retina displays look sharper but may reduce performance slightly. Default is <code>true</code>.</p>"
         ], 
         "pname": "opt", 
         "return": "<p>this CanvasSpace</p>"
@@ -704,7 +704,7 @@
   }, 
   "DOMSpace": {
     "cls": "DOMSpace", 
-    "description": "<h3>DOMSpace is a space that represents a html dom. It is similar to <code>CanvasSpace</code> but usually used as a space for SVG or HTML.</h3>", 
+    "description": "<h3>DOMSpace is a space that represents a html dom. It is similar to CanvasSpace but usually used as a space for SVG or HTML.</h3>", 
     "extend": "Space", 
     "file": "DOMSpace.coffee", 
     "funcs": [
@@ -713,34 +713,33 @@
         "name": "DOMSpace", 
         "param": [
           "<p><code>id</code> an id property which refers to the \"id\" attribute of the element in DOM.</p>", 
-          "<p><code>callback</code> an optional callback function with parameters <code>function (boundingBox, spaceElement)</code> which will get called when element is appended and ready. A \"ready\" event will also be fired from the space's element when it's appended, which you may track with <code>instance.space.addEventListener(\"ready\")</code></p>", 
-          "<p><code>spaceElement</code> a string of space's dom element name, such as \"div\" or \"svg\" or . Default is \"div\"</p>"
+          "<p><code>callback</code> an optional callback <code>function(boundingBox, spaceElement)</code> to be called when element is appended and ready. A \"ready\" event will also be fired from the space's element when it's appended, which can be tracked with <code>spaceInstance.space.addEventListener(\"ready\")</code></p>", 
+          "<p><code>spaceElement</code> a string of space's dom element name, such as <code>\"div\"</code> or <code>\"svg\"</code> or . Default is <code>\"div\"</code></p>"
         ], 
         "pname": "id, callback, spaceElement=\"div\""
       }, 
       {
-        "description": "<h2><code>display(...)</code> function is deprecated as of 0.2.0. You can now set the canvas element directly in the constructor, and customize it using <code>setup()</code>.</h2>", 
+        "description": "<h2><code>display(...)</code> is deprecated as of 0.2.0. You can now set the DOM element directly in the constructor, and customize it using <code>setup()</code>.</h2>", 
         "name": "display", 
         "param": [], 
         "pname": ""
       }, 
       {
-        "description": "<h2>Set up various options for CanvasSpace. The <code>opt</code> parameter is an object with the following fields. This is usually used during instantiation, eg <code>new CanvasSpace(...).setup( { opt } )</code></h2>", 
+        "description": "<h2>Set up various options for DOMSpace. The <code>opt</code> parameter is an object with the following fields. This is usually set during instantiation, eg <code>new DOMSpace(...).setup( { opt } )</code></h2>", 
         "name": "setup", 
         "param": [
-          "<p><code>opt.bgcolor</code> a hex or rgba string initial background color of the canvas</p>", 
-          "<p><code>opt.resize</code> a boolean to set whether <code>&lt;canvas&gt;</code> size should auto resize to match its container's size</p>"
+          "<p><code>opt.bgcolor</code> a hex or rgba string to set initial background color of the element</p>", 
+          "<p><code>opt.resize</code> a boolean to set whether th element's size should auto resize to match its container's size. You can also set it manually with <code>autoSize()</code></p>"
         ], 
         "pname": "opt", 
         "return": "<p>this DOMSpace</p>"
       }, 
       {
-        "demo": "canvasspace.resize", 
         "description": "<h2>This overrides Space's <code>resize</code> function. It's a callback function for window's resize event when <code>autoResize</code> is true. Keep track of this with <code>onSpaceResize(w,h,evt)</code> callback in your added objects.</h2>", 
         "name": "resize", 
         "param": [], 
         "pname": "w, h, evt", 
-        "return": "<p>this CanvasSpace</p>"
+        "return": "<p>this DOMSpace</p>"
       }, 
       {
         "description": "<h2>Set whether the svg element should resize when its container is resized.</h2>", 

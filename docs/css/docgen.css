@@ -58,7 +58,7 @@ section {
       font-weight: 400;
       font-size: 12px;
       font-family: "Inconsolata", monospace;
-      color: #556070; }
+      color: #667788; }
   section h2 {
     font-size: 1.4em;
     font-weight: 400;
@@ -146,7 +146,11 @@ section.inherited ul {
 
 .param .group code {
   padding-right: 5px;
-  padding-left: 0; }
+  padding-left: 0;
+  color: #667788; }
+
+h2 code {
+  color: #667788; }
 
 #head {
   position: fixed;
@@ -165,7 +169,7 @@ section.inherited ul {
     font-weight: 300;
     margin-bottom: 5vh; }
     #overview h1 small {
-      color: #556070;
+      color: #667788;
       font-size: 0.5em;
       display: inline-block;
       opacity: .7; }

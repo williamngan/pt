@@ -1,11 +1,11 @@
-# ### DOMSpace is a space that represents a html dom. It is similar to `CanvasSpace` but usually used as a space for SVG or HTML.
+# ### DOMSpace is a space that represents a html dom. It is similar to CanvasSpace but usually used as a space for SVG or HTML.
 
 class DOMSpace extends Space
 
   # ## Create a DOMSpace which represents a HTML DOM
   # @param `id` an id property which refers to the "id" attribute of the element in DOM.
-  # @param `callback` an optional callback function with parameters `function (boundingBox, spaceElement)` which will get called when element is appended and ready. A "ready" event will also be fired from the space's element when it's appended, which you may track with `instance.space.addEventListener("ready")`
-  # @param `spaceElement` a string of space's dom element name, such as "div" or "svg" or . Default is "div"
+  # @param `callback` an optional callback `function(boundingBox, spaceElement)` to be called when element is appended and ready. A "ready" event will also be fired from the space's element when it's appended, which can be tracked with `spaceInstance.space.addEventListener("ready")`
+  # @param `spaceElement` a string of space's dom element name, such as `"div"` or `"svg"` or . Default is `"div"`
   constructor: ( id, callback, spaceElement="div" ) ->
     if (!id) then id = 'pt'
     super( id )
@@ -39,7 +39,7 @@ class DOMSpace extends Space
     # no mutation observer, so we set a timeout for ready event
     setTimeout( @_ready.bind(@, callback), 50 )
 
-    # A property to store canvas background color
+    # A property to store background color
     @bgcolor = false
 
     # A property to store rendering contenxt
@@ -86,21 +86,21 @@ class DOMSpace extends Space
       @space.style[k] = v
 
 
-  # ## `display(...)` function is deprecated as of 0.2.0. You can now set the canvas element directly in the constructor, and customize it using `setup()`.
+  # ## `display(...)` is deprecated as of 0.2.0. You can now set the DOM element directly in the constructor, and customize it using `setup()`.
   display: () ->
-    console.warn( "space.display(...) function is deprecated as of version 0.2.0. You can now set the canvas element in the constructor. Please see the release note for details." )
+    console.warn( "space.display(...) function is deprecated as of version 0.2.0. You can now set the DOM element in the constructor. Please see the release note for details." )
     return @
 
-  # ## Set up various options for CanvasSpace. The `opt` parameter is an object with the following fields. This is usually used during instantiation, eg `new CanvasSpace(...).setup( { opt } )`
-  # @param `opt.bgcolor` a hex or rgba string initial background color of the canvas
-  # @param `opt.resize` a boolean to set whether `<canvas>` size should auto resize to match its container's size
+  # ## Set up various options for DOMSpace. The `opt` parameter is an object with the following fields. This is usually set during instantiation, eg `new DOMSpace(...).setup( { opt } )`
+  # @param `opt.bgcolor` a hex or rgba string to set initial background color of the element
+  # @param `opt.resize` a boolean to set whether th element's size should auto resize to match its container's size. You can also set it manually with `autoSize()`
   # @return this DOMSpace
   setup: ( opt ) ->
 
     # background color
     if opt.bgcolor then @bgcolor = opt.bgcolor
 
-    # auto resize canvas to fit its container
+    # auto resize element to fit its container
     @_autoResize = if (opt.resize != false) then true else false
 
     return @
@@ -115,8 +115,7 @@ class DOMSpace extends Space
 
 
   # ## This overrides Space's `resize` function. It's a callback function for window's resize event when `autoResize` is true. Keep track of this with `onSpaceResize(w,h,evt)` callback in your added objects.
-  # @demo canvasspace.resize
-  # @return this CanvasSpace
+  # @return this DOMSpace
   resize: (w, h, evt) ->
 
     @size.set(w, h)
