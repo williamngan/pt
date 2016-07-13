@@ -1,12 +1,73 @@
 body {
-  font: 14px/1.5 "Roboto Slab", sans-serif; }
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: "Helvetica Neue", Helvetica, sans-serif; }
+
+h1, h2, h3 {
+  font-family: "Roboto Slab", sans-serif; }
+
+h1 {
+  font-weight: 300;
+  color: #334fff;
+  font-size: 3.2em;
+  margin: 1em 0 1.5em 0; }
+
+h3 {
+  font-weight: 600;
+  font-size: 1.6em;
+  margin-top: 2em; }
+
+p {
+  margin-bottom: 1.5em; }
+
+code, pre {
+  font-family: "Inconsolata", monospace;
+  font-weight: 600; }
+
+a {
+  color: #334fff;
+  text-decoration: none; }
+
+a:hover {
+  color: #0020e6; }
 
 #menu {
   position: absolute;
-  top: 0;
+  top: 2em;
   left: 0;
   padding: 40px;
   width: 200px; }
+  #menu > div {
+    margin-bottom: 15px; }
+  #menu .guide {
+    padding: 5px;
+    border-left: 3px solid #334fff;
+    color: #334fff;
+    padding-left: 15px;
+    font-family: "Roboto Slab", sans-serif;
+    font-weight: 500;
+    font-size: 1.2em; }
+    #menu .guide:hover {
+      border-left-color: #0020e6;
+      color: #0020e6; }
+    #menu .guide.selected {
+      border-left-color: #334455;
+      color: #334455; }
 
 #content {
-  margin-left: 300px; }
+  margin: 0 auto;
+  max-width: 600px; }
+
+:not(pre) > code[class*="language-"], pre[class*="language-"] {
+  background-color: #f1f3f7;
+  margin-bottom: 1.8em;
+  padding: 1.5em;
+  padding-bottom: 0px; }
+
+code[class*="language-"], pre[class*="language-"] {
+  text-shadow: none;
+  font-weight: 400;
+  font-size: 12px; }
+
+.token.operator, .token.entity, .token.url, .language-css .token.string, .style .token.string {
+  background: transparent; }

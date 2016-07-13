@@ -1,14 +1,110 @@
+$link: #334fff;
+$link-hover: #4a11df;
+$link-menu: #345;
+$link-hover: darken( $link, 15 );
+$grey-medium: #89a;
+$grey-dark: #678;
+
+$bg: #f1f3f7;
+
+$sans:  'Helvetica Neue', Helvetica, sans-serif;
+$slab: "Roboto Slab", sans-serif;
+$monospace: 'Inconsolata', monospace;
+
+
 body {
-  font: 14px/1.5 "Roboto Slab", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: $sans;
 }
 
+h1, h2, h3 {
+  font-family: $slab;
+}
+
+h1 {
+  font-weight: 300;
+  color: $link;
+  font-size: 3.2em;
+  margin: 1em 0 1.5em 0;
+}
+
+h3 {
+  font-weight: 600;
+  font-size: 1.6em;
+  margin-top: 2em;
+}
+
+p {
+  margin-bottom: 1.5em;
+}
+
+code, pre {
+  font-family: $monospace;
+  font-weight: 600;
+}
+
+
+a {
+  color: $link;
+  text-decoration: none;
+}
+
+a:hover { color: $link-hover; }
 
 #menu {
   position: absolute;
-  top: 0; left: 0; padding: 40px;
+  top: 2em; left: 0; padding: 40px;
   width: 200px;
+
+  > div {
+    margin-bottom: 15px;
+  }
+
+  .guide {
+    padding: 5px;
+    border-left: 3px solid $link;
+    color: $link;
+    padding-left: 15px;
+
+    font-family: $slab;
+    font-weight: 500;
+    font-size: 1.2em;
+
+    &:hover {
+      border-left-color: $link-hover;
+      color: $link-hover;
+    }
+
+    &.selected {
+      border-left-color: $link-menu;
+      color: $link-menu
+    }
+  }
 }
 
 #content {
-  margin-left: 300px
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+// Prism code style overrides
+:not(pre) > code[class*="language-"], pre[class*="language-"] {
+  background-color: $bg;
+  margin-bottom: 1.8em;
+
+  // quick visual workaround on the extra line on <pre> in generated markdown
+  padding: 1.5em;
+  padding-bottom: 0px;
+
+}
+
+code[class*="language-"], pre[class*="language-"] {
+  text-shadow: none;
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.token.operator, .token.entity, .token.url, .language-css .token.string, .style .token.string {
+  background: transparent;
 }
