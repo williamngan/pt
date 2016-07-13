@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pt - getting started</title>
+    <script type="text/javascript" src="../../dist/pt.min.js"></script>
+    <style type="text/css">
+        a { color: #334fff; display: block; margin: 20px 0; text-decoration: none; font: 11px/1.5 sans-serif; }
+    </style>
+
+</head>
+<body>
+
+    <div id="pt" style="width: 500px; height: 500px;"></div>
+    <a href="./quickstart.html">Back to Quick Start Guide</a>
+    <a href="https://github.com/williamngan/pt/blob/master/docs/guide/quickstart_demo.html">Source Code</a>
+
+    <script type="text/javascript">
+
+        (function() {
+
+            var space = new CanvasSpace().setup({bgcolor: "#f1f3f5"});
+            var form = new Form( space );
+
+            var dot = new Circle( 250, 250 ).setRadius( 50 );
+            var another = new Circle( 100, 100 ).setRadius( 50 );
+
+            var bot = {
+                animate: function ( time, fs, context ) {
+                    form.fill( "#999" ).text( new Point( 20, 20 ), "frame rate is " + (1000 / fs) );
+
+                    form.fill( "#5AF" ).stroke( false );
+                    dot.setRadius( Math.abs( 500 - time % 1000 ) / 50 + 50 );
+                    form.circle( dot );
+
+                    form.fill( false ).stroke( "#fc0", 5 );
+                    form.circle( another );
+
+                    var hits = another.intersectCircle( dot );
+
+                    if (hits.length > 0) {
+                        form.stroke( "#fff" ).fill( "#0C9" );
+                        form.line( new Line( hits[0] ).to( hits[1] ) );
+                        form.points( hits, 5, true );
+                    }
+                },
+
+                onMouseAction: function ( type, x, y, evt ) {
+                    if (type == "move") {
+                        another.set( x, y )
+                    }
+                }
+            };
+
+            space.add( bot );
+            space.bindMouse();
+            space.play();
+
+        })();
+    </script>
+
+
+</body>
+</html>

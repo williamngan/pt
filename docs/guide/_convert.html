@@ -1,37 +1,36 @@
 <h1>Pt: A quick start guide</h1>
 <p>This guide discusses the main concepts of Pt, and walks through the code to create a simple interactive sketch with Pt.</p>
-<p><strong>If you are learning to code,
-there's also <a href="https://medium.com/@williamngan/758f2e082da5">a friendlier, non-technical guide</a> to get you started.</strong></p>
-<p>As you know, Pt is based on the ideas of <em>Point</em>, <em>Form</em>, and <em>Space</em>. So we'll be creating a space, a form, and a point (and their extensions).</p>
+<p>If you are learning to code,
+there's also <a href="https://medium.com/@williamngan/758f2e082da5">a friendlier, non-technical guide</a> to get you started.</p>
+<p>As you know, Pt is based on the ideas of <a href="https://medium.com/@williamngan/pt-93382bf5943e"><em>Point</em>, <em>Form</em>, and <em>Space</em></a>. So we'll be creating a space, a form, and a point (and their extensions).</p>
 <h3>0. Spoiler!</h3>
-<p>Here's <a href="http://williamngan.github.io/pt/docs/start.html">the thing</a> we'll be building, and here's the <a href="https://github.com/williamngan/pt/blob/master/docs/start.html">final source code</a>.
-Pretty fun with less than 40 lines of code, right?</p>
+<p>Here's <a href="./quickstart_demo.html">the thing</a> we'll be building, and here's the <a href="https://github.com/williamngan/pt/blob/master/docs/guide/quickstart_demo.html">final source code</a>.
+Pretty fun with less than 40 lines of javascript, right?</p>
 <h3>1. Setting up and drawing a point</h3>
-<p>The simplest way to create a space is to use CanvasSpace, which is included in the core library.</p>
-<pre><code class="language-javascript">var space = new CanvasSpace().display();
+<p>The simplest way to create a space is to use <a href="../#elemCanvasSpace"><code>CanvasSpace</code></a>, which is included in the core library.</p>
+<pre><code class="language-javascript">var space = new CanvasSpace();
 </code></pre>
 
-<p>This assumes you have, in your html, a container element with id="pt". For example <code>&lt;div id="pt"&gt;&lt;/div&gt;</code>.
-The code above will try to find that element, and create a <code>&lt;canvas&gt;</code> element inside it.</p>
-<p>You can also specify the canvas id and background color, along with a specific container element.</p>
-<pre><code class="language-javascript">var space = new CanvasSpace(&quot;hello&quot;, &quot;#f1f1f1&quot;).display( &quot;#pt&quot; );
+<p>This assumes you have, in your html, an element with attribute <code>id="pt"</code>. For example <code>&lt;div id="pt"&gt;&lt;/div&gt;</code> or <code>&lt;canvas id="pt"&gt;&lt;/canvas&gt;</code>.</p>
+<p>Optionally, You can also specify an id to target an existing element, which can be a container element like <code>&lt;div&gt;</code>, or a <code>&lt;canvas&gt;</code> itself.
+Also you may use <code>setup()</code> to specify background color and another options. For example:</p>
+<pre><code class="language-javascript">var space = new CanvasSpace(&quot;#hello&quot;).setup( {bgcolor: &quot;#f1f5f7&quot;} );
 </code></pre>
 
-<p>The code above will create a light-grey canvas with id "hello", and put it inside a container element with id "pt".</p>
 <p>After creating a space, we will create a <em>Form</em> to work with that space. A form is like a brush, a way of visualizing the points.
 The <em>Form</em> class works with html canvas and draws basic shapes. We create an instance of it by passing <code>space</code> into it.</p>
 <pre><code class="language-javascript">var form = new Form(space);
 </code></pre>
 
-<p>You may realize that <em>Space</em> and <em>Form</em> can be extended to create different kinds of expressions in different media.
-Can it control a robot to graffiti a clumsy circle on a wall? It's possible!</p>
+<p>You may realize that <em>Space</em> and <em>Form</em> can be extended to create different kinds of expressions in different media. And you're absolutely right!
+Can it control a robot to graffiti a clumsy circle on a wall? It's possible.</p>
 <p>Now let's create a point. Just a simple point.</p>
 <pre><code class="language-javascript">var dot = new Point( 250, 250 );
 </code></pre>
 
 <p>How do we put this point into space and draw it with the form we just created?
 All instances of Space let you add objects into it, as long as the object includes an <code>animate</code> callback function.
-Each object is like an actor, keeping track of time and doing dramatic stuff. Let's create one such object.</p>
+Imagine each object is like an actor, keeping track of time and doing dramatic stuff. Let's create one such object.</p>
 <pre><code class="language-javascript">var bot = {
     animate: function( time, fs, context ) {
         form.point( dot ); // the bot will use form to draw a point
@@ -44,7 +43,7 @@ space.play();
 
 <p>The animate function has 3 parameters: <code>time</code> which keeps track of time elapsed in milliseconds, <code>fs</code> tells you the milliseconds passed since last frame (ie, frame-rate is <code>1000/fs</code>), and <code>context</code> is the Space's context which is the canvas graphics context in this case.</p>
 <p>Finally, we add the <code>bot</code> into space, and seeing that everything is ready, we call <code>space.play()</code> to start. If you see a gray point appears in your canvas, you're doing it right!</p>
-<p><img alt="A point" src="./docs/images/quick-start-guide/progress1.png" /></p>
+<p><img alt="A point" src="../images/quick-start-guide/progress1.png" /></p>
 <h3>2. Drawing a circle and making it move</h3>
 <p>Too boring? Let's change the dot to a <code>Circle</code>.</p>
 <pre><code class="language-javascript">var dot = new Circle( 250, 250 ).setRadius( 50 );
@@ -77,7 +76,7 @@ var bot = {
 
 <p>Here we calculate the frame-rate and draw it as gray text on top-left corner.
 Then we change the dot's radius based on elapsing time so that it will pulsate between 20px to 45px.</p>
-<p><img alt="circle" src="./docs/images/quick-start-guide/progress2.png" /></p>
+<p><img alt="circle" src="../images/quick-start-guide/progress2.png" /></p>
 <p>Now let's add some interactivity. CanvasSpace allows you to keep track of mouse events, and it will pass those events to the added objects. The easiest way is to call <code>space.bindMouse()</code>, which will listen to common mouse events, and then pass the information into your object's callback function <code>onMouseAction</code>. Like this:</p>
 <pre><code class="language-javascript">var bot = {
     animate: function(time, fs, context) {
@@ -118,9 +117,10 @@ space.play();
 </code></pre>
 
 <p>So in <code>onMouseAction</code>, we set the circle's position when mouse moves, and in <code>animate</code>, we draw the circle with an orange stroke color. Give it a try, and you should see the orange circle is now moving with your cursor.</p>
-<p><img alt="with interaction" src="./docs/images/quick-start-guide/progress3.png" /></p>
+<p><img alt="with interaction" src="../images/quick-start-guide/progress3.png" /></p>
+<p>Pt also supports multi-touch interactions for mobile. See the <a href="./mobile.html">mobile guide</a> for more.</p>
 <h3>3. Experimentation</h3>
-<p>We got the basics working, but what can we do with it? Dear reader, this is the place where the start guide ends and your imagination starts. What can you do with 2 circles, one pulsating and one moving?</p>
+<p>We got the basics working, but what can we do with it? Dear reader, this is the place where our guide ends and your imagination starts. What can you do with 2 circles, one pulsating and one moving?</p>
 <p>Perhaps, you can check if the two circles intersect, and if so, draw 2 extra points or a line connecting the intersection points. It might look like this:</p>
 <pre><code class="language-javascript">animate: function ( time, fs, context ) {
     // previous code omitted...
@@ -134,7 +134,7 @@ space.play();
 }
 </code></pre>
 
-<p><em>Inspiration: Casey Reas applied these simple intersections of circles to great effects, in his 2004 Whitney Museum commission "<a href="http://artport.whitney.org/commissions/softwarestructures/">Software Structures</a>".</em></p>
+<p>For example, Casey Reas extended these simple intersections of circles to great effects, in his 2004 Whitney Museum commission "<a href="http://artport.whitney.org/commissions/softwarestructures/">Software Structures</a>".*</p>
 <p>Or what if you extend either <em>Form</em> or <em>Circle</em> to make them do special things? In es6 or coffeescript, you can simply do:</p>
 <pre><code class="language-javascript">class SuperCircle extends Circle
 </code></pre>
@@ -145,5 +145,5 @@ space.play();
 
 <p><a href="http://williamngan.github.io/pt/demo/index.html?name=space.add">This simple demo</a> shows a simple example of an extended class. See <a href="https://github.com/williamngan/pt/blob/master/demo/space.add.js">source code</a> for details.</p>
 <p>I hope you'll enjoy Pt. Take a look at <a href="http://williamngan.github.io/pt/demo/?name=color.LABtoRGB">demos</a> and <a href="http://williamngan.github.io/pt/docs/">docs</a>, and be fearless in experimentation!</p>
-<p><img alt="final" src="./docs/images/quick-start-guide/progress5.png" />
-<a href="http://williamngan.github.io/pt/docs/start.html">view</a></p>
+<p><img alt="final" src="../images/quick-start-guide/progress5.png" /></p>
+<p><a href="./quickstart_demo.html">final result</a> and <a href="https://github.com/williamngan/pt/blob/master/docs/guide/quickstart_demo.html">source code</a></p>
