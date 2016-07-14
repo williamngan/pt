@@ -32,8 +32,8 @@ a:hover {
   color: #0020e6; }
 
 #menu {
-  position: absolute;
-  top: 2em;
+  position: fixed;
+  top: 60px;
   left: 0;
   padding: 40px;
   width: 200px; }
@@ -41,7 +41,7 @@ a:hover {
     margin-bottom: 15px; }
   #menu .guide {
     padding: 5px;
-    border-left: 3px solid #334fff;
+    border-left: 2px solid #334fff;
     color: #334fff;
     padding-left: 15px;
     font-family: "Roboto Slab", sans-serif;
@@ -55,14 +55,71 @@ a:hover {
       color: #334455; }
 
 #content {
-  margin: 0 auto;
-  max-width: 600px; }
+  margin-left: 250px;
+  max-width: 600px;
+  margin-top: 80px;
+  margin-bottom: 200px; }
 
+#header {
+  position: fixed;
+  z-index: 3;
+  height: 50px;
+  left: 0;
+  right: 0;
+  top: 0px;
+  background-color: #fff;
+  border-bottom: 1px solid #334fff;
+  transition: top .4s;
+  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  font-family: "Roboto Slab", sans-serif; }
+  #header .header-left {
+    position: absolute;
+    top: 0;
+    left: 20px; }
+  #header .header-right {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 20px;
+    cursor: pointer;
+    color: #334fff; }
+  #header .menu-item {
+    display: inline-block;
+    font-size: 12px;
+    line-height: 50px;
+    padding: 0 10px; }
+    #header .menu-item:hover {
+      text-decoration: underline; }
+    #header .menu-item.homepage {
+      font-size: 18px; }
+
+#header #mobile.menu-item {
+  display: none;
+  font-size: 18px; }
+
+@media only screen and (max-device-width : 768px) {
+  #header {
+    height: 70px; }
+    #header .menu-item {
+      font-size: 20px;
+      line-height: 70px; }
+      #header .menu-item.homepage {
+        font-size: 30px; }
+
+  #menu {
+    width: 30%; }
+
+  #content {
+    margin-right: 0;
+    margin-left: 30%;
+    width: 70%; } }
 :not(pre) > code[class*="language-"], pre[class*="language-"] {
   background-color: #f1f3f7;
   margin-bottom: 1.8em;
-  padding: 1.5em;
-  padding-bottom: 0px; }
+  padding: 1.5em; }
 
 code[class*="language-"], pre[class*="language-"] {
   text-shadow: none;

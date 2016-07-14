@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="./prism.css" />
+    <link rel="stylesheet" href="../css/guide.css" />
+    <script type="text/javascript" src="./prism.js"></script>
+</head>
+<body>
+
+<div id="header">
+    <div class="header-left">
+        <div class="homepage menu-item"><a href="../../">Pt</a></div>
+    </div>
+    <div class="header-right">
+        <div class="menu-item"><a href="../#elemSpace">Docs</a></div>
+		<div class="menu-item"><a href="../../demo/index.html?name=color.LABtoRGB">Demos</a></div>
+        <div class="menu-item"><a href="http://medium.com/@williamngan/93382bf5943e/">Description</a></div>
+        <div class="menu-item"><a href="https://github.com/williamngan/pt/">pt.js</a></div>
+    </div>
+</div>
+
+
+<div id="menu">
+    <div><a href="./quickstart.html" class="guide">Quick Start</a></div>
+    <div><a href="./mobile.html" class="guide selected">Mobile</a></div>
+    <div><a href="./svg.html" class="guide">DOM & SVG</a></div>
+</div>
+
+<div id="content">
+<h1>Pt: Mobile Guide</h1>
+<p>Pt supports multi-touch and retina pixel scale, so it's pretty straightforward to extend your code for mobile browser.
+This is a quick guide to get you started.</p>
+<h3>Multi-touch</h3>
+<p>Similar to <a href="../#func-Space-bindMouse"><code>space.bindMouse</code></a>, there's a convenient function to get touch events called <a href="../#func-Space-bindTouch"><code>space.bindTouch</code></a>.
+You may use both together to support both desktop and mobile browsers.</p>
+<pre><code class="language-javascript">var space = new CanvasSpace()
+// ...
+space.bindMouse()
+space.bindTouch()
+</code></pre>
+
+<p>Then, for any objects you added to space,
+you may provide a <code>onMouseAction</code> or <code>onTouchAction</code> to handle mouse or touch events respectively.
+For example:</p>
+<pre><code class="language-javascript">space.add({
+    animate: function(time, fps, context) {
+        // implement animation logic
+    },
+
+    onMouseAction: function( type, x, y, evt ) {
+        // types can be: &quot;up&quot;, &quot;down&quot;, &quot;move&quot;, &quot;drag&quot;, &quot;drop&quot;, &quot;over&quot;, and &quot;out&quot;
+        if (type==&quot;move&quot;) {
+            // mouse moved
+        }
+    },
+
+    onTouchAction: function( type, x, y, evt) {
+        touchPoints = space.touchesToPoints( evt );
+
+        // types can be: &quot;up&quot;, &quot;down&quot;, &quot;move&quot;, and &quot;out&quot;
+        if (type==&quot;move&quot; &amp;&amp; touchPoints.length &gt; 0) {
+            // touched
+        }
+    }
+});
+</code></pre>
+
+<p>It's that simple! Now your code will support interactions in both desktop and mobile browsers.</p>
+<p>One thing to notice is the <code>space.touchesToPoints( evt )</code> function.
+This is a convenient way to convert the points in <code>event.touches</code> to an array of Pt's <code>Vector</code> objects.
+You can then count the number of multi-touches and track their positions.</p>
+<h3>Retina display</h3>
+<p>Many phones offer a much higher resolution display than desktop monitors. As a result, a 1px line may look like 1px on desktop, but on mobile it may look like a blurry 2px.</p>
+<p>If you are using <code>CanvasSpace</code>, Pt will try to determine the device's pixel scale, and adjust the canvas size automatically to make the graphics look sharp.</p>
+<p>By default, this setting is turned on so you don't need to do anything. If you want to turn it off, pass a <code>retina</code> parameter in space's <code>setup</code> function.</p>
+<pre><code class="language-javascript">// turn off retina support, if you must
+var space = new CanvasSpace().setup({retina: false});
+</code></pre>
+
+<h3>Testing on your phone</h3>
+<p>One of the easiest way to get a localhost running in your computer is to open Terminal (Mac) or CMD (Windows), and type these two lines:</p>
+<pre><code class="language-cmd">cd /path/to/your/folder
+python -m SimpleHTTPServer 8001
+</code></pre>
+
+<p>The first line change the directory to a specific folder. (If you don't know the path, type "cd ", and then simply drag the folder from your Finder/Explore window to the Terminal/cmd)</p>
+<p>The second line runs a simple server on port 8001 using python. Python may not be installed on Windows. You can download it at <a href="https://python.org">https://python.org</a>.</p>
+<p>If you open a desktop browser and access <code>http://localhost:8001</code>, you should see your folder contents there.</p>
+<p>Next, open another Terminal or cmd, and then type <code>ifconfig</code> (Mac) or <code>ipconfig</code> (Windows). This will print out a bunch of stuff. Look for an address similar to <code>192.168.1.XX</code>.</p>
+<p>Now go to your mobile browser, type in <code>http://192.168.1.XX:8001</code> (replace "XX" with your own address), and you should see the same thing in mobile. Done!</p>
+<h3>Example</h3>
+<p>Access this page <a href="http://williamngan.github.io/pt/demo">http://williamngan.github.io/pt/demo</a> from your mobile browser to see a multi-touch demo. The souce code is <a href="https://github.com/williamngan/pt/blob/master/demo/circle.intersectCircle.mobile.js">here</a>. Have fun!</p>
+<p><img alt="Mobile example" src="../images/quick-start-guide/mobile1.png" /></p>
+</div>
+
+</body>
+</html>

@@ -53,8 +53,8 @@ a {
 a:hover { color: $link-hover; }
 
 #menu {
-  position: absolute;
-  top: 2em; left: 0; padding: 40px;
+  position: fixed;
+  top: 60px; left: 0; padding: 40px;
   width: 200px;
 
   > div {
@@ -63,7 +63,7 @@ a:hover { color: $link-hover; }
 
   .guide {
     padding: 5px;
-    border-left: 3px solid $link;
+    border-left: 2px solid $link;
     color: $link;
     padding-left: 15px;
 
@@ -84,8 +84,83 @@ a:hover { color: $link-hover; }
 }
 
 #content {
-  margin: 0 auto;
+  margin-left: 250px;
   max-width: 600px;
+  margin-top: 80px;
+  margin-bottom: 200px;
+}
+
+#header {
+  position: fixed;
+  z-index: 3;
+  height: 50px; left: 0; right: 0; top: 0px;
+  background-color: #fff;
+  border-bottom: 1px solid $link;
+  transition: top .4s;
+  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+
+  font-family: "Roboto Slab", sans-serif;
+
+  .header-left {
+    position: absolute;
+    top: 0; left: 20px;
+  }
+
+  .header-right {
+    display: block;
+    position: absolute;
+    top: 0; right: 20px;
+    cursor: pointer;
+    color: $link;
+  }
+  .menu-item {
+    display: inline-block;
+    font-size: 12px;
+    line-height: 50px;
+    padding: 0 10px;
+
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &.homepage {
+      font-size: 18px;
+    }
+  }
+}
+
+#header #mobile.menu-item {
+  display: none;
+  font-size: 18px;
+}
+
+
+@media only screen and (max-device-width : 768px) {
+
+  #header {
+    height: 70px;
+    .menu-item {
+      font-size: 20px;
+      line-height: 70px;
+      &.homepage {
+        font-size: 30px;
+      }
+    }
+  }
+
+  #menu {
+    width: 30%;
+  }
+
+  #content {
+    margin-right: 0;
+    margin-left: 30%;
+    width: 70%;
+  }
 }
 
 // Prism code style overrides
@@ -95,7 +170,6 @@ a:hover { color: $link-hover; }
 
   // quick visual workaround on the extra line on <pre> in generated markdown
   padding: 1.5em;
-  padding-bottom: 0px;
 
 }
 
