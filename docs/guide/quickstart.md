@@ -192,8 +192,8 @@ Util.extend( SuperCircle, Circle)
 
 [This simple demo](http://williamngan.github.io/pt/demo/index.html?name=space.add) shows a simple example of an extended class. See [source code](https://github.com/williamngan/pt/blob/master/demo/space.add.js) for details.
 
-I hope you'll enjoy Pt. Take a look at [demos](http://williamngan.github.io/pt/demo/?name=color.LABtoRGB) and [docs](http://williamngan.github.io/pt/docs/), and be fearless in experimentation!
-
 ![final](../images/quick-start-guide/progress5.png)
 
-[final result](./quickstart_demo.html) and [source code](https://github.com/williamngan/pt/blob/master/docs/guide/quickstart_demo.html)
+Here's the [final result](./quickstart_demo.html) of what we made in this guide. Take a look at the [source code](https://github.com/williamngan/pt/blob/master/docs/guide/quickstart_demo.html) too.
+
+I hope you'll enjoy Pt. Also see various [demos](http://williamngan.github.io/pt/demo/?name=color.LABtoRGB) and [docs](http://williamngan.github.io/pt/docs/), and be fearless in experimentation!
