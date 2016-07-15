@@ -31,7 +31,7 @@ Util.extend( Dust, Vector ); // extends Vector class
 // define an animate function so it can be animated when added into Space
 Dust.prototype.animate = function(time, fps, context) {
 
-  form.getScope(this);
+  form.enterScope(this);
 
   // drift movement
   this.add( rand(1), (Math.random() - Math.random()*(1-this.weight/1.5)) );

@@ -1,9 +1,10 @@
+# ### `SVGForm` visualizes forms in the `SVGSpace`.
 class SVGForm
 
   @_domId = 0
 
   # ## Create a new Form which is based on SVG
-  # @param `space` A space that has a valid context for this form. In this case, the space should represent an <svg>.
+  # @param `space` A space that has a valid context for this form. In this case, the space should represent an svg.
   # @return a new Form object
   constructor: ( space ) ->
 
