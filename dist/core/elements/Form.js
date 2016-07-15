@@ -336,6 +336,14 @@ Form = (function() {
     return this;
   };
 
+  Form.prototype.scope = function() {
+    return this.cc;
+  };
+
+  Form.prototype.enterScope = function() {
+    return this.cc;
+  };
+
   return Form;
 
 })();

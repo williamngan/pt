@@ -1,5 +1,4 @@
 # ### SVGSpace is an extension of DOMSpace that represents an svg element in DOM. Also refers to DOMSpace for inherited methods.
-
 class SVGSpace extends DOMSpace
 
   # ## Create a SVGSpace which represents a svg element

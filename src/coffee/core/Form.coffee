@@ -365,5 +365,12 @@ class Form
     return @
 
 
+  # Not implemented, see SVGForm
+  scope: () -> return @cc
+
+  # Not implemented, see SVGForm
+  enterScope: () -> return @cc
+
+
 # namespace
 this.Form = Form

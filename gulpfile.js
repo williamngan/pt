@@ -41,6 +41,7 @@ var path = {
 var coreElems = [
   "Const", "Matrix", "Util", "Timer",
   "Space", "CanvasSpace", "DOMSpace",
+  "SVGForm", "SVGSpace",
   "Form",
   "Point", "Vector", "Color",
   "Circle", "Particle", "ParticleSystem",
@@ -50,7 +51,6 @@ var coreElems = [
 var coreFiles = coreElems.map(function(n) { return path.src.core+n+".coffee"; } );
 
 var extendElems = [
-  "SVGForm", "SVGSpace",
   "Easing", "GridCascade", "ParticleEmitter", "ParticleField", "QuadTree",
   "SamplePoints", "StripeBound", "UI", "Noise", "Delaunay"
 ];
