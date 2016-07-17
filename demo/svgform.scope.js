@@ -9,7 +9,7 @@ var colors = {
 };
 
 var space = new SVGSpace("pt", ready).setup({bgcolor: colors.b3});
-var form = new SVGForm( space.ctx );
+var form = new SVGForm( space );
 
 
 //// 2. Create Elements

@@ -50,9 +50,12 @@ a:hover {
     #menu .guide:hover {
       border-left-color: #0020e6;
       color: #0020e6; }
-    #menu .guide.selected {
-      border-left-color: #334455;
-      color: #334455; }
+    #menu .guide.selected, #menu .guide.migration.selected {
+      border-left-color: #ff2d5d;
+      color: #ff2d5d; }
+    #menu .guide.migration {
+      border-left: 2px solid #667788;
+      color: #667788; }
 
 #content {
   margin-left: 250px;
