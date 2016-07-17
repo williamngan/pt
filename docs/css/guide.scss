@@ -76,9 +76,14 @@ a:hover { color: $link-hover; }
       color: $link-hover;
     }
 
-    &.selected {
-      border-left-color: $link-menu;
-      color: $link-menu
+    &.selected, &.migration.selected {
+      border-left-color: #ff2d5d;
+      color: #ff2d5d
+    }
+
+    &.migration {
+      border-left: 2px solid $grey-dark;
+      color: $grey-dark;
     }
   }
 }
