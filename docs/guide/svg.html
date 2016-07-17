@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="./prism.css" />
+    <link rel="stylesheet" href="../css/guide.css" />
+    <script type="text/javascript" src="./prism.js"></script>
+</head>
+<body>
+
+<div id="header">
+    <div class="header-left">
+        <div class="homepage menu-item"><a href="../../">Pt</a></div>
+    </div>
+    <div class="header-right">
+        <div class="menu-item"><a href="../#elemSpace">Docs</a></div>
+		<div class="menu-item"><a href="../../demo/index.html?name=color.LABtoRGB">Demos</a></div>
+        <div class="menu-item"><a href="http://medium.com/@williamngan/93382bf5943e/">Description</a></div>
+        <div class="menu-item"><a href="https://github.com/williamngan/pt/">pt.js</a></div>
+    </div>
+</div>
+
+
+<div id="menu">
+    <div><a href="./quickstart.html" class="guide">Quick Start</a></div>
+    <div><a href="./mobile.html" class="guide">Mobile</a></div>
+    <div><a href="./svg.html" class="guide selected">SVG</a></div>
+    <div><a href="./migration.html" class="guide migration">Migration</a></div>
+</div>
+
+<div id="content">
+<h1>Pt: SVG Guide</h1>
+<p>Pt enables you to express an idea in a variety of forms and spaces.
+SVG is another kind of space, in which every element is in a DOM (Document Object Model).
+But don't worry, it's easy to write almost identical code for both SVG and Canvas. This is a quick guide to show you how.</p>
+<h3>Set up</h3>
+<p>First of all, we'll create an <code>SVGSpace</code> instead of a <code>CanvasSpace</code>.</p>
+<pre><code class="language-javascript">var space = new SVGSpace(&quot;pt&quot;, ready).setup({bgcolor: &quot;#abc&quot;});
+</code></pre>
+
+<p>You may notice a second parameter called <code>ready</code>. This is a callback function which we'll define now:</p>
+<pre><code class="language-javascript">function ready(bounds, elem) {
+  form.scope(&quot;item&quot;, elem ); // initiate the scope which uses the svg dom as parent node
+  space.bindMouse();
+  space.play();
+}
+</code></pre>
+
+<p>Because of how DOM works (it's kind of a pain), we have to wait till the DOM elements are ready before we can use them.
+Hence we use a callback function <code>ready</code> to put all the initiation code inside.</p>
+<p>The one additional function we use here is <code>form.scope("item", elem)</code>.
+This initiates the container element (second parameter, passed from callback function) for our svg space ,
+and give it a custom name called "item", which will be used to identify child elements inside it.</p>
+<h3>Scope</h3>
+<p>In <code>&lt;canvas&gt;</code>, elements are simply painted on top of each other,
+and in each cycle everything is usually wiped and repainted.
+In DOM, elements persist. We may clear and recreate them again and again like <code>&lt;canvas&gt;</code>, but that will be very slow.
+It'll be better if we keep track of DOM elements and update their attributes when needed.</p>
+<p><code>SVGForm</code> solves this with a function called <code>enterScope(item)</code>.
+It's a way of saying: Hey, take note of new and existing elements in this group and update them as needed.
+The <code>item</code> parameter is simply the animate-able object you added to space.</p>
+<p>In short, and in most cases, you may simply add this <code>enterScope</code> function in the beginning of <code>animate</code> callback function, and that's it.</p>
+<pre><code class="language-javascript">space.add({
+  animate: function(time, fps, context) {
+    // enter group scope. &quot;this&quot; refers to this object we are adding to space
+    form.enterScope( this );
+
+    // do stuff here, no additional changes needed.
+    form.fill(&quot;#f00&quot;).point( new Point( 100, 100 ) );
+  }
+});
+</code></pre>
+
+<h3>Examples</h3>
+<p>To recap: first initiate a parent scope in a ready callback function,
+and then in the beginning of your object's <code>animate</code> function, call the <code>enterScope</code> function. Done!</p>
+<p>If you want to change it back to CanvasSpace, simply change <code>SVGSpace</code> to <code>CanvasSpace</code>, and <code>SVGForm</code> to <code>Form</code> in the instantiation.
+The <code>scope</code> functions have no effects in CanvasSpace and won't break your code.</p>
+<p>Take a look at the source code in the <a href="../../demo/index.html?name=svgform.scope">SVG demos</a>. It's pretty straightforward.</p>
+</div>
+
+</body>
+</html>

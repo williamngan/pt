@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="./prism.css" />
+    <link rel="stylesheet" href="../css/guide.css" />
+    <script type="text/javascript" src="./prism.js"></script>
+</head>
+<body>
+
+<div id="header">
+    <div class="header-left">
+        <div class="homepage menu-item"><a href="../../">Pt</a></div>
+    </div>
+    <div class="header-right">
+        <div class="menu-item"><a href="../#elemSpace">Docs</a></div>
+		<div class="menu-item"><a href="../../demo/index.html?name=color.LABtoRGB">Demos</a></div>
+        <div class="menu-item"><a href="http://medium.com/@williamngan/93382bf5943e/">Description</a></div>
+        <div class="menu-item"><a href="https://github.com/williamngan/pt/">pt.js</a></div>
+    </div>
+</div>
+
+
+<div id="menu">
+    <div><a href="./quickstart.html" class="guide">Quick Start</a></div>
+    <div><a href="./mobile.html" class="guide">Mobile</a></div>
+    <div><a href="./svg.html" class="guide">SVG</a></div>
+    <div><a href="./migration.html" class="guide migration selected">Migration</a></div>
+</div>
+
+<div id="content">
+<h1>Pt: Migration Guide</h1>
+<h3>v0.2.0: Space constructor</h3>
+<p>In Pt v0.2.0, we refactored the constructor function for Space to make it simpler and clearer.</p>
+<p>Previously in 0.1.x, the old constructor function works like this:</p>
+<pre><code class="language-javascript">// new CanvasSpace( canvas_id, bgcolor ).display( container_id, readyCallback, devicePixelSupport);
+// for example:
+
+new CanvasSpace().display(&quot;#myDiv&quot;)
+new CanvasSpace(&quot;myCanvas&quot;, &quot;#F00&quot;).display(&quot;#myDiv&quot;, readyFunc, true)
+</code></pre>
+
+<p>The container and canvas id has been a source of confusion for some users. The new constructor function now works like this:</p>
+<pre><code class="language-javascript">// new CanvasSpace( domID, readyCallback ).setup( properties );
+// for example:
+
+new CanvasSpace()
+new CanvasSpace(&quot;#elem&quot;)
+new CanvasSpace(&quot;#elem&quot;, readyFunc).setup({ bgcolor: &quot;#F00&quot;, retina: true })
+</code></pre>
+
+<p>You can now simply pass an id to the constructor,
+and it's smart enough to find out whether it's a container like <code>&lt;div&gt;</code> or <code>&lt;canvas&gt;</code> and fill in the rest.
+A new <code>setup</code> function lets you pass parameters to initialize the space, as each type of space may offer different kind of setups.
+Also notice that the ready callback is now an optional second parameter in the constructor.</p>
+<h3>v0.2.0: SVG</h3>
+<p><code>SVGSpace</code> and <code>SVGForm</code> are now in the <em>core</em> library. If you don't need anything else in <em>extend</em> library and wants to save a tiny bit of bandwidth, you may use <code>pt-core.min.js</code> instead of <code>pt.min.js</code>.
+Otherwise no change is neeed.</p>
+<p><code>getScope</code> function is now called <a href="http://localhost:2016/docs/#func-SVGForm-enterScope"><code>enterScope</code></a> in v0.2.0 to make it clearer.
+The old function name will continue to work, but will print a warning in the console.</p>
+</div>
+
+</body>
+</html>
