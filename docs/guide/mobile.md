@@ -3,6 +3,8 @@
 Pt supports multi-touch and retina pixel scale, so it's pretty straightforward to extend your code for mobile browser.
 This is a quick guide to get you started.
 
+![Mobile example](../images/quick-start-guide/mobile1.png)
+
 ### Multi-touch
 Similar to [`space.bindMouse`](../#func-Space-bindMouse), there's a convenient function to get touch events called [`space.bindTouch`](../#func-Space-bindTouch).
 You may use both together to support both desktop and mobile browsers.
@@ -72,7 +74,7 @@ python -m SimpleHTTPServer 8001
 
 The first line change the directory to a specific folder. (If you don't know the path, type "cd ", and then simply drag the folder from your Finder/Explore window to the Terminal/cmd)
 
-The second line runs a simple server on port 8001 using python. Python may not be installed on Windows. You can download it at [https://python.org](https://python.org).
+The second line runs a simple server on port 8001 using python. Python may not be installed on Windows. You can download it at [https://python.org](https://python.org). Get the 2.7.x version.
 
 If you open a desktop browser and access `http://localhost:8001`, you should see your folder contents there.
 
@@ -85,4 +87,4 @@ Now go to your mobile browser, type in `http://192.168.1.XX:8001` (replace "XX" 
 ### Example
 Access this page [http://williamngan.github.io/pt/demo](http://williamngan.github.io/pt/demo) from your mobile browser to see a multi-touch demo. The souce code is [here](https://github.com/williamngan/pt/blob/master/demo/circle.intersectCircle.mobile.js). Have fun!
 
-![Mobile example](../images/quick-start-guide/mobile1.png)
+![Mobile example](../images/quick-start-guide/mobiletouch.gif)
