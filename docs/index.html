@@ -17,7 +17,7 @@
 		<%= description %>
 
 		<% _.each( funcs, function( f ) { %>
-			<section class="funcs" id="func-<%= cls %>-<%= f.name %>">
+			<section class="funcs" id="func-<%= cls %>-<%= f.name %><%= packageMarker %>">
 				<h1><%= f.name %>
 					<span class="param">(<%= f.pname %>)</span>
 				</h1>
@@ -46,7 +46,7 @@
 		<% }); %>
 
 		<% _.each( statics, function( f ) { %>
-			<section class="statics" id="static-<%= cls %>-<%= f.name %>">
+			<section class="statics" id="static-<%= cls %>-<%= f.name %><%= packageMarker %>">
 				<h1><%= cls %>.<%= f.name %> <span class="param">(<%= f.pname %>)</span></h1>
 				<%= f.description %>
                 <% if (f.demo) { %>
@@ -73,13 +73,13 @@
 		<% }); %>
 
 		<% _.each( props, function( f ) { %>
-			<section class="props" id="prop-<%= cls %>-<%= f.name %>">
+			<section class="props" id="prop-<%= cls %>-<%= f.name %><%= packageMarker %>">
 				<h1><%= f.name %></h1>
 				<%= f.description %>
 			</section>
 		<% }); %>
 
-		<div id="inherited-<%= cls %>">
+		<div id="inherited-<%= cls %><%= packageMarker %>">
 		<% _.each( parents, function( pa ) { %>
 			<% if (pa.funcs.length > 0 || pa.props.length > 0) { %>
 				<section class="inherited">
@@ -114,9 +114,8 @@
 <body>
 
 
-
 <div id="head">
-	<div id="pt"></div>
+	<div id="pt"><canvas id="pt_canvas"></canvas></div>
 	<div id="overview">
 		<h1>Pt <small>&nbsp; <span id="docLabel"></span> Documentation <small>v0.1</small></small></h1>
 	</div>
@@ -155,8 +154,8 @@
 <div id="header">
     <div class="header-left">
         <div class="homepage menu-item"><a href="../">Pt</a></div>
-		<div class="menu-item"><a href="#" onclick="generateDoc('core')">Core docs</a></div>
-		<div class="menu-item"><a href="#" onclick="generateDoc('extend')">Extended docs</a></div>
+		<div class="menu-item"><a href="#" onclick="generateDoc('core'); return false;">Core docs</a></div>
+		<div class="menu-item"><a href="#" onclick="generateDoc('extend'); return false;">Extended docs</a></div>
 		<div class="menu-item"><a href="./guide/quickstart.html">Guides</a></div>
 
     </div>
@@ -176,6 +175,13 @@
 
 	function generateDoc( folder ) {
 
+		// Check url
+		if ((new RegExp("[^a-zA-Z0-9-_#]+?", "g").test( window.location.hash ))) {
+			window.location = './';
+			return;
+		}
+
+
 		// reset everything
 		var i=0;
 		var elems = document.querySelectorAll(".element");
@@ -188,9 +194,10 @@
 			elems[i].parentNode.removeChild(elems[i]);
 		}
 		document.querySelector("#submenu" ).innerHTML = "";
-		document.querySelector("#pt" ).innerHTML = "";
+		// document.querySelector("#pt" ).innerHTML = "";
 
 		document.querySelector("#docLabel" ).textContent = (folder=="extend") ? "Extended" : "Core";
+		document.querySelector("#content > .intro").style.display = (folder=="core") ? "block" : "none";
 
 		// load the docs
 		var docs = new Docs( "#comp", folder );
@@ -201,9 +208,15 @@
 		} else {
 			document.addEventListener( 'DOMContentLoaded', docs.resize.bind( docs ) );
 		}
+
+		window.scrollTo(0,0)
 	}
 
-	generateDoc("core");
+	if (window.location.hash.indexOf("_xt") === window.location.hash.length-3) {
+		generateDoc( "extend" );
+	} else {
+		generateDoc( "core" );
+	}
 
 </script>
 
