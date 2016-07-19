@@ -10,7 +10,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 window.demoDescription = "Visualize Hairy Ball Theorem: you can't comb a hairy ball flat without creating a cowlick";
 
-var space = new CanvasSpace("pt").setup({bgcolor: "#334fff"});
+var bgcolor ="#437fff";
+var space = new CanvasSpace("pt").setup({bgcolor: bgcolor});
 var form = new Form(space);
 
 var center = space.size.$divide(2);
@@ -179,7 +180,7 @@ var counter = 0;
 
 // fill canvas in white initially and no refresh
 space.refresh(false);
-space.clear("#334fff");
+space.clear( bgcolor );
 
 function create() {
   return {
@@ -216,7 +217,7 @@ function create() {
       }
 
       // fade out effect
-      form.fill( "rgba(51,79,255,.1" ).rect( new Rectangle().to( space.size ) );
+      form.fill( "rgba(67,127,255,.1" ).rect( new Rectangle().to( space.size ) );
       lastTime = time;
     }
   }
