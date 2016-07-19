@@ -41,7 +41,7 @@ SVG is another kind of space, in which every element is in a DOM (Document Objec
 But don't worry, it's easy to write almost identical code for both SVG and Canvas. This is a quick guide to show you how.</p>
 <h3>Set up</h3>
 <p>First of all, we'll create an <code>SVGSpace</code> instead of a <code>CanvasSpace</code>.</p>
-<pre><code class="language-javascript">var space = new SVGSpace(&quot;pt&quot;, ready).setup({bgcolor: &quot;#abc&quot;});
+<pre><code class="language-javascript">var space = new SVGSpace(&quot;pt&quot;, ready);
 </code></pre>
 
 <p>You may notice a second parameter called <code>ready</code>. This is a callback function which we'll define now:</p>

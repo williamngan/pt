@@ -8,7 +8,7 @@ But don't worry, it's easy to write almost identical code for both SVG and Canva
 First of all, we'll create an `SVGSpace` instead of a `CanvasSpace`.
 
 ```language-javascript
-var space = new SVGSpace("pt", ready).setup({bgcolor: "#abc"});
+var space = new SVGSpace("pt", ready);
 ```
 
 You may notice a second parameter called `ready`. This is a callback function which we'll define now:

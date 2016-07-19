@@ -25,7 +25,8 @@ new CanvasSpace("#elem", readyFunc).setup({ bgcolor: "#F00", retina: true })
 ```
 
 You can now simply pass an id to the constructor,
-and it's smart enough to find out whether it's a container like `<div>` or `<canvas>` and fill in the rest.
+and it's smart enough to find out whether it's a container like `<div>` or `<canvas>` and fill in the rest. If instantiated without parameters, it assumes you are targeting an existing element in DOM with `id="pt"` attribute.
+
 A new `setup` function lets you pass parameters to initialize the space, as each type of space may offer different kind of setups.
 Also notice that the ready callback is now an optional second parameter in the constructor.
 

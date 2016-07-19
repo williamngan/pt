@@ -56,8 +56,8 @@ new CanvasSpace(&quot;#elem&quot;, readyFunc).setup({ bgcolor: &quot;#F00&quot;,
 </code></pre>
 
 <p>You can now simply pass an id to the constructor,
-and it's smart enough to find out whether it's a container like <code>&lt;div&gt;</code> or <code>&lt;canvas&gt;</code> and fill in the rest.
-A new <code>setup</code> function lets you pass parameters to initialize the space, as each type of space may offer different kind of setups.
+and it's smart enough to find out whether it's a container like <code>&lt;div&gt;</code> or <code>&lt;canvas&gt;</code> and fill in the rest. If instantiated without parameters, it assumes you are targeting an existing element in DOM with <code>id="pt"</code> attribute.</p>
+<p>A new <code>setup</code> function lets you pass parameters to initialize the space, as each type of space may offer different kind of setups.
 Also notice that the ready callback is now an optional second parameter in the constructor.</p>
 <h3>v0.2.0: SVG</h3>
 <p><code>SVGSpace</code> and <code>SVGForm</code> are now in the <em>core</em> library. If you don't need anything else in <em>extend</em> library and wants to save a tiny bit of bandwidth, you may use <code>pt-core.min.js</code> instead of <code>pt.min.js</code>.
