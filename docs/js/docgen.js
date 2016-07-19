@@ -16,6 +16,7 @@
       this.coverDemoTimeout = -1;
       this.coverDemoLoaded = false;
       this.isDocReady = false;
+      this.packageMarker = this.doc_id === 'extend' ? '_xt' : '';
       this.activeDemo = {
         elem: null,
         script: null,
@@ -78,8 +79,22 @@
             _this.tree = _this.getTree();
             _this.buildMenu(_this.tree, _this.dom.menu);
             _this.buildContent();
-            _this.scrollToHashID(window.location.hash);
-            return _this.ready();
+            _this.ready();
+            return setTimeout((function() {
+              var cls;
+              _this.scrollToHashID(window.location.hash);
+              cls = window.location.hash.split("-");
+              cls = cls.length > 1 ? cls[1] : cls[0];
+              if (cls.indexOf("#elem") === 0) {
+                cls = cls.substr(5);
+              }
+              if (cls.indexOf("_xt") === cls.length - 3) {
+                cls = cls.substr(0, cls.length - 3);
+              }
+              if (cls.length > 0 && !(new RegExp("[^a-zA-Z0-9]+?", "g").test(cls))) {
+                return _this.getMembers(cls);
+              }
+            }), 300);
           } else {
             return showError("Cannot get contents");
           }
@@ -113,7 +128,7 @@
         v = this.json[k];
         sec = document.createElement("section");
         sec.classList.add("element");
-        sec.setAttribute("id", "elem" + k);
+        sec.setAttribute("id", "elem" + k + this.packageMarker);
         this.dom.content.appendChild(sec);
         parents = [];
         ref1 = this.elems[v.cls].extend;
@@ -129,6 +144,7 @@
           }
         }
         v.parents = parents;
+        v.packageMarker = this.packageMarker;
         results.push(sec.innerHTML = this.dom.template(v));
       }
       return results;
@@ -149,7 +165,7 @@
             li = document.createElement("li");
             li.setAttribute("data-name", k);
             _this.bindSubMenu(li);
-            li.innerHTML = "<a href='#elem" + k + "'>" + k + "</a>";
+            li.innerHTML = "<a href='#elem" + k + _this.packageMarker + "'>" + k + "</a>";
             sec.appendChild(li);
             _this.flatTree.push(k);
             _this.elems[k].funcs = _.pluck(_this.json[k].funcs, 'name');
@@ -193,14 +209,14 @@
             _this.dom.submenu.appendChild(sub);
             if (list === "inherited") {
               item = document.createElement("a");
-              item.setAttribute("href", "#" + key + "-" + k);
+              item.setAttribute("href", "#" + key + "-" + k + _this.packageMarker);
               item.innerText = name;
               return sub.appendChild(item);
             } else {
               for (j = 0, len = list.length; j < len; j++) {
                 li = list[j];
                 item = document.createElement("a");
-                item.setAttribute("href", "#" + key + "-" + k + "-" + li);
+                item.setAttribute("href", "#" + key + "-" + k + "-" + li + _this.packageMarker);
                 item.innerText = li;
                 item.classList.add("subitem");
                 sub.appendChild(item);
@@ -364,7 +380,7 @@
       if (id) {
         elem = document.querySelector("" + id);
         if (elem) {
-          window.scrollTo(0, elem.offsetTop + window.innerHeight);
+          window.scrollTo(0, elem.getBoundingClientRect().top);
           clearTimeout(this.coverDemoTimeout);
           return;
         }

@@ -16,6 +16,9 @@ class Docs
     @coverDemoLoaded = false;
     @isDocReady = false;
 
+    @packageMarker = if (@doc_id == 'extend') then '_xt' else ''
+
+
     @activeDemo = {
       elem: null
       script: null
@@ -77,8 +80,19 @@ class Docs
         @tree = @getTree()
         @buildMenu( @tree, @dom.menu )
         @buildContent()
-        @scrollToHashID( window.location.hash );
         @ready()
+
+        setTimeout( (() =>
+          @scrollToHashID( window.location.hash )
+
+          # strip out the hash to find the class name, and then populate submenu
+          cls = window.location.hash.split("-")
+          cls = if (cls.length > 1) then cls[1] else cls[0]
+          if cls.indexOf("#elem") == 0 then cls = cls.substr(5)
+          if cls.indexOf("_xt") == cls.length-3 then cls = cls.substr(0, cls.length-3);
+          if (cls.length > 0 and !(new RegExp("[^a-zA-Z0-9]+?", "g").test(cls)) ) then @getMembers( cls )
+
+        ), 300);
 
       else
         showError("Cannot get contents")
@@ -106,7 +120,7 @@ class Docs
       # create content section
       sec = document.createElement("section");
       sec.classList.add("element");
-      sec.setAttribute("id", "elem"+k);
+      sec.setAttribute("id", "elem"+k+@packageMarker);
       @dom.content.appendChild( sec );
 
       # get inherited
@@ -122,6 +136,7 @@ class Docs
           parents.push( pa )
 
       v.parents = parents
+      v.packageMarker = @packageMarker
 
       sec.innerHTML = @dom.template( v );
 
@@ -140,7 +155,7 @@ class Docs
         li = document.createElement("li")
         li.setAttribute("data-name", k)
         @bindSubMenu( li )
-        li.innerHTML = "<a href='#elem#{k}'>#{k}</a>"
+        li.innerHTML = "<a href='#elem#{k}#{@packageMarker}'>#{k}</a>"
         sec.appendChild( li );
 
         # store the sequence of menu item in flat list
@@ -188,14 +203,14 @@ class Docs
         # sub item
         if list == "inherited"
           item = document.createElement("a")
-          item.setAttribute("href", "##{key}-#{k}");
+          item.setAttribute("href", "##{key}-#{k}#{@packageMarker}");
           item.innerText = name
           sub.appendChild(item);
 
         else
           for li in list
             item = document.createElement("a")
-            item.setAttribute("href", "##{key}-#{k}-#{li}");
+            item.setAttribute("href", "##{key}-#{k}-#{li}#{@packageMarker}");
             item.innerText = li
             item.classList.add("subitem")
             sub.appendChild(item);
@@ -339,10 +354,12 @@ class Docs
 
   # Go to hash id location
   scrollToHashID: (id) ->
+
     if (id)
       elem = document.querySelector(""+id)
+
       if (elem)
-        window.scrollTo( 0, elem.offsetTop + window.innerHeight )
+        window.scrollTo( 0, elem.getBoundingClientRect().top )
         clearTimeout( @coverDemoTimeout )
         return
 
