@@ -8,14 +8,14 @@ Hello there. Allow me to introduce Pt, which is a study of Point, Form, and Spac
 The best places to get started are:
 - **[Demos page](http://williamngan.github.io/pt/demo/index.html?name=pair.collinear)** shows various interactive sketches, usually done in short form (50-70 lines of code).
 - **[Description](http://medium.com/@williamngan/93382bf5943e/)** is a little essay about the motivations behind Pt. 7 mins read.
-- **[Quick start guide](https://github.com/williamngan/pt/blob/master/QUICKSTART.md)** helps you understand how Pt works, intended for both technical and non-technical audiences.
+- **[Quick start guide](http://williamngan.github.io/pt/docs/guide/quickstart.html)** helps you understand how Pt works, intended for both technical and non-technical audiences.
 - [Documentation](http://williamngan.github.io/pt/docs/) describes Pt's classes and functions.
 - [Release notes](https://github.com/williamngan/pt/blob/master/RELEASE.md) talks about what's past, or passing, or to come.
 - [Issues page](https://github.com/williamngan/pt/issues) is the place to report bugs and discuss features. Also you can ask questions on [stackoverflow](http://stackoverflow.com/questions/tagged/ptjs) with `#ptjs` tag, or ping me anytime [@williamngan](http://twitter.com/williamngan). Your feedbacks and ideas are appreciated!
 
 ### Files
 Looking for the actual javascript library files? Here you go:
-- If using **npm:**, you can do: `npm install ptjs` and then use it like `import {Vector, Rectangle} from 'ptjs'`   
+- If using [**npm:**](https://www.npmjs.com/package/ptjs), you can do: `npm install ptjs` and then use it like `import {Vector, Rectangle} from 'ptjs'`
 
 - If using standalone file, **[pt.js](https://github.com/williamngan/pt/blob/master/dist/pt.js)** is the full version, **without namespace**. If you just want to sketch out a simple idea with Pt, this is probably what you need.
 - [pt.min.js](https://github.com/williamngan/pt/blob/master/dist/pt.min.js) is the minified version of the above.
