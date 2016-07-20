@@ -77,6 +77,9 @@ class Grid extends Rectangle
       @cell.size.y = y
       @rows = Math.floor( size.y / @cell.size.y )
 
+    # init layout arrays
+    if (@layout.length < 1) then @resetLayout()
+
     return @
 
 

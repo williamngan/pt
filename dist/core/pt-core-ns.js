@@ -4228,6 +4228,9 @@ Grid = (function(superClass) {
       this.cell.size.y = y;
       this.rows = Math.floor(size.y / this.cell.size.y);
     }
+    if (this.layout.length < 1) {
+      this.resetLayout();
+    }
     return this;
   };
 
