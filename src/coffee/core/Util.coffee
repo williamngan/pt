@@ -210,6 +210,17 @@ class Util
     return Const.gaussian * Math.exp( -0.5 * x * x) / sigma
 
 
+  # ## Map a value from one range to another
+  # @param `n` a value in the first range
+  # @param `min1` lower bound of the first range
+  # @param `max1` upper bound of the first range
+  # @param `min2` lower bound of the second range
+  # @param `max2` upper bound of the second range
+  # @return a remapped value in the second range
+  @map: (n, min1, max1, min2, max2) ->
+    return (n - min1) / (max1 - min1) * (max2 - min2) + min2;
+
+
 # namespace
 this.Util = Util;
 
