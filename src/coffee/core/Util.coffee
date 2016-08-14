@@ -217,8 +217,9 @@ class Util
   # @param `min2` lower bound of the second range
   # @param `max2` upper bound of the second range
   # @return a remapped value in the second range
-  @map: (n, min1, max1, min2, max2) ->
-    return (n - min1) / (max1 - min1) * (max2 - min2) + min2;
+  @mapToRange: (n, min1, max1, min2, max2) ->
+    if (min1 == max1) then throw "[min1, max1] must be a non-degenerate interval (that is, min1 != max1)"
+    return ( (n - min1) / (max1 - min1) ) * (max2 - min2) + min2;
 
 
 # namespace
