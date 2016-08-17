@@ -226,6 +226,13 @@ Util = (function() {
     return Const.gaussian * Math.exp(-0.5 * x * x) / sigma;
   };
 
+  Util.mapToRange = function(n, min1, max1, min2, max2) {
+    if (min1 === max1) {
+      throw "[min1, max1] must be a non-degenerate interval (that is, min1 != max1)";
+    }
+    return ((n - min1) / (max1 - min1)) * (max2 - min2) + min2;
+  };
+
   return Util;
 
 })();
