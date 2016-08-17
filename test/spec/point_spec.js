@@ -1,4 +1,42 @@
 describe("Util", function() {
+  describe("mapToRange", function() {
+    it("can map a value from one range to another", function() {
+      // Normal values
+      expect(Util.mapToRange(0, 0, 2, 0, 100)).toEqual(0);
+      expect(Util.mapToRange(1, 0, 2, 0, 100)).toEqual(50);
+      expect(Util.mapToRange(2, 0, 2, 0, 100)).toEqual(100);
+
+      // Reversed starting range
+      expect(Util.mapToRange(0, 2, 0, 100, 200)).toEqual(200);
+      expect(Util.mapToRange(1, 2, 0, 200, 100)).toEqual(150);
+      expect(Util.mapToRange(2, 2, 0, 100, 200)).toEqual(100);
+
+      // Reversed target range
+      expect(Util.mapToRange(0, 0, 2, 200, 100)).toEqual(200);
+      expect(Util.mapToRange(1, 0, 2, 200, 100)).toEqual(150);
+      expect(Util.mapToRange(2, 0, 2, 200, 100)).toEqual(100);
+
+      // Degenerate target range
+      expect(Util.mapToRange(0, 0, 2, 0, 0)).toEqual(0);
+      expect(Util.mapToRange(1, 0, 2, 0, 0)).toEqual(0);
+      expect(Util.mapToRange(2, 0, 2, 0, 0)).toEqual(0);
+      expect(Util.mapToRange(0, 0, 2, 100, 100)).toEqual(100);
+      expect(Util.mapToRange(1, 0, 2, 100, 100)).toEqual(100);
+      expect(Util.mapToRange(2, 0, 2, 100, 100)).toEqual(100);
+
+      // Target range with negative values
+      expect(Util.mapToRange(1, 0, 2, -100, -200)).toEqual(-150);
+
+      // Target range with both negative and positive number
+      expect(Util.mapToRange(0, 0, 2, -100, 100)).toEqual(-100);
+      expect(Util.mapToRange(1, 0, 2, -100, 100)).toEqual(0);
+    });
+    it("throws error when provided a degenerate starting interval", function() {
+      expect(function() {
+        Util.mapToRange(1, 2, 2, 100, 100);
+      }).toThrow();
+    });
+  });
   it("can convert angle to radian", function() {
     return expect(Util.toRadian(47)).toBe(0.8203047484373349);
   });
