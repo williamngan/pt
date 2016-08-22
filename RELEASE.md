@@ -2,18 +2,18 @@
 
 ## v0.2.0
 **Mobile**
-- Pt now supports multi-touch interactions and retina resolutions for mobile. Yay! Get started with this quick [mobile guide](http://localhost:2016/docs/guide/mobile.html).
+- Pt now supports multi-touch interactions and retina resolutions for mobile. Yay! Get started with this quick [mobile guide](http://williamngan.github.io/pt/docs/guide/mobile.html).
 
 **Improvements**
 - `Space` constructors get a complete makeover, making it simpler and clearer to use (Issue [#12](https://github.com/williamngan/pt/issues/12) and [#13](https://github.com/williamngan/pt/issues/13))
-- New guides on [mobile](http://localhost:2016/docs/guide/mobile.html) and [svg](http://localhost:2016/docs/guide/svg.html)
+- New guides on [mobile](http://williamngan.github.io/pt/docs/guide/mobile.html) and [svg](http://williamngan.github.io/pt/docs/guide/svg.html)
 - Updated documentations and fixed navigation issues in docs
 - Improved SVG and DOM code. SVG moved to `core` library.
-- New demos: [Delaunay triangles](http://localhost:2016/demo/index.html?name=delaunay.generate) and [Game of Life](http://localhost:2016/demo/index.html?name=grid.canFit)
+- New demos: [Delaunay triangles](http://williamngan.github.io/pt/demo/index.html?name=delaunay.generate) and [Game of Life](http://williamngan.github.io/pt/demo/index.html?name=grid.canFit)
 - Various bug fixes
 
 **Breaking changes**
-- `CanvasSpace` and `SVGSpace` now uses a new constructor function. Please take a look at [migration guide](http://localhost:2016/docs/guide/mobile.html) and update your code.
+- `CanvasSpace` and `SVGSpace` now uses a new constructor function. Please take a look at [migration guide](http://williamngan.github.io/pt/docs/guide/migration.html) and update your code.
 
 ## v0.1.1
 **SVG!**
