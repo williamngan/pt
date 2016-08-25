@@ -1,523 +1,8 @@
 
 /* Licensed under the Apache License, Version 2.0. (http://www.apache.org/licenses/LICENSE-2.0). Copyright 2015-2016 William Ngan. (https://github.com/williamngan/pt/) */
-var Delaunay, Easing, GridCascade, Noise, ParticleEmitter, ParticleField, QuadTree, SVGForm, SVGSpace, SamplePoints, StripeBound, UI,
+var Delaunay, Easing, GridCascade, Noise, ParticleEmitter, ParticleField, QuadTree, SamplePoints, Shaping, StripeBound, UI,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
-
-SVGForm = (function() {
-  SVGForm._domId = 0;
-
-  function SVGForm(space) {
-    this.cc = space.ctx || {};
-    this.cc.group = this.cc.group || null;
-    this.cc.groupID = "ptx";
-    this.cc.groupCount = 0;
-    this.cc.currentID = "ptx0";
-    this.cc.style = {
-      fill: "#999",
-      stroke: "#666",
-      "stroke-width": 1,
-      "stroke-linejoin": false,
-      "stroke-linecap": false
-    };
-    this.cc.font = "11px sans-serif";
-    this.cc.fontSize = 11;
-    this.cc.fontFace = "sans-serif";
-  }
-
-  SVGForm.prototype.fill = function(c) {
-    this.cc.style.fill = c ? c : false;
-    return this;
-  };
-
-  SVGForm.prototype.stroke = function(c, width, joint, cap) {
-    this.cc.style.stroke = c ? c : false;
-    if (width) {
-      this.cc.style["stroke-width"] = width;
-    }
-    if (joint) {
-      this.cc.style["stroke-linejoin"] = joint;
-    }
-    if (cap) {
-      this.cc.style["stroke-linecap"] = joint;
-    }
-    return this;
-  };
-
-  SVGForm.prototype.scope = function(group_id, group) {
-    if (group == null) {
-      group = false;
-    }
-    if (group) {
-      this.cc.group = group;
-    }
-    this.cc.groupID = group_id;
-    this.cc.groupCount = 0;
-    this.nextID();
-    return this.cc;
-  };
-
-  SVGForm.prototype.enterScope = function(item) {
-    if (!item || item.animateID === null) {
-      throw "getScope()'s item must be added to a Space, and has an animateID property. Otherwise, use scope() instead.";
-    }
-    return this.scope(SVGForm._scopeID(item));
-  };
-
-  SVGForm.prototype.getScope = function(item) {
-    if (!this._warn1) {
-      console.warn("form.getScope(...) function is deprecated as of version 0.2.0. It is renamed as `enterScope()`.");
-      this._warn1 = true;
-    }
-    return this.enterScope(item);
-  };
-
-  SVGForm.prototype.nextID = function() {
-    this.cc.groupCount++;
-    this.cc.currentID = this.cc.groupID + "-" + this.cc.groupCount;
-    return this.cc.currentID;
-  };
-
-  SVGForm.id = function(ctx) {
-    return ctx.currentID || "p-" + SVGForm._domId++;
-  };
-
-  SVGForm._scopeID = function(item) {
-    return "item-" + item.animateID;
-  };
-
-  SVGForm.style = function(elem, styles) {
-    var k, st, v;
-    st = [];
-    for (k in styles) {
-      v = styles[k];
-      if (!v) {
-        if (k === "fill") {
-          st.push("fill: none");
-        } else if (k === "stroke") {
-          st.push("stroke: none");
-        }
-      } else {
-        st.push(k + ":" + v);
-      }
-    }
-    return DOMSpace.attr(elem, {
-      style: st.join(";")
-    });
-  };
-
-  SVGForm.point = function(ctx, pt, halfsize, fill, stroke, circle) {
-    var elem;
-    if (halfsize == null) {
-      halfsize = 2;
-    }
-    if (fill == null) {
-      fill = true;
-    }
-    if (stroke == null) {
-      stroke = true;
-    }
-    if (circle == null) {
-      circle = false;
-    }
-    elem = SVGSpace.svgElement(ctx.group, (circle ? "circle" : "rect"), SVGForm.id(ctx));
-    if (!elem) {
-      return;
-    }
-    if (circle) {
-      DOMSpace.attr(elem, {
-        cx: pt.x,
-        cy: pt.y,
-        r: halfsize
-      });
-    } else {
-      DOMSpace.attr(elem, {
-        x: pt.x - halfsize,
-        y: pt.y - halfsize,
-        width: halfsize + halfsize,
-        height: halfsize + halfsize
-      });
-    }
-    SVGForm.style(elem, ctx.style);
-    return elem;
-  };
-
-  SVGForm.prototype.point = function(p, halfsize, isCircle) {
-    if (halfsize == null) {
-      halfsize = 2;
-    }
-    if (isCircle == null) {
-      isCircle = false;
-    }
-    this.nextID();
-    SVGForm.point(this.cc, p, halfsize, true, true, isCircle);
-    return this;
-  };
-
-  SVGForm.points = function(ctx, pts, halfsize, fill, stroke, circle) {
-    var p;
-    if (halfsize == null) {
-      halfsize = 2;
-    }
-    if (fill == null) {
-      fill = true;
-    }
-    if (stroke == null) {
-      stroke = true;
-    }
-    if (circle == null) {
-      circle = false;
-    }
-    return (function() {
-      var l, len, results;
-      results = [];
-      for (l = 0, len = pts.length; l < len; l++) {
-        p = pts[l];
-        results.push(SVGForm.point(ctx, p, halfsize, fill, stroke, circle));
-      }
-      return results;
-    })();
-  };
-
-  SVGForm.prototype.points = function(ps, halfsize, isCircle) {
-    var l, len, p;
-    if (halfsize == null) {
-      halfsize = 2;
-    }
-    if (isCircle == null) {
-      isCircle = false;
-    }
-    for (l = 0, len = ps.length; l < len; l++) {
-      p = ps[l];
-      this.point(p, halfsize, isCircle);
-    }
-    return this;
-  };
-
-  SVGForm.line = function(ctx, pair) {
-    var elem;
-    if (!pair.p1) {
-      throw (pair.toString()) + " is not a Pair";
-    }
-    elem = SVGSpace.svgElement(ctx.group, "line", SVGForm.id(ctx));
-    DOMSpace.attr(elem, {
-      x1: pair.x,
-      y1: pair.y,
-      x2: pair.p1.x,
-      y2: pair.p1.y
-    });
-    SVGForm.style(elem, ctx.style);
-    return elem;
-  };
-
-  SVGForm.prototype.line = function(p) {
-    this.nextID();
-    SVGForm.line(this.cc, p);
-    return this;
-  };
-
-  SVGForm.lines = function(ctx, pairs) {
-    var ln;
-    return (function() {
-      var l, len, results;
-      results = [];
-      for (l = 0, len = pairs.length; l < len; l++) {
-        ln = pairs[l];
-        results.push(SVGForm.line(ctx, ln));
-      }
-      return results;
-    })();
-  };
-
-  SVGForm.prototype.lines = function(ps) {
-    var l, len, p;
-    for (l = 0, len = ps.length; l < len; l++) {
-      p = ps[l];
-      this.line(p);
-    }
-    return this;
-  };
-
-  SVGForm.rect = function(ctx, pair, fill, stroke) {
-    var elem, size;
-    if (fill == null) {
-      fill = true;
-    }
-    if (stroke == null) {
-      stroke = true;
-    }
-    if (!pair.p1) {
-      throw "" + (pair.toString() === !a(Pair));
-    }
-    elem = SVGSpace.svgElement(ctx.group, "rect", SVGForm.id(ctx));
-    size = pair.size();
-    DOMSpace.attr(elem, {
-      x: pair.x,
-      y: pair.y,
-      width: size.x,
-      height: size.y
-    });
-    SVGForm.style(elem, ctx.style);
-    return elem;
-  };
-
-  SVGForm.prototype.rect = function(p, checkBounds) {
-    var r;
-    if (checkBounds == null) {
-      checkBounds = true;
-    }
-    this.nextID();
-    r = checkBounds ? p.bounds() : p;
-    SVGForm.rect(this.cc, r);
-    return this;
-  };
-
-  SVGForm.circle = function(ctx, c, fill, stroke) {
-    var elem;
-    if (fill == null) {
-      fill = true;
-    }
-    if (stroke == null) {
-      stroke = false;
-    }
-    elem = SVGSpace.svgElement(ctx.group, "circle", SVGForm.id(ctx));
-    if (!elem) {
-      return;
-    }
-    DOMSpace.attr(elem, {
-      cx: c.x,
-      cy: c.y,
-      r: c.radius
-    });
-    SVGForm.style(elem, ctx.style);
-    return elem;
-  };
-
-  SVGForm.prototype.circle = function(c) {
-    this.nextID();
-    SVGForm.circle(this.cc, c);
-    return this;
-  };
-
-  SVGForm.polygon = function(ctx, pts, closePath, fill, stroke) {
-    var elem, i, points;
-    if (closePath == null) {
-      closePath = true;
-    }
-    if (fill == null) {
-      fill = true;
-    }
-    if (stroke == null) {
-      stroke = true;
-    }
-    elem = SVGSpace.svgElement(ctx.group, (closePath ? "polygon" : "polyline"), SVGForm.id(ctx));
-    if (!elem) {
-      return;
-    }
-    if (pts.length <= 1) {
-      return;
-    }
-    points = (function() {
-      var l, ref, results;
-      results = [];
-      for (i = l = 0, ref = pts.length; l < ref; i = l += 1) {
-        results.push(pts[i].x + "," + pts[i].y);
-      }
-      return results;
-    })();
-    DOMSpace.attr(elem, {
-      points: points.join(" ")
-    });
-    SVGForm.style(elem, ctx.style);
-    return elem;
-  };
-
-  SVGForm.prototype.polygon = function(ps, closePath) {
-    this.nextID();
-    SVGForm.polygon(this.cc, ps, closePath);
-    return this;
-  };
-
-  SVGForm.triangle = function(ctx, tri, fill, stroke) {
-    if (fill == null) {
-      fill = true;
-    }
-    if (stroke == null) {
-      stroke = false;
-    }
-    return SVGForm.polygon(ctx, tri.toArray());
-  };
-
-  SVGForm.prototype.triangle = function(tri) {
-    this.nextID();
-    SVGForm.triangle(this.cc, tri);
-    return this;
-  };
-
-  SVGForm.curve = function(ctx, pts, closePath) {
-    if (closePath == null) {
-      closePath = false;
-    }
-    return SVGForm.polygon(ctx, pts, closePath);
-  };
-
-  SVGForm.prototype.curve = function(ps, closePath) {
-    if (closePath == null) {
-      closePath = false;
-    }
-    this.nextID();
-    SVGForm.curve(this.cc, ps, closePath);
-    return this;
-  };
-
-  SVGForm.text = function(ctx, pt, txt, maxWidth, dx, dy) {
-    var elem;
-    if (maxWidth == null) {
-      maxWidth = 0;
-    }
-    if (dx == null) {
-      dx = 0;
-    }
-    if (dy == null) {
-      dy = 0;
-    }
-    elem = SVGSpace.svgElement(ctx.group, "text", SVGForm.id(ctx));
-    if (!elem) {
-      return;
-    }
-    DOMSpace.attr(elem, {
-      "pointer-events": "none",
-      x: pt.x,
-      y: pt.y,
-      dx: 0,
-      dy: 0
-    });
-    elem.textContent = txt;
-    SVGForm.style(elem, {
-      fill: ctx.style.fill,
-      stroke: ctx.style.stroke,
-      "font-family": ctx.fontFace || false,
-      "font-size": ctx.fontSize || false
-    });
-    return elem;
-  };
-
-  SVGForm.prototype.text = function(p, txt, maxWidth, xoff, yoff) {
-    if (maxWidth == null) {
-      maxWidth = 1000;
-    }
-    this.nextID();
-    SVGForm.text(this.cc, p, txt, maxWidth, xoff, yoff);
-    return this;
-  };
-
-  SVGForm.prototype.font = function(size, face) {
-    if (face == null) {
-      face = false;
-    }
-    this.cc.fontFace = face;
-    this.cc.fontSize = size;
-    this.cc.font = size + "px " + face;
-    return this;
-  };
-
-  SVGForm.prototype.draw = function(shape) {
-    return this.sketch(shape);
-  };
-
-  SVGForm.prototype.sketch = function(shape) {
-    shape.floor();
-    if (shape instanceof Circle) {
-      SVGForm.circle(this.cc, shape, this.filled, this.stroked);
-    } else if (shape instanceof Rectangle) {
-      SVGForm.rect(this.cc, shape, this.filled, this.stroked);
-    } else if (shape instanceof Triangle) {
-      SVGForm.triangle(this.cc, shape, this.filled, this.stroked);
-    } else if (shape instanceof Line || shape instanceof Pair) {
-      SVGForm.line(this.cc, shape);
-    } else if (shape instanceof PointSet) {
-      SVGForm.polygon(this.cc, shape.points);
-    } else if (shape instanceof Vector || shape instanceof Point) {
-      SVGForm.point(this.cc, shape);
-    }
-    return this;
-  };
-
-  return SVGForm;
-
-})();
-
-this.SVGForm = SVGForm;
-
-SVGSpace = (function(superClass) {
-  extend(SVGSpace, superClass);
-
-  function SVGSpace(id, callback) {
-    var b, s;
-    SVGSpace.__super__.constructor.call(this, id, callback, 'svg');
-    if (this.space.nodeName.toLowerCase() !== "svg") {
-      s = this._createElement("svg", this.id + "_svg");
-      this.space.appendChild(s);
-      this.bound = this.space;
-      this.space = s;
-      b = this.bound.getBoundingClientRect();
-      this.resize(b.width, b.height);
-    }
-  }
-
-  SVGSpace.prototype._createElement = function(elem, id) {
-    var d;
-    if (elem == null) {
-      elem = "svg";
-    }
-    d = document.createElementNS("http://www.w3.org/2000/svg", elem);
-    if (id) {
-      d.setAttribute("id", id);
-    }
-    return d;
-  };
-
-  SVGSpace.svgElement = function(parent, name, id) {
-    var elem;
-    if (!parent || !parent.appendChild) {
-      parent = this.space;
-      if (!parent) {
-        throw "parent parameter needs to be a DOM node";
-      }
-    }
-    elem = document.querySelector("#" + id);
-    if (!elem) {
-      elem = document.createElementNS("http://www.w3.org/2000/svg", name);
-      elem.setAttribute("id", id);
-      elem.setAttribute("class", id.substring(0, id.indexOf("-")));
-      parent.appendChild(elem);
-    }
-    return elem;
-  };
-
-  SVGSpace.prototype.remove = function(item) {
-    var l, len, t, temp;
-    temp = this.space.querySelectorAll("." + SVGForm._scopeID(item));
-    for (l = 0, len = temp.length; l < len; l++) {
-      t = temp[l];
-      t.parentNode.removeChild(t);
-    }
-    delete this.items[item.animateID];
-    return this;
-  };
-
-  SVGSpace.prototype.removeAll = function() {
-    while (this.space.firstChild) {
-      this.space.removeChild(this.space.firstChild);
-      return this;
-    }
-  };
-
-  return SVGSpace;
-
-})(DOMSpace);
-
-this.SVGSpace = SVGSpace;
 
 Easing = (function() {
   function Easing() {}
@@ -1540,5 +1025,235 @@ Delaunay = (function(superClass) {
 })(PointSet);
 
 this.Delaunay = Delaunay;
+
+Shaping = (function(superClass) {
+  extend(Shaping, superClass);
+
+  function Shaping(args) {
+    Shaping.__super__.constructor.apply(this, arguments);
+  }
+
+  Shaping.linear = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return c * t;
+  };
+
+  Shaping.quadraticIn = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return c * t * t;
+  };
+
+  Shaping.quadraticOut = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return -c * t * (t - 2);
+  };
+
+  Shaping.quadraticInOut = function(t, c) {
+    var dt;
+    if (c == null) {
+      c = 1;
+    }
+    dt = t * 2;
+    if (t < 0.5) {
+      return c / 2 * t * t * 4;
+    } else {
+      return -c / 2 * ((dt - 1) * (dt - 3) - 1);
+    }
+  };
+
+  Shaping.cubicIn = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return c * t * t * t;
+  };
+
+  Shaping.cubicOut = function(t, c) {
+    var dt;
+    if (c == null) {
+      c = 1;
+    }
+    dt = t - 1;
+    return c * (dt * dt * dt + 1);
+  };
+
+  Shaping.cubicInOut = function(t, c) {
+    var dt;
+    if (c == null) {
+      c = 1;
+    }
+    dt = t * 2;
+    if (t < 0.5) {
+      return c / 2 * dt * dt * dt;
+    } else {
+      return c / 2 * ((dt - 2) * (dt - 2) * (dt - 2) + 2);
+    }
+  };
+
+  Shaping.sineIn = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return -c * Math.cos(t * Const.half_pi) + c;
+  };
+
+  Shaping.sineOut = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return c * Math.sin(t * Const.half_pi);
+  };
+
+  Shaping.sineInOut = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return -c / 2 * (Math.cos(Math.PI * t) - 1);
+  };
+
+  Shaping.circularIn = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return -c * (Math.sqrt(1 - t * t) - 1);
+  };
+
+  Shaping.circularOut = function(t, c) {
+    var dt;
+    if (c == null) {
+      c = 1;
+    }
+    dt = t - 1;
+    return c * Math.sqrt(1 - dt * dt);
+  };
+
+  Shaping.circularInOut = function(t, c) {
+    var dt;
+    if (c == null) {
+      c = 1;
+    }
+    dt = t * 2;
+    if (t < 0.5) {
+      return -c / 2 * (Math.sqrt(1 - dt * dt) - 1);
+    } else {
+      return c / 2 * (Math.sqrt(1 - (dt - 2) * (dt - 2)) + 1);
+    }
+  };
+
+  Shaping.elasticIn = function(t, c, p) {
+    var dt, s;
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 0.7;
+    }
+    dt = t - 1;
+    s = (p / Const.two_pi) * 1.5707963267948966;
+    return c * (-Math.pow(2, 10 * dt) * Math.sin((dt - s) * Const.two_pi / p));
+  };
+
+  Shaping.elasticOut = function(t, c, p) {
+    var s;
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 0.7;
+    }
+    s = (p / Const.two_pi) * 1.5707963267948966;
+    return c * (Math.pow(2, -10 * t) * Math.sin((t - s) * Const.two_pi / p)) + c;
+  };
+
+  Shaping.elasticInOut = function(t, c, p) {
+    var dt, s;
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 0.6;
+    }
+    dt = t * 2;
+    s = (p / Const.two_pi) * 1.5707963267948966;
+    if (t < 0.5) {
+      dt -= 1;
+      return c * (-0.5 * (Math.pow(2, 10 * dt) * Math.sin((dt - s) * Const.two_pi / p)));
+    } else {
+      dt -= 1;
+      return c * (0.5 * (Math.pow(2, -10 * dt) * Math.sin((dt - s) * Const.two_pi / p))) + c;
+    }
+  };
+
+  Shaping.bounceIn = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return c - Shaping.bounceOut(1 - t, c);
+  };
+
+  Shaping.bounceOut = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    if (t < (1 / 2.75)) {
+      return c * (7.5625 * t * t);
+    } else if (t < (2 / 2.75)) {
+      t -= 1.5 / 2.75;
+      return c * (7.5625 * t * t + 0.75);
+    } else if (t < (2.5 / 2.75)) {
+      t -= 2.25 / 2.75;
+      return c * (7.5625 * t * t + 0.9375);
+    } else {
+      t -= 2.625 / 2.75;
+      return c * (7.5625 * t * t + 0.984375);
+    }
+  };
+
+  Shaping.bounceInOut = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    if (t < 0.5) {
+      return Shaping.bounceIn(t * 2, c) / 2;
+    } else {
+      return Shaping.bounceOut(t * 2 - 1, c) / 2 + c / 2;
+    }
+  };
+
+  Shaping.sigmoid = function(t, c, p) {
+    var d;
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 8;
+    }
+    d = p * (t - 0.5);
+    return c * 1 / (1 + Math.exp(d * -1));
+  };
+
+  Shaping.step = function(t, c, p) {
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 0.5;
+    }
+    if (t > p) {
+      return c;
+    } else {
+      return 0;
+    }
+  };
+
+  return Shaping;
+
+})(Vector);
 
 //# sourceMappingURL=pt-extend.js.map

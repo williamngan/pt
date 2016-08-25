@@ -5,6 +5,9 @@ class Shaping extends Vector
     super
 
 
+  @linear: (t, c=1) ->
+    return c * t;
+
   # ## Quadratic, in based on Robert Penner's easing functions
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
@@ -94,36 +97,36 @@ class Shaping extends Vector
 
   # ## Elastic in, based on Robert Penner's easing functions
   # @param `t` a value between 0 to 1
-  # @param `p` elastic parmeter between 0 to 1. The lower the number, the more elastic it will be
   # @param `c` the value to shape, default is 1
-  @elasticIn: (t, p=0.5, c=1) ->
+  # @param `p` elastic parmeter between 0 to 1. The lower the number, the more elastic it will be
+  @elasticIn: (t, c=1, p=0.7) ->
     dt = t - 1
     s = (p / Const.two_pi) * 1.5707963267948966
-    return -c * Math.pow(2, 10 * dt) * Math.sin((dt * c - s) * Const.two_pi / p)
+    return c * (-Math.pow(2, 10 * dt) * Math.sin((dt - s) * Const.two_pi / p))
 
 
   # ## Elastic out, based on Robert Penner's easing functions
   # @param `t` a value between 0 to 1
-  # @param `p` elastic parmeter between 0 to 1. The lower the number, the more elastic it will be
   # @param `c` the value to shape, default is 1
-  @elasticOut: (t, p=0.5, c=1) ->
+  # @param `p` elastic parmeter between 0 to 1. The lower the number, the more elastic it will be
+  @elasticOut: (t, c=1, p=0.7) ->
     s = (p / Const.two_pi) * 1.5707963267948966
-    return c * Math.pow(2, -10 * t) * Math.sin((t * c - s) * Const.two_pi / p) + c
+    return c * ( Math.pow(2, -10 * t) * Math.sin((t - s) * Const.two_pi / p)) + c
 
 
   # ## Elastic in-out, based on Robert Penner's easing functions
   # @param `t` a value between 0 to 1
-  # @param `p` elastic parmeter between 0 to 1. The lower the number, the more elastic it will be
   # @param `c` the value to shape, default is 1
-  @elasticInOut: (t, p=0.5, c=1) ->
+  # @param `p` elastic parmeter between 0 to 1. The lower the number, the more elastic it will be
+  @elasticInOut: (t, c=1, p=0.6) ->
     dt = t*2
     s = (p / Const.two_pi) * 1.5707963267948966
     if (t<0.5)
       dt -= 1
-      return -c/2 * ( Math.pow(2, 10 * dt) * Math.sin((dt * c - s) * Const.two_pi / p))
+      return c * ( -0.5 * ( Math.pow(2, 10 * dt) * Math.sin((dt - s) * Const.two_pi / p)) )
     else
       dt -= 1
-      return c/2 * ( Math.pow(2, -10 * dt) * Math.sin(( dt * c - s) * Const.two_pi / p)) + c
+      return c * (0.5 * ( Math.pow(2, -10 * dt) * Math.sin(( dt - s) * Const.two_pi / p))) + c
 
 
   # ## Bounce in, based on Robert Penner's easing functions
@@ -160,14 +163,14 @@ class Shaping extends Vector
 
   # ## Sigmoid curve changes its shape based on the input value, but always returns a value between 0 to 1.
   # @param `t` a value between 0 to 1
-  # @param `c` the larger the value, the "steeper" the curve will be. Default is 8
-  @sigmoid: (t, c=8) ->
-    d = c*(t-0.5)
-    return 1 / (1 + Math.exp( d*-1 ) )
+  # @param `p` the larger the value, the "steeper" the curve will be. Default is 8
+  @sigmoid: (t, c=1, p=8) ->
+    d = p*(t-0.5)
+    return c * 1 / (1 + Math.exp( d*-1 ) )
 
 
   # ## Step function is a simple jump from 0 to 1 at a specific point in time
   # @param `t` a value between 0 to 1
-  # @param `c` usually a value between 0 to 1, which specify the point to "jump". Default is 0.5 which is in the middle.
-  @step: (t, c=0.5) ->
-    return (t - 0.5 - (c-0.5) ) ? 1: 0
+  # @param `p` usually a value between 0 to 1, which specify the point to "jump". Default is 0.5 which is in the middle.
+  @step: (t, c=1, p=0.5) ->
+    return if ( t > p ) then c else 0
