@@ -1096,6 +1096,26 @@ Shaping = (function(superClass) {
     }
   };
 
+  Shaping.exponentialIn = function(t, c, p) {
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 0.25;
+    }
+    return c * Math.pow(t, 1 / p);
+  };
+
+  Shaping.exponentialOut = function(t, c, p) {
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 0.25;
+    }
+    return c * Math.pow(t, p);
+  };
+
   Shaping.sineIn = function(t, c) {
     if (c == null) {
       c = 1;
@@ -1115,6 +1135,17 @@ Shaping = (function(superClass) {
       c = 1;
     }
     return -c / 2 * (Math.cos(Math.PI * t) - 1);
+  };
+
+  Shaping.cosineApprox = function(t, c) {
+    var t2, t4, t6;
+    if (c == null) {
+      c = 1;
+    }
+    t2 = t * t;
+    t4 = t2 * t2;
+    t6 = t4 * t2;
+    return c * (4 * t6 / 9 - 17 * t4 / 9 + 22 * t2 / 9);
   };
 
   Shaping.circularIn = function(t, c) {
@@ -1232,13 +1263,92 @@ Shaping = (function(superClass) {
       c = 1;
     }
     if (p == null) {
-      p = 8;
+      p = 10;
     }
     d = p * (t - 0.5);
-    return c * 1 / (1 + Math.exp(d * -1));
+    return c / (1 + Math.exp(-d));
   };
 
-  Shaping.step = function(t, c, p) {
+  Shaping.logSigmoid = function(t, c, p) {
+    var A, B, C;
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 0.7;
+    }
+    p = Math.max(Const.epsilon, Math.min(1 - Const.epsilon, p));
+    p = 1 / (1 - p);
+    A = 1 / (1 + Math.exp((t - 0.5) * p * -2));
+    B = 1 / (1 + Math.exp(p));
+    C = 1 / (1 + Math.exp(-p));
+    return c * (A - B) / (C - B);
+  };
+
+  Shaping.seat = function(t, c, p) {
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 0.5;
+    }
+    if (t < 0.5) {
+      return c * (Math.pow(2 * t, 1 - p)) / 2;
+    } else {
+      return c * (1 - (Math.pow(2 * (1 - t), 1 - p)) / 2);
+    }
+  };
+
+  Shaping.quadraticBezier = function(t, c, p) {
+    var a, b, d, om2a;
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = new Point(0.05, 0.95);
+    }
+    a = p.x ? p.x : p;
+    b = p.y ? p.y : 0.5;
+    om2a = 1 - 2 * a;
+    if (om2a === 0) {
+      om2a = Const.epsilon;
+    }
+    d = (Math.sqrt(a * a + om2a * t) - a) / om2a;
+    return c * ((1 - 2 * b) * (d * d) + (2 * b) * d);
+  };
+
+  Shaping.cubicBezier = function(t, c, p1, p2) {
+    var curve;
+    if (c == null) {
+      c = 1;
+    }
+    if (p1 == null) {
+      p1 = new Point(0.1, 0.7);
+    }
+    if (p2 == null) {
+      p2 = new Point(0.9, 0.2);
+    }
+    curve = new Curve().to([new Point(0, 0), p1, p2, new Point(1, 1)]);
+    return c * curve.bezierPoint([t, t * t, t * t * t], curve.controlPoints()).y;
+  };
+
+  Shaping.quadraticTarget = function(t, c, p1) {
+    var A, B, a, b, y;
+    if (c == null) {
+      c = 1;
+    }
+    if (p1 == null) {
+      p1 = new Point(0.2, 0.35);
+    }
+    a = Math.min(1 - Const.epsilon, Math.max(Const.epsilon, p1.x));
+    b = Math.min(1, Math.max(0, p1.y));
+    A = (1 - b) / (1 - a) - (b / a);
+    B = (A * (a * a) - b) / a;
+    y = A * (t * t) - B * t;
+    return c * Math.min(1, Math.max(0, y));
+  };
+
+  Shaping.cliff = function(t, c, p) {
     if (c == null) {
       c = 1;
     }
@@ -1250,6 +1360,13 @@ Shaping = (function(superClass) {
     } else {
       return 0;
     }
+  };
+
+  Shaping.step = function(fn, steps, t, c, p1, p2) {
+    var s, tt;
+    s = 1 / steps;
+    tt = Math.floor(t / s) * s;
+    return fn(tt, c, p1, p2);
   };
 
   return Shaping;
