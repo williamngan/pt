@@ -68,11 +68,11 @@ class Noise extends Vector
     g[0] * x + g[1] * y
 
 
-  # ## Get a 2d perlin noise value. Increase the x and y parameters by a small amount (eg, 0.01) at each step to get a smooth noise.
+  # ## Get a 2D perlin noise value. Increase the x and y parameters by a small amount (eg, 0.01) at each step to get a smooth noise.
   # @param `x, y` optional x and y dimension, or leave empty to use this vector's x and y position
-  # @eg `noise.perlin2d()`, `noise.perlin2d(10.001, 0.1)`
+  # @eg `noise.perlin2D()`, `noise.perlin2D(10.001, 0.1)`
   # @return a value between 0 to 1
-  perlin2d: (xin=@x, yin=@y) ->
+  perlin2D: (xin=@x, yin=@y) ->
 
     _fade = (f) -> f*f*f*(f*(f*6-15)+10)
 
@@ -90,11 +90,11 @@ class Noise extends Vector
     return Util.lerp( Util.lerp(n00, n10, tx), Util.lerp(n01, n11, tx), _fade(y) )
 
 
-  # ## Get a 2d simplex noise value. Increase the x and y parameters by a small amount (eg, 0.01) at each step to get a smooth noise.
+  # ## Get a 2D simplex noise value. Increase the x and y parameters by a small amount (eg, 0.01) at each step to get a smooth noise.
   # @param `x, y` optional x and y dimension, or leave empty to use this vector's x and y position
-  # @eg `noise.simplex2d()`, `noise.simplex2d(10.001, 0.1)`
+  # @eg `noise.simplex2D()`, `noise.simplex2D(10.001, 0.1)`
   # @return a value between -1 to 1
-  simplex2d: (xin=@x, yin=@y) ->
+  simplex2D: (xin=@x, yin=@y) ->
 
     # Skew the input space to determine which simplex cell we're in
     F2 = 0.5*(Math.sqrt(3.0)-1.0)
@@ -165,4 +165,3 @@ class Noise extends Vector
     # Add contributions from each corner to get the final noise value.
     # The result is scaled to return values in the interval [-1,1].
     return 70.0 * (n0 + n1 + n2)
-
