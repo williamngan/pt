@@ -8,6 +8,7 @@ var coffee = require('gulp-coffee');
 var insert = require('gulp-insert');
 var es = require('event-stream');
 var babel = require('gulp-babel');
+var runSequence = require('run-sequence');
 
 // Define Paths
 var path = {
@@ -116,6 +117,14 @@ gulp.task('module', function() {
 
 gulp.task('min', ["core-min", "core-ns-min", "pt-min", "pt-ns-min"]);
 
+gulp.task('rebuildAll', function(callback) {
+  runSequence(
+    ["pt", "core", "core-files"],
+    'namespace',
+    'module',
+    ["core-min", "core-ns-min", "pt-min", "pt-ns-min"],
+    callback);
+});
 
 // Pt
 
