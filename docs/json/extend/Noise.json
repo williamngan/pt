@@ -14,9 +14,9 @@
             "pname": "seed"
         }, 
         {
-            "description": "<h2>Get a 2d perlin noise value. Increase the x and y parameters by a small amount (eg, 0.01) at each step to get a smooth noise.</h2>", 
-            "eg": "<p><code>noise.perlin2d()</code>, <code>noise.perlin2d(10.001, 0.1)</code></p>", 
-            "name": "perlin2d", 
+            "description": "<h2>Get a 2D perlin noise value. Increase the x and y parameters by a small amount (eg, 0.01) at each step to get a smooth noise.</h2>", 
+            "eg": "<p><code>noise.perlin2D()</code>, <code>noise.perlin2D(10.001, 0.1)</code></p>", 
+            "name": "perlin2D", 
             "param": [
                 "<p><code>x, y</code> optional x and y dimension, or leave empty to use this vector's x and y position</p>"
             ], 
@@ -24,9 +24,9 @@
             "return": "<p>a value between 0 to 1</p>"
         }, 
         {
-            "description": "<h2>Get a 2d simplex noise value. Increase the x and y parameters by a small amount (eg, 0.01) at each step to get a smooth noise.</h2>", 
-            "eg": "<p><code>noise.simplex2d()</code>, <code>noise.simplex2d(10.001, 0.1)</code></p>", 
-            "name": "simplex2d", 
+            "description": "<h2>Get a 2D simplex noise value. Increase the x and y parameters by a small amount (eg, 0.01) at each step to get a smooth noise.</h2>", 
+            "eg": "<p><code>noise.simplex2D()</code>, <code>noise.simplex2D(10.001, 0.1)</code></p>", 
+            "name": "simplex2D", 
             "param": [
                 "<p><code>x, y</code> optional x and y dimension, or leave empty to use this vector's x and y position</p>"
             ], 

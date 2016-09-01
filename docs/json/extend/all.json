@@ -26,28 +26,6 @@
     "props": [], 
     "statics": []
   }, 
-  "Easing": {
-    "cls": "Easing", 
-    "description": "<h3>Simple easing functions based on Robert Penner's functions.</h3>", 
-    "extend": "", 
-    "file": "Easing.coffee", 
-    "funcs": [], 
-    "props": [], 
-    "statics": [
-      {
-        "description": "<h2>Linear interpolation</h2>", 
-        "name": "linear", 
-        "param": [
-          "<p><code>t</code> current time or iteration</p>", 
-          "<p><code>b</code> start value</p>", 
-          "<p><code>c</code> change in value</p>", 
-          "<p><code>d</code> duration time or total iteration</p>"
-        ], 
-        "pname": "t, b, c, d", 
-        "return": "<p>interpolated value</p>"
-      }
-    ]
-  }, 
   "GridCascade": {
     "cls": "GridCascade", 
     "description": "<h3>(In progress) Like Grid, but expand the rows as needed to fit more items.</h3>", 
@@ -108,9 +86,9 @@
         "pname": "seed"
       }, 
       {
-        "description": "<h2>Get a 2d perlin noise value. Increase the x and y parameters by a small amount (eg, 0.01) at each step to get a smooth noise.</h2>", 
-        "eg": "<p><code>noise.perlin2d()</code>, <code>noise.perlin2d(10.001, 0.1)</code></p>", 
-        "name": "perlin2d", 
+        "description": "<h2>Get a 2D perlin noise value. Increase the x and y parameters by a small amount (eg, 0.01) at each step to get a smooth noise.</h2>", 
+        "eg": "<p><code>noise.perlin2D()</code>, <code>noise.perlin2D(10.001, 0.1)</code></p>", 
+        "name": "perlin2D", 
         "param": [
           "<p><code>x, y</code> optional x and y dimension, or leave empty to use this vector's x and y position</p>"
         ], 
@@ -118,9 +96,9 @@
         "return": "<p>a value between 0 to 1</p>"
       }, 
       {
-        "description": "<h2>Get a 2d simplex noise value. Increase the x and y parameters by a small amount (eg, 0.01) at each step to get a smooth noise.</h2>", 
-        "eg": "<p><code>noise.simplex2d()</code>, <code>noise.simplex2d(10.001, 0.1)</code></p>", 
-        "name": "simplex2d", 
+        "description": "<h2>Get a 2D simplex noise value. Increase the x and y parameters by a small amount (eg, 0.01) at each step to get a smooth noise.</h2>", 
+        "eg": "<p><code>noise.simplex2D()</code>, <code>noise.simplex2D(10.001, 0.1)</code></p>", 
+        "name": "simplex2D", 
         "param": [
           "<p><code>x, y</code> optional x and y dimension, or leave empty to use this vector's x and y position</p>"
         ], 
@@ -310,6 +288,304 @@
         ], 
         "pname": "bound, items, samples=10", 
         "return": "<p>o Vector object which is best candidate</p>"
+      }
+    ]
+  }, 
+  "Shaping": {
+    "cls": "Shaping", 
+    "description": "<h3>Think of a shaping function as you turn the handle of your faucet. See: when you turn it to left the water gets colder, and hotter when you turn it to right. A shaping function is just that. It turns a value (say, angle of your faucet handle of 0-180 degrees) into another value (say, water temperature between 0-75). Shaping function has many uses, especially in shaping continuous values within a range such as easing in animation.</h3>", 
+    "extend": "", 
+    "file": "Shaping.coffee", 
+    "funcs": [], 
+    "props": [], 
+    "statics": [
+      {
+        "demo": "shaping.linear", 
+        "description": "<h2>Linear mapping</h2>", 
+        "name": "linear", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>Quadratic in, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "quadraticIn", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>Quadratic out, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "quadraticOut", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>Quadratic in-out, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "quadraticInOut", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>Cubic in, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "cubicIn", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>Cubic out, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "cubicOut", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>Cubic in-out, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "cubicInOut", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>Exponential ease In, adapted from Golan Levin's <a href=\"http://www.flong.com/texts/code/shapers_poly/\">polynomial shapers</a></h2>", 
+        "name": "exponentialIn", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>", 
+          "<p><code>p</code> a value between 0 to 1 to control the curve. Default is 0.25.</p>"
+        ], 
+        "pname": "t, c=1, p=0.25"
+      }, 
+      {
+        "description": "<h2>Exponential ease out, adapted from Golan Levin's <a href=\"http://www.flong.com/texts/code/shapers_poly/\">polynomial shapers</a></h2>", 
+        "name": "exponentialOut", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>", 
+          "<p><code>p</code> a value between 0 to 1 to control the curve. Default is 0.25.</p>"
+        ], 
+        "pname": "t, c=1, p=0.25"
+      }, 
+      {
+        "description": "<h2>Sinuous in, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "sineIn", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>Sinuous out, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "sineOut", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>Sinuous in-out, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "sineInOut", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>A faster way to approximate cosine ease in-out using Blinn-Wyvill Approximation. Adapated from Golan Levin's <a href=\"http://www.flong.com/texts/code/shapers_poly/\">polynomial shaping</a></h2>", 
+        "name": "cosineApprox", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>Circular in, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "circularIn", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>Circular out, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "circularOut", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>Circular in-out, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "circularInOut", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>Elastic in, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "elasticIn", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>", 
+          "<p><code>p</code> elastic parmeter between 0 to 1. The lower the number, the more elastic it will be. Default is 0.7.</p>"
+        ], 
+        "pname": "t, c=1, p=0.7"
+      }, 
+      {
+        "description": "<h2>Elastic out, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "elasticOut", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>", 
+          "<p><code>p</code> elastic parmeter between 0 to 1. The lower the number, the more elastic it will be. Default is 0.7.</p>"
+        ], 
+        "pname": "t, c=1, p=0.7"
+      }, 
+      {
+        "description": "<h2>Elastic in-out, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "elasticInOut", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>", 
+          "<p><code>p</code> elastic parmeter between 0 to 1. The lower the number, the more elastic it will be. Default is 0.6.</p>"
+        ], 
+        "pname": "t, c=1, p=0.6"
+      }, 
+      {
+        "description": "<h2>Bounce in, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "bounceIn", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>Bounce out, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "bounceOut", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>Bounce in-out, adapted from Robert Penner's <a href=\"http://robertpenner.com/easing/\">easing functions</a></h2>", 
+        "name": "bounceInOut", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>"
+        ], 
+        "pname": "t, c=1"
+      }, 
+      {
+        "description": "<h2>Sigmoid curve changes its shape adapted from the input value, but always returns a value between 0 to 1.</h2>", 
+        "name": "sigmoid", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>", 
+          "<p><code>p</code> the larger the value, the \"steeper\" the curve will be. Default is 10.</p>"
+        ], 
+        "pname": "t, c=1, p=10"
+      }, 
+      {
+        "description": "<h2>The Logistic Sigmoid is a useful curve. Adapted from Golan Levin's <a href=\"http://www.flong.com/texts/code/shapers_exp/\">shaping function</a></h2>", 
+        "name": "logSigmoid", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>", 
+          "<p><code>p</code> a parameter between 0 to 1 to control the steepness of the curve. Higher is steeper. Default is 0.7.</p>"
+        ], 
+        "pname": "t, c=1, p=0.7"
+      }, 
+      {
+        "description": "<h2>An exponential seat curve. Adapted from Golan Levin's <a href=\"http://www.flong.com/texts/code/shapers_exp/\">shaping functions</a></h2>", 
+        "name": "seat", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>", 
+          "<p><code>p</code> a parameter between 0 to 1 to control the steepness of the curve. Higher is steeper. Default is 0.5.</p>"
+        ], 
+        "pname": "t, c=1, p=0.5"
+      }, 
+      {
+        "description": "<h2>Quadratic bezier curve. Adapted from Golan Levin's <a href=\"http://www.flong.com/texts/code/shapers_exp/\">shaping functions</a></h2>", 
+        "name": "quadraticBezier", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>", 
+          "<p><code>p1</code> a Point object specifying the first control point, or a value specifying the control point's x position (its y position will default to 0.5). Default is <code>Point(0.95, 0.95)</code></p>"
+        ], 
+        "pname": "t, c=1, p=new Point(0.05, 0.95)"
+      }, 
+      {
+        "description": "<h2>Cubic bezier curve. This reuses the bezier functions in Curve class.</h2>", 
+        "name": "cubicBezier", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>", 
+          "<p><code>p1</code> a Point object specifying the first control point. Default is <code>Point(0.1, 0.7)</code>.</p>", 
+          "<p><code>p2</code> a Point object specifying the second control point. Default is <code>Point(0.9, 0.2)</code>.</p>"
+        ], 
+        "pname": "t, c=1, p1=new Point(0.1, 0.7), p2=new Point(0.9, 0.2)"
+      }, 
+      {
+        "description": "<h2>Give a point, draw a quadratic curve that will pass through that point as closely as possible. Adapted from Golan Levin's <a href=\"http://www.flong.com/texts/code/shapers_poly/\">shaping functions</a></h2>", 
+        "name": "quadraticTarget", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>", 
+          "<p><code>p1</code> a Point object specifying the point to pass through. Default is <code>Point(0.2, 0.35)</code></p>"
+        ], 
+        "pname": "t, c=1, p1= new Point(0.2, 0.35)"
+      }, 
+      {
+        "description": "<h2>Step function is a simple jump from 0 to 1 at a specific point in time</h2>", 
+        "name": "cliff", 
+        "param": [
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>", 
+          "<p><code>p</code> usually a value between 0 to 1, which specify the point to \"jump\". Default is 0.5 which is in the middle.</p>"
+        ], 
+        "pname": "t, c=1, p=0.5"
+      }, 
+      {
+        "description": "<h2>Convert any shaping functions into a series of steps</h2>", 
+        "name": "step", 
+        "param": [
+          "<p><code>fn</code> the original shaping function</p>", 
+          "<p><code>steps</code> the number of steps</p>", 
+          "<p><code>t</code> a value between 0 to 1</p>", 
+          "<p><code>c</code> the value to shape, default is 1</p>", 
+          "<p><code>p1</code> optional first paramter to pass to original function</p>", 
+          "<p><code>p2</code> optional second paramter to pass to original function</p>"
+        ], 
+        "pname": "fn, steps, t, c, p1, p2"
       }
     ]
   }, 

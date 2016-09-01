@@ -1,9 +1,10 @@
-# ### Think of a shaping function as you turn the handle of your faucet. See: when you turn it to left the water gets colder, and hotter when you turn it to right. A shaping function is just that. It turns a value (say, angle of your faucet handle) into another value (say, water temperature). Shaping function has many uses, especially in shaping continuous values within a range such as easing in animation.
+# ### Think of a shaping function as you turn the handle of your faucet. See: when you turn it to left the water gets colder, and hotter when you turn it to right. A shaping function is just that. It turns a value (say, angle of your faucet handle of 0-180 degrees) into another value (say, water temperature between 0-75). Shaping function has many uses, especially in shaping continuous values within a range such as easing in animation.
 class Shaping
 
   # ## Linear mapping
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
+  # @demo shaping.linear
   @linear: (t, c=1) ->
     return c * t;
 
