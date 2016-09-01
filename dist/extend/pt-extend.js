@@ -1,105 +1,8 @@
 
 /* Licensed under the Apache License, Version 2.0. (http://www.apache.org/licenses/LICENSE-2.0). Copyright 2015-2016 William Ngan. (https://github.com/williamngan/pt/) */
-var Delaunay, Easing, GridCascade, Noise, ParticleEmitter, ParticleField, QuadTree, SamplePoints, Shaping, StripeBound, UI,
+var Delaunay, GridCascade, Noise, ParticleEmitter, ParticleField, QuadTree, SamplePoints, Shaping, StripeBound, UI,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
-
-Easing = (function() {
-  function Easing() {}
-
-  Easing.linear = function(t, b, c, d) {
-    return c * (t /= d) + b;
-  };
-
-  Easing._linear = function(t) {
-    return Easing.linear(t, 0, 1, 1);
-  };
-
-  Easing.quadIn = function(t, b, c, d) {
-    return c * (t /= d) * t + b;
-  };
-
-  Easing._quadIn = function(t) {
-    return Easing.quadIn(t, 0, 1, 1);
-  };
-
-  Easing.quadOut = function(t, b, c, d) {
-    return -c * (t /= d) * (t - 2) + b;
-  };
-
-  Easing._quadOut = function(t) {
-    return Easing.quadOut(t, 0, 1, 1);
-  };
-
-  Easing.cubicIn = function(t, b, c, d) {
-    t = t / d;
-    return c * t * t * t + b;
-  };
-
-  Easing._cubicIn = function(t) {
-    return Easing.cubicIn(t, 0, 1, 1);
-  };
-
-  Easing.cubicOut = function(t, b, c, d) {
-    t = t / d;
-    return c * ((t - 1) * t * t + 1) + b;
-  };
-
-  Easing._cubicOut = function(t) {
-    return Easing.cubicOut(t, 0, 1, 1);
-  };
-
-  Easing.elastic = function(t, b, c, d, el) {
-    var a, p, s;
-    if (el == null) {
-      el = 0.3;
-    }
-    s = 1.70158;
-    p = d * el;
-    a = c;
-    if (t === 0) {
-      return b;
-    }
-    t = t / d;
-    if (t === 1) {
-      return b + c;
-    }
-    if (a < Math.abs(c)) {
-      a = c;
-      s = p / 4;
-    } else if (a !== 0) {
-      s = p / Const.two_pi * Math.asin(c / a);
-    } else {
-      s = 0;
-    }
-    return a * Math.pow(2, -10 * t) * Math.sin((t * d - s) * Const.two_pi / p) + c + b;
-  };
-
-  Easing._elastic = function(t) {
-    return Easing.elastic(t, 0, 1, 1);
-  };
-
-  Easing.bounce = function(t, b, c, d) {
-    if ((t /= d) < (1 / 2.75)) {
-      return c * (7.5625 * t * t) + b;
-    } else if (t < (2 / 2.75)) {
-      return c * (7.5625 * (t -= 1.5 / 2.75) * t + 0.75) + b;
-    } else if (t < (2.5 / 2.75)) {
-      return c * (7.5625 * (t -= 2.25 / 2.75) * t + 0.9375) + b;
-    } else {
-      return c * (7.5625 * (t -= 2.625 / 2.75) * t + 0.984375) + b;
-    }
-  };
-
-  Easing._bounce = function(t) {
-    return Easing.bounce(t, 0, 1, 1);
-  };
-
-  return Easing;
-
-})();
-
-this.Easing = Easing;
 
 GridCascade = (function(superClass) {
   extend(GridCascade, superClass);
@@ -811,7 +714,7 @@ Noise = (function(superClass) {
     return g[0] * x + g[1] * y;
   };
 
-  Noise.prototype.perlin2d = function(xin, yin) {
+  Noise.prototype.perlin2D = function(xin, yin) {
     var _fade, i, j, n00, n01, n10, n11, tx, x, y;
     if (xin == null) {
       xin = this.x;
@@ -834,7 +737,7 @@ Noise = (function(superClass) {
     return Util.lerp(Util.lerp(n00, n10, tx), Util.lerp(n01, n11, tx), _fade(y));
   };
 
-  Noise.prototype.simplex2d = function(xin, yin) {
+  Noise.prototype.simplex2D = function(xin, yin) {
     var F2, G2, X0, Y0, gi0, gi1, gi2, i, i1, ii, j, j1, jj, n0, n1, n2, s, t, t0, t1, t2, x0, x1, x2, y0, y1, y2;
     if (xin == null) {
       xin = this.x;
@@ -1026,12 +929,8 @@ Delaunay = (function(superClass) {
 
 this.Delaunay = Delaunay;
 
-Shaping = (function(superClass) {
-  extend(Shaping, superClass);
-
-  function Shaping(args) {
-    Shaping.__super__.constructor.apply(this, arguments);
-  }
+Shaping = (function() {
+  function Shaping() {}
 
   Shaping.linear = function(t, c) {
     if (c == null) {
@@ -1371,6 +1270,6 @@ Shaping = (function(superClass) {
 
   return Shaping;
 
-})(Vector);
+})();
 
 //# sourceMappingURL=pt-extend.js.map

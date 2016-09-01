@@ -1,28 +1,28 @@
-# ### Shaping functions.
-class Shaping extends Vector
+# ### Think of a shaping function as you turn the handle of your faucet. See: when you turn it to left the water gets colder, and hotter when you turn it to right. A shaping function is just that. It turns a value (say, angle of your faucet handle) into another value (say, water temperature). Shaping function has many uses, especially in shaping continuous values within a range such as easing in animation.
+class Shaping
 
-  constructor: ( args ) ->
-    super
-
-
+  # ## Linear mapping
+  # @param `t` a value between 0 to 1
+  # @param `c` the value to shape, default is 1
   @linear: (t, c=1) ->
     return c * t;
 
-  # ## Quadratic, in based on Robert Penner's easing functions
+
+  # ## Quadratic in, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
   @quadraticIn: ( t, c=1 ) ->
     return c * t * t
 
 
-  # ## Quadratic out, based on Robert Penner's easing functions
+  # ## Quadratic out, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
   @quadraticOut: ( t, c=1 ) ->
     return -c * t * (t-2)
 
 
-  # ## Quadratic in-out, based on Robert Penner's easing functions
+  # ## Quadratic in-out, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
   @quadraticInOut: (t, c=1) ->
@@ -30,21 +30,21 @@ class Shaping extends Vector
     return if (t<0.5) then c/2 * t * t * 4 else -c/2 * ((dt-1) * (dt-3) - 1)
 
 
-  # ## Cubic in, based on Robert Penner's easing functions
+  # ## Cubic in, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
   @cubicIn: ( t, c=1 ) ->
     return c * t * t * t
 
 
-  # ## Cubic out, based on Robert Penner's easing functions
+  # ## Cubic out, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
   @cubicOut: ( t, c=1 ) ->
     dt = t - 1
     return c * ( dt * dt * dt + 1)
 
-  # ## Cubic in-out, based on Robert Penner's easing functions
+  # ## Cubic in-out, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
   @cubicInOut: (t, c=1) ->
@@ -52,44 +52,46 @@ class Shaping extends Vector
     return if (t<0.5) then c/2 * dt * dt * dt else c/2 * ((dt-2) * (dt-2) * (dt-2) + 2)
 
 
-  # ## Exponential ease In, based on Golan Levin's [polynomial shapers](http://www.flong.com/texts/code/shapers_poly/)
+  # ## Exponential ease In, adapted from Golan Levin's [polynomial shapers](http://www.flong.com/texts/code/shapers_poly/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
-  # @param `p` a value between 0 to 1 to control the curve.
+  # @param `p` a value between 0 to 1 to control the curve. Default is 0.25.
   @exponentialIn: (t, c=1, p=0.25) ->
     return c * Math.pow( t, 1/p );
 
 
-  # ## Exponential ease out, based on Golan Levin's [polynomial shapers](http://www.flong.com/texts/code/shapers_poly/)
+  # ## Exponential ease out, adapted from Golan Levin's [polynomial shapers](http://www.flong.com/texts/code/shapers_poly/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
-  # @param `p` a value between 0 to 1 to control the curve.
+  # @param `p` a value between 0 to 1 to control the curve. Default is 0.25.
   @exponentialOut: (t, c=1, p=0.25) ->
     return c * Math.pow( t, p );
 
 
-  # ## Sinuous in, based on Robert Penner's easing functions
+  # ## Sinuous in, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
   @sineIn: (t, c=1) ->
     return -c * Math.cos(t * Const.half_pi) + c
 
 
-  # ## Sinuous out, based on Robert Penner's easing functions
+  # ## Sinuous out, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
   @sineOut: (t, c=1) ->
     return c * Math.sin(t * Const.half_pi)
 
 
-  # ## Sinuous in-out, based on Robert Penner's easing functions
+  # ## Sinuous in-out, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
   @sineInOut: (t, c=1) ->
     return -c/2 * (Math.cos(Math.PI*t) - 1)
 
 
-  # ## A faster way to approximate cosine ease in-out using Blinn-Wyvill Approximation. See Golan Levin's [polynomial shaping](http://www.flong.com/texts/code/shapers_poly/)
+  # ## A faster way to approximate cosine ease in-out using Blinn-Wyvill Approximation. Adapated from Golan Levin's [polynomial shaping](http://www.flong.com/texts/code/shapers_poly/)
+  # @param `t` a value between 0 to 1
+  # @param `c` the value to shape, default is 1
   @cosineApprox: (t, c=1) ->
     t2 = t * t
     t4 = t2 * t2
@@ -97,14 +99,14 @@ class Shaping extends Vector
     return c * ( 4*t6/9 - 17*t4/9 + 22*t2/9 )
 
 
-  # ## Circular in, based on Robert Penner's easing functions
+  # ## Circular in, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
   @circularIn: (t, c=1) ->
     return -c * (Math.sqrt(1 - t*t) - 1)
 
 
-  # ## Circular out, based on Robert Penner's easing functions
+  # ## Circular out, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
   @circularOut: (t, c=1) ->
@@ -112,7 +114,7 @@ class Shaping extends Vector
     return c * Math.sqrt(1 - dt*dt)
 
 
-  # ## Circular in-out, based on Robert Penner's easing functions
+  # ## Circular in-out, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
   @circularInOut: (t, c=1) ->
@@ -120,29 +122,29 @@ class Shaping extends Vector
     return if (t<0.5) then -c/2 * (Math.sqrt(1 - dt*dt) - 1) else c/2 * (Math.sqrt(1 - (dt-2)*(dt-2)) + 1)
 
 
-  # ## Elastic in, based on Robert Penner's easing functions
+  # ## Elastic in, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
-  # @param `p` elastic parmeter between 0 to 1. The lower the number, the more elastic it will be
+  # @param `p` elastic parmeter between 0 to 1. The lower the number, the more elastic it will be. Default is 0.7.
   @elasticIn: (t, c=1, p=0.7) ->
     dt = t - 1
     s = (p / Const.two_pi) * 1.5707963267948966
     return c * (-Math.pow(2, 10 * dt) * Math.sin((dt - s) * Const.two_pi / p))
 
 
-  # ## Elastic out, based on Robert Penner's easing functions
+  # ## Elastic out, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
-  # @param `p` elastic parmeter between 0 to 1. The lower the number, the more elastic it will be
+  # @param `p` elastic parmeter between 0 to 1. The lower the number, the more elastic it will be. Default is 0.7.
   @elasticOut: (t, c=1, p=0.7) ->
     s = (p / Const.two_pi) * 1.5707963267948966
     return c * ( Math.pow(2, -10 * t) * Math.sin((t - s) * Const.two_pi / p)) + c
 
 
-  # ## Elastic in-out, based on Robert Penner's easing functions
+  # ## Elastic in-out, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
-  # @param `p` elastic parmeter between 0 to 1. The lower the number, the more elastic it will be
+  # @param `p` elastic parmeter between 0 to 1. The lower the number, the more elastic it will be. Default is 0.6.
   @elasticInOut: (t, c=1, p=0.6) ->
     dt = t*2
     s = (p / Const.two_pi) * 1.5707963267948966
@@ -154,14 +156,14 @@ class Shaping extends Vector
       return c * (0.5 * ( Math.pow(2, -10 * dt) * Math.sin(( dt - s) * Const.two_pi / p))) + c
 
 
-  # ## Bounce in, based on Robert Penner's easing functions
+  # ## Bounce in, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
   @bounceIn: (t, c=1) ->
     return c - Shaping.bounceOut((1-t), c)
 
 
-  # ## Bounce out, based on Robert Penner's easing functions
+  # ## Bounce out, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
   @bounceOut: (t, c=1) ->
@@ -178,25 +180,26 @@ class Shaping extends Vector
       return c * (7.5625 * t * t + 0.984375)
 
 
-  # ## Bounce in-out, based on Robert Penner's easing functions
+  # ## Bounce in-out, adapted from Robert Penner's [easing functions](http://robertpenner.com/easing/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
   @bounceInOut: (t, c=1) ->
     return if (t<0.5) then Shaping.bounceIn( t*2, c ) / 2 else Shaping.bounceOut( t*2 - 1, c) / 2 + c/2
 
 
-  # ## Sigmoid curve changes its shape based on the input value, but always returns a value between 0 to 1.
+  # ## Sigmoid curve changes its shape adapted from the input value, but always returns a value between 0 to 1.
   # @param `t` a value between 0 to 1
-  # @param `p` the larger the value, the "steeper" the curve will be. Default is 10
+  # @param `c` the value to shape, default is 1
+  # @param `p` the larger the value, the "steeper" the curve will be. Default is 10.
   @sigmoid: (t, c=1, p=10) ->
     d = p * (t-0.5)
     return c / (1 + Math.exp( -d ) )
 
 
-  # ## The Logistic Sigmoid is a useful curve. Based on Golan Levin's [shaping function](http://www.flong.com/texts/code/shapers_exp/)
+  # ## The Logistic Sigmoid is a useful curve. Adapted from Golan Levin's [shaping function](http://www.flong.com/texts/code/shapers_exp/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
-  # @param `p` a parameter between 0 to 1 to control the steepness of the curve. Higher is steeper.
+  # @param `p` a parameter between 0 to 1 to control the steepness of the curve. Higher is steeper. Default is 0.7.
   @logSigmoid: (t, c=1, p=0.7) ->
     p = Math.max( Const.epsilon, Math.min( 1-Const.epsilon, p ) )
     p = 1/(1-p)
@@ -207,10 +210,10 @@ class Shaping extends Vector
     return c * (A-B)/(C-B);
 
 
-  # ## An exponential seat curve. Based on Golan Levin's [shaping functions](http://www.flong.com/texts/code/shapers_exp/)
+  # ## An exponential seat curve. Adapted from Golan Levin's [shaping functions](http://www.flong.com/texts/code/shapers_exp/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
-  # @param `p` a parameter between 0 to 1 to control the steepness of the curve. Higher is steeper.
+  # @param `p` a parameter between 0 to 1 to control the steepness of the curve. Higher is steeper. Default is 0.5.
   @seat: (t, c=1, p=0.5) ->
     if (t < 0.5)
       return c * ( Math.pow( 2*t, 1-p ) ) / 2
@@ -218,10 +221,10 @@ class Shaping extends Vector
       return c * ( 1 - ( Math.pow( 2 * (1-t), 1-p)) / 2 )
 
 
-  # ## Quadratic bezier curve. Based on Golan Levin's [shaping functions](http://www.flong.com/texts/code/shapers_exp/)
+  # ## Quadratic bezier curve. Adapted from Golan Levin's [shaping functions](http://www.flong.com/texts/code/shapers_exp/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
-  # @param `p1` a Point object specifying the first control point, or a value specifying the control point's x position (its y position will default to 0.5)
+  # @param `p1` a Point object specifying the first control point, or a value specifying the control point's x position (its y position will default to 0.5). Default is `Point(0.95, 0.95)`
   @quadraticBezier: (t, c=1, p=new Point(0.05, 0.95)) ->
     a = if (p.x) then p.x else p
     b = if (p.y) then p.y else 0.5
@@ -234,17 +237,17 @@ class Shaping extends Vector
   # ## Cubic bezier curve. This reuses the bezier functions in Curve class.
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
-  # @param `p1` a Point object specifying the first control point
-  # @param `p2` a Point object specifying the second control point
+  # @param `p1` a Point object specifying the first control point. Default is `Point(0.1, 0.7)`.
+  # @param `p2` a Point object specifying the second control point. Default is `Point(0.9, 0.2)`.
   @cubicBezier: ( t, c=1, p1=new Point(0.1, 0.7), p2=new Point(0.9, 0.2)) ->
     curve = new Curve().to( [new Point(0,0,), p1, p2, new Point(1,1)])
     return c * curve.bezierPoint([t, t*t, t*t*t], curve.controlPoints() ).y
 
 
-  # ## Give a point, draw a quadratic curve that will pass through that point as closely as possible. Based on Golan Levin's [shaping functions](http://www.flong.com/texts/code/shapers_poly/)
+  # ## Give a point, draw a quadratic curve that will pass through that point as closely as possible. Adapted from Golan Levin's [shaping functions](http://www.flong.com/texts/code/shapers_poly/)
   # @param `t` a value between 0 to 1
   # @param `c` the value to shape, default is 1
-  # @param `p1` a Point object specifying the point to pass through
+  # @param `p1` a Point object specifying the point to pass through. Default is `Point(0.2, 0.35)`
   @quadraticTarget: (t, c=1, p1= new Point(0.2, 0.35)) ->
     a = Math.min(1-Const.epsilon, Math.max(Const.epsilon, p1.x))
     b = Math.min(1, Math.max(0, p1.y))
@@ -256,12 +259,13 @@ class Shaping extends Vector
 
   # ## Step function is a simple jump from 0 to 1 at a specific point in time
   # @param `t` a value between 0 to 1
+  # @param `c` the value to shape, default is 1
   # @param `p` usually a value between 0 to 1, which specify the point to "jump". Default is 0.5 which is in the middle.
   @cliff: (t, c=1, p=0.5) ->
     return if ( t > p ) then c else 0
 
 
-  # ## Turn any shaping functions into a series of steps
+  # ## Convert any shaping functions into a series of steps
   # @param `fn` the original shaping function
   # @param `steps` the number of steps
   # @param `t` a value between 0 to 1
