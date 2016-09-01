@@ -1,6 +1,6 @@
 var Pt = {}; (function() {
 /* Licensed under the Apache License, Version 2.0. (http://www.apache.org/licenses/LICENSE-2.0). Copyright 2015-2016 William Ngan. (https://github.com/williamngan/pt/) */
-var CanvasSpace, Circle, Color, Const, Curve, DOMSpace, Delaunay, Easing, Form, Grid, GridCascade, Line, Matrix, Noise, Pair, Particle, ParticleEmitter, ParticleField, ParticleSystem, Point, PointSet, QuadTree, Rectangle, SVGForm, SVGSpace, SamplePoints, Space, StripeBound, Timer, Triangle, UI, Util, Vector,
+var CanvasSpace, Circle, Color, Const, Curve, DOMSpace, Delaunay, Form, Grid, GridCascade, Line, Matrix, Noise, Pair, Particle, ParticleEmitter, ParticleField, ParticleSystem, Point, PointSet, QuadTree, Rectangle, SVGForm, SVGSpace, SamplePoints, Shaping, Space, StripeBound, Timer, Triangle, UI, Util, Vector,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty,
@@ -5175,103 +5175,6 @@ Triangle = (function(superClass) {
 
 this.Triangle = Triangle;
 
-Easing = (function() {
-  function Easing() {}
-
-  Easing.linear = function(t, b, c, d) {
-    return c * (t /= d) + b;
-  };
-
-  Easing._linear = function(t) {
-    return Easing.linear(t, 0, 1, 1);
-  };
-
-  Easing.quadIn = function(t, b, c, d) {
-    return c * (t /= d) * t + b;
-  };
-
-  Easing._quadIn = function(t) {
-    return Easing.quadIn(t, 0, 1, 1);
-  };
-
-  Easing.quadOut = function(t, b, c, d) {
-    return -c * (t /= d) * (t - 2) + b;
-  };
-
-  Easing._quadOut = function(t) {
-    return Easing.quadOut(t, 0, 1, 1);
-  };
-
-  Easing.cubicIn = function(t, b, c, d) {
-    t = t / d;
-    return c * t * t * t + b;
-  };
-
-  Easing._cubicIn = function(t) {
-    return Easing.cubicIn(t, 0, 1, 1);
-  };
-
-  Easing.cubicOut = function(t, b, c, d) {
-    t = t / d;
-    return c * ((t - 1) * t * t + 1) + b;
-  };
-
-  Easing._cubicOut = function(t) {
-    return Easing.cubicOut(t, 0, 1, 1);
-  };
-
-  Easing.elastic = function(t, b, c, d, el) {
-    var a, p, s;
-    if (el == null) {
-      el = 0.3;
-    }
-    s = 1.70158;
-    p = d * el;
-    a = c;
-    if (t === 0) {
-      return b;
-    }
-    t = t / d;
-    if (t === 1) {
-      return b + c;
-    }
-    if (a < Math.abs(c)) {
-      a = c;
-      s = p / 4;
-    } else if (a !== 0) {
-      s = p / Const.two_pi * Math.asin(c / a);
-    } else {
-      s = 0;
-    }
-    return a * Math.pow(2, -10 * t) * Math.sin((t * d - s) * Const.two_pi / p) + c + b;
-  };
-
-  Easing._elastic = function(t) {
-    return Easing.elastic(t, 0, 1, 1);
-  };
-
-  Easing.bounce = function(t, b, c, d) {
-    if ((t /= d) < (1 / 2.75)) {
-      return c * (7.5625 * t * t) + b;
-    } else if (t < (2 / 2.75)) {
-      return c * (7.5625 * (t -= 1.5 / 2.75) * t + 0.75) + b;
-    } else if (t < (2.5 / 2.75)) {
-      return c * (7.5625 * (t -= 2.25 / 2.75) * t + 0.9375) + b;
-    } else {
-      return c * (7.5625 * (t -= 2.625 / 2.75) * t + 0.984375) + b;
-    }
-  };
-
-  Easing._bounce = function(t) {
-    return Easing.bounce(t, 0, 1, 1);
-  };
-
-  return Easing;
-
-})();
-
-this.Easing = Easing;
-
 GridCascade = (function(superClass) {
   extend(GridCascade, superClass);
 
@@ -5982,7 +5885,7 @@ Noise = (function(superClass) {
     return g[0] * x + g[1] * y;
   };
 
-  Noise.prototype.perlin2d = function(xin, yin) {
+  Noise.prototype.perlin2D = function(xin, yin) {
     var _fade, i, j, n00, n01, n10, n11, tx, x, y;
     if (xin == null) {
       xin = this.x;
@@ -6005,7 +5908,7 @@ Noise = (function(superClass) {
     return Util.lerp(Util.lerp(n00, n10, tx), Util.lerp(n01, n11, tx), _fade(y));
   };
 
-  Noise.prototype.simplex2d = function(xin, yin) {
+  Noise.prototype.simplex2D = function(xin, yin) {
     var F2, G2, X0, Y0, gi0, gi1, gi2, i, i1, ii, j, j1, jj, n0, n1, n2, s, t, t0, t1, t2, x0, x1, x2, y0, y1, y2;
     if (xin == null) {
       xin = this.x;
@@ -6196,6 +6099,349 @@ Delaunay = (function(superClass) {
 })(PointSet);
 
 this.Delaunay = Delaunay;
+
+Shaping = (function() {
+  function Shaping() {}
+
+  Shaping.linear = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return c * t;
+  };
+
+  Shaping.quadraticIn = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return c * t * t;
+  };
+
+  Shaping.quadraticOut = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return -c * t * (t - 2);
+  };
+
+  Shaping.quadraticInOut = function(t, c) {
+    var dt;
+    if (c == null) {
+      c = 1;
+    }
+    dt = t * 2;
+    if (t < 0.5) {
+      return c / 2 * t * t * 4;
+    } else {
+      return -c / 2 * ((dt - 1) * (dt - 3) - 1);
+    }
+  };
+
+  Shaping.cubicIn = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return c * t * t * t;
+  };
+
+  Shaping.cubicOut = function(t, c) {
+    var dt;
+    if (c == null) {
+      c = 1;
+    }
+    dt = t - 1;
+    return c * (dt * dt * dt + 1);
+  };
+
+  Shaping.cubicInOut = function(t, c) {
+    var dt;
+    if (c == null) {
+      c = 1;
+    }
+    dt = t * 2;
+    if (t < 0.5) {
+      return c / 2 * dt * dt * dt;
+    } else {
+      return c / 2 * ((dt - 2) * (dt - 2) * (dt - 2) + 2);
+    }
+  };
+
+  Shaping.exponentialIn = function(t, c, p) {
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 0.25;
+    }
+    return c * Math.pow(t, 1 / p);
+  };
+
+  Shaping.exponentialOut = function(t, c, p) {
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 0.25;
+    }
+    return c * Math.pow(t, p);
+  };
+
+  Shaping.sineIn = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return -c * Math.cos(t * Const.half_pi) + c;
+  };
+
+  Shaping.sineOut = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return c * Math.sin(t * Const.half_pi);
+  };
+
+  Shaping.sineInOut = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return -c / 2 * (Math.cos(Math.PI * t) - 1);
+  };
+
+  Shaping.cosineApprox = function(t, c) {
+    var t2, t4, t6;
+    if (c == null) {
+      c = 1;
+    }
+    t2 = t * t;
+    t4 = t2 * t2;
+    t6 = t4 * t2;
+    return c * (4 * t6 / 9 - 17 * t4 / 9 + 22 * t2 / 9);
+  };
+
+  Shaping.circularIn = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return -c * (Math.sqrt(1 - t * t) - 1);
+  };
+
+  Shaping.circularOut = function(t, c) {
+    var dt;
+    if (c == null) {
+      c = 1;
+    }
+    dt = t - 1;
+    return c * Math.sqrt(1 - dt * dt);
+  };
+
+  Shaping.circularInOut = function(t, c) {
+    var dt;
+    if (c == null) {
+      c = 1;
+    }
+    dt = t * 2;
+    if (t < 0.5) {
+      return -c / 2 * (Math.sqrt(1 - dt * dt) - 1);
+    } else {
+      return c / 2 * (Math.sqrt(1 - (dt - 2) * (dt - 2)) + 1);
+    }
+  };
+
+  Shaping.elasticIn = function(t, c, p) {
+    var dt, s;
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 0.7;
+    }
+    dt = t - 1;
+    s = (p / Const.two_pi) * 1.5707963267948966;
+    return c * (-Math.pow(2, 10 * dt) * Math.sin((dt - s) * Const.two_pi / p));
+  };
+
+  Shaping.elasticOut = function(t, c, p) {
+    var s;
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 0.7;
+    }
+    s = (p / Const.two_pi) * 1.5707963267948966;
+    return c * (Math.pow(2, -10 * t) * Math.sin((t - s) * Const.two_pi / p)) + c;
+  };
+
+  Shaping.elasticInOut = function(t, c, p) {
+    var dt, s;
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 0.6;
+    }
+    dt = t * 2;
+    s = (p / Const.two_pi) * 1.5707963267948966;
+    if (t < 0.5) {
+      dt -= 1;
+      return c * (-0.5 * (Math.pow(2, 10 * dt) * Math.sin((dt - s) * Const.two_pi / p)));
+    } else {
+      dt -= 1;
+      return c * (0.5 * (Math.pow(2, -10 * dt) * Math.sin((dt - s) * Const.two_pi / p))) + c;
+    }
+  };
+
+  Shaping.bounceIn = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    return c - Shaping.bounceOut(1 - t, c);
+  };
+
+  Shaping.bounceOut = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    if (t < (1 / 2.75)) {
+      return c * (7.5625 * t * t);
+    } else if (t < (2 / 2.75)) {
+      t -= 1.5 / 2.75;
+      return c * (7.5625 * t * t + 0.75);
+    } else if (t < (2.5 / 2.75)) {
+      t -= 2.25 / 2.75;
+      return c * (7.5625 * t * t + 0.9375);
+    } else {
+      t -= 2.625 / 2.75;
+      return c * (7.5625 * t * t + 0.984375);
+    }
+  };
+
+  Shaping.bounceInOut = function(t, c) {
+    if (c == null) {
+      c = 1;
+    }
+    if (t < 0.5) {
+      return Shaping.bounceIn(t * 2, c) / 2;
+    } else {
+      return Shaping.bounceOut(t * 2 - 1, c) / 2 + c / 2;
+    }
+  };
+
+  Shaping.sigmoid = function(t, c, p) {
+    var d;
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 10;
+    }
+    d = p * (t - 0.5);
+    return c / (1 + Math.exp(-d));
+  };
+
+  Shaping.logSigmoid = function(t, c, p) {
+    var A, B, C;
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 0.7;
+    }
+    p = Math.max(Const.epsilon, Math.min(1 - Const.epsilon, p));
+    p = 1 / (1 - p);
+    A = 1 / (1 + Math.exp((t - 0.5) * p * -2));
+    B = 1 / (1 + Math.exp(p));
+    C = 1 / (1 + Math.exp(-p));
+    return c * (A - B) / (C - B);
+  };
+
+  Shaping.seat = function(t, c, p) {
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 0.5;
+    }
+    if (t < 0.5) {
+      return c * (Math.pow(2 * t, 1 - p)) / 2;
+    } else {
+      return c * (1 - (Math.pow(2 * (1 - t), 1 - p)) / 2);
+    }
+  };
+
+  Shaping.quadraticBezier = function(t, c, p) {
+    var a, b, d, om2a;
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = new Point(0.05, 0.95);
+    }
+    a = p.x ? p.x : p;
+    b = p.y ? p.y : 0.5;
+    om2a = 1 - 2 * a;
+    if (om2a === 0) {
+      om2a = Const.epsilon;
+    }
+    d = (Math.sqrt(a * a + om2a * t) - a) / om2a;
+    return c * ((1 - 2 * b) * (d * d) + (2 * b) * d);
+  };
+
+  Shaping.cubicBezier = function(t, c, p1, p2) {
+    var curve;
+    if (c == null) {
+      c = 1;
+    }
+    if (p1 == null) {
+      p1 = new Point(0.1, 0.7);
+    }
+    if (p2 == null) {
+      p2 = new Point(0.9, 0.2);
+    }
+    curve = new Curve().to([new Point(0, 0), p1, p2, new Point(1, 1)]);
+    return c * curve.bezierPoint([t, t * t, t * t * t], curve.controlPoints()).y;
+  };
+
+  Shaping.quadraticTarget = function(t, c, p1) {
+    var A, B, a, b, y;
+    if (c == null) {
+      c = 1;
+    }
+    if (p1 == null) {
+      p1 = new Point(0.2, 0.35);
+    }
+    a = Math.min(1 - Const.epsilon, Math.max(Const.epsilon, p1.x));
+    b = Math.min(1, Math.max(0, p1.y));
+    A = (1 - b) / (1 - a) - (b / a);
+    B = (A * (a * a) - b) / a;
+    y = A * (t * t) - B * t;
+    return c * Math.min(1, Math.max(0, y));
+  };
+
+  Shaping.cliff = function(t, c, p) {
+    if (c == null) {
+      c = 1;
+    }
+    if (p == null) {
+      p = 0.5;
+    }
+    if (t > p) {
+      return c;
+    } else {
+      return 0;
+    }
+  };
+
+  Shaping.step = function(fn, steps, t, c, p1, p2) {
+    var s, tt;
+    s = 1 / steps;
+    tt = Math.floor(t / s) * s;
+    return fn(tt, c, p1, p2);
+  };
+
+  return Shaping;
+
+})();
 
 //# sourceMappingURL=pt.js.map
 }).call(Pt); module.exports = Pt;
