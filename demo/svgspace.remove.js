@@ -54,19 +54,28 @@ function rand(r) { return Math.random() * r - Math.random() * r; }
 
 
 //// 3. Visualize, Animate, Interact
+space.add({
+  animate: function(time, fps, context) {},
 
-// When mouse moved, add dust into space
-space.bindCanvas("mousemove", function(evt) {
+  onMouseAction: function(type, x, y, evt) {
+    // When mouse moved, add two dust into space
+    if (type=="move") {
+      space.add( new Dust( x+rand(5), y+rand(5) ) );
+      space.add( new Dust( x+rand(5), y+rand(5) ) );
+    }
+  },
 
-  // add two Dust into space
-  space.add( new Dust( evt.offsetX+rand(5), evt.offsetY+rand(5) ) );
-  space.add( new Dust( evt.offsetX+rand(5), evt.offsetY+rand(5) ) );
-
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
+  }
 });
+
 
 // 4. Start playing
 // Here we need to make sure the svg dom is ready first, via callback function ( see constructor SVGSpace(...) )
 function ready(bounds, elem) {
   form.scope("item", elem ); // initiate the scope which uses the svg dom as parent node
+  space.bindMouse();
+  space.bindTouch();
   space.play();
 }

@@ -85,6 +85,10 @@ space.add({
     }
   },
 
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
+  },
+
   // callback to reset grid when space is resized
   onSpaceResize: function(w, h) {
     grid.set( space.size.$multiply( 0.1 ) ).to( space.size.$multiply( 0.9 ) ).init( 10, 10, "fix", "fix" );
@@ -96,4 +100,5 @@ space.add({
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

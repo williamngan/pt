@@ -83,9 +83,14 @@ space.add({
 
       lastAngle = ang;
     }
+  },
+
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
   }
 });
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

@@ -45,6 +45,7 @@ space.add({
     }
     lastTime = time;
   },
+
   onMouseAction: function(type, x, y, evt) {
 
     // reset when mouse up
@@ -52,10 +53,15 @@ space.add({
       space.clear( "#222" );
       init();
     }
+  },
+
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
   }
 });
 
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

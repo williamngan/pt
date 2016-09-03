@@ -35,6 +35,7 @@ space.add({
     form.stroke(colors.a4,2).line( mouseLine );
     form.stroke(false).fill(colors.a4).point( mouseLine.p1, 3, true )
   },
+
   onMouseAction: function(type, x, y, evt) {
     if (type=="move") {
       if (paths.length < 1000) {
@@ -42,10 +43,15 @@ space.add({
         paths.push( mouseLine );
       }
     }
+  },
+
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
   }
 });
 
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

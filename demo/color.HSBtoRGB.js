@@ -62,6 +62,7 @@ space.add({
 
     }
   },
+
   onMouseAction: function(type, x, y, evt) {
     if (type=="move") {
       // angle from center shifts the hue, and distance from center shifts then saturation
@@ -69,10 +70,15 @@ space.add({
       scale = (vec.magnitude() / space.size.y);
       mouse.set( Const.rad_to_deg * Util.boundRadian( vec.angle(), true ), scale/2,  scale/2 )
     }
+  },
+
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
   }
 });
 
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

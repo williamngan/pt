@@ -48,6 +48,8 @@ Tri.prototype.onMouseAction = function(type, x, y, evt) {
   }
 };
 
+Tri.prototype.onTouchAction = Tri.prototype.onMouseAction;
+
 // remove a vertex when it's unfolded
 Tri.prototype.removeVertex = function( id ) {
   var v = this.vertices.indexOf( id );
@@ -86,4 +88,5 @@ space.add( new Tri( center.$subtract(0, 50) ) .to( center.$add( -43.3, 25),  cen
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

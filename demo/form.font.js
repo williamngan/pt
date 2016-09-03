@@ -36,10 +36,15 @@ space.add({
       var halfh = space.size.y/2;
       scale = maxScale * (1 - Math.abs(y - halfh) / halfh); // calculate scale based on mouse position
     }
+  },
+  
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
   }
 });
 
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

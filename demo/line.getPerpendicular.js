@@ -30,16 +30,21 @@ space.add({
       form.stroke(colors.a1).line( ln );
       form.stroke(colors.a3).line( ln2 );
     }
-
   },
+
   onMouseAction: function(type, x, y, evt) {
     if (type=="move") {
       angle = y/space.size.y * 2 * Const.two_pi; // change starting angle
     }
+  },
+
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
   }
 });
 
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

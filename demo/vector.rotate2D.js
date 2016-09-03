@@ -57,16 +57,22 @@ space.add({
     form.point( dot, 5, true );
 
   },
+
   onMouseAction: function(type, x, y, evt) {
     if (type=="move") {
       mouse.set(x,y);
     } else if (type=="up") {
       rotateAroundMouse = !rotateAroundMouse;
     }
+  },
+
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
   }
 });
 
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

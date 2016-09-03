@@ -1,5 +1,5 @@
 //// 0. Describe this demo
-window.demoDescription = "A circle and a donut meets. Indicate their points of intersections.";
+window.demoDescription = "A mobile multi-touch demo. Open in a mobile browser and try dragging 1, 2, 3, or 4 fingers.";
 
 
 //// 1. Define Space and Form
@@ -10,11 +10,16 @@ var colors = {
 var space = new CanvasSpace("pt").setup( {bgcolor: colors.a4} );
 var form = new Form( space );
 
+
 //// 2. Create Elements
-var mouse = new Circle( space.size.$divide(2) ).setRadius(  Math.min(space.size.x, space.size.y)/4 );
+var touchPoints = [];
+
+var mouse = new Circle( space.size.$divide(2) ).setRadius( Math.min(space.size.x, space.size.y)/4 );
 var mouse2 = new Circle( space.size.$divide(2) ).setRadius(  Math.min(space.size.x, space.size.y)/8 );
 var circle = new Circle( space.size.$divide(2) ).setRadius( Math.min(space.size.x, space.size.y)/5 );
 
+
+var _evt = null;
 
 form.stroke( false );
 
@@ -42,18 +47,44 @@ space.add({
     form.fill( "#fff" );
     for (i=0; i<ps2.length; i++) { form.point( ps2[i], 3, true); }
 
+    // Draw finger touch points and lines
+    form.stroke("#f00").fill( false );
+    form.points( touchPoints, 30, true );
+    form.polygon( touchPoints, false );
+    form.stroke(false);
+
+    if (_evt) {
+      form.fill( "#000" ).text( new Vector( 10, 20 ), "touch points:" +touchPoints.length + ", changed points:"+_evt.changedTouches.length );
+    }
+
   },
-  
   onMouseAction: function(type, x, y, evt) {
     if (type=="move") {
       mouse.set(x,y);
       mouse2.set(x,y);
     }
   },
-
   onTouchAction: function(type, x, y, evt) {
-    this.onMouseAction( type, x, y );
+
+    _evt = evt; // for printing event values
+
+    // Convert event.touches' points to Pt vector objects
+    touchPoints = space.touchesToPoints( evt );
+
+    if (type=="move" && touchPoints.length > 0) {
+      mouse.set( touchPoints[0] );
+      mouse2.set( touchPoints[0] );
+
+      // 2 fingers pinch/expand to resize the mouse circles
+      var r = (touchPoints.length > 1) ? touchPoints[1].distance( touchPoints[0] ) : Math.min(space.size.x, space.size.y)/4;
+      mouse.setRadius( r );
+
+      // 3rd and 4th fingers: move and pinch/expand the static circle
+      if ( touchPoints.length > 2 ) circle.set( touchPoints[2] );
+      if ( touchPoints.length > 3 ) circle.setRadius( touchPoints[3].distance( touchPoints[2]) );
+    }
   }
+
 });
 
 

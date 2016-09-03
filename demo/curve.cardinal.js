@@ -69,10 +69,15 @@ space.add( {
     for (var i = 0; i < pts.length; i++) {
       sizes[i] = Math.sin( angle + i * Const.half_pi ) * unit.x * (i / pts.length);
     }
+  },
+
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
   }
 });
 
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

@@ -63,6 +63,10 @@ space.add({
     }
   },
 
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
+  },
+
   // onSpaceResize is a callback to handle canvas size change
   onSpaceResize: function(w,h,evt) {
     setSizes();
@@ -72,4 +76,5 @@ space.add({
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

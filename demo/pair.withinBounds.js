@@ -68,10 +68,16 @@ space.add({
       mouse.set(x,y);
     }
   },
+
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
+  },
+
   animate: function() {}
 });
 
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

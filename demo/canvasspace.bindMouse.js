@@ -54,6 +54,8 @@ Chain.prototype.onMouseAction = function(type, x, y, evt) {
   }
 };
 
+Chain.prototype.onTouchAction = Chain.prototype.onMouseAction;
+
 
 //// 3. Visualize, Animate, Interact
 
@@ -63,4 +65,5 @@ space.add( new Chain() );
 
 // 4. Start playing
 space.bindMouse(); // bind mouse events
+space.bindTouch();
 space.play();

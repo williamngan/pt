@@ -24,7 +24,7 @@ Util.extend( Ball, Particle );
 
 // animate this ball
 Ball.prototype.animate = function( time, frame, ctx ) {
-  form.getScope(this); // Distinguish each ball's scope (id attribute prefix)
+  form.enterScope(this); // Distinguish each ball's scope (id attribute prefix)
   this.play(time, frame);
   form.stroke( false).fill(this.color);
   form.point( this, this.radius, true);

@@ -1,6 +1,3 @@
-// This is generated from ES6 javascript source file.
-// See original ES6 source code at https://github.com/williamngan/pt/tree/master/demo/es6/src
-
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -13,7 +10,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 window.demoDescription = "If this is a sphere, it would visualize Hairy Ball Theorem, where you can't comb a hairy ball flat without creating a cowlick. This demo was done in javascript ES6 and compiled with babel.";
 
-var space = new CanvasSpace("pt").setup( {bgcolor: "#f5ead6"} );
+var space = new CanvasSpace("pt").setup({ bgcolor: "#f5ead6" });
 var form = new Form(space);
 
 var center = space.size.$divide(2);
@@ -57,6 +54,11 @@ var Comb = (function (_Circle) {
       if (type == "move") {
         this.move(x, y);
       }
+    }
+  }, {
+    key: "onTouchAction",
+    value: function onTouchAction(type, x, y, evt) {
+      this.onMouseAction(type, x, y);
     }
   }]);
 
@@ -129,6 +131,11 @@ var VectorLine = (function (_Vector) {
         this.resetTimer = 0;
         this.moved = false;
       }
+    }
+  }, {
+    key: "onTouchAction",
+    value: function onTouchAction(type, x, y, evt) {
+      this.onMouseAction(type, x, y);
     }
   }, {
     key: "checkRange",
@@ -214,6 +221,8 @@ space.add({
         // add to sample point set and increment counter
         samples.to(s);
         counter++;
+      } else {
+        counter = 3001; // assuming completion if no more
       }
     }
 
@@ -225,4 +234,5 @@ space.add({
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

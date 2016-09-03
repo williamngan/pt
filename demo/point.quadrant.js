@@ -72,11 +72,15 @@ space.add({
     if (type === "move") {
       mouseP.set(x, y);
     }
-  }
+  },
 
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
+  }
 });
 
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

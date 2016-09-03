@@ -71,6 +71,7 @@ space.add({
     form.stroke(false ).fill( colors.a4 ).point( center, unit*3, true );
 
   },
+
   onMouseAction: function(type, x, y, evt) {
     if (type=="move") {
       mouse = new Vector( x, y );
@@ -78,10 +79,15 @@ space.add({
       var u = Math.min( unit*10, dist)/(unit*10);
       threshold = (1 - u*u) * dist * 2; // a circular threshold that becomes biggest at 1/4 and 3/4 area of space
     }
+  },
+
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
   }
 });
 
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

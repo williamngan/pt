@@ -31,6 +31,10 @@ class Comb extends Circle {
       this.move( x, y );
     }
   }
+
+  onTouchAction( type, x, y, evt) {
+    this.onMouseAction( type, x, y );
+  }
 }
 
 // create comb and add to space
@@ -85,6 +89,10 @@ class VectorLine extends Vector {
       this.resetTimer = 0;
       this.moved = false;
     }
+  }
+
+  onTouchAction( type, x, y, evt) {
+    this.onMouseAction( type, x, y );
   }
 
   checkRange() {
@@ -166,6 +174,8 @@ space.add({
         // add to sample point set and increment counter
         samples.to( s );
         counter++;
+      } else {
+        counter = 3001; // assuming completion if no more
       }
     }
 
@@ -178,4 +188,5 @@ space.add({
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

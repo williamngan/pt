@@ -66,6 +66,10 @@ space.add({
     if (type=="move") {
       mouse.set(x,y);
     }
+  },
+
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
   }
 });
 
@@ -75,5 +79,6 @@ space.add({
 function ready(bounds, elem) {
   form.scope("item", elem ); // initiate the scope which uses the svg dom as parent node
   space.bindMouse();
+  space.bindTouch();
   space.play();
 }

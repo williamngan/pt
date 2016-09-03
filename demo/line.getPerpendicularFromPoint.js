@@ -44,14 +44,20 @@ space.add({
       form.stroke( "rgba(255,255,255," + opacity + ")", 2*(i%20)/20 ).fill( false ).line( ln );
     }
   },
+
   onMouseAction: function(type, x, y, evt) {
     if (type=="move") {
       line.p1.set( x, y );
     }
+  },
+
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
   }
 });
 
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

@@ -55,14 +55,20 @@ space.add({
       form.fill( colors.a1 ).stroke(false).point( mouse, 1.5, true );
     }
   },
+
   onMouseAction: function(type, x, y, evt) {
     if (type=="move") {
       mouse.set(x,y);
     }
+  },
+
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
   }
 });
 
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();

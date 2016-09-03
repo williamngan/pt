@@ -60,10 +60,15 @@ space.add({
     if (type=="move") {
       variant = Math.min( space.size.$divide(2 ).distance(x,y ) / 50, 30);
     }
+  },
+
+  onTouchAction: function(type, x, y, evt) {
+    this.onMouseAction( type, x, y );
   }
 });
 
 
 // 4. Start playing
 space.bindMouse();
+space.bindTouch();
 space.play();
