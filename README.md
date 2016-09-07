@@ -15,7 +15,7 @@ The best places to get started are:
 
 ### Files
 Looking for the actual javascript library files? Here you go:
-- If using [**npm:**](https://www.npmjs.com/package/ptjs), you can do: `npm install ptjs` and then use it like `import {Vector, Rectangle} from 'ptjs'`
+- If using [**npm**](https://www.npmjs.com/package/ptjs), you can do: `npm install ptjs` and then use it like `import {Vector, Rectangle} from 'ptjs'`
 
 - If using standalone file, **[pt.js](https://github.com/williamngan/pt/blob/master/dist/pt.js)** is the full version, **without namespace**. If you just want to sketch out a simple idea with Pt, this is probably what you need.
 - [pt.min.js](https://github.com/williamngan/pt/blob/master/dist/pt.min.js) is the minified version of the above.
@@ -23,7 +23,7 @@ Looking for the actual javascript library files? Here you go:
 - [pt-ns.js](https://github.com/williamngan/pt/blob/master/dist/pt-ns.js) is the full version **with namespace**. That means, instead of `new Point()`, you'll write `new Pt.Point()`. It's unaesthetic but perhaps necessary (sometimes).
 - [pt-ns.min.js](https://github.com/williamngan/pt/blob/master/dist/pt-ns.min.js) is the minified version of the above
 
-- Pt has a set of core classes, and a growing list of extended classes. If you just want the core classes (smaller file size), you can get `pt-core.js` and others in the [core folder](https://github.com/williamngan/pt/tree/master/dist/core).
+- Pt has a set of core classes, and a growing list of extended classes. If you just want the core classes (smaller file size, only ~70kb min or ~20kb gzip without dependencies), you can get `pt-core.js` and others in the [core folder](https://github.com/williamngan/pt/tree/master/dist/core).
 
 The latest release is always in the master branch. For now.
 

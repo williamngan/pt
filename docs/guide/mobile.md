@@ -85,6 +85,6 @@ Now go to your mobile browser, type in `http://192.168.1.XX:8001` (replace "XX" 
 
 
 ### Example
-Access this page [http://williamngan.github.io/pt/demo](http://williamngan.github.io/pt/demo) from your mobile browser to see a multi-touch demo. The souce code is [here](https://github.com/williamngan/pt/blob/master/demo/circle.intersectCircle.mobile.js). Have fun!
+Access this page [http://williamngan.github.io/pt/demo](http://williamngan.github.io/pt/demo/index.html?name=mobile.multiTouch) from your mobile browser to see a multi-touch demo. The souce code is [here](https://github.com/williamngan/pt/blob/master/demo/circle.intersectCircle.mobile.js). Have fun!
 
 ![Mobile example](../images/quick-start-guide/mobiletouch.gif)
