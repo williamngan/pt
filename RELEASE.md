@@ -1,5 +1,20 @@
 # Release notes
 
+## v0.2.1
+**Shaping functions**
+- A series of useful shaping/easing functions are now in [extend/Shaping](http://williamngan.github.io/pt/docs/#elemShaping_xt). See a demo [here](http://williamngan.github.io/pt/demo/index.html?name=shaping.linear).
+
+**Mobile**
+- All [demos](http://williamngan.github.io/pt/demo/index.html?name=color.LABtoRGB) are now mobile ready!
+
+**Improvements**
+- `Util` now includes a `mapToRange` function (by @tofuness)
+- `form.stroke` now supports a lineCap parameter.
+
+**Breaking changes**
+- `perlin2d` and `simplex2d` in Noise class are renamed to `perlin2D` and `simplex2D` for consistency. (by @tofuness)
+
+
 ## v0.2.0
 **Mobile**
 - Pt now supports multi-touch interactions and retina resolutions for mobile. Yay! Get started with this quick [mobile guide](http://williamngan.github.io/pt/docs/guide/mobile.html).

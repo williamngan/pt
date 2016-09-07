@@ -808,9 +808,10 @@
         "param": [
           "<p><code>c</code> stroke color which can be as color, gradient, or pattern. (See <a href=\"https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/strokeStyle\">canvas documentation</a>) Default is false (transparent)</p>", 
           "<p><code>width</code> Optional value (can be floating point) to set line width</p>", 
-          "<p><code>joint</code> Optional string to set line joint style. Can be \"miter\", \"bevel\", or \"round\".</p>"
+          "<p><code>joint</code> Optional string to set line joint style. Can be \"miter\", \"bevel\", or \"round\".</p>", 
+          "<p><code>cap</code> Optional string to set line cap style. Can be \"butt\", \"round\", or \"square\".</p>"
         ], 
-        "pname": "c, width, joint", 
+        "pname": "c, width, joint, cap", 
         "return": "<p>this Form</p>"
       }, 
       {
@@ -2508,7 +2509,8 @@
         "param": [
           "<p><code>c</code> stroke color. Default is false (transparent)</p>", 
           "<p><code>width</code> Optional value (can be floating point) to set line width</p>", 
-          "<p><code>joint</code> Optional string to set line joint style. Can be \"miter\", \"bevel\", or \"round\".</p>"
+          "<p><code>joint</code> Optional string to set line joint style. Can be \"miter\", \"bevel\", or \"round\".</p>", 
+          "<p><code>cap</code> Optional string to set line joint style. Can be \"butt \", \"round\", or \"square\".</p>"
         ], 
         "pname": "c, width, joint, cap", 
         "return": "<p>this Form</p>"
@@ -3520,6 +3522,19 @@
         "name": "gaussian", 
         "param": [], 
         "pname": "x, mean=0, sigma=1"
+      }, 
+      {
+        "description": "<h2>Map a value from one range to another</h2>", 
+        "name": "mapToRange", 
+        "param": [
+          "<p><code>n</code> a value in the first range</p>", 
+          "<p><code>min1</code> lower bound of the first range</p>", 
+          "<p><code>max1</code> upper bound of the first range</p>", 
+          "<p><code>min2</code> lower bound of the second range</p>", 
+          "<p><code>max2</code> upper bound of the second range</p>"
+        ], 
+        "pname": "n, min1, max1, min2, max2", 
+        "return": "<p>a remapped value in the second range</p>"
       }
     ]
   }, 

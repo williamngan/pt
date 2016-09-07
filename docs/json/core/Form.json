@@ -31,9 +31,10 @@
             "param": [
                 "<p><code>c</code> stroke color which can be as color, gradient, or pattern. (See <a href=\"https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/strokeStyle\">canvas documentation</a>) Default is false (transparent)</p>", 
                 "<p><code>width</code> Optional value (can be floating point) to set line width</p>", 
-                "<p><code>joint</code> Optional string to set line joint style. Can be \"miter\", \"bevel\", or \"round\".</p>"
+                "<p><code>joint</code> Optional string to set line joint style. Can be \"miter\", \"bevel\", or \"round\".</p>", 
+                "<p><code>cap</code> Optional string to set line cap style. Can be \"butt\", \"round\", or \"square\".</p>"
             ], 
-            "pname": "c, width, joint", 
+            "pname": "c, width, joint, cap", 
             "return": "<p>this Form</p>"
         }, 
         {
