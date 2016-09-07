@@ -1111,7 +1111,7 @@ SVGForm = (function() {
       this.cc.style["stroke-linejoin"] = joint;
     }
     if (cap) {
-      this.cc.style["stroke-linecap"] = joint;
+      this.cc.style["stroke-linecap"] = cap;
     }
     return this;
   };
@@ -1806,7 +1806,7 @@ Form = (function() {
     return this;
   };
 
-  Form.prototype.stroke = function(c, width, joint) {
+  Form.prototype.stroke = function(c, width, joint, cap) {
     this.cc.strokeStyle = c ? c : "transparent";
     this.stroked = !!c;
     if (width) {
@@ -1814,6 +1814,9 @@ Form = (function() {
     }
     if (joint) {
       this.cc.lineJoin = joint;
+    }
+    if (cap) {
+      this.cc.lineCap = cap;
     }
     return this;
   };

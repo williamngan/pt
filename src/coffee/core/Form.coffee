@@ -211,13 +211,15 @@ class Form
   # @param `c` stroke color which can be as color, gradient, or pattern. (See [canvas documentation](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/strokeStyle)) Default is false (transparent)
   # @param `width` Optional value (can be floating point) to set line width
   # @param `joint` Optional string to set line joint style. Can be "miter", "bevel", or "round".
+  # @param `cap` Optional string to set line cap style. Can be "butt", "round", or "square".
   # @eg `form.stroke("#F90")` `form.stroke("rgba(0,0,0,.5")` `form.stroke(false)` `form.stroke("#000", 0.5, 'round')`
   # @return this Form
-  stroke: (c, width, joint) ->
+  stroke: (c, width, joint, cap) ->
     @cc.strokeStyle = if c then c else "transparent"
     @stroked = !!c
     if width then @cc.lineWidth = width
     if joint then @cc.lineJoin = joint
+    if cap then @cc.lineCap = cap
     return @
 
 

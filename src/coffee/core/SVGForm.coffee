@@ -47,13 +47,14 @@ class SVGForm
   # @param `c` stroke color. Default is false (transparent)
   # @param `width` Optional value (can be floating point) to set line width
   # @param `joint` Optional string to set line joint style. Can be "miter", "bevel", or "round".
+  # @param `cap` Optional string to set line joint style. Can be "butt ", "round", or "square".
   # @eg `form.stroke("#F90")` `form.stroke("rgba(0,0,0,.5")` `form.stroke(false)` `form.stroke("#000", 0.5, 'round')`
   # @return this Form
   stroke: (c, width, joint, cap) ->
     @cc.style.stroke = if c then c else false
     if width then @cc.style["stroke-width"] = width
     if joint then @cc.style["stroke-linejoin"] = joint
-    if cap then @cc.style["stroke-linecap"] = joint
+    if cap then @cc.style["stroke-linecap"] = cap
     return @
 
 

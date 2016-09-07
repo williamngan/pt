@@ -56,7 +56,7 @@ grid.generate( function ( size, position, row, column, type, isOccupied ) {
     var radius = Math.min(size.x, size.y)/8 + nv*Math.min(size.x, size.y)/4;
 
     form.stroke( false ).fill( bgcolor ).circle( new Circle( size.$divide(2).add(position) ).setRadius( radius ) ); // draw circle
-    form.fill(false).stroke("#fff", 6, 'round').polygon( pts.points, false ); // draw path
+    form.fill(false).stroke("#fff", 6, 'round', 'round').polygon( pts.points, false ); // draw path
     form.stroke(false).fill(colors.a3).point( pointAt( fn, progress, position, size ), 3, true); // draw moving dot
     form.fill("rgba(0,0,0,.5)").font(11).text( position.$add(0, 20), fns[idx]); // draw label
   }

@@ -35,7 +35,7 @@ SVGForm = (function() {
       this.cc.style["stroke-linejoin"] = joint;
     }
     if (cap) {
-      this.cc.style["stroke-linecap"] = joint;
+      this.cc.style["stroke-linecap"] = cap;
     }
     return this;
   };
