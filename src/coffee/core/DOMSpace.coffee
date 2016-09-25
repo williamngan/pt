@@ -3,14 +3,15 @@
 class DOMSpace extends Space
 
   # ## Create a DOMSpace which represents a HTML DOM
-  # @param `id` an id property which refers to the "id" attribute of the element in DOM.
+  # @param `elem` Either a string which refers to the "id" attribute of a DOM element, or the DOM element itself.
   # @param `callback` an optional callback `function(boundingBox, spaceElement)` to be called when element is appended and ready. A "ready" event will also be fired from the space's element when it's appended, which can be tracked with `spaceInstance.space.addEventListener("ready")`
-  # @param `spaceElement` a string of space's dom element name, such as `"div"` or `"svg"` or . Default is `"div"`
-  constructor: ( id, callback, spaceElement="div" ) ->
-    if (!id) then id = 'pt'
-    super( id )
+  # @param `spaceElement` an optional string of space's dom element name, such as `"div"` or `"svg"` or . Default is `"div"`
+  constructor: ( elem, callback, spaceElement="div" ) ->
+    if (!elem) then elem = 'pt'
+    
+    isElement = elem instanceof Element
 
-    @id = if (@id[0] == "#") then @id.substr(1) else @id
+    super( if (isElement) then "pt_custom_space" else elem )
 
     # ## A property to store the DOM element
     @space = null
@@ -19,7 +20,14 @@ class DOMSpace extends Space
 
     @css = {};
 
-    _selector = document.querySelector("#"+@id)
+    _selector = null
+
+    if (isElement)
+      _selector = elem
+    else
+      @id = if (@id[0] == "#") then @id.substr(1) else @id
+      _selector = document.querySelector("#"+@id)
+
 
     # if selector is not defined, create the spaceElement element
     if !_selector

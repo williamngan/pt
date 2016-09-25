@@ -9,8 +9,9 @@ class Color extends Vector
   constructor: ( args ) ->
     super
 
-    # ## alpha value from 0 to 1, where 0 is fully transparent, and 1 is fully opaque
     _args = if ( Array.isArray(arguments[0]) and arguments[0][3] != undefined ) then arguments[0] else arguments
+
+    # ## alpha value from 0 to 1, where 0 is fully transparent, and 1 is fully opaque
     @alpha = if _args.length >=4 then Math.min( 1, Math.max( _args[3], 0) ) else 1
 
     # ## color mode id such as "lab" or "rgb"

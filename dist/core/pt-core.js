@@ -722,14 +722,14 @@ this.Space = Space;
 CanvasSpace = (function(superClass) {
   extend(CanvasSpace, superClass);
 
-  function CanvasSpace(id, callback) {
+  function CanvasSpace(elem, callback) {
     this._resizeHandler = bind(this._resizeHandler, this);
-    var _existed, _selector, b;
-    if (!id) {
-      id = 'pt';
+    var _existed, _selector, b, isElement;
+    if (!elem) {
+      elem = 'pt';
     }
-    CanvasSpace.__super__.constructor.call(this, id);
-    this.id = this.id[0] === "#" ? this.id.substr(1) : this.id;
+    isElement = elem instanceof Element;
+    CanvasSpace.__super__.constructor.call(this, isElement ? "pt_custom_space" : elem);
     this.space = null;
     this.bound = null;
     this.boundRect = {
@@ -740,8 +740,14 @@ CanvasSpace = (function(superClass) {
     };
     this.pixelScale = 1;
     this._autoResize = true;
-    _selector = document.querySelector("#" + this.id);
-    _existed = true;
+    _selector = null;
+    if (isElement) {
+      _selector = elem;
+    } else {
+      this.id = this.id[0] === "#" ? this.id.substr(1) : this.id;
+      _selector = document.querySelector("#" + this.id);
+      _existed = true;
+    }
     if (!_selector) {
       this.bound = this._createElement("div", this.id + "_container");
       this.space = this._createElement("canvas", this.id);
@@ -900,17 +906,17 @@ this.CanvasSpace = CanvasSpace;
 DOMSpace = (function(superClass) {
   extend(DOMSpace, superClass);
 
-  function DOMSpace(id, callback, spaceElement) {
-    var _selector;
+  function DOMSpace(elem, callback, spaceElement) {
+    var _selector, isElement;
     if (spaceElement == null) {
       spaceElement = "div";
     }
     this._resizeHandler = bind(this._resizeHandler, this);
-    if (!id) {
-      id = 'pt';
+    if (!elem) {
+      elem = 'pt';
     }
-    DOMSpace.__super__.constructor.call(this, id);
-    this.id = this.id[0] === "#" ? this.id.substr(1) : this.id;
+    isElement = elem instanceof Element;
+    DOMSpace.__super__.constructor.call(this, isElement ? "pt_custom_space" : elem);
     this.space = null;
     this.bound = null;
     this.boundRect = {
@@ -920,7 +926,13 @@ DOMSpace = (function(superClass) {
       height: 0
     };
     this.css = {};
-    _selector = document.querySelector("#" + this.id);
+    _selector = null;
+    if (isElement) {
+      _selector = elem;
+    } else {
+      this.id = this.id[0] === "#" ? this.id.substr(1) : this.id;
+      _selector = document.querySelector("#" + this.id);
+    }
     if (!_selector) {
       this.space = this._createElement(spaceElement, this.id);
       document.body.appendChild(this.space);

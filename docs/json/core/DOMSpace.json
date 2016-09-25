@@ -8,11 +8,11 @@
             "description": "<h2>Create a DOMSpace which represents a HTML DOM</h2>", 
             "name": "DOMSpace", 
             "param": [
-                "<p><code>id</code> an id property which refers to the \"id\" attribute of the element in DOM.</p>", 
+                "<p><code>elem</code> Either a string which refers to the \"id\" attribute of a DOM element, or the DOM element itself.</p>", 
                 "<p><code>callback</code> an optional callback <code>function(boundingBox, spaceElement)</code> to be called when element is appended and ready. A \"ready\" event will also be fired from the space's element when it's appended, which can be tracked with <code>spaceInstance.space.addEventListener(\"ready\")</code></p>", 
-                "<p><code>spaceElement</code> a string of space's dom element name, such as <code>\"div\"</code> or <code>\"svg\"</code> or . Default is <code>\"div\"</code></p>"
+                "<p><code>spaceElement</code> an optional string of space's dom element name, such as <code>\"div\"</code> or <code>\"svg\"</code> or . Default is <code>\"div\"</code></p>"
             ], 
-            "pname": "id, callback, spaceElement=\"div\""
+            "pname": "elem, callback, spaceElement=\"div\""
         }, 
         {
             "description": "<h2><code>display(...)</code> is deprecated as of 0.2.0. You can now set the DOM element directly in the constructor, and customize it using <code>setup()</code>.</h2>", 

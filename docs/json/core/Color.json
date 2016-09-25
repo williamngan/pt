@@ -67,6 +67,11 @@
     ], 
     "props": [
         {
+            "description": "<h2>alpha value from 0 to 1, where 0 is fully transparent, and 1 is fully opaque</h2>", 
+            "name": "alpha", 
+            "param": []
+        }, 
+        {
             "description": "<h2>color mode id such as \"lab\" or \"rgb\"</h2>", 
             "name": "mode", 
             "param": []
