@@ -807,7 +807,7 @@ CanvasSpace = (function(superClass) {
 
   CanvasSpace.prototype.setup = function(opt) {
     var r1, r2;
-    if (opt.bgcolor) {
+    if (opt.bgcolor !== void 0) {
       this.bgcolor = opt.bgcolor;
     }
     this._autoResize = opt.resize !== false ? true : false;
@@ -869,7 +869,7 @@ CanvasSpace = (function(superClass) {
       this.bgcolor = bg;
     }
     lastColor = this.ctx.fillStyle;
-    if (this.bgcolor) {
+    if (this.bgcolor && this.bgcolor !== "transparent") {
       this.ctx.fillStyle = this.bgcolor;
       this.ctx.fillRect(0, 0, this.size.x, this.size.y);
     } else {
@@ -1001,7 +1001,7 @@ DOMSpace = (function(superClass) {
   };
 
   DOMSpace.prototype.setup = function(opt) {
-    if (opt.bgcolor) {
+    if (opt.bgcolor !== void 0) {
       this.bgcolor = opt.bgcolor;
     }
     this._autoResize = opt.resize !== false ? true : false;
@@ -1043,8 +1043,18 @@ DOMSpace = (function(superClass) {
     return this;
   };
 
-  DOMSpace.prototype.clear = function() {
-    return this.space.innerHML = "";
+  DOMSpace.prototype.clear = function(bg) {
+    this.setBackground(bg);
+    this.space.innerHML = "";
+    return this;
+  };
+
+  DOMSpace.prototype.setBackground = function(bg) {
+    if (bg) {
+      this.bgcolor = bg;
+      this.setCSS("backgroundColor", this.bgcolor);
+      return this.space.style["backgroundColor"] = this.bgcolor;
+    }
   };
 
   DOMSpace.prototype.animate = function(time) {

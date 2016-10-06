@@ -101,7 +101,7 @@ class CanvasSpace extends Space
     return @
 
   # ## Set up various options for CanvasSpace. The `opt` parameter is an object with the following fields. This is usually set during instantiation, eg `new CanvasSpace(...).setup( { opt } )`
-  # @param `opt.bgcolor` a hex or rgba string to set initial background color of the canvas. You may also change it later with `clear()`
+  # @param `opt.bgcolor` a hex or rgba string to set initial background color of the canvas, or use `false` or "transparent" to set a transparent background. You may also change it later with `clear()`
   # @param `opt.resize` a boolean to set whether `<canvas>` size should auto resize to match its container's size. You can also set it manually with `autoSize()`
   # @param `opt.retina` a boolean to set if device pixel scaling should be used. This may make drawings on retina displays look sharper but may reduce performance slightly. Default is `true`.
   # @return this CanvasSpace
@@ -111,7 +111,7 @@ class CanvasSpace extends Space
     # if opt.context then @ctx = @space.getContext( opt.context )
 
     # background color
-    if opt.bgcolor then @bgcolor = opt.bgcolor;
+    if opt.bgcolor != undefined then @bgcolor = opt.bgcolor;
 
     # auto resize canvas to fit its container
     @_autoResize = if (opt.resize != false) then true else false
@@ -178,7 +178,7 @@ class CanvasSpace extends Space
 
 
   # ## Clear the canvas with its background color. Overrides Space's `clear` function.
-  # @param `bg` Optionally specify a custom background color. If evaluated to false, it will use its `bgcolor` property as background color.
+  # @param `bg` Optionally specify a custom background color in hex or rgba string, or "transparent". If not defined, it will use its `bgcolor` property as background color to clear the canvas.
   # @return this CanvasSpace
   clear: ( bg ) ->
 
@@ -186,7 +186,7 @@ class CanvasSpace extends Space
 
     lastColor = @ctx.fillStyle
 
-    if @bgcolor
+    if @bgcolor and @bgcolor != "transparent"
       @ctx.fillStyle = @bgcolor;
       @ctx.fillRect( 0, 0, @size.x, @size.y )
     else

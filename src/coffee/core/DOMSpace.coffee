@@ -73,7 +73,6 @@ class DOMSpace extends Space
       if @bgcolor
         @setCSS( "backgroundColor", @bgcolor )
 
-
       @updateCSS()
 
       @space.dispatchEvent( new Event('ready') )
@@ -100,13 +99,13 @@ class DOMSpace extends Space
     return @
 
   # ## Set up various options for DOMSpace. The `opt` parameter is an object with the following fields. This is usually set during instantiation, eg `new DOMSpace(...).setup( { opt } )`
-  # @param `opt.bgcolor` a hex or rgba string to set initial background color of the element
+  # @param `opt.bgcolor` a hex or rgba string to set initial background color of the element, or use `false` or "transparent" to set a transparent background.
   # @param `opt.resize` a boolean to set whether th element's size should auto resize to match its container's size. You can also set it manually with `autoSize()`
   # @return this DOMSpace
   setup: ( opt ) ->
 
     # background color
-    if opt.bgcolor then @bgcolor = opt.bgcolor
+    if opt.bgcolor != undefined then @bgcolor = opt.bgcolor
 
     # auto resize element to fit its container
     @_autoResize = if (opt.resize != false) then true else false
@@ -155,8 +154,21 @@ class DOMSpace extends Space
 
 
   # ## Clear the space. This removes all the child nodes inside `space`
-  clear: () ->
+  # @param `bg` Optional parameter. If defined, this will change the css background-color on the svg element. Specify a custom background color in hex or rgba string, or "transparent".
+  # @return this space
+  clear: ( bg ) ->
+    @setBackground( bg )
     @space.innerHML = ""
+    return @
+
+
+  # ## Set background color. This will change the css background-color on the svg element.
+  # @param `bg` Specify a custom background color in hex or rgba string, or "transparent".
+  setBackground: ( bg ) ->
+    if bg
+      @bgcolor = bg
+      @setCSS( "backgroundColor", @bgcolor )
+      @space.style["backgroundColor"] = @bgcolor
 
 
   # ## Overrides Space's `animate` function
