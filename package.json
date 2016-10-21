@@ -1,6 +1,6 @@
 {
   "name": "ptjs",
-  "version": "0.2.2",
+  "version": "0.2.1",
   "description": "An experimental library based on the ideas of Point, Form, and Space",
   "author": "William Ngan",
   "devDependencies": {
