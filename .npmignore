@@ -1,4 +1,12 @@
-src
-docs
-test
+src/
+docs/
+test/
 .idea
+demo/
+docgen.py
+index.html
+favicon.ico
+dist/core/
+dist/extend/
+dist/*.js
+dist/*.js.map
