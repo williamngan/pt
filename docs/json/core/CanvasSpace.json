@@ -23,7 +23,7 @@
             "description": "<h2>Set up various options for CanvasSpace. The <code>opt</code> parameter is an object with the following fields. This is usually set during instantiation, eg <code>new CanvasSpace(...).setup( { opt } )</code></h2>", 
             "name": "setup", 
             "param": [
-                "<p><code>opt.bgcolor</code> a hex or rgba string to set initial background color of the canvas. You may also change it later with <code>clear()</code></p>", 
+                "<p><code>opt.bgcolor</code> a hex or rgba string to set initial background color of the canvas, or use <code>false</code> or \"transparent\" to set a transparent background. You may also change it later with <code>clear()</code></p>", 
                 "<p><code>opt.resize</code> a boolean to set whether <code>&lt;canvas&gt;</code> size should auto resize to match its container's size. You can also set it manually with <code>autoSize()</code></p>", 
                 "<p><code>opt.retina</code> a boolean to set if device pixel scaling should be used. This may make drawings on retina displays look sharper but may reduce performance slightly. Default is <code>true</code>.</p>"
             ], 
@@ -51,7 +51,7 @@
             "description": "<h2>Clear the canvas with its background color. Overrides Space's <code>clear</code> function.</h2>", 
             "name": "clear", 
             "param": [
-                "<p><code>bg</code> Optionally specify a custom background color. If evaluated to false, it will use its <code>bgcolor</code> property as background color.</p>"
+                "<p><code>bg</code> Optionally specify a custom background color in hex or rgba string, or \"transparent\". If not defined, it will use its <code>bgcolor</code> property as background color to clear the canvas.</p>"
             ], 
             "pname": "bg", 
             "return": "<p>this CanvasSpace</p>"

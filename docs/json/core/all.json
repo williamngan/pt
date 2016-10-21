@@ -24,7 +24,7 @@
         "description": "<h2>Set up various options for CanvasSpace. The <code>opt</code> parameter is an object with the following fields. This is usually set during instantiation, eg <code>new CanvasSpace(...).setup( { opt } )</code></h2>", 
         "name": "setup", 
         "param": [
-          "<p><code>opt.bgcolor</code> a hex or rgba string to set initial background color of the canvas. You may also change it later with <code>clear()</code></p>", 
+          "<p><code>opt.bgcolor</code> a hex or rgba string to set initial background color of the canvas, or use <code>false</code> or \"transparent\" to set a transparent background. You may also change it later with <code>clear()</code></p>", 
           "<p><code>opt.resize</code> a boolean to set whether <code>&lt;canvas&gt;</code> size should auto resize to match its container's size. You can also set it manually with <code>autoSize()</code></p>", 
           "<p><code>opt.retina</code> a boolean to set if device pixel scaling should be used. This may make drawings on retina displays look sharper but may reduce performance slightly. Default is <code>true</code>.</p>"
         ], 
@@ -52,7 +52,7 @@
         "description": "<h2>Clear the canvas with its background color. Overrides Space's <code>clear</code> function.</h2>", 
         "name": "clear", 
         "param": [
-          "<p><code>bg</code> Optionally specify a custom background color. If evaluated to false, it will use its <code>bgcolor</code> property as background color.</p>"
+          "<p><code>bg</code> Optionally specify a custom background color in hex or rgba string, or \"transparent\". If not defined, it will use its <code>bgcolor</code> property as background color to clear the canvas.</p>"
         ], 
         "pname": "bg", 
         "return": "<p>this CanvasSpace</p>"
@@ -733,7 +733,7 @@
         "description": "<h2>Set up various options for DOMSpace. The <code>opt</code> parameter is an object with the following fields. This is usually set during instantiation, eg <code>new DOMSpace(...).setup( { opt } )</code></h2>", 
         "name": "setup", 
         "param": [
-          "<p><code>opt.bgcolor</code> a hex or rgba string to set initial background color of the element</p>", 
+          "<p><code>opt.bgcolor</code> a hex or rgba string to set initial background color of the element, or use <code>false</code> or \"transparent\" to set a transparent background.</p>", 
           "<p><code>opt.resize</code> a boolean to set whether th element's size should auto resize to match its container's size. You can also set it manually with <code>autoSize()</code></p>"
         ], 
         "pname": "opt", 
@@ -758,8 +758,19 @@
       {
         "description": "<h2>Clear the space. This removes all the child nodes inside <code>space</code></h2>", 
         "name": "clear", 
-        "param": [], 
-        "pname": ""
+        "param": [
+          "<p><code>bg</code> Optional parameter. If defined, this will change the css background-color on the svg element. Specify a custom background color in hex or rgba string, or \"transparent\".</p>"
+        ], 
+        "pname": "bg", 
+        "return": "<p>this space</p>"
+      }, 
+      {
+        "description": "<h2>Set background color. This will change the css background-color on the svg element.</h2>", 
+        "name": "setBackground", 
+        "param": [
+          "<p><code>bg</code> Specify a custom background color in hex or rgba string, or \"transparent\".</p>"
+        ], 
+        "pname": "bg"
       }, 
       {
         "description": "<h2>Overrides Space's <code>animate</code> function</h2>", 

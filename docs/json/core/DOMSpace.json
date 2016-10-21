@@ -24,7 +24,7 @@
             "description": "<h2>Set up various options for DOMSpace. The <code>opt</code> parameter is an object with the following fields. This is usually set during instantiation, eg <code>new DOMSpace(...).setup( { opt } )</code></h2>", 
             "name": "setup", 
             "param": [
-                "<p><code>opt.bgcolor</code> a hex or rgba string to set initial background color of the element</p>", 
+                "<p><code>opt.bgcolor</code> a hex or rgba string to set initial background color of the element, or use <code>false</code> or \"transparent\" to set a transparent background.</p>", 
                 "<p><code>opt.resize</code> a boolean to set whether th element's size should auto resize to match its container's size. You can also set it manually with <code>autoSize()</code></p>"
             ], 
             "pname": "opt", 
@@ -49,8 +49,19 @@
         {
             "description": "<h2>Clear the space. This removes all the child nodes inside <code>space</code></h2>", 
             "name": "clear", 
-            "param": [], 
-            "pname": ""
+            "param": [
+                "<p><code>bg</code> Optional parameter. If defined, this will change the css background-color on the svg element. Specify a custom background color in hex or rgba string, or \"transparent\".</p>"
+            ], 
+            "pname": "bg", 
+            "return": "<p>this space</p>"
+        }, 
+        {
+            "description": "<h2>Set background color. This will change the css background-color on the svg element.</h2>", 
+            "name": "setBackground", 
+            "param": [
+                "<p><code>bg</code> Specify a custom background color in hex or rgba string, or \"transparent\".</p>"
+            ], 
+            "pname": "bg"
         }, 
         {
             "description": "<h2>Overrides Space's <code>animate</code> function</h2>", 
