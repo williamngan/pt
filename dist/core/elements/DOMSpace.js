@@ -6,17 +6,17 @@ var DOMSpace,
 DOMSpace = (function(superClass) {
   extend(DOMSpace, superClass);
 
-  function DOMSpace(id, callback, spaceElement) {
-    var _selector;
+  function DOMSpace(elem, callback, spaceElement) {
+    var _selector, isElement;
     if (spaceElement == null) {
       spaceElement = "div";
     }
     this._resizeHandler = bind(this._resizeHandler, this);
-    if (!id) {
-      id = 'pt';
+    if (!elem) {
+      elem = 'pt';
     }
-    DOMSpace.__super__.constructor.call(this, id);
-    this.id = this.id[0] === "#" ? this.id.substr(1) : this.id;
+    isElement = elem instanceof Element;
+    DOMSpace.__super__.constructor.call(this, isElement ? "pt_custom_space" : elem);
     this.space = null;
     this.bound = null;
     this.boundRect = {
@@ -26,7 +26,13 @@ DOMSpace = (function(superClass) {
       height: 0
     };
     this.css = {};
-    _selector = document.querySelector("#" + this.id);
+    _selector = null;
+    if (isElement) {
+      _selector = elem;
+    } else {
+      this.id = this.id[0] === "#" ? this.id.substr(1) : this.id;
+      _selector = document.querySelector("#" + this.id);
+    }
     if (!_selector) {
       this.space = this._createElement(spaceElement, this.id);
       document.body.appendChild(this.space);
@@ -95,7 +101,7 @@ DOMSpace = (function(superClass) {
   };
 
   DOMSpace.prototype.setup = function(opt) {
-    if (opt.bgcolor) {
+    if (opt.bgcolor !== void 0) {
       this.bgcolor = opt.bgcolor;
     }
     this._autoResize = opt.resize !== false ? true : false;
@@ -137,8 +143,18 @@ DOMSpace = (function(superClass) {
     return this;
   };
 
-  DOMSpace.prototype.clear = function() {
-    return this.space.innerHML = "";
+  DOMSpace.prototype.clear = function(bg) {
+    this.setBackground(bg);
+    this.space.innerHML = "";
+    return this;
+  };
+
+  DOMSpace.prototype.setBackground = function(bg) {
+    if (bg) {
+      this.bgcolor = bg;
+      this.setCSS("backgroundColor", this.bgcolor);
+      return this.space.style["backgroundColor"] = this.bgcolor;
+    }
   };
 
   DOMSpace.prototype.animate = function(time) {

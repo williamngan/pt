@@ -6,14 +6,14 @@ var CanvasSpace,
 CanvasSpace = (function(superClass) {
   extend(CanvasSpace, superClass);
 
-  function CanvasSpace(id, callback) {
+  function CanvasSpace(elem, callback) {
     this._resizeHandler = bind(this._resizeHandler, this);
-    var _existed, _selector, b;
-    if (!id) {
-      id = 'pt';
+    var _existed, _selector, b, isElement;
+    if (!elem) {
+      elem = 'pt';
     }
-    CanvasSpace.__super__.constructor.call(this, id);
-    this.id = this.id[0] === "#" ? this.id.substr(1) : this.id;
+    isElement = elem instanceof Element;
+    CanvasSpace.__super__.constructor.call(this, isElement ? "pt_custom_space" : elem);
     this.space = null;
     this.bound = null;
     this.boundRect = {
@@ -24,8 +24,14 @@ CanvasSpace = (function(superClass) {
     };
     this.pixelScale = 1;
     this._autoResize = true;
-    _selector = document.querySelector("#" + this.id);
-    _existed = true;
+    _selector = null;
+    if (isElement) {
+      _selector = elem;
+    } else {
+      this.id = this.id[0] === "#" ? this.id.substr(1) : this.id;
+      _selector = document.querySelector("#" + this.id);
+      _existed = true;
+    }
     if (!_selector) {
       this.bound = this._createElement("div", this.id + "_container");
       this.space = this._createElement("canvas", this.id);
@@ -85,7 +91,7 @@ CanvasSpace = (function(superClass) {
 
   CanvasSpace.prototype.setup = function(opt) {
     var r1, r2;
-    if (opt.bgcolor) {
+    if (opt.bgcolor !== void 0) {
       this.bgcolor = opt.bgcolor;
     }
     this._autoResize = opt.resize !== false ? true : false;
@@ -147,7 +153,7 @@ CanvasSpace = (function(superClass) {
       this.bgcolor = bg;
     }
     lastColor = this.ctx.fillStyle;
-    if (this.bgcolor) {
+    if (this.bgcolor && this.bgcolor !== "transparent") {
       this.ctx.fillStyle = this.bgcolor;
       this.ctx.fillRect(0, 0, this.size.x, this.size.y);
     } else {
