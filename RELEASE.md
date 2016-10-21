@@ -1,5 +1,10 @@
 # Release notes
 
+## v0.2.3
+** Bug fixes **
+- Enable passing a DOM element to initiate `CanvasSpace` and `DOMSpace`. [Doc](http://williamngan.github.io/pt/docs/#func-CanvasSpace-CanvasSpace) [Issue](https://github.com/williamngan/pt/issues/23)
+- Fix background transparency by `space.setup({bgcolor: false)`. [Doc](http://williamngan.github.io/pt/docs/#func-CanvasSpace-setup) [Issue](https://github.com/williamngan/pt/issues/24)
+
 ## v0.2.1
 **Shaping functions**
 - A series of useful shaping/easing functions are now in [extend/Shaping](http://williamngan.github.io/pt/docs/#elemShaping_xt). See a demo [here](http://williamngan.github.io/pt/demo/index.html?name=shaping.linear).
