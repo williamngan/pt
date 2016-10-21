@@ -2,7 +2,7 @@
 class SVGSpace extends DOMSpace
 
   # ## Create a SVGSpace which represents a svg element
-  # @param `id` Either a string which refers to the "id" attribute of a DOM element, or the DOM element itself. It can either refer to an existing `<svg>`, or a `<div>` container in which a new `<svg>` will be created. If left empty, a `<div id="pt"><svg id="pt_svg" /></div>` will be added to DOM. Use css to customize its appearance if needed.
+  # @param `id` Specify an element by its "id" attribute as string, or by the element object itself. An element can be an existing `<svg>`, or a `<div>` container in which a new `<svg>` will be created. If left empty, a `<div id="pt"><svg id="pt_svg" /></div>` will be added to DOM. Use css to customize its appearance if needed.
   # @param `callback` an optional callback `function(boundingBox, spaceElement)` to be called when element is appended and ready. A "ready" event will also be fired from the space's element when it's appended, which can be tracked with `spaceInstance.space.addEventListener("ready")`
   constructor: ( id, callback ) ->
     super( id, callback, 'svg')

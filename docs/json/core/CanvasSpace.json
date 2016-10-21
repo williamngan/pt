@@ -8,7 +8,7 @@
             "description": "<h2>Create a CanvasSpace which represents a HTML Canvas Space</h2>", 
             "name": "CanvasSpace", 
             "param": [
-                "<p><code>elem</code> Either a string which refers to the \"id\" attribute of a Canvas element, or the Canvas element itself. It can either refer to an existing <code>&lt;canvas&gt;</code>, or a <code>&lt;div&gt;</code> container in which a new <code>&lt;canvas&gt;</code> will be created. If left empty, a <code>&lt;div id=\"pt_container\"&gt;&lt;canvas id=\"pt\" /&gt;&lt;/div&gt;</code> will be added to DOM. Use css to customize its appearance if needed.</p>", 
+                "<p><code>elem</code> Specify an element by its \"id\" attribute as string, or by the element object itself. An element can be an existing <code>&lt;canvas&gt;</code>, or a <code>&lt;div&gt;</code> container in which a new <code>&lt;canvas&gt;</code> will be created. If left empty, a <code>&lt;div id=\"pt_container\"&gt;&lt;canvas id=\"pt\" /&gt;&lt;/div&gt;</code> will be added to DOM. Use css to customize its appearance if needed.</p>", 
                 "<p><code>callback</code> an optional callback <code>function(boundingBox, spaceElement)</code> to be called when canvas is appended and ready. A \"ready\" event will also be fired from the <code>&lt;canvas&gt;</code> element when it's appended, which can be traced with <code>spaceInstance.space.addEventListener(\"ready\")</code></p>"
             ], 
             "pname": "elem, callback"

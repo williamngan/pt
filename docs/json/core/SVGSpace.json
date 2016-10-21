@@ -8,7 +8,7 @@
             "description": "<h2>Create a SVGSpace which represents a svg element</h2>", 
             "name": "SVGSpace", 
             "param": [
-                "<p><code>id</code> Either a string which refers to the \"id\" attribute of a DOM element, or the DOM element itself. It can either refer to an existing <code>&lt;svg&gt;</code>, or a <code>&lt;div&gt;</code> container in which a new <code>&lt;svg&gt;</code> will be created. If left empty, a <code>&lt;div id=\"pt\"&gt;&lt;svg id=\"pt_svg\" /&gt;&lt;/div&gt;</code> will be added to DOM. Use css to customize its appearance if needed.</p>", 
+                "<p><code>id</code> Specify an element by its \"id\" attribute as string, or by the element object itself. An element can be an existing <code>&lt;svg&gt;</code>, or a <code>&lt;div&gt;</code> container in which a new <code>&lt;svg&gt;</code> will be created. If left empty, a <code>&lt;div id=\"pt\"&gt;&lt;svg id=\"pt_svg\" /&gt;&lt;/div&gt;</code> will be added to DOM. Use css to customize its appearance if needed.</p>", 
                 "<p><code>callback</code> an optional callback <code>function(boundingBox, spaceElement)</code> to be called when element is appended and ready. A \"ready\" event will also be fired from the space's element when it's appended, which can be tracked with <code>spaceInstance.space.addEventListener(\"ready\")</code></p>"
             ], 
             "pname": "id, callback"
