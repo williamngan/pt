@@ -277,3 +277,7 @@ class Shaping
     s = 1/steps
     tt = Math.floor(t/s) * s
     return fn( tt, c, p1, p2 )
+
+
+# namespace
+this.Shaping = Shaping

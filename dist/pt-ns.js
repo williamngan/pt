@@ -5995,6 +5995,8 @@ Noise = (function(superClass) {
 
 })(Vector);
 
+this.Noise = Noise;
+
 Delaunay = (function(superClass) {
   extend(Delaunay, superClass);
 
@@ -6467,6 +6469,8 @@ Shaping = (function() {
   return Shaping;
 
 })();
+
+this.Shaping = Shaping;
 
 //# sourceMappingURL=pt.js.map
 }).call(Pt);
