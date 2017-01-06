@@ -5,7 +5,7 @@
     "file": "PointSet.coffee", 
     "funcs": [
         {
-            "description": "<h2>Create a new PointSet. A PointSet is a set of points which can repsent a polygon or a polyline or a time series.</h2>", 
+            "description": "<h2>Create a new PointSet. A PointSet is a set of points which can represent a polygon or a polyline or a time series.</h2>", 
             "eg": "<p><code>new PointSet()</code> <code>new PointSet(1,2,3)</code> <code>new PointSet([2,4])</code> <code>new PointSet({x:3, y:6, z:9}).to(1,2,3)</code> <code>new PointSet(1,2,3).to([p1, p2, p3, p4, p5])</code></p>", 
             "name": "PointSet", 
             "param": [
