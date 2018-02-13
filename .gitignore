@@ -4,3 +4,4 @@ node_modules
 .map/*.*
 dist/core/**/*.js.map
 dist/extend/**/*.js.map
+.DS_Store

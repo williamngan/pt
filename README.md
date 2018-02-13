@@ -4,6 +4,9 @@
 
 Hello there. Allow me to introduce Pt, which is a study of Point, Form, and Space. It is experimental and fun, and I hope you will use it to make crazy, strange, awesome things.
 
+### Update 2017
+There's an improved version of Pt, written in typescript and with simplified workflows. Please visit [https://ptsjs.org](https://ptsjs.org) and check out [the new repo](https://github.com/williamngan/pts)
+
 ### Get started
 The best places to get started are:
 - **[Demos page](http://williamngan.github.io/pt/demo/index.html?name=pair.collinear)** shows various interactive sketches, usually done in short form (50-70 lines of code).
