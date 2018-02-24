@@ -53,7 +53,8 @@ var coreFiles = coreElems.map(function(n) { return path.src.core+n+".coffee"; } 
 
 var extendElems = [
   "Easing", "GridCascade", "ParticleEmitter", "ParticleField", "QuadTree",
-  "SamplePoints", "StripeBound", "UI", "Noise", "Delaunay", "Shaping"
+  "SamplePoints", "StripeBound", "UI", "Noise", "Delaunay", "Shaping",
+  "ForceDirectedGraph", "Vertex", "Edge"
 ];
 var extendFiles = extendElems.map(function(n) { return path.src.extend+n+".coffee"; } );
 
